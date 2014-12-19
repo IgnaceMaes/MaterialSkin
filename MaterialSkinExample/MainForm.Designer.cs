@@ -121,6 +121,8 @@ namespace MaterialSkinExample
             // 
             // materialSingleLineTextField2
             // 
+            this.materialSingleLineTextField2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.materialSingleLineTextField2.Depth = 0;
             this.materialSingleLineTextField2.Hint = null;
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(12, 41);
@@ -130,6 +132,8 @@ namespace MaterialSkinExample
             // 
             // materialSingleLineTextField1
             // 
+            this.materialSingleLineTextField1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.materialSingleLineTextField1.Depth = 0;
             this.materialSingleLineTextField1.Hint = null;
             this.materialSingleLineTextField1.Location = new System.Drawing.Point(12, 12);
@@ -139,6 +143,7 @@ namespace MaterialSkinExample
             // 
             // materialFlatButton1
             // 
+            this.materialFlatButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton1.Depth = 0;
             this.materialFlatButton1.Location = new System.Drawing.Point(57, 361);
             this.materialFlatButton1.Name = "materialFlatButton1";
