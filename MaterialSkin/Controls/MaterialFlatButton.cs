@@ -15,6 +15,13 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
 
+        public bool Primary { get; set; }
+
+        public MaterialFlatButton()
+        {
+            Primary = true;
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             if (DesignMode) { pevent.Graphics.Clear(Color.Black); return; }
@@ -25,7 +32,7 @@ namespace MaterialSkin.Controls
 
             g.Clear(Parent.BackColor);
 
-            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, SkinManager.PrimaryColorBrush, ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetMainTextBrush(), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
     }
 }

@@ -31,6 +31,8 @@ namespace MaterialSkinExample
         /// </summary>
         private void InitializeComponent()
         {
+            this.materialFlatButton2 = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRadioButton3 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialRadioButton2 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialCheckbox4 = new MaterialSkin.Controls.MaterialCheckbox();
@@ -43,6 +45,30 @@ namespace MaterialSkinExample
             this.materialButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRadioButton1 = new MaterialSkin.Controls.MaterialRadioButton();
             this.SuspendLayout();
+            // 
+            // materialFlatButton2
+            // 
+            this.materialFlatButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialFlatButton2.Depth = 0;
+            this.materialFlatButton2.Location = new System.Drawing.Point(12, 358);
+            this.materialFlatButton2.Name = "materialFlatButton2";
+            this.materialFlatButton2.Primary = false;
+            this.materialFlatButton2.Size = new System.Drawing.Size(195, 23);
+            this.materialFlatButton2.TabIndex = 13;
+            this.materialFlatButton2.Text = "materialFlatButton2";
+            this.materialFlatButton2.UseVisualStyleBackColor = true;
+            // 
+            // materialRaisedButton1
+            // 
+            this.materialRaisedButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialRaisedButton1.Depth = 0;
+            this.materialRaisedButton1.Location = new System.Drawing.Point(12, 408);
+            this.materialRaisedButton1.Name = "materialRaisedButton1";
+            this.materialRaisedButton1.Primary = false;
+            this.materialRaisedButton1.Size = new System.Drawing.Size(210, 32);
+            this.materialRaisedButton1.TabIndex = 12;
+            this.materialRaisedButton1.Text = "materialRaisedButton1";
+            this.materialRaisedButton1.UseVisualStyleBackColor = true;
             // 
             // materialRadioButton3
             // 
@@ -127,7 +153,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.Hint = null;
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(12, 41);
             this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
-            this.materialSingleLineTextField2.Size = new System.Drawing.Size(393, 21);
+            this.materialSingleLineTextField2.Size = new System.Drawing.Size(368, 21);
             this.materialSingleLineTextField2.TabIndex = 3;
             // 
             // materialSingleLineTextField1
@@ -138,15 +164,16 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField1.Hint = null;
             this.materialSingleLineTextField1.Location = new System.Drawing.Point(12, 12);
             this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
-            this.materialSingleLineTextField1.Size = new System.Drawing.Size(393, 21);
+            this.materialSingleLineTextField1.Size = new System.Drawing.Size(368, 21);
             this.materialSingleLineTextField1.TabIndex = 2;
             // 
             // materialFlatButton1
             // 
             this.materialFlatButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton1.Depth = 0;
-            this.materialFlatButton1.Location = new System.Drawing.Point(57, 361);
+            this.materialFlatButton1.Location = new System.Drawing.Point(213, 358);
             this.materialFlatButton1.Name = "materialFlatButton1";
+            this.materialFlatButton1.Primary = true;
             this.materialFlatButton1.Size = new System.Drawing.Size(167, 23);
             this.materialFlatButton1.TabIndex = 1;
             this.materialFlatButton1.Text = "materialFlatButton1";
@@ -156,13 +183,14 @@ namespace MaterialSkinExample
             // 
             this.materialButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialButton1.Depth = 0;
-            this.materialButton1.Location = new System.Drawing.Point(253, 354);
+            this.materialButton1.Location = new System.Drawing.Point(228, 408);
             this.materialButton1.Name = "materialButton1";
-            this.materialButton1.Primary = false;
-            this.materialButton1.Size = new System.Drawing.Size(152, 36);
+            this.materialButton1.Primary = true;
+            this.materialButton1.Size = new System.Drawing.Size(152, 32);
             this.materialButton1.TabIndex = 0;
             this.materialButton1.Text = "materialButton1";
             this.materialButton1.UseVisualStyleBackColor = true;
+            this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
             // 
             // materialRadioButton1
             // 
@@ -180,7 +208,9 @@ namespace MaterialSkinExample
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(417, 402);
+            this.ClientSize = new System.Drawing.Size(392, 452);
+            this.Controls.Add(this.materialFlatButton2);
+            this.Controls.Add(this.materialRaisedButton1);
             this.Controls.Add(this.materialRadioButton3);
             this.Controls.Add(this.materialRadioButton2);
             this.Controls.Add(this.materialCheckbox4);
@@ -213,6 +243,8 @@ namespace MaterialSkinExample
         private MaterialSkin.Controls.MaterialRadioButton materialRadioButton1;
         private MaterialRadioButton materialRadioButton2;
         private MaterialRadioButton materialRadioButton3;
+        private MaterialRaisedButton materialRaisedButton1;
+        private MaterialFlatButton materialFlatButton2;
     }
 }
 

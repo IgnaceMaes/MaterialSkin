@@ -85,8 +85,12 @@ namespace MaterialSkin
         private static Brush CHECKBOX_OFF_DISABLED_DARK_BRUSH = new SolidBrush(CHECKBOX_OFF_DISABLED_DARK);
 
         //Raised button
-        private static Color RAISED_BUTTON_LIGHT = Color.FromArgb(255, 255, 255, 255);
-        private static Brush RAISED_BUTTON_LIGHT_BRUSH = new SolidBrush(RAISED_BUTTON_LIGHT);
+        private static Color RAISED_BUTTON_BACKGROUND = Color.FromArgb(255, 255, 255, 255);
+        private static Brush RAISED_BUTTON_BACKGROUND_BRUSH = new SolidBrush(RAISED_BUTTON_BACKGROUND);
+        private static Color RAISED_BUTTON_TEXT_LIGHT = MAIN_TEXT_WHITE;
+        private static Brush RAISED_BUTTON_TEXT_LIGHT_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_LIGHT);
+        private static Color RAISED_BUTTON_TEXT_DARK = MAIN_TEXT_BLACK;
+        private static Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
 
         //Application background
         private static Color BACKGROUND_LIGHT = Color.FromArgb(255, 238, 238, 238);
@@ -125,9 +129,14 @@ namespace MaterialSkin
             return (Theme == Themes.LIGHT ? CHECKBOX_OFF_DISABLED_LIGHT_BRUSH : CHECKBOX_OFF_DISABLED_DARK_BRUSH);
         }
 
-        public Brush GetRaisedButtonBrush()
+        public Brush GetRaisedButtonBackgroundBrush()
         {
-            return RAISED_BUTTON_LIGHT_BRUSH;
+            return RAISED_BUTTON_BACKGROUND_BRUSH;
+        }
+
+        public Brush GetRaisedButtonTextBrush(bool primary)
+        {
+            return (primary ? RAISED_BUTTON_TEXT_LIGHT_BRUSH : RAISED_BUTTON_TEXT_DARK_BRUSH);
         }
 
         public Color GetApplicationBackgroundColor()
