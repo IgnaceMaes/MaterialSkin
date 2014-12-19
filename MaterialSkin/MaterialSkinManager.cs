@@ -114,6 +114,11 @@ namespace MaterialSkin
             return (Theme == Themes.LIGHT ? DISABLED_OR_HINT_TEXT_BLACK : DISABLED_OR_HINT_TEXT_WHITE);
         }
 
+        public Color GetDividersColor()
+        {
+            return (Theme == Themes.LIGHT ? DIVIDERS_BLACK : DIVIDERS_WHITE);
+        }
+
         public Brush GetDividersBrush()
         {
             return (Theme == Themes.LIGHT ? DIVIDERS_BLACK_BRUSH : DIVIDERS_WHITE_BRUSH);

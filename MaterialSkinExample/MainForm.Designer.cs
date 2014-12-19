@@ -32,6 +32,9 @@ namespace MaterialSkinExample
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
+            this.materialRadioButton4 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.materialFlatButton2 = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRadioButton3 = new MaterialSkin.Controls.MaterialRadioButton();
@@ -45,27 +48,60 @@ namespace MaterialSkinExample
             this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRadioButton1 = new MaterialSkin.Controls.MaterialRadioButton();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialRadioButton4 = new MaterialSkin.Controls.MaterialRadioButton();
             this.SuspendLayout();
+            // 
+            // materialDivider1
+            // 
+            this.materialDivider1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialDivider1.Depth = 0;
+            this.materialDivider1.Location = new System.Drawing.Point(0, 315);
+            this.materialDivider1.Name = "materialDivider1";
+            this.materialDivider1.Size = new System.Drawing.Size(400, 1);
+            this.materialDivider1.TabIndex = 16;
+            this.materialDivider1.Text = "materialDivider1";
+            // 
+            // materialRadioButton4
+            // 
+            this.materialRadioButton4.AutoSize = true;
+            this.materialRadioButton4.Depth = 0;
+            this.materialRadioButton4.Enabled = false;
+            this.materialRadioButton4.Location = new System.Drawing.Point(213, 269);
+            this.materialRadioButton4.Name = "materialRadioButton4";
+            this.materialRadioButton4.Size = new System.Drawing.Size(126, 17);
+            this.materialRadioButton4.TabIndex = 15;
+            this.materialRadioButton4.Text = "materialRadioButton4";
+            this.materialRadioButton4.UseVisualStyleBackColor = true;
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(12, 120);
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(368, 64);
+            this.materialLabel1.TabIndex = 14;
+            this.materialLabel1.Text = resources.GetString("materialLabel1.Text");
             // 
             // materialFlatButton2
             // 
             this.materialFlatButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton2.Depth = 0;
-            this.materialFlatButton2.Location = new System.Drawing.Point(12, 278);
+            this.materialFlatButton2.Location = new System.Drawing.Point(12, 326);
             this.materialFlatButton2.Name = "materialFlatButton2";
             this.materialFlatButton2.Primary = false;
-            this.materialFlatButton2.Size = new System.Drawing.Size(195, 23);
+            this.materialFlatButton2.Size = new System.Drawing.Size(180, 23);
             this.materialFlatButton2.TabIndex = 13;
             this.materialFlatButton2.Text = "materialFlatButton2";
             this.materialFlatButton2.UseVisualStyleBackColor = true;
             // 
             // materialRaisedButton1
             // 
-            this.materialRaisedButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(12, 328);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(12, 76);
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = false;
             this.materialRaisedButton1.Size = new System.Drawing.Size(210, 32);
@@ -78,7 +114,7 @@ namespace MaterialSkinExample
             this.materialRadioButton3.AutoSize = true;
             this.materialRadioButton3.Checked = true;
             this.materialRadioButton3.Depth = 0;
-            this.materialRadioButton3.Location = new System.Drawing.Point(213, 207);
+            this.materialRadioButton3.Location = new System.Drawing.Point(213, 246);
             this.materialRadioButton3.Name = "materialRadioButton3";
             this.materialRadioButton3.Size = new System.Drawing.Size(126, 17);
             this.materialRadioButton3.TabIndex = 11;
@@ -90,7 +126,7 @@ namespace MaterialSkinExample
             // 
             this.materialRadioButton2.AutoSize = true;
             this.materialRadioButton2.Depth = 0;
-            this.materialRadioButton2.Location = new System.Drawing.Point(213, 182);
+            this.materialRadioButton2.Location = new System.Drawing.Point(213, 221);
             this.materialRadioButton2.Name = "materialRadioButton2";
             this.materialRadioButton2.Size = new System.Drawing.Size(126, 17);
             this.materialRadioButton2.TabIndex = 10;
@@ -102,7 +138,7 @@ namespace MaterialSkinExample
             this.materialCheckbox4.AutoSize = true;
             this.materialCheckbox4.Depth = 0;
             this.materialCheckbox4.Enabled = false;
-            this.materialCheckbox4.Location = new System.Drawing.Point(12, 234);
+            this.materialCheckbox4.Location = new System.Drawing.Point(12, 273);
             this.materialCheckbox4.Name = "materialCheckbox4";
             this.materialCheckbox4.Size = new System.Drawing.Size(116, 17);
             this.materialCheckbox4.TabIndex = 7;
@@ -116,7 +152,7 @@ namespace MaterialSkinExample
             this.materialCheckbox3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialCheckbox3.Depth = 0;
             this.materialCheckbox3.Enabled = false;
-            this.materialCheckbox3.Location = new System.Drawing.Point(12, 208);
+            this.materialCheckbox3.Location = new System.Drawing.Point(12, 247);
             this.materialCheckbox3.Name = "materialCheckbox3";
             this.materialCheckbox3.Size = new System.Drawing.Size(116, 17);
             this.materialCheckbox3.TabIndex = 6;
@@ -127,7 +163,7 @@ namespace MaterialSkinExample
             // 
             this.materialCheckbox2.AutoSize = true;
             this.materialCheckbox2.Depth = 0;
-            this.materialCheckbox2.Location = new System.Drawing.Point(12, 182);
+            this.materialCheckbox2.Location = new System.Drawing.Point(12, 221);
             this.materialCheckbox2.Name = "materialCheckbox2";
             this.materialCheckbox2.Size = new System.Drawing.Size(116, 17);
             this.materialCheckbox2.TabIndex = 5;
@@ -140,7 +176,7 @@ namespace MaterialSkinExample
             this.materialCheckbox1.Checked = true;
             this.materialCheckbox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialCheckbox1.Depth = 0;
-            this.materialCheckbox1.Location = new System.Drawing.Point(12, 157);
+            this.materialCheckbox1.Location = new System.Drawing.Point(12, 196);
             this.materialCheckbox1.Name = "materialCheckbox1";
             this.materialCheckbox1.Size = new System.Drawing.Size(116, 17);
             this.materialCheckbox1.TabIndex = 4;
@@ -173,19 +209,18 @@ namespace MaterialSkinExample
             // 
             this.materialFlatButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton1.Depth = 0;
-            this.materialFlatButton1.Location = new System.Drawing.Point(213, 278);
+            this.materialFlatButton1.Location = new System.Drawing.Point(200, 326);
             this.materialFlatButton1.Name = "materialFlatButton1";
             this.materialFlatButton1.Primary = true;
-            this.materialFlatButton1.Size = new System.Drawing.Size(167, 23);
+            this.materialFlatButton1.Size = new System.Drawing.Size(180, 23);
             this.materialFlatButton1.TabIndex = 1;
             this.materialFlatButton1.Text = "materialFlatButton1";
             this.materialFlatButton1.UseVisualStyleBackColor = true;
             // 
             // materialButton1
             // 
-            this.materialButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialButton1.Depth = 0;
-            this.materialButton1.Location = new System.Drawing.Point(228, 328);
+            this.materialButton1.Location = new System.Drawing.Point(228, 76);
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.Primary = true;
             this.materialButton1.Size = new System.Drawing.Size(152, 32);
@@ -198,41 +233,20 @@ namespace MaterialSkinExample
             // 
             this.materialRadioButton1.AutoSize = true;
             this.materialRadioButton1.Depth = 0;
-            this.materialRadioButton1.Location = new System.Drawing.Point(213, 157);
+            this.materialRadioButton1.Location = new System.Drawing.Point(213, 196);
             this.materialRadioButton1.Name = "materialRadioButton1";
             this.materialRadioButton1.Size = new System.Drawing.Size(126, 17);
             this.materialRadioButton1.TabIndex = 9;
             this.materialRadioButton1.Text = "materialRadioButton1";
             this.materialRadioButton1.UseVisualStyleBackColor = true;
             // 
-            // materialLabel1
-            // 
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(12, 81);
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(368, 64);
-            this.materialLabel1.TabIndex = 14;
-            this.materialLabel1.Text = resources.GetString("materialLabel1.Text");
-            // 
-            // materialRadioButton4
-            // 
-            this.materialRadioButton4.AutoSize = true;
-            this.materialRadioButton4.Depth = 0;
-            this.materialRadioButton4.Enabled = false;
-            this.materialRadioButton4.Location = new System.Drawing.Point(213, 230);
-            this.materialRadioButton4.Name = "materialRadioButton4";
-            this.materialRadioButton4.Size = new System.Drawing.Size(126, 17);
-            this.materialRadioButton4.TabIndex = 15;
-            this.materialRadioButton4.Text = "materialRadioButton4";
-            this.materialRadioButton4.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(392, 372);
+            this.ClientSize = new System.Drawing.Size(392, 361);
+            this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialRadioButton4);
             this.Controls.Add(this.materialLabel1);
             this.Controls.Add(this.materialFlatButton2);
@@ -273,6 +287,7 @@ namespace MaterialSkinExample
         private MaterialFlatButton materialFlatButton2;
         private MaterialLabel materialLabel1;
         private MaterialRadioButton materialRadioButton4;
+        private MaterialDivider materialDivider1;
     }
 }
 

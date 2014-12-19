@@ -44,6 +44,9 @@
     <Compile Include="Controls\MaterialCheckbox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialDivider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialFlatButton.cs">
       <SubType>Component</SubType>
     </Compile>
