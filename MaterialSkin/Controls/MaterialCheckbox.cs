@@ -29,17 +29,17 @@ namespace MaterialSkin.Controls
             {
                 if (Checked)
                 {
-                    g.FillPath(Enabled ? SkinManager.AccentColorBrush : new SolidBrush(SkinManager.CHECKBOX_OFF_DISABLED_LIGHT), checkmarkPath);
+                    g.FillPath(Enabled ? SkinManager.AccentColorBrush : SkinManager.GetCheckBoxOffDisabledBrush(), checkmarkPath);
                     g.DrawLines(new Pen(Parent.BackColor, 2), new[] { new Point(3, 8), new Point(6, 11), new Point(13, 4) });
                 }
                 else
                 {
-                    g.FillPath(new SolidBrush(Enabled ? SkinManager.CHECKBOX_OFF_LIGHT : SkinManager.CHECKBOX_OFF_DISABLED_LIGHT), checkmarkPath);
+                    g.FillPath(Enabled ? SkinManager.GetCheckboxOffBrush() : SkinManager.GetCheckBoxOffDisabledBrush(), checkmarkPath);
                     g.FillRectangle(new SolidBrush(Parent.BackColor), 2, 2, 12, 12);
                 }          
             }
 
-            g.DrawString(Text, SkinManager.FONT_BUTTON, new SolidBrush(SkinManager.MAIN_TEXT_BLACK), 20, 0);
+            g.DrawString(Text, SkinManager.FONT_BUTTON, SkinManager.GetMainTextBrush(), 20, 0);
         }
 
         protected override void OnCreateControl()

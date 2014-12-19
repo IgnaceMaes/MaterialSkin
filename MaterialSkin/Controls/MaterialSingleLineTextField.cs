@@ -25,7 +25,7 @@ namespace MaterialSkin.Controls
             {
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.FONT_BODY1,
-                ForeColor = SkinManager.MAIN_TEXT_BLACK,
+                ForeColor = SkinManager.GetMainTextColor(),
                 Location = new Point(0, 0),
                 Text = Text,
                 Width = Width,
@@ -47,7 +47,7 @@ namespace MaterialSkin.Controls
             if (baseTextBox.Text != Hint && baseTextBox.Text == "")
             {
                 baseTextBox.Text = Hint;
-                baseTextBox.ForeColor = SkinManager.DISABLED_OR_HINT_TEXT_BLACK;
+                baseTextBox.ForeColor = SkinManager.GetDisabledOrHintColor();
             }
         }
 
@@ -60,7 +60,7 @@ namespace MaterialSkin.Controls
 
             g.Clear(Parent.BackColor);
 
-            g.FillRectangle(baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.DIVIDERS_BLACK_BRUSH, baseTextBox.Location.X, baseTextBox.Bottom + 1, baseTextBox.Width, 1);
+            g.FillRectangle(baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, baseTextBox.Bottom + 1, baseTextBox.Width, 1);
         }
 
         protected override void OnResize(EventArgs e)
@@ -73,6 +73,14 @@ namespace MaterialSkin.Controls
             {
                 Height = baseTextBox.Height + 3;
             }
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+
+            baseTextBox.BackColor = Parent.BackColor;
+            baseTextBox.ForeColor = SkinManager.GetMainTextColor();
         }
     }
 }

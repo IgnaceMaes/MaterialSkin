@@ -15,12 +15,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
 
-        private readonly Brush textBrush;
-
-        public MaterialRaisedButton()
-        {
-            textBrush = new SolidBrush(SkinManager.MAIN_TEXT_WHITE);
-        }
+        public bool Primary { get; set; }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
@@ -37,7 +32,7 @@ namespace MaterialSkin.Controls
                 g.FillPath(SkinManager.PrimaryColorBrush, backgroundPath);
             }
 
-            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, textBrush, ClientRectangle, new StringFormat() {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center});
+            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, SkinManager.GetRaisedButtonBrush(), ClientRectangle, new StringFormat() {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center});
         }
     }
 }

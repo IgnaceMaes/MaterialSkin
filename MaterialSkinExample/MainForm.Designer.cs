@@ -127,7 +127,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.Hint = null;
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(12, 41);
             this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
-            this.materialSingleLineTextField2.Size = new System.Drawing.Size(393, 23);
+            this.materialSingleLineTextField2.Size = new System.Drawing.Size(393, 21);
             this.materialSingleLineTextField2.TabIndex = 3;
             // 
             // materialSingleLineTextField1
@@ -138,7 +138,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField1.Hint = null;
             this.materialSingleLineTextField1.Location = new System.Drawing.Point(12, 12);
             this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
-            this.materialSingleLineTextField1.Size = new System.Drawing.Size(393, 23);
+            this.materialSingleLineTextField1.Size = new System.Drawing.Size(393, 21);
             this.materialSingleLineTextField1.TabIndex = 2;
             // 
             // materialFlatButton1
@@ -158,6 +158,7 @@ namespace MaterialSkinExample
             this.materialButton1.Depth = 0;
             this.materialButton1.Location = new System.Drawing.Point(253, 354);
             this.materialButton1.Name = "materialButton1";
+            this.materialButton1.Primary = false;
             this.materialButton1.Size = new System.Drawing.Size(152, 36);
             this.materialButton1.TabIndex = 0;
             this.materialButton1.Text = "materialButton1";
@@ -178,7 +179,7 @@ namespace MaterialSkinExample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
             this.ClientSize = new System.Drawing.Size(417, 402);
             this.Controls.Add(this.materialRadioButton3);
             this.Controls.Add(this.materialRadioButton2);
@@ -193,6 +194,7 @@ namespace MaterialSkinExample
             this.Controls.Add(this.materialRadioButton1);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

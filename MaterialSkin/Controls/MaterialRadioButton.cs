@@ -27,16 +27,16 @@ namespace MaterialSkin.Controls
 
             if (Checked)
             {
-                g.FillEllipse(Enabled ? SkinManager.AccentColorBrush : new SolidBrush(SkinManager.CHECKBOX_OFF_DISABLED_LIGHT), 0, 0, 16, 16);
+                g.FillEllipse(Enabled ? SkinManager.AccentColorBrush : SkinManager.GetCheckBoxOffDisabledBrush(), 0, 0, 16, 16);
                 g.DrawEllipse(new Pen(Parent.BackColor, 2), 3, 3, 10, 10);
             }
             else
             {
-                g.FillEllipse(new SolidBrush(Enabled ? SkinManager.CHECKBOX_OFF_LIGHT : SkinManager.CHECKBOX_OFF_DISABLED_LIGHT), 0, 0, 16, 16);
+                g.FillEllipse(Enabled ? SkinManager.GetCheckboxOffBrush() : SkinManager.GetCheckBoxOffDisabledBrush(), 0, 0, 16, 16);
                 g.FillEllipse(new SolidBrush(Parent.BackColor), 2, 2, 12, 12);
             }
 
-            g.DrawString(Text, SkinManager.FONT_BUTTON, new SolidBrush(SkinManager.MAIN_TEXT_BLACK), 20, 0);
+            g.DrawString(Text, SkinManager.FONT_BUTTON, SkinManager.GetMainTextBrush(), 20, 0);
         }
 
         protected override void OnCreateControl()
