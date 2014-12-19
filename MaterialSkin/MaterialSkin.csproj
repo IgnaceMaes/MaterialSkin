@@ -47,6 +47,9 @@
     <Compile Include="Controls\MaterialFlatButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
