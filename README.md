@@ -27,4 +27,4 @@ materialSkinManager.AccentColor = Color.FromArgb(255, 64, 129);
 ---
 
 ##### Early release
-Please not this is a very early release, a lot will be changed.
+Please note this is a very early release, a lot will be changed.
