@@ -13,7 +13,7 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            if (DesignMode) { pevent.Graphics.Clear(Color.Black); return; }
+            //if (DesignMode) { pevent.Graphics.Clear(Color.Black); return; }
 
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
