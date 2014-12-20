@@ -104,11 +104,14 @@ namespace MaterialSkin
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
 
         //Application background
-        private static readonly Color BACKGROUND_LIGHT = Color.FromArgb(255, 238, 238, 238);
+        private static readonly Color BACKGROUND_LIGHT = Color.FromArgb(255, 255, 255, 255);
         private static Brush BACKGROUND_LIGHT_BRUSH = new SolidBrush(BACKGROUND_LIGHT);
 
         private static readonly Color BACKGROUND_DARK = Color.FromArgb(255, 51, 51, 51);
         private static Brush BACKGROUND_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
+
+        //Application action bar
+        public readonly Brush ACTION_BAR_TEXT = new SolidBrush(Color.White);
 
         public Color GetMainTextColor()
         {
@@ -176,6 +179,7 @@ namespace MaterialSkin
         }
 
         //Roboto font
+        public Font FONT_TITLE;
         public Font FONT_BODY1;
         public Font FONT_BODY2;
         public Font FONT_BUTTON;
@@ -185,6 +189,7 @@ namespace MaterialSkin
         
         private MaterialSkinManager()
         {
+            FONT_TITLE = new Font(LoadFont(Properties.Resources.Roboto_Medium), 12f);
             FONT_BUTTON = new Font(LoadFont(Properties.Resources.Roboto_Medium), 10f);
             FONT_BODY1 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
             FONT_BODY2 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);

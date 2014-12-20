@@ -16,8 +16,8 @@ namespace MaterialSkin.Controls
         public MaterialDivider()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            BackColor = SkinManager.GetDividersColor();
             Height = 1;
+            BackColor = SkinManager.GetDividersColor();
         }
     }
 }

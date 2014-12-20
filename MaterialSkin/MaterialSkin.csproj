@@ -50,6 +50,9 @@
     <Compile Include="Controls\MaterialFlatButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialLabel.cs">
       <SubType>Component</SubType>
     </Compile>
