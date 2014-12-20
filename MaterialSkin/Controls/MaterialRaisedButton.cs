@@ -22,9 +22,9 @@ namespace MaterialSkin.Controls
             animationTimer.Tick += animationTimer_Tick;
         }
 
-        protected override void OnMouseDown(MouseEventArgs mevent)
+        protected override void OnMouseUp(MouseEventArgs mevent)
         {
-            base.OnMouseDown(mevent);
+            base.OnMouseUp(mevent);
             animationValue = 0;
             animationSource = mevent.Location;
             animationTimer.Start();

@@ -22,9 +22,9 @@ namespace MaterialSkin.Controls
             animationTimer.Tick += animationTimer_Tick;
         }
 
-        protected override void OnMouseDown(MouseEventArgs mevent)
+        protected override void OnMouseUp(MouseEventArgs mevent)
         {
-            base.OnMouseDown(mevent);
+            base.OnMouseUp(mevent);
             animationValue = 0;
             animationSource = mevent.Location;
             animationTimer.Start();
@@ -54,7 +54,7 @@ namespace MaterialSkin.Controls
             g.Clear(Parent.BackColor);
             if (MouseState != MouseState.OUT)
             {
-                g.FillRectangle(MouseState == MouseState.HOVER ? SkinManager.GetFlatButtonHoverBackgroundBrush() : SkinManager.GetFlatButtonPressedBackgroundBrush(), ClientRectangle);
+                g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), ClientRectangle);
             }
 
             if (animationValue > 0)
