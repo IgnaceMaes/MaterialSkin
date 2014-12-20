@@ -16,7 +16,7 @@ Theming WinForms (C# or VB.Net) to Google's Material Design Principles.
 
 Light Theme | Dark Theme
 --- | ---
-![alt tag](http://i.imgur.com/8ZuhAvR.png) | ![alt tag](http://i.imgur.com/i3H5Rw6.png)
+![alt tag](http://puu.sh/dCnJ0/1a09990e52.png) | ![alt tag](http://puu.sh/dCnNa/96861a2fdf.png)
 
 ---
 
