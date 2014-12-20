@@ -2,7 +2,7 @@
 
 namespace MaterialSkin.Controls
 {
-    public class MaterialDivider : Control, IMaterialControl
+    public sealed class MaterialDivider : Control, IMaterialControl
     {
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
