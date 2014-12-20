@@ -226,7 +226,6 @@ namespace MaterialSkin.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (DesignMode) return;
 
             minButtonBounds = new Rectangle(Width - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             maxButtonBounds = new Rectangle(Width - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
@@ -237,8 +236,6 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (DesignMode) { e.Graphics.Clear(Color.FromArgb(238, 238, 238)); return; }
-
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
