@@ -55,48 +55,48 @@ namespace MaterialSkin
         public SolidBrush AccentColorBrush { get; set; }
 
         //Constant color values
-        private static Color MAIN_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
-        private static Brush MAIN_TEXT_BLACK_BRUSH = new SolidBrush(MAIN_TEXT_BLACK);
+        private static readonly Color MAIN_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
+        private static readonly Brush MAIN_TEXT_BLACK_BRUSH = new SolidBrush(MAIN_TEXT_BLACK);
         public static Color SECONDARY_TEXT_BLACK = Color.FromArgb(138, 0, 0, 0);
         public static Brush SECONDARY_TEXT_BLACK_BRUSH = new SolidBrush(SECONDARY_TEXT_BLACK);
         public static Color DISABLED_OR_HINT_TEXT_BLACK = Color.FromArgb(66, 0, 0, 0);
         public static Brush DISABLED_OR_HINT_TEXT_BLACK_BRUSH = new SolidBrush(DISABLED_OR_HINT_TEXT_BLACK);
-        private static Color DIVIDERS_BLACK = Color.FromArgb(31, 0, 0, 0);
-        private static Brush DIVIDERS_BLACK_BRUSH = new SolidBrush(DIVIDERS_BLACK);
+        private static readonly Color DIVIDERS_BLACK = Color.FromArgb(31, 0, 0, 0);
+        private static readonly Brush DIVIDERS_BLACK_BRUSH = new SolidBrush(DIVIDERS_BLACK);
 
-        private static Color MAIN_TEXT_WHITE = Color.FromArgb(255, 255, 255, 255);
-        private static Brush MAIN_TEXT_WHITE_BRUSH = new SolidBrush(MAIN_TEXT_WHITE);
+        private static readonly Color MAIN_TEXT_WHITE = Color.FromArgb(255, 255, 255, 255);
+        private static readonly Brush MAIN_TEXT_WHITE_BRUSH = new SolidBrush(MAIN_TEXT_WHITE);
         public static Color SECONDARY_TEXT_WHITE = Color.FromArgb(179, 255, 255, 255);
         public static Brush SECONDARY_TEXT_WHITE_BRUSH = new SolidBrush(SECONDARY_TEXT_WHITE);
-        private static Color DISABLED_OR_HINT_TEXT_WHITE = Color.FromArgb(77, 255, 255, 255);
+        private static readonly Color DISABLED_OR_HINT_TEXT_WHITE = Color.FromArgb(77, 255, 255, 255);
         private static Brush DISABLED_OR_HINT_TEXT_WHITE_BRUSH = new SolidBrush(DISABLED_OR_HINT_TEXT_WHITE);
-        private static Color DIVIDERS_WHITE = Color.FromArgb(31, 255, 255, 255);
-        private static Brush DIVIDERS_WHITE_BRUSH = new SolidBrush(DIVIDERS_WHITE);
+        private static readonly Color DIVIDERS_WHITE = Color.FromArgb(31, 255, 255, 255);
+        private static readonly Brush DIVIDERS_WHITE_BRUSH = new SolidBrush(DIVIDERS_WHITE);
 
         // Checkbox colors
-        private static Color CHECKBOX_OFF_LIGHT = Color.FromArgb(138, 0, 0, 0);
-        private static Brush CHECKBOX_OFF_LIGHT_BRUSH = new SolidBrush(CHECKBOX_OFF_LIGHT);
-        private static Color CHECKBOX_OFF_DISABLED_LIGHT = Color.FromArgb(66, 0, 0, 0);
-        private static Brush CHECKBOX_OFF_DISABLED_LIGHT_BRUSH = new SolidBrush(CHECKBOX_OFF_DISABLED_LIGHT);
+        private static readonly Color CHECKBOX_OFF_LIGHT = Color.FromArgb(138, 0, 0, 0);
+        private static readonly Brush CHECKBOX_OFF_LIGHT_BRUSH = new SolidBrush(CHECKBOX_OFF_LIGHT);
+        private static readonly Color CHECKBOX_OFF_DISABLED_LIGHT = Color.FromArgb(66, 0, 0, 0);
+        private static readonly Brush CHECKBOX_OFF_DISABLED_LIGHT_BRUSH = new SolidBrush(CHECKBOX_OFF_DISABLED_LIGHT);
 
-        private static Color CHECKBOX_OFF_DARK = Color.FromArgb(179, 255, 255, 255);
-        private static Brush CHECKBOX_OFF_DARK_BRUSH = new SolidBrush(CHECKBOX_OFF_DARK);
-        private static Color CHECKBOX_OFF_DISABLED_DARK = Color.FromArgb(77, 255, 255, 255);
-        private static Brush CHECKBOX_OFF_DISABLED_DARK_BRUSH = new SolidBrush(CHECKBOX_OFF_DISABLED_DARK);
+        private static readonly Color CHECKBOX_OFF_DARK = Color.FromArgb(179, 255, 255, 255);
+        private static readonly Brush CHECKBOX_OFF_DARK_BRUSH = new SolidBrush(CHECKBOX_OFF_DARK);
+        private static readonly Color CHECKBOX_OFF_DISABLED_DARK = Color.FromArgb(77, 255, 255, 255);
+        private static readonly Brush CHECKBOX_OFF_DISABLED_DARK_BRUSH = new SolidBrush(CHECKBOX_OFF_DISABLED_DARK);
 
         //Raised button
-        private static Color RAISED_BUTTON_BACKGROUND = Color.FromArgb(255, 255, 255, 255);
-        private static Brush RAISED_BUTTON_BACKGROUND_BRUSH = new SolidBrush(RAISED_BUTTON_BACKGROUND);
-        private static Color RAISED_BUTTON_TEXT_LIGHT = MAIN_TEXT_WHITE;
-        private static Brush RAISED_BUTTON_TEXT_LIGHT_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_LIGHT);
-        private static Color RAISED_BUTTON_TEXT_DARK = MAIN_TEXT_BLACK;
-        private static Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
+        private static readonly Color RAISED_BUTTON_BACKGROUND = Color.FromArgb(255, 255, 255, 255);
+        private static readonly Brush RAISED_BUTTON_BACKGROUND_BRUSH = new SolidBrush(RAISED_BUTTON_BACKGROUND);
+        private static readonly Color RAISED_BUTTON_TEXT_LIGHT = MAIN_TEXT_WHITE;
+        private static readonly Brush RAISED_BUTTON_TEXT_LIGHT_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_LIGHT);
+        private static readonly Color RAISED_BUTTON_TEXT_DARK = MAIN_TEXT_BLACK;
+        private static readonly Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
 
         //Application background
-        private static Color BACKGROUND_LIGHT = Color.FromArgb(255, 238, 238, 238);
+        private static readonly Color BACKGROUND_LIGHT = Color.FromArgb(255, 238, 238, 238);
         private static Brush BACKGROUND_LIGHT_BRUSH = new SolidBrush(BACKGROUND_LIGHT);
 
-        private static Color BACKGROUND_DARK = Color.FromArgb(255, 51, 51, 51);
+        private static readonly Color BACKGROUND_DARK = Color.FromArgb(255, 51, 51, 51);
         private static Brush BACKGROUND_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
 
         public Color GetMainTextColor()
@@ -164,24 +164,18 @@ namespace MaterialSkin
             FONT_BODY2 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
         }
 
+        private readonly PrivateFontCollection privateFontCollection = new PrivateFontCollection();
         private FontFamily LoadFont(byte[] fontResource)
         {
             int dataLength = fontResource.Length;
             IntPtr fontPtr = Marshal.AllocCoTaskMem(dataLength);
-
             Marshal.Copy(fontResource, 0, fontPtr, dataLength);
 
             uint cFonts = 0;
-
             AddFontMemResourceEx(fontPtr, (uint) fontResource.Length, IntPtr.Zero, ref cFonts);
-
-            PrivateFontCollection privateFontCollection = new PrivateFontCollection();
             privateFontCollection.AddMemoryFont(fontPtr, dataLength);
-
-            Marshal.FreeCoTaskMem(fontPtr);
-
-            FontFamily fontFamily = privateFontCollection.Families[0];
-            return fontFamily;
+            
+           return privateFontCollection.Families.Last();
         }
 
         public static MaterialSkinManager Instance
