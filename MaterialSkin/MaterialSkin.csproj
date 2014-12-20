@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\MaterialCheckbox.cs">
+    <Compile Include="Controls\MaterialCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialDivider.cs">
@@ -57,9 +57,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TextField.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DrawHelper.cs" />

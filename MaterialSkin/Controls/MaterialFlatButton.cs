@@ -14,6 +14,7 @@ namespace MaterialSkin.Controls
     {
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MouseState MouseState { get; set; }
 
         public bool Primary { get; set; }
 
@@ -31,8 +32,40 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(Parent.BackColor);
+            if (MouseState != MouseState.OUT)
+            {
+                g.FillRectangle(MouseState == MouseState.HOVER ? SkinManager.GetFlatButtonHoverBackgroundBrush() : SkinManager.GetFlatButtonPressedBackgroundBrush(), ClientRectangle);
+            }
 
-            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetMainTextBrush(), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, Enabled ? (Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetMainTextBrush()) : SkinManager.GetDisabledOrHintBrush(), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            if (DesignMode) return;
+
+            MouseState = MouseState.OUT;
+            MouseEnter += (sender, args) =>
+            {
+                MouseState = MouseState.HOVER;
+                Invalidate();
+            };
+            MouseLeave += (sender, args) => 
+            { 
+                MouseState = MouseState.OUT;
+                Invalidate();
+            };
+            MouseDown += (sender, args) =>
+            {
+                MouseState = MouseState.DOWN;
+                Invalidate();
+            };
+            MouseUp += (sender, args) =>
+            {
+                MouseState = MouseState.HOVER;
+                Invalidate();
+            };
         }
     }
 }

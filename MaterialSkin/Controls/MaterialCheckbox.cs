@@ -10,10 +10,11 @@ using System.Windows.Forms;
 
 namespace MaterialSkin.Controls
 {
-    public class MaterialCheckbox : CheckBox, IMaterialControl
+    public class MaterialCheckBox : CheckBox, IMaterialControl
     {
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MouseState MouseState { get; set; }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {

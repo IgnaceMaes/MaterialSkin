@@ -14,14 +14,15 @@ namespace MaterialSkin.Controls
         //Properties for managing the material design properties
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MouseState MouseState { get; set; }
 
         public string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value;  } }
         public string Hint { get; set; }
 
-        private readonly TextField baseTextBox = new TextField();
+        private readonly TextBox baseTextBox = new TextBox();
         public MaterialSingleLineTextField()
         {
-            baseTextBox = new TextField
+            baseTextBox = new TextBox
             {
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.FONT_BODY1,

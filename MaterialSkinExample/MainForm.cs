@@ -19,7 +19,7 @@ namespace MaterialSkinExample
 
             // Initialize MaterialSkinManager
             var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.PrimaryColor = Color.FromArgb(63, 81, 181);
             materialSkinManager.PrimaryColorDark = Color.FromArgb(48, 63, 159);
             materialSkinManager.AccentColor = Color.FromArgb(255, 64, 129);
