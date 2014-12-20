@@ -39,7 +39,7 @@ namespace MaterialSkin.Controls
                 }          
             }
 
-            g.DrawString(Text, SkinManager.FONT_BUTTON, SkinManager.GetMainTextBrush(), 20, 0);
+            g.DrawString(Text, SkinManager.FONT_BUTTON, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), 20, 0);
         }
 
         protected override void OnCreateControl()

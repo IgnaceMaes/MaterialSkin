@@ -59,8 +59,8 @@ namespace MaterialSkin
         private static readonly Brush MAIN_TEXT_BLACK_BRUSH = new SolidBrush(MAIN_TEXT_BLACK);
         public static Color SECONDARY_TEXT_BLACK = Color.FromArgb(138, 0, 0, 0);
         public static Brush SECONDARY_TEXT_BLACK_BRUSH = new SolidBrush(SECONDARY_TEXT_BLACK);
-        public static Color DISABLED_OR_HINT_TEXT_BLACK = Color.FromArgb(66, 0, 0, 0);
-        public static Brush DISABLED_OR_HINT_TEXT_BLACK_BRUSH = new SolidBrush(DISABLED_OR_HINT_TEXT_BLACK);
+        private static readonly Color DISABLED_OR_HINT_TEXT_BLACK = Color.FromArgb(66, 0, 0, 0);
+        private static readonly Brush DISABLED_OR_HINT_TEXT_BLACK_BRUSH = new SolidBrush(DISABLED_OR_HINT_TEXT_BLACK);
         private static readonly Color DIVIDERS_BLACK = Color.FromArgb(31, 0, 0, 0);
         private static readonly Brush DIVIDERS_BLACK_BRUSH = new SolidBrush(DIVIDERS_BLACK);
 
@@ -69,7 +69,7 @@ namespace MaterialSkin
         public static Color SECONDARY_TEXT_WHITE = Color.FromArgb(179, 255, 255, 255);
         public static Brush SECONDARY_TEXT_WHITE_BRUSH = new SolidBrush(SECONDARY_TEXT_WHITE);
         private static readonly Color DISABLED_OR_HINT_TEXT_WHITE = Color.FromArgb(77, 255, 255, 255);
-        private static Brush DISABLED_OR_HINT_TEXT_WHITE_BRUSH = new SolidBrush(DISABLED_OR_HINT_TEXT_WHITE);
+        private static readonly Brush DISABLED_OR_HINT_TEXT_WHITE_BRUSH = new SolidBrush(DISABLED_OR_HINT_TEXT_WHITE);
         private static readonly Color DIVIDERS_WHITE = Color.FromArgb(31, 255, 255, 255);
         private static readonly Brush DIVIDERS_WHITE_BRUSH = new SolidBrush(DIVIDERS_WHITE);
 
@@ -112,6 +112,11 @@ namespace MaterialSkin
         public Color GetDisabledOrHintColor()
         {
             return (Theme == Themes.LIGHT ? DISABLED_OR_HINT_TEXT_BLACK : DISABLED_OR_HINT_TEXT_WHITE);
+        }
+
+        public Brush GetDisabledOrHintBrush()
+        {
+            return (Theme == Themes.LIGHT ? DISABLED_OR_HINT_TEXT_BLACK_BRUSH : DISABLED_OR_HINT_TEXT_WHITE_BRUSH);
         }
 
         public Color GetDividersColor()
