@@ -209,6 +209,10 @@ namespace MaterialSkin
             FONT_BUTTON = new Font(LoadFont(Properties.Resources.Roboto_Medium), 10f);
             FONT_BODY1 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
             FONT_BODY2 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
+            Theme = Themes.LIGHT;
+            PrimaryColor = Color.FromArgb(63, 81, 181);
+            PrimaryColorDark = Color.FromArgb(48, 63, 159);
+            AccentColor = Color.FromArgb(255, 64, 129);
         }
 
         public static MaterialSkinManager Instance
