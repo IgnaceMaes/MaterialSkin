@@ -20,6 +20,8 @@ namespace MaterialSkin.Controls
             ForeColor = SkinManager.GetMainTextColor();
             if (!DesignMode)
                 Font = SkinManager.FONT_BODY1;
+
+            BackColorChanged += (sender, args) => ForeColor = SkinManager.GetMainTextColor();
         }
     }
 }

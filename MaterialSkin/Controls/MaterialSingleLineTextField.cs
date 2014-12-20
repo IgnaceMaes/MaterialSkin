@@ -41,6 +41,11 @@ namespace MaterialSkin.Controls
             baseTextBox.GotFocus += (sender, args) => Invalidate();
             baseTextBox.LostFocus += (sender, args) => Invalidate();
             baseTextBox.TextChanged += BaseTextBoxOnTextChanged;
+            BackColorChanged += (sender, args) =>
+            {
+                baseTextBox.BackColor = BackColor;
+                baseTextBox.ForeColor = SkinManager.GetMainTextColor();
+            };
         }
 
         private void BaseTextBoxOnTextChanged(object sender, EventArgs eventArgs)

@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using MaterialSkin.Controls;
 
 
 namespace MaterialSkin
@@ -18,8 +19,23 @@ namespace MaterialSkin
         //Singleton instance
         private static MaterialSkinManager instance;
 
+        //Forms to control
+        private readonly List<MaterialForm> formsToManage = new List<MaterialForm>(); 
+
         //Theme
-        public Themes Theme { get; set; }
+        private Themes theme;
+        public Themes Theme
+        {
+            get { return theme; }
+            set
+            {
+                theme = value;
+                foreach (var materialForm in formsToManage)
+                {
+                    materialForm.BackColor = GetApplicationBackgroundColor();
+                }
+            }
+        }
 
         public enum Themes : byte
         {
@@ -195,7 +211,23 @@ namespace MaterialSkin
             FONT_BODY2 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
         }
 
+        public static MaterialSkinManager Instance
+        {
+            get { return instance ?? (instance = new MaterialSkinManager()); }
+        }
+
+        public void AddFormToManage(MaterialForm materialForm)
+        {
+            formsToManage.Add(materialForm);
+        }
+
+        public void RemoveFormToManage(MaterialForm materialForm)
+        {
+            formsToManage.Remove(materialForm);
+        }
+
         private readonly PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+
         private FontFamily LoadFont(byte[] fontResource)
         {
             int dataLength = fontResource.Length;
@@ -207,11 +239,6 @@ namespace MaterialSkin
             privateFontCollection.AddMemoryFont(fontPtr, dataLength);
             
            return privateFontCollection.Families.Last();
-        }
-
-        public static MaterialSkinManager Instance
-        {
-            get { return instance ?? (instance = new MaterialSkinManager()); }
         }
     }
 }
