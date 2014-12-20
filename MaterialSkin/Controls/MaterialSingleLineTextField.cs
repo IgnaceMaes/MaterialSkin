@@ -12,7 +12,7 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
 
-        public string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value;  } }
+        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value;  } }
         public string Hint { get; set; }
 
         private readonly TextBox baseTextBox = new TextBox();
@@ -55,8 +55,6 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            //if (DesignMode){pevent.Graphics.Clear(Color.Black);return;}
-
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -71,10 +69,8 @@ namespace MaterialSkin.Controls
 
             baseTextBox.Location = new Point(0, 0);
             baseTextBox.Width = Width;
-            if (Height != baseTextBox.Height + 3)
-            {
-                Height = baseTextBox.Height + 3;
-            }
+            
+            Height = baseTextBox.Height + 3;
         }
 
         protected override void OnCreateControl()

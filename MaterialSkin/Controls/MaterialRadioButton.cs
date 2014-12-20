@@ -13,8 +13,6 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            //if (DesignMode) { pevent.Graphics.Clear(Color.Black); return; }
-
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
@@ -38,7 +36,7 @@ namespace MaterialSkin.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            if (!DesignMode) Font = SkinManager.FONT_BUTTON;
+            Font = SkinManager.FONT_BUTTON;
         }
     }
 }
