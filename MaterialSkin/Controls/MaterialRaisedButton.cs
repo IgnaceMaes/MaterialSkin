@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using MaterialSkin.Animations;
 
 namespace MaterialSkin.Controls
 {
@@ -12,37 +13,27 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
 
-        private readonly Timer animationTimer = new Timer { Interval = 5, Enabled = false };
-        private double animationValue;
+        private readonly AnimationManager animationManager;
         private Point animationSource;
 
         public MaterialRaisedButton()
         {
             Primary = true;
-            animationTimer.Tick += animationTimer_Tick;
+            
+            animationManager = new AnimationManager()
+            {
+                Increment = 0.03,
+                AnimationType = AnimationType.Linear
+            };
+            animationManager.OnAnimationProgress += sender => Invalidate();
         }
 
         protected override void OnMouseUp(MouseEventArgs mevent)
         {
             base.OnMouseUp(mevent);
-            animationValue = 0;
-            animationSource = mevent.Location;
-            animationTimer.Start();
-        }
 
-        void animationTimer_Tick(object sender, System.EventArgs e)
-        {
-            if (animationValue < 1.00)
-            {
-                animationValue += 0.03;
-                Invalidate();
-            }
-            else
-            {
-                animationValue = 0;
-                animationTimer.Stop();
-                Invalidate();
-            }
+            animationSource = mevent.Location;
+            animationManager.StartNewAnimation(AnimationDirection.In);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -62,10 +53,11 @@ namespace MaterialSkin.Controls
                 g.FillPath(Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
             }
 
-            if (animationValue > 0)
+            if (animationManager.IsAnimating())
             {
+                var animationValue = animationManager.GetProgress();
                 var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.White));
-                var rippleSize = (int)(animationValue * Width * 2);
+                var rippleSize = (int) (animationValue * Width * 2);
                 g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
             }
             

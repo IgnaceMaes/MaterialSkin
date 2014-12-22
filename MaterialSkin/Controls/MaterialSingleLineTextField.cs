@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using MaterialSkin.Animations;
 
 namespace MaterialSkin.Controls
 {
@@ -15,14 +16,19 @@ namespace MaterialSkin.Controls
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value;  } }
         public string Hint { get; set; }
 
-        private readonly Timer animationTimer = new Timer { Interval = 5, Enabled = false };
-        private double animationValue;
-        private bool animationFadeIn;
+        private readonly AnimationManager animationManager;
 
         private readonly TextBox baseTextBox = new TextBox();
         public MaterialSingleLineTextField()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
+
+            animationManager = new AnimationManager()
+            {
+                Increment = 0.06,
+                AnimationType = AnimationType.EaseInOut
+            };
+            animationManager.OnAnimationProgress += sender => Invalidate();
 
             baseTextBox = new TextBox
             {
@@ -40,30 +46,14 @@ namespace MaterialSkin.Controls
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.GotFocus += BaseTextBoxOnGotFocus;
-            baseTextBox.LostFocus += BaseTextBoxOnLostFocus;
+            baseTextBox.GotFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.In);
+            baseTextBox.LostFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.Out);
             baseTextBox.TextChanged += BaseTextBoxOnTextChanged;
             BackColorChanged += (sender, args) =>
             {
                 baseTextBox.BackColor = BackColor;
                 baseTextBox.ForeColor = SkinManager.GetMainTextColor();
             };
-
-            animationTimer.Tick += animationTimer_Tick;
-        }
-
-        private void BaseTextBoxOnLostFocus(object sender, EventArgs eventArgs)
-        {
-            animationValue = 1.00;
-            animationFadeIn = false;
-            animationTimer.Start();
-        }
-
-        private void BaseTextBoxOnGotFocus(object sender, EventArgs eventArgs)
-        {
-            animationValue = 0;
-            animationFadeIn = true;
-            animationTimer.Start();
         }
 
         private void BaseTextBoxOnTextChanged(object sender, EventArgs eventArgs)
@@ -75,26 +65,6 @@ namespace MaterialSkin.Controls
             }
         }
 
-        void animationTimer_Tick(object sender, EventArgs e)
-        {
-            if (animationValue < 1.00 && animationFadeIn)
-            {
-                animationValue += 0.06;
-                Invalidate();
-            }
-            else if (animationValue > 0.00 && !animationFadeIn)
-            {
-                animationValue -= 0.10;
-                Invalidate();
-            }
-            else
-            {
-                animationValue = 0;
-                animationTimer.Stop();
-                Invalidate();
-            }
-        }
-
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -102,7 +72,7 @@ namespace MaterialSkin.Controls
 
             int lineY = baseTextBox.Bottom + 3;
 
-            if (animationValue < 0.03)
+            if (!animationManager.IsAnimating())
             {
                 //No animation
                 g.FillRectangle(baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
@@ -110,7 +80,7 @@ namespace MaterialSkin.Controls
             else
             {
                 //Animate
-                int animationWidth = (int) (baseTextBox.Width * animationValue);
+                int animationWidth = (int) (baseTextBox.Width * animationManager.GetProgress());
                 int halfAnimationWidth = animationWidth / 2;
                 int animationStart = baseTextBox.Location.X + baseTextBox.Width / 2;
 
