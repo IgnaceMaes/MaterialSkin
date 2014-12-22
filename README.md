@@ -3,11 +3,7 @@ WinForms MaterialSkin
 
 Theming WinForms (C# or VB.Net) to Google's Material Design Principles.
 
-Light | Dark
---- | ---
-![alt tag](http://puu.sh/dCnJ0/1a09990e52.png) | ![alt tag](http://puu.sh/dCnNa/96861a2fdf.png)
-
----
+![alt tag](http://i.imgur.com/f0QLfpa.gif)
 
 #### Current state of the MaterialSkin components
  | Supported | Dark & light version | Disabled mode | Animated
