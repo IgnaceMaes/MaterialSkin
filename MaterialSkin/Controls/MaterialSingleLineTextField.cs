@@ -17,6 +17,7 @@ namespace MaterialSkin.Controls
 
         private readonly Timer animationTimer = new Timer { Interval = 5, Enabled = false };
         private double animationValue;
+        private bool animationFadeIn;
 
         private readonly TextBox baseTextBox = new TextBox();
         public MaterialSingleLineTextField()
@@ -31,7 +32,7 @@ namespace MaterialSkin.Controls
                 Location = new Point(0, 0),
                 Text = Text,
                 Width = Width,
-                Height = Height - 3
+                Height = Height - 5
             };
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
@@ -40,7 +41,7 @@ namespace MaterialSkin.Controls
             }
 
             baseTextBox.GotFocus += BaseTextBoxOnGotFocus;
-            baseTextBox.LostFocus += (sender, args) => Invalidate();
+            baseTextBox.LostFocus += BaseTextBoxOnLostFocus;
             baseTextBox.TextChanged += BaseTextBoxOnTextChanged;
             BackColorChanged += (sender, args) =>
             {
@@ -51,9 +52,17 @@ namespace MaterialSkin.Controls
             animationTimer.Tick += animationTimer_Tick;
         }
 
+        private void BaseTextBoxOnLostFocus(object sender, EventArgs eventArgs)
+        {
+            animationValue = 1.00;
+            animationFadeIn = false;
+            animationTimer.Start();
+        }
+
         private void BaseTextBoxOnGotFocus(object sender, EventArgs eventArgs)
         {
             animationValue = 0;
+            animationFadeIn = true;
             animationTimer.Start();
         }
 
@@ -68,9 +77,14 @@ namespace MaterialSkin.Controls
 
         void animationTimer_Tick(object sender, EventArgs e)
         {
-            if (animationValue < 1.00)
+            if (animationValue < 1.00 && animationFadeIn)
             {
                 animationValue += 0.06;
+                Invalidate();
+            }
+            else if (animationValue > 0.00 && !animationFadeIn)
+            {
+                animationValue -= 0.10;
                 Invalidate();
             }
             else
@@ -86,7 +100,7 @@ namespace MaterialSkin.Controls
             var g = pevent.Graphics;
             g.Clear(Parent.BackColor);
 
-            int lineY = baseTextBox.Bottom + 1;
+            int lineY = baseTextBox.Bottom + 3;
 
             if (animationValue < 0.03)
             {
@@ -115,7 +129,7 @@ namespace MaterialSkin.Controls
             baseTextBox.Location = new Point(0, 0);
             baseTextBox.Width = Width;
             
-            Height = baseTextBox.Height + 3;
+            Height = baseTextBox.Height + 5;
         }
 
         protected override void OnCreateControl()

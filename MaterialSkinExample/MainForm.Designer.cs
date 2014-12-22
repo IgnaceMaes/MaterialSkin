@@ -70,7 +70,7 @@ namespace MaterialSkinExample
             this.materialRadioButton4.Depth = 0;
             this.materialRadioButton4.Enabled = false;
             this.materialRadioButton4.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton4.Location = new System.Drawing.Point(171, 337);
+            this.materialRadioButton4.Location = new System.Drawing.Point(171, 343);
             this.materialRadioButton4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton4.Name = "materialRadioButton4";
             this.materialRadioButton4.Size = new System.Drawing.Size(164, 22);
@@ -85,7 +85,7 @@ namespace MaterialSkinExample
             this.materialLabel1.Depth = 0;
             this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(12, 184);
+            this.materialLabel1.Location = new System.Drawing.Point(12, 190);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(318, 64);
@@ -110,7 +110,7 @@ namespace MaterialSkinExample
             this.materialRadioButton3.AutoSize = true;
             this.materialRadioButton3.Depth = 0;
             this.materialRadioButton3.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton3.Location = new System.Drawing.Point(171, 311);
+            this.materialRadioButton3.Location = new System.Drawing.Point(171, 317);
             this.materialRadioButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton3.Name = "materialRadioButton3";
             this.materialRadioButton3.Size = new System.Drawing.Size(164, 22);
@@ -123,7 +123,7 @@ namespace MaterialSkinExample
             this.materialRadioButton2.AutoSize = true;
             this.materialRadioButton2.Depth = 0;
             this.materialRadioButton2.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton2.Location = new System.Drawing.Point(171, 285);
+            this.materialRadioButton2.Location = new System.Drawing.Point(171, 291);
             this.materialRadioButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton2.Name = "materialRadioButton2";
             this.materialRadioButton2.Size = new System.Drawing.Size(164, 22);
@@ -137,7 +137,7 @@ namespace MaterialSkinExample
             this.materialCheckbox4.Depth = 0;
             this.materialCheckbox4.Enabled = false;
             this.materialCheckbox4.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckbox4.Location = new System.Drawing.Point(12, 337);
+            this.materialCheckbox4.Location = new System.Drawing.Point(12, 343);
             this.materialCheckbox4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox4.Name = "materialCheckbox4";
             this.materialCheckbox4.Size = new System.Drawing.Size(147, 22);
@@ -153,7 +153,7 @@ namespace MaterialSkinExample
             this.materialCheckbox3.Depth = 0;
             this.materialCheckbox3.Enabled = false;
             this.materialCheckbox3.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckbox3.Location = new System.Drawing.Point(12, 311);
+            this.materialCheckbox3.Location = new System.Drawing.Point(12, 317);
             this.materialCheckbox3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox3.Name = "materialCheckbox3";
             this.materialCheckbox3.Size = new System.Drawing.Size(147, 22);
@@ -166,7 +166,7 @@ namespace MaterialSkinExample
             this.materialCheckbox2.AutoSize = true;
             this.materialCheckbox2.Depth = 0;
             this.materialCheckbox2.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckbox2.Location = new System.Drawing.Point(12, 285);
+            this.materialCheckbox2.Location = new System.Drawing.Point(12, 291);
             this.materialCheckbox2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox2.Name = "materialCheckbox2";
             this.materialCheckbox2.Size = new System.Drawing.Size(147, 22);
@@ -181,7 +181,7 @@ namespace MaterialSkinExample
             this.materialCheckbox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialCheckbox1.Depth = 0;
             this.materialCheckbox1.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckbox1.Location = new System.Drawing.Point(12, 260);
+            this.materialCheckbox1.Location = new System.Drawing.Point(12, 266);
             this.materialCheckbox1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox1.Name = "materialCheckbox1";
             this.materialCheckbox1.Size = new System.Drawing.Size(147, 22);
@@ -198,7 +198,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(12, 105);
             this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
-            this.materialSingleLineTextField2.Size = new System.Drawing.Size(318, 21);
+            this.materialSingleLineTextField2.Size = new System.Drawing.Size(318, 23);
             this.materialSingleLineTextField2.TabIndex = 3;
             // 
             // materialSingleLineTextField1
@@ -210,7 +210,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField1.Location = new System.Drawing.Point(12, 76);
             this.materialSingleLineTextField1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
-            this.materialSingleLineTextField1.Size = new System.Drawing.Size(318, 21);
+            this.materialSingleLineTextField1.Size = new System.Drawing.Size(318, 23);
             this.materialSingleLineTextField1.TabIndex = 2;
             // 
             // materialFlatButton1
@@ -230,7 +230,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.materialButton1.Depth = 0;
-            this.materialButton1.Location = new System.Drawing.Point(178, 135);
+            this.materialButton1.Location = new System.Drawing.Point(178, 141);
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.Primary = true;
@@ -246,7 +246,7 @@ namespace MaterialSkinExample
             this.materialRadioButton1.Checked = true;
             this.materialRadioButton1.Depth = 0;
             this.materialRadioButton1.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton1.Location = new System.Drawing.Point(171, 260);
+            this.materialRadioButton1.Location = new System.Drawing.Point(171, 266);
             this.materialRadioButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton1.Name = "materialRadioButton1";
             this.materialRadioButton1.Size = new System.Drawing.Size(164, 22);
@@ -258,7 +258,7 @@ namespace MaterialSkinExample
             // materialRaisedButton1
             // 
             this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(16, 135);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(16, 141);
             this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
