@@ -23,7 +23,8 @@ namespace MaterialSkin.Controls
             animationManager = new AnimationManager()
             {
                 Increment = 0.03,
-                AnimationType = AnimationType.Linear
+                AnimationType = AnimationType.Linear,
+                InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }

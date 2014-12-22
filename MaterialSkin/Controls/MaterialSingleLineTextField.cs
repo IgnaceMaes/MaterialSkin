@@ -26,7 +26,8 @@ namespace MaterialSkin.Controls
             animationManager = new AnimationManager()
             {
                 Increment = 0.06,
-                AnimationType = AnimationType.EaseInOut
+                AnimationType = AnimationType.EaseInOut,
+                InterruptAnimation = false
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
 

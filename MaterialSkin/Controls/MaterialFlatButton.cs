@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
 
@@ -23,7 +24,8 @@ namespace MaterialSkin.Controls
             animationManager = new AnimationManager()
             {
                 Increment = 0.03,
-                AnimationType = AnimationType.Linear
+                AnimationType = AnimationType.Linear,
+                InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }

@@ -9,6 +9,7 @@ namespace MaterialSkin.Animations
 {
     class AnimationManager
     {
+        public bool InterruptAnimation { get; set; }
         public double Increment { get; set; }
         public AnimationType AnimationType { get; set; }
 
@@ -29,6 +30,7 @@ namespace MaterialSkin.Animations
         {
             Increment = 0.03;
             AnimationType = AnimationType.Linear;
+            InterruptAnimation = false;
 
             animationTimer.Tick += AnimationTimerOnTick;
         }
@@ -45,22 +47,26 @@ namespace MaterialSkin.Animations
 
         public bool IsAnimating()
         {
-            return progress >= Increment;
+            return (MIN_VALUE + progress >= Increment && MAX_VALUE - Increment >= progress);
         }
 
         public void StartNewAnimation(AnimationDirection animationDirection)
         {
             this.animationDirection = animationDirection;
-            switch (this.animationDirection)
+
+            if (!IsAnimating() || InterruptAnimation)
             {
-                case AnimationDirection.In:
-                    progress = MIN_VALUE;
-                    break;
-                case AnimationDirection.Out:
-                    progress = MAX_VALUE;
-                    break;
-                default:
-                    throw new Exception("Invalid AnimationDirection");
+                switch (this.animationDirection)
+                {
+                    case AnimationDirection.In:
+                        progress = MIN_VALUE;
+                        break;
+                    case AnimationDirection.Out:
+                        progress = MAX_VALUE;
+                        break;
+                    default:
+                        throw new Exception("Invalid AnimationDirection");
+                }
             }
 
             animationTimer.Start();
