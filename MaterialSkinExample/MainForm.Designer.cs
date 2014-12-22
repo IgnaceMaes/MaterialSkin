@@ -48,6 +48,7 @@ namespace MaterialSkinExample
             this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRadioButton1 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SuspendLayout();
             // 
             // materialDivider1
@@ -205,7 +206,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.materialSingleLineTextField1.Depth = 0;
-            this.materialSingleLineTextField1.Hint = null;
+            this.materialSingleLineTextField1.Hint = "";
             this.materialSingleLineTextField1.Location = new System.Drawing.Point(12, 76);
             this.materialSingleLineTextField1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
@@ -254,12 +255,25 @@ namespace MaterialSkinExample
             this.materialRadioButton1.Text = "materialRadioButton1";
             this.materialRadioButton1.UseVisualStyleBackColor = true;
             // 
+            // materialRaisedButton1
+            // 
+            this.materialRaisedButton1.Depth = 0;
+            this.materialRaisedButton1.Location = new System.Drawing.Point(16, 135);
+            this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton1.Name = "materialRaisedButton1";
+            this.materialRaisedButton1.Primary = true;
+            this.materialRaisedButton1.Size = new System.Drawing.Size(156, 32);
+            this.materialRaisedButton1.TabIndex = 17;
+            this.materialRaisedButton1.Text = "RaisedButton2";
+            this.materialRaisedButton1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(342, 448);
+            this.Controls.Add(this.materialRaisedButton1);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialRadioButton4);
             this.Controls.Add(this.materialLabel1);
@@ -299,5 +313,6 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel1;
         private MaterialRadioButton materialRadioButton4;
         private MaterialDivider materialDivider1;
+        private MaterialRaisedButton materialRaisedButton1;
     }
 }

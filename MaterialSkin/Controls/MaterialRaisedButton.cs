@@ -57,7 +57,7 @@ namespace MaterialSkin.Controls
                 ClientRectangle.Y,
                 ClientRectangle.Width - 1,
                 ClientRectangle.Height - 1,
-                2f))
+                1f))
             {
                 g.FillPath(Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
             }

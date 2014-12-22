@@ -15,9 +15,14 @@ namespace MaterialSkin.Controls
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value;  } }
         public string Hint { get; set; }
 
+        private readonly Timer animationTimer = new Timer { Interval = 5, Enabled = false };
+        private double animationValue;
+
         private readonly TextBox baseTextBox = new TextBox();
         public MaterialSingleLineTextField()
         {
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
+
             baseTextBox = new TextBox
             {
                 BorderStyle = BorderStyle.None,
@@ -34,7 +39,7 @@ namespace MaterialSkin.Controls
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.GotFocus += (sender, args) => Invalidate();
+            baseTextBox.GotFocus += BaseTextBoxOnGotFocus;
             baseTextBox.LostFocus += (sender, args) => Invalidate();
             baseTextBox.TextChanged += BaseTextBoxOnTextChanged;
             BackColorChanged += (sender, args) =>
@@ -42,6 +47,14 @@ namespace MaterialSkin.Controls
                 baseTextBox.BackColor = BackColor;
                 baseTextBox.ForeColor = SkinManager.GetMainTextColor();
             };
+
+            animationTimer.Tick += animationTimer_Tick;
+        }
+
+        private void BaseTextBoxOnGotFocus(object sender, EventArgs eventArgs)
+        {
+            animationValue = 0;
+            animationTimer.Start();
         }
 
         private void BaseTextBoxOnTextChanged(object sender, EventArgs eventArgs)
@@ -53,14 +66,46 @@ namespace MaterialSkin.Controls
             }
         }
 
+        void animationTimer_Tick(object sender, EventArgs e)
+        {
+            if (animationValue < 1.00)
+            {
+                animationValue += 0.06;
+                Invalidate();
+            }
+            else
+            {
+                animationValue = 0;
+                animationTimer.Stop();
+                Invalidate();
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-
             g.Clear(Parent.BackColor);
 
-            g.FillRectangle(baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, baseTextBox.Bottom + 1, baseTextBox.Width, 1);
+            int lineY = baseTextBox.Bottom + 1;
+
+            if (animationValue < 0.03)
+            {
+                //No animation
+                g.FillRectangle(baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
+            }
+            else
+            {
+                //Animate
+                int animationWidth = (int) (baseTextBox.Width * animationValue);
+                int halfAnimationWidth = animationWidth / 2;
+                int animationStart = baseTextBox.Location.X + baseTextBox.Width / 2;
+
+                //Unfocused background
+                g.FillRectangle(SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, 1);
+            
+                //Animated focus transition
+                g.FillRectangle(SkinManager.PrimaryColorBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
+            }
         }
 
         protected override void OnResize(EventArgs e)
