@@ -3,6 +3,10 @@ WinForms MaterialSkin
 
 Theming WinForms (C# or VB.Net) to Google's Material Design Principles.
 
+Light | Dark
+--- | ---
+![alt tag](http://puu.sh/dCnJ0/1a09990e52.png) | ![alt tag](http://puu.sh/dCnNa/96861a2fdf.png)
+
 ---
 
 #### Current state of the MaterialSkin components
@@ -16,38 +20,28 @@ Radio Button | Yes | Yes | Yes | Yes
 Raised Button | Yes | Yes | Yes | Yes 
 Single-line text field | Yes | Yes | No | Yes
 
-Light Theme | Dark Theme
---- | ---
-![alt tag](http://puu.sh/dCnJ0/1a09990e52.png) | ![alt tag](http://puu.sh/dCnNa/96861a2fdf.png)
-
 ---
 
-#### Implementing MaterialSkin in your application (C#)
+#### Implementing MaterialSkin in your application
 
-**1. Download the library from GitHub**
+**1. Add the library to your project**
 
-  You only need the library, not the example. ([As found here](https://github.com/IgnaceMaes/WinForms-MaterialSkin/tree/master/MaterialSkin))
+  You can do this on 2 ways. The easiest way would be adding the NuGet Package. Right click on your project and click 'Manage NuGet Packages...'. Search for 'MaterialSkin' and click on install. Once installed the library will be included in your project references.
   
-**2. Compile the library**
-
-  Open the library in Visual Studio (or whatever IDE you use for C#) and compile the library. If succesfull you now have a dll file.
+  Another way of doing this step would be downloading the project from GitHub, compiling the library yourself and adding it as a reference.
   
-**3. Add the library as a reference in the project you wish to skin**
+**2. Add the MaterialSkin components to your ToolBox**
 
-  In Visual Studio this can be done by right clicking your project and select Add>Reference. Now browse to the dll you've just compiled and click add.
-
-**4. Rebuild your project**
-
-  The MaterialSkin components should now appear in your ToolBox.
+  If you have installed the NuGet package, the MaterialSkin.dll file should be in the folder <Solution>/<Project>/bin/Debug. Simply drag the MaterialSkin.dll file into your IDE's ToolBox and all the controls should be added there.
   
-**5. Inherit from MaterialForm**
+**3. Inherit from MaterialForm**
 
-  Open the code behind your Form you wish to skin. Make it inherit from MaterialForm rather than Form. (Don't forget to import the library)
+  Open the code behind your Form you wish to skin. Make it inherit from MaterialForm rather than Form. Don't forget to put the library in your imports, so it can find the MaterialForm class!
   ```cs
-  public partial class Form1 : MaterialForm // Example in C#
+  public partial class Form1 : MaterialForm //Example in C#
   ```
   
-**6. Initialize your colorscheme**
+**4. Initialize your colorscheme**
 
   Set your prefered colors & theme. Also add the form to the manager so it keeps updated if the color scheme or theme changes later on.
 
@@ -56,7 +50,7 @@ Light Theme | Dark Theme
   {
       InitializeComponent();
 
-      // Initialize MaterialSkinManager (example in C#)
+      //Initialize MaterialSkinManager (example in C#)
       var materialSkinManager = MaterialSkinManager.Instance;
       materialSkinManager.AddFormToManage(this);
       materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
