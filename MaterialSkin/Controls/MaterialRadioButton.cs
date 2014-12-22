@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using MaterialSkin.Animations;
 
 namespace MaterialSkin.Controls
 {
@@ -11,6 +13,28 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
 
+        private readonly AnimationManager animationManager;
+
+        public MaterialRadioButton()
+        {
+            animationManager = new AnimationManager()
+            {
+                AnimationType = AnimationType.EaseInOut,
+                Increment = 0.06,
+                InterruptAnimation = false
+            };
+            animationManager.OnAnimationProgress += sender => Invalidate();
+
+            CheckedChanged += (sender, args) => animationManager.StartNewAnimation(Checked ? AnimationDirection.In : AnimationDirection.Out);
+        }
+
+        private const int RADIOBUTTON_SIZE = 16;
+        private const int RADIOBUTTON_OUTER_CIRCLE_WIDTH = 2;
+        private const int RADIOBUTTON_INNER_CIRCLE_SIZE = RADIOBUTTON_SIZE - 2 * RADIOBUTTON_OUTER_CIRCLE_WIDTH;
+        private const int RADIOBUTTON_X = 0;
+        private const int RADIOBUTTON_Y = 0;
+        private const int RADIOBUTTON_CENTER_X = RADIOBUTTON_X + RADIOBUTTON_SIZE / 2;
+        private const int RADIOBUTTON_CENTER_Y = RADIOBUTTON_Y + RADIOBUTTON_SIZE / 2;
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -19,15 +43,21 @@ namespace MaterialSkin.Controls
 
             g.Clear(Parent.BackColor);
 
-            if (Checked)
+
+            var animationProgress = animationManager.GetProgress();
+
+            int colorAlpha = (int) (animationProgress * 255.0);
+            float animationSize = (float)(animationManager.GetProgress() * 8.0);
+            float animationSizeHalf = animationSize / 2;
+            var transition = new RectangleF(RADIOBUTTON_CENTER_X - animationSizeHalf, RADIOBUTTON_CENTER_Y - animationSizeHalf, animationSize, animationSize);
+
+            using (var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.AccentColor : SkinManager.GetCheckBoxOffDisabledColor())))
             {
-                g.FillEllipse(Enabled ? SkinManager.AccentColorBrush : SkinManager.GetCheckBoxOffDisabledBrush(), 0, 0, 16, 16);
-                g.DrawEllipse(new Pen(Parent.BackColor, 2), 3, 3, 10, 10);
-            }
-            else
-            {
-                g.FillEllipse(Enabled ? SkinManager.GetCheckboxOffBrush() : SkinManager.GetCheckBoxOffDisabledBrush(), 0, 0, 16, 16);
-                g.FillEllipse(new SolidBrush(Parent.BackColor), 2, 2, 12, 12);
+                g.FillEllipse(Enabled ? SkinManager.GetCheckboxOffBrush() : SkinManager.GetCheckBoxOffDisabledBrush(), RADIOBUTTON_X, RADIOBUTTON_Y, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+                g.FillEllipse(brush, RADIOBUTTON_X, RADIOBUTTON_Y, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+
+                g.FillEllipse(new SolidBrush(Parent.BackColor), RADIOBUTTON_OUTER_CIRCLE_WIDTH, RADIOBUTTON_OUTER_CIRCLE_WIDTH, RADIOBUTTON_INNER_CIRCLE_SIZE, RADIOBUTTON_INNER_CIRCLE_SIZE);
+                g.FillEllipse(brush, transition);
             }
 
             g.DrawString(Text, SkinManager.FONT_BUTTON, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), 20, 0);

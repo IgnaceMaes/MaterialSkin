@@ -47,7 +47,7 @@ namespace MaterialSkin.Animations
 
         public bool IsAnimating()
         {
-            return (MIN_VALUE + progress >= Increment && MAX_VALUE - Increment >= progress);
+            return animationTimer.Enabled;
         }
 
         public void StartNewAnimation(AnimationDirection animationDirection)

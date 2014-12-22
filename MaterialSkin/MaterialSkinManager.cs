@@ -164,6 +164,11 @@ namespace MaterialSkin
             return (Theme == Themes.LIGHT ? CHECKBOX_OFF_LIGHT_BRUSH : CHECKBOX_OFF_DARK_BRUSH);
         }
 
+        public Color GetCheckBoxOffDisabledColor()
+        {
+            return (Theme == Themes.LIGHT ? CHECKBOX_OFF_DISABLED_LIGHT : CHECKBOX_OFF_DISABLED_DARK);
+        }
+
         public Brush GetCheckBoxOffDisabledBrush()
         {
             return (Theme == Themes.LIGHT ? CHECKBOX_OFF_DISABLED_LIGHT_BRUSH : CHECKBOX_OFF_DISABLED_DARK_BRUSH);
