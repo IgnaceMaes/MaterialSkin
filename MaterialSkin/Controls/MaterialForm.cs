@@ -37,7 +37,7 @@ namespace MaterialSkin.Controls
         private ResizeDirection resizeDir;
         private ButtonState buttonState = ButtonState.None;
 
-        private const int STATUS_BAR_BUTTON_WIDTH = (int) (STATUS_BAR_HEIGHT * 1.5);
+        private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
         private const int STATUS_BAR_HEIGHT = 24;
         private const int ACTION_BAR_HEIGHT = 40;
 
@@ -227,13 +227,14 @@ namespace MaterialSkin.Controls
         {
             base.OnResize(e);
 
-            minButtonBounds = new Rectangle(Width - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            maxButtonBounds = new Rectangle(Width - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            xButtonBounds = new Rectangle(Width - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            minButtonBounds = new Rectangle((Width - FORM_PADDING / 2)- 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            maxButtonBounds = new Rectangle((Width - FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            xButtonBounds = new Rectangle((Width - FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
         }
 
+        private int FORM_PADDING = 10;
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -273,14 +274,22 @@ namespace MaterialSkin.Controls
                     g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), xButtonBounds);
                     break;
             }
+
+            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT, 2))
+            {
+                //Minimize
+                g.DrawLine(formButtonsPen, minButtonBounds.X + (int) (minButtonBounds.Width * 0.33), minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66), minButtonBounds.X + (int)(minButtonBounds.Width * 0.66), minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66));
             
-            //Minimize, maximize and close
-            g.DrawString("0", new Font("Marlett", 11), SkinManager.ACTION_BAR_TEXT, minButtonBounds, new StringFormat() {LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center});
-            g.DrawString("1", new Font("Marlett", 11), SkinManager.ACTION_BAR_TEXT, maxButtonBounds, new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center });
-            g.DrawString("r", new Font("Marlett", 11), SkinManager.ACTION_BAR_TEXT, xButtonBounds, new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center });
+                //Maximize
+                g.DrawRectangle(formButtonsPen, maxButtonBounds.X + (int) (maxButtonBounds.Width * 0.33), maxButtonBounds.Y + (int) (maxButtonBounds.Height * 0.36), (int) (maxButtonBounds.Width * 0.39), (int) (maxButtonBounds.Height * 0.31));
+            
+                //Close
+                g.DrawLine(formButtonsPen, xButtonBounds.X + (int) (xButtonBounds.Width * 0.33), xButtonBounds.Y + (int) (xButtonBounds.Height * 0.33), xButtonBounds.X + (int) (xButtonBounds.Width * 0.66), xButtonBounds.Y + (int) (xButtonBounds.Height * 0.66));
+                g.DrawLine(formButtonsPen, xButtonBounds.X + (int) (xButtonBounds.Width * 0.66), xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33), xButtonBounds.X + (int)(xButtonBounds.Width * 0.33), xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
+            }
 
             //Form title
-            g.DrawString(Text, SkinManager.FONT_TITLE, SkinManager.ACTION_BAR_TEXT, new Rectangle(10, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.FONT_TITLE, SkinManager.ACTION_BAR_TEXT, new Rectangle(FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
         }
     }
 }
