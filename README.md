@@ -5,10 +5,12 @@ Theming WinForms (C# or VB.Net) to Google's Material Design Principles.
 
 ![alt tag](http://i.imgur.com/f0QLfpa.gif)
 
+---
+
 #### Current state of the MaterialSkin components
  | Supported | Dark & light version | Disabled mode | Animated
 --- | --- | --- | --- | ---
-Checkbox | Yes | Yes | Yes | No 
+Checkbox | Yes | Yes | Yes | Yes 
 Divider | Yes | Yes | N/A | N/A 
 Flat Button | Yes | Yes | Yes | Yes 
 Label | Yes | Yes | N/A | N/A
