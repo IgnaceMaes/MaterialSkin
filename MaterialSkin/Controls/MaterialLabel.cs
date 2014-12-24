@@ -13,7 +13,7 @@ namespace MaterialSkin.Controls
             base.OnCreateControl();
 
             ForeColor = SkinManager.GetMainTextColor();
-            Font = SkinManager.FONT_BODY1;
+            Font = SkinManager.ROBOTO_REGULAR_11;
 
             BackColorChanged += (sender, args) => ForeColor = SkinManager.GetMainTextColor();
         }

@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MaterialSkin.Controls;
 
 
@@ -30,10 +31,7 @@ namespace MaterialSkin
             set
             {
                 theme = value;
-                foreach (var materialForm in formsToManage)
-                {
-                    materialForm.BackColor = GetApplicationBackgroundColor();
-                }
+                UpdateBackgrounds();
             }
         }
 
@@ -127,7 +125,10 @@ namespace MaterialSkin
         private static Brush BACKGROUND_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
 
         //Application action bar
-        public readonly Brush ACTION_BAR_TEXT = new SolidBrush(Color.White);
+        public readonly Color ACTION_BAR_TEXT = Color.FromArgb(255, 255, 255, 255);
+        public readonly Brush ACTION_BAR_TEXT_BRUSH = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
+        public readonly Color ACTION_BAR_TEXT_SECONDARY = Color.FromArgb(153, 255, 255, 255);
+        public readonly Brush ACTION_BAR_TEXT_SECONDARY_BRUSH = new SolidBrush(Color.FromArgb(153, 255, 255, 255));
 
         public Color GetMainTextColor()
         {
@@ -205,20 +206,23 @@ namespace MaterialSkin
         }
 
         //Roboto font
-        public Font FONT_TITLE;
-        public Font FONT_BODY1;
-        public Font FONT_BODY2;
-        public Font FONT_BUTTON;
+        public Font ROBOTO_MEDIUM_12;
+        public Font ROBOTO_REGULAR_11;
+        public Font ROBOTO_MEDIUM_11;
+        public Font ROBOTO_MEDIUM_10;
+
+        //Other constants
+        public int FORM_PADDING = 10;
 
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pvd, [In] ref uint pcFonts);
         
         private MaterialSkinManager()
         {
-            FONT_TITLE = new Font(LoadFont(Properties.Resources.Roboto_Medium), 12f);
-            FONT_BUTTON = new Font(LoadFont(Properties.Resources.Roboto_Medium), 10f);
-            FONT_BODY1 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
-            FONT_BODY2 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
+            ROBOTO_MEDIUM_12 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 12f);
+            ROBOTO_MEDIUM_10 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 10f);
+            ROBOTO_REGULAR_11 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
+            ROBOTO_MEDIUM_11 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
             Theme = Themes.LIGHT;
             PrimaryColor = Color.FromArgb(63, 81, 181);
             PrimaryColorDark = Color.FromArgb(48, 63, 159);
@@ -233,6 +237,7 @@ namespace MaterialSkin
         public void AddFormToManage(MaterialForm materialForm)
         {
             formsToManage.Add(materialForm);
+            UpdateBackgrounds();
         }
 
         public void RemoveFormToManage(MaterialForm materialForm)
@@ -253,6 +258,26 @@ namespace MaterialSkin
             privateFontCollection.AddMemoryFont(fontPtr, dataLength);
             
            return privateFontCollection.Families.Last();
+        }
+
+        private void UpdateBackgrounds()
+        {
+            Color newBackColor = GetApplicationBackgroundColor();
+            foreach (var materialForm in formsToManage)
+            {
+                materialForm.BackColor = newBackColor;
+                foreach (Control control in materialForm.Controls)
+                {
+                    if (control is MaterialTabControl)
+                    {
+                        control.BackColor = newBackColor;
+                        foreach (TabPage tabPage in (control as MaterialTabControl).TabPages)
+                        {
+                            tabPage.BackColor = newBackColor;
+                        }
+                    }
+                }
+            }
         }
     }
 }

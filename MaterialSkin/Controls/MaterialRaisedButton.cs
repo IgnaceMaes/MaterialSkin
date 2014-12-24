@@ -62,7 +62,7 @@ namespace MaterialSkin.Controls
                 g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
             }
             
-            g.DrawString(Text.ToUpper(), SkinManager.FONT_BUTTON, SkinManager.GetRaisedButtonTextBrush(Primary), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetRaisedButtonTextBrush(Primary), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
     }
 }

@@ -34,7 +34,7 @@ namespace MaterialSkin.Controls
             baseTextBox = new TextBox
             {
                 BorderStyle = BorderStyle.None,
-                Font = SkinManager.FONT_BODY1,
+                Font = SkinManager.ROBOTO_REGULAR_11,
                 ForeColor = SkinManager.GetMainTextColor(),
                 Location = new Point(0, 0),
                 Text = Text,

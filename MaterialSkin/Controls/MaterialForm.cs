@@ -227,14 +227,13 @@ namespace MaterialSkin.Controls
         {
             base.OnResize(e);
 
-            minButtonBounds = new Rectangle((Width - FORM_PADDING / 2)- 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            maxButtonBounds = new Rectangle((Width - FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            xButtonBounds = new Rectangle((Width - FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            minButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2)- 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            maxButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
         }
 
-        private int FORM_PADDING = 10;
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -275,7 +274,7 @@ namespace MaterialSkin.Controls
                     break;
             }
 
-            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT, 2))
+            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY_BRUSH, 2))
             {
                 //Minimize
                 g.DrawLine(formButtonsPen, minButtonBounds.X + (int) (minButtonBounds.Width * 0.33), minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66), minButtonBounds.X + (int)(minButtonBounds.Width * 0.66), minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66));
@@ -289,7 +288,7 @@ namespace MaterialSkin.Controls
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.FONT_TITLE, SkinManager.ACTION_BAR_TEXT, new Rectangle(FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ACTION_BAR_TEXT_BRUSH, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
         }
     }
 }

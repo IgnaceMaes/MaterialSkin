@@ -65,6 +65,12 @@
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialTabSelector.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DrawHelper.cs" />
     <Compile Include="IMaterialControl.cs" />
     <Compile Include="Controls\MaterialRaisedButton.cs">

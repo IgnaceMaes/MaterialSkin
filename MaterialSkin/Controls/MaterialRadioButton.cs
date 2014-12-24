@@ -64,13 +64,13 @@ namespace MaterialSkin.Controls
                 g.FillEllipse(brush, transition);
             }
 
-            g.DrawString(Text, SkinManager.FONT_BUTTON, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), 20, 0);
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), 20, 0);
         }
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = SkinManager.FONT_BUTTON;
+            Font = SkinManager.ROBOTO_MEDIUM_10;
         }
     }
 }
