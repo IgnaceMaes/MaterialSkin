@@ -46,17 +46,21 @@ namespace MaterialSkin.Controls
 
             var animationProgress = animationManager.GetProgress();
 
-            int colorAlpha = (int) (animationProgress * 255.0);
-            float animationSize = (float)(animationManager.GetProgress() * 8.0);
+            int colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
+            int backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
+            float animationSize = (float)(animationProgress * 8.0);
             float animationSizeHalf = animationSize / 2;
             var transition = new RectangleF(RADIOBUTTON_CENTER_X - animationSizeHalf, RADIOBUTTON_CENTER_Y - animationSizeHalf, animationSize, animationSize);
 
             using (var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.AccentColor : SkinManager.GetCheckBoxOffDisabledColor())))
             {
-                g.FillEllipse(Enabled ? SkinManager.GetCheckboxOffBrush() : SkinManager.GetCheckBoxOffDisabledBrush(), RADIOBUTTON_X, RADIOBUTTON_Y, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+                g.FillEllipse(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), RADIOBUTTON_X, RADIOBUTTON_Y, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+                
+                if (Enabled)
                 g.FillEllipse(brush, RADIOBUTTON_X, RADIOBUTTON_Y, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
 
                 g.FillEllipse(new SolidBrush(Parent.BackColor), RADIOBUTTON_OUTER_CIRCLE_WIDTH, RADIOBUTTON_OUTER_CIRCLE_WIDTH, RADIOBUTTON_INNER_CIRCLE_SIZE, RADIOBUTTON_INNER_CIRCLE_SIZE);
+                
                 g.FillEllipse(brush, transition);
             }
 
