@@ -25,9 +25,16 @@ namespace MaterialSkin.Controls
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
+        [DllImport("user32.dll")]
+        static extern int TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
         public const int WM_LBUTTONDOWN = 0x0201;
+        public const int WM_RBUTTONDOWN = 0x0204;
         private const int HTBOTTOMLEFT = 16;
         private const int HTBOTTOMRIGHT = 17;
         private const int HTLEFT = 10;
@@ -40,6 +47,13 @@ namespace MaterialSkin.Controls
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
         private const int STATUS_BAR_HEIGHT = 24;
         private const int ACTION_BAR_HEIGHT = 40;
+
+        private uint TPM_LEFTALIGN = 0x0000;
+        private uint TPM_RETURNCMD = 0x0100;
+
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int WS_MINIMIZEBOX = 0x20000;
+        private const int WS_SYSMENU = 0x00080000;
 
         private enum ResizeDirection
         {
@@ -84,6 +98,29 @@ namespace MaterialSkin.Controls
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+            else if (m.Msg == WM_RBUTTONDOWN)
+            {
+                // Show default system menu when right clicking titlebar
+                int id = TrackPopupMenuEx(
+                    GetSystemMenu(this.Handle, false),
+                    TPM_LEFTALIGN | TPM_RETURNCMD,
+                    Cursor.Position.X, Cursor.Position.Y, this.Handle, IntPtr.Zero);
+
+                // Pass the command as a WM_SYSCOMMAND message
+                SendMessage(this.Handle, WM_SYSCOMMAND, id, 0);
+            }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams par = base.CreateParams;
+                // WS_SYSMENU: Trigger the creation of the system menu
+                // WS_MINIMIZEBOX: Allow minimizing from taskbar
+                par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU; // Turn on the WS_MINIMIZEBOX style flag
+                return par;
             }
         }
 
