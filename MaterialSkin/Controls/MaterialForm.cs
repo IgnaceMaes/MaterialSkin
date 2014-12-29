@@ -101,14 +101,19 @@ namespace MaterialSkin.Controls
             }
             else if (m.Msg == WM_RBUTTONDOWN)
             {
-                // Show default system menu when right clicking titlebar
-                int id = TrackPopupMenuEx(
-                    GetSystemMenu(this.Handle, false),
-                    TPM_LEFTALIGN | TPM_RETURNCMD,
-                    Cursor.Position.X, Cursor.Position.Y, this.Handle, IntPtr.Zero);
+                Point cursorPos = PointToClient(Cursor.Position);
 
-                // Pass the command as a WM_SYSCOMMAND message
-                SendMessage(this.Handle, WM_SYSCOMMAND, id, 0);
+                if (statusBarBounds.Contains(cursorPos) && !minButtonBounds.Contains(cursorPos) && !maxButtonBounds.Contains(cursorPos) && !xButtonBounds.Contains(cursorPos))
+                {
+                    // Show default system menu when right clicking titlebar
+                    int id = TrackPopupMenuEx(
+                        GetSystemMenu(this.Handle, false),
+                        TPM_LEFTALIGN | TPM_RETURNCMD,
+                        Cursor.Position.X, Cursor.Position.Y, this.Handle, IntPtr.Zero);
+
+                    // Pass the command as a WM_SYSCOMMAND message
+                    SendMessage(this.Handle, WM_SYSCOMMAND, id, 0);
+                }
             }
         }
 
