@@ -25,6 +25,10 @@ namespace MaterialSkin.Controls
                 baseTabControl = value;
                 if (baseTabControl == null) return;
                 previousSelectedTabIndex = baseTabControl.SelectedIndex;
+                baseTabControl.Deselected += (sender, args) =>
+                {
+                    previousSelectedTabIndex = baseTabControl.SelectedIndex;
+                };
                 baseTabControl.SelectedIndexChanged += (sender, args) => 
                 {
                     animationManager.StartNewAnimation(AnimationDirection.In);
@@ -60,7 +64,6 @@ namespace MaterialSkin.Controls
                 InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
-            animationManager.OnAnimationFinished += sender => previousSelectedTabIndex = baseTabControl.SelectedIndex;
         }
 
         protected override void OnPaint(PaintEventArgs e)
