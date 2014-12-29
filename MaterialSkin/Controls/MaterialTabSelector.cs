@@ -51,7 +51,7 @@ namespace MaterialSkin.Controls
             animationManager = new AnimationManager()
             {
                 AnimationType = AnimationType.EaseInOut,
-                Increment = 0.03,
+                Increment = 0.04,
                 InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
@@ -76,8 +76,8 @@ namespace MaterialSkin.Controls
             //Click feedback
             if (animationManager.IsAnimating())
             {
-                var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationProgress * 50)), Color.Black));
-                var rippleSize = (int)(animationProgress * TabRects[baseTabControl.SelectedIndex].Width * 2);
+                var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationProgress * 50)), Color.White));
+                var rippleSize = (int)(animationProgress * TabRects[baseTabControl.SelectedIndex].Width * 1.75);
 
                 g.SetClip(TabRects[baseTabControl.SelectedIndex]);
                 g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
@@ -130,6 +130,7 @@ namespace MaterialSkin.Controls
         {
             base.OnMouseUp(e);
 
+            if (TabRects == null) UpdateTabRects();
             for (int i = 0; i < TabRects.Count; i++)
             {
                 if (TabRects[i].Contains(e.Location))
