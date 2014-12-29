@@ -24,6 +24,7 @@ namespace MaterialSkin.Controls
             {
                 baseTabControl = value;
                 if (baseTabControl == null) return;
+                previousSelectedTabIndex = baseTabControl.SelectedIndex;
                 baseTabControl.SelectedIndexChanged += (sender, args) => 
                 {
                     animationManager.StartNewAnimation(AnimationDirection.In);
@@ -43,6 +44,10 @@ namespace MaterialSkin.Controls
         private Point animationSource;
         private readonly AnimationManager animationManager;
 
+        private List<Rectangle> TabRects;
+        private const int TAB_HEADER_PADDING = 24;
+        private const int TAB_INDICATOR_HEIGHT = 2;
+
         public MaterialTabSelector()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
@@ -58,17 +63,16 @@ namespace MaterialSkin.Controls
             animationManager.OnAnimationFinished += sender => previousSelectedTabIndex = baseTabControl.SelectedIndex;
         }
 
-        private const int TAB_INDICATOR_HEIGHT = 2;
         protected override void OnPaint(PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
+            var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(SkinManager.PrimaryColor);
 
             if (baseTabControl == null) return;
 
-            if (!animationManager.IsAnimating())
+            if (!animationManager.IsAnimating() || TabRects == null)
                 UpdateTabRects();
 
             double animationProgress = animationManager.GetProgress();
@@ -96,7 +100,8 @@ namespace MaterialSkin.Controls
             }
 
             //Animate tab indicator
-            Rectangle previousActiveTabRect = TabRects[previousSelectedTabIndex];
+            int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
+            Rectangle previousActiveTabRect = TabRects[previousSelectedTabIndexIfHasOne];
             Rectangle activeTabPageRect = TabRects[baseTabControl.SelectedIndex];
 
             int y = activeTabPageRect.Bottom - 2;
@@ -142,21 +147,26 @@ namespace MaterialSkin.Controls
             animationSource = e.Location;
         }
 
-        private List<Rectangle> TabRects = new List<Rectangle>(); 
         private void UpdateTabRects()
         {
             TabRects = new List<Rectangle>();
 
-            if (baseTabControl == null || baseTabControl.TabPages.Count == 0) return;
+            //If there isn't a base tab control, the rects shouldn't be calculated
+            //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
+            if (baseTabControl == null || baseTabControl.TabCount == 0) return;
 
-            Graphics g = Graphics.FromImage(new Bitmap(1,1));
-
-            TabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, 24 * 2 + (int) g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
-            for (int i = 1; i < baseTabControl.TabPages.Count; i++)
+            //Caluclate the bounds of each tab header specified in the base tab control
+            using (var b = new Bitmap(1,1))
             {
-                TabRects.Add(new Rectangle(TabRects[i - 1].Right, 0, 24 * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                using (var g = Graphics.FromImage(b))
+                {
+                    TabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                    for (int i = 1; i < baseTabControl.TabPages.Count; i++)
+                    {
+                        TabRects.Add(new Rectangle(TabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                    }
+                }
             }
-            g.Dispose();
         }
     }
 }
