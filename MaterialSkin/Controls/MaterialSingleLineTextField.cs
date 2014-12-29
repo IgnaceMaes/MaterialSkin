@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
 
@@ -13,12 +14,12 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
 
-        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value;  } }
-        public string Hint { get; set; }
+        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
+        public string Hint { get { return baseTextBox.Hint; } set { baseTextBox.Hint = value; } }
 
         private readonly AnimationManager animationManager;
 
-        private readonly TextBox baseTextBox = new TextBox();
+        private readonly BaseTextBox baseTextBox;
         public MaterialSingleLineTextField()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
@@ -31,15 +32,14 @@ namespace MaterialSkin.Controls
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
 
-            baseTextBox = new TextBox
+            baseTextBox = new BaseTextBox
             {
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.ROBOTO_REGULAR_11,
                 ForeColor = SkinManager.GetMainTextColor(),
                 Location = new Point(0, 0),
-                Text = Text,
                 Width = Width,
-                Height = Height - 5
+                Height = Height - 5,
             };
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
@@ -49,21 +49,11 @@ namespace MaterialSkin.Controls
 
             baseTextBox.GotFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.In);
             baseTextBox.LostFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.Out);
-            baseTextBox.TextChanged += BaseTextBoxOnTextChanged;
             BackColorChanged += (sender, args) =>
             {
                 baseTextBox.BackColor = BackColor;
                 baseTextBox.ForeColor = SkinManager.GetMainTextColor();
             };
-        }
-
-        private void BaseTextBoxOnTextChanged(object sender, EventArgs eventArgs)
-        {
-            if (baseTextBox.Text != Hint && baseTextBox.Text == "")
-            {
-                baseTextBox.Text = Hint;
-                baseTextBox.ForeColor = SkinManager.GetDisabledOrHintColor();
-            }
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -109,6 +99,68 @@ namespace MaterialSkin.Controls
 
             baseTextBox.BackColor = Parent.BackColor;
             baseTextBox.ForeColor = SkinManager.GetMainTextColor();
+        }
+
+        private class BaseTextBox : TextBox, IMaterialControl
+        {
+            //Properties for managing the material design properties
+            public int Depth { get; set; }
+            public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+            public MouseState MouseState { get; set; }
+
+            public string Hint { get; set; }
+
+            public BaseTextBox()
+            {
+                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+                KeyDown += OnKeyDown;
+                KeyUp += (sender, args) => CheckToDrawHint();
+                GotFocus += (sender, args) => CheckToDrawHint();
+                LostFocus += (sender, args) => CheckToDrawHint();
+            }
+
+            private void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
+            {
+                if (keyEventArgs.KeyCode != Keys.Back)
+                {
+                    //This fixes an issue when the Text is empty and the user holds a key, the background will flash cause otherwise the userpaint would still be on
+                    SetStyle(ControlStyles.UserPaint, false);
+                }
+            }
+
+            protected override void OnCreateControl()
+            {
+                base.OnCreateControl();
+
+                CheckToDrawHint();
+            }
+
+            private bool ShouldDrawHint()
+            {
+                return Text == "" && !string.IsNullOrEmpty(Hint);
+            }
+
+            private void CheckToDrawHint()
+            {
+                //Enabled the userpaint if needed when the hint should be drawn
+                SetStyle(ControlStyles.UserPaint, ShouldDrawHint());
+
+                Invalidate();
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                var g = e.Graphics;
+                g.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+                base.OnPaint(e);
+
+                if (ShouldDrawHint())
+                {
+                    //The text is empty, so the hint should be drawn if there is one
+                    g.DrawString(Hint, Font, SkinManager.GetDisabledOrHintBrush(), ClientRectangle, new StringFormat() {LineAlignment = StringAlignment.Center});
+                }
+            }
         }
     }
 }
