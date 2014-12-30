@@ -112,7 +112,9 @@ namespace MaterialSkin.Controls
 
             public BaseTextBox()
             {
-                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
+                DoubleBuffered = true;
+
                 KeyDown += OnKeyDown;
                 KeyUp += (sender, args) => CheckToDrawHint();
                 GotFocus += (sender, args) => CheckToDrawHint();
@@ -142,22 +144,28 @@ namespace MaterialSkin.Controls
 
             private void CheckToDrawHint()
             {
-                //Enabled the userpaint if needed when the hint should be drawn
-                SetStyle(ControlStyles.UserPaint, ShouldDrawHint());
+                bool startUserPaint = GetStyle(ControlStyles.UserPaint);
+                bool shouldDrawHint = ShouldDrawHint();
 
-                Invalidate();
+                //Enabled the userpaint if needed when the hint should be drawn
+                //Disables the userpaint if the hint doesn't need to be drawn
+                if (startUserPaint != shouldDrawHint)
+                {
+                    SetStyle(ControlStyles.UserPaint, shouldDrawHint);
+                    Invalidate();
+                }
             }
 
             protected override void OnPaint(PaintEventArgs e)
             {
-                var g = e.Graphics;
-                g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
                 base.OnPaint(e);
-
+                
                 if (ShouldDrawHint())
                 {
-                    //The text is empty, so the hint should be drawn if there is one
+                    var g = e.Graphics;
+                    g.Clear(BackColor);
+                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
+
                     g.DrawString(Hint, Font, SkinManager.GetDisabledOrHintBrush(), ClientRectangle, new StringFormat() {LineAlignment = StringAlignment.Center});
                 }
             }
