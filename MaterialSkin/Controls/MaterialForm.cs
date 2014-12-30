@@ -11,6 +11,28 @@ using System.Windows.Forms;
 
 namespace MaterialSkin.Controls
 {
+    public class MouseMessageFilter : IMessageFilter
+    {
+        private const int WM_MOUSEMOVE = 0x0200;
+
+        public static event MouseEventHandler MouseMove;
+
+        public bool PreFilterMessage(ref Message m)
+        {
+
+            if (m.Msg == WM_MOUSEMOVE)
+            {
+                if (MouseMove != null)
+                {
+                    int x = Control.MousePosition.X, y = Control.MousePosition.Y;
+
+                    MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
+                }
+            }
+            return false;
+        }
+    }
+
     public class MaterialForm : Form, IMaterialControl
     {
         public int Depth { get; set; }
@@ -40,9 +62,33 @@ namespace MaterialSkin.Controls
         private const int HTLEFT = 10;
         private const int HTRIGHT = 11;
         private const int HTBOTTOM = 15;
+        private const int HTTOP = 12;
+        private const int HTTOPLEFT = 13;
+        private const int HTTOPRIGHT = 14;
         private const int BORDER_WIDTH = 7;
         private ResizeDirection resizeDir;
         private ButtonState buttonState = ButtonState.None;
+
+        private const int WMSZ_TOP = 3;
+        private const int WMSZ_TOPLEFT = 4;
+        private const int WMSZ_TOPRIGHT = 5;
+        private const int WMSZ_LEFT = 1;
+        private const int WMSZ_RIGHT = 2;
+        private const int WMSZ_BOTTOM = 6;
+        private const int WMSZ_BOTTOMLEFT = 7;
+        private const int WMSZ_BOTTOMRIGHT = 8;
+
+        private Dictionary<int, int> ResizingLocationsToCmd = new Dictionary<int, int>() 
+        {
+            {HTTOP,         WMSZ_TOP},
+            {HTTOPLEFT,     WMSZ_TOPLEFT},
+            {HTTOPRIGHT,    WMSZ_TOPRIGHT},
+            {HTLEFT,        WMSZ_LEFT},
+            {HTRIGHT,       WMSZ_RIGHT},
+            {HTBOTTOM,      WMSZ_BOTTOM},
+            {HTBOTTOMLEFT,  WMSZ_BOTTOMLEFT},
+            {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
+        };
 
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
         private const int STATUS_BAR_HEIGHT = 24;
@@ -88,6 +134,10 @@ namespace MaterialSkin.Controls
             Sizable = true;
             DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+
+            // This enables the form to trigger the MouseMove event even when mouse is over another control
+            Application.AddMessageFilter(new MouseMessageFilter());
+            MouseMessageFilter.MouseMove += new MouseEventHandler(OnGlobalMouseMove);
         }
 
         protected override void WndProc(ref Message m)
@@ -114,6 +164,20 @@ namespace MaterialSkin.Controls
                     // Pass the command as a WM_SYSCOMMAND message
                     SendMessage(this.Handle, WM_SYSCOMMAND, id, 0);
                 }
+            }
+            else if (m.Msg == WM_NCLBUTTONDOWN)
+            {
+                // This re-enables resizing by letting the application know when the
+                // user is trying to resize a side. This is disabled by default when using WS_SYSMENU.
+
+                byte bFlag = 0;
+
+                // Get which side to resize from
+                if (ResizingLocationsToCmd.ContainsKey((int)m.WParam))
+                    bFlag = (byte)ResizingLocationsToCmd[(int)m.WParam];
+
+                if (bFlag != 0)
+                    SendMessage(this.Handle, WM_SYSCOMMAND, (int)(0xF000 | bFlag), (int)m.LParam);
             }
         }
 
@@ -150,40 +214,58 @@ namespace MaterialSkin.Controls
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
+
             if (DesignMode) return;
 
-            if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
-            {
-                resizeDir = ResizeDirection.BottomLeft;
-                Cursor = Cursors.SizeNESW;
-            }
-            else if (e.Location.X < BORDER_WIDTH && e.Location.Y > 40)
-            {
-                resizeDir = ResizeDirection.Left;
-                Cursor = Cursors.SizeWE;
-            }
-            else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
-            {
-                resizeDir = ResizeDirection.BottomRight;
-                Cursor = Cursors.SizeNWSE;
-            }
-            else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > 40)
-            {
-                resizeDir = ResizeDirection.Right;
-                Cursor = Cursors.SizeWE;
-            }
-            else if (e.Location.Y > Height - BORDER_WIDTH)
-            {
-                resizeDir = ResizeDirection.Bottom;
-                Cursor = Cursors.SizeNS;
-            }
-            else
+            // Don't show resize cursor when over a child control, since it wont work anyway
+            if (GetChildAtPoint(e.Location) != null)
             {
                 resizeDir = ResizeDirection.None;
                 Cursor = Cursors.Default;
             }
+            else
+            {
+                if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
+                {
+                    resizeDir = ResizeDirection.BottomLeft;
+                    Cursor = Cursors.SizeNESW;
+                }
+                else if (e.Location.X < BORDER_WIDTH && e.Location.Y > 40)
+                {
+                    resizeDir = ResizeDirection.Left;
+                    Cursor = Cursors.SizeWE;
+                }
+                else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
+                {
+                    resizeDir = ResizeDirection.BottomRight;
+                    Cursor = Cursors.SizeNWSE;
+                }
+                else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > 40)
+                {
+                    resizeDir = ResizeDirection.Right;
+                    Cursor = Cursors.SizeWE;
+                }
+                else if (e.Location.Y > Height - BORDER_WIDTH)
+                {
+                    resizeDir = ResizeDirection.Bottom;
+                    Cursor = Cursors.SizeNS;
+                }
+                else
+                {
+                    resizeDir = ResizeDirection.None;
+                    Cursor = Cursors.Default;
+                }
+            }
 
             UpdateButtons(e);
+        }
+
+        protected void OnGlobalMouseMove(object sender, MouseEventArgs e)
+        {
+            // Convert to client position and pass to Form.MouseMove
+            Point clientCursorPos = PointToClient(e.Location);
+            MouseEventArgs new_e = new MouseEventArgs(MouseButtons.None, 0, clientCursorPos.X, clientCursorPos.Y, 0);
+            this.OnMouseMove(new_e);
         }
 
         private void UpdateButtons(MouseEventArgs e, bool up = false)
