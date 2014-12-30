@@ -216,30 +216,33 @@ namespace MaterialSkin.Controls
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-
+            
             if (DesignMode) return;
 
-            if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
+            //True if the mouse is hovering over a child control
+            bool isChildUnderMouse = GetChildAtPoint(e.Location) != null;
+
+            if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse)
             {
                 resizeDir = ResizeDirection.BottomLeft;
                 Cursor = Cursors.SizeNESW;
             }
-            else if (e.Location.X < BORDER_WIDTH)
+            else if (e.Location.X < BORDER_WIDTH && !isChildUnderMouse)
             {
                 resizeDir = ResizeDirection.Left;
                 Cursor = Cursors.SizeWE;
             }
-            else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
+            else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse)
             {
                 resizeDir = ResizeDirection.BottomRight;
                 Cursor = Cursors.SizeNWSE;
             }
-            else if (e.Location.X > Width - BORDER_WIDTH)
+            else if (e.Location.X > Width - BORDER_WIDTH && !isChildUnderMouse)
             {
                 resizeDir = ResizeDirection.Right;
                 Cursor = Cursors.SizeWE;
             }
-            else if (e.Location.Y > Height - BORDER_WIDTH)
+            else if (e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse)
             {
                 resizeDir = ResizeDirection.Bottom;
                 Cursor = Cursors.SizeNS;
@@ -247,10 +250,9 @@ namespace MaterialSkin.Controls
             else
             {
                 resizeDir = ResizeDirection.None;
-                
+
                 //Only reset the cursur when needed, this prevents it from flickering when a child control changes the cursor to its own needs
-                var resetCursorRect = new Rectangle(BORDER_WIDTH, BORDER_WIDTH, Width - 2 * BORDER_WIDTH, Height - 2 * BORDER_WIDTH);
-                if (resetCursorRect.Contains(e.Location) && resizeCursors.Contains(Cursor))
+                if (resizeCursors.Contains(Cursor))
                 {
                     Cursor = Cursors.Default;
                 }
