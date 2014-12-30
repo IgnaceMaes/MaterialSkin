@@ -78,7 +78,7 @@ namespace MaterialSkin.Controls
         private const int WMSZ_BOTTOMLEFT = 7;
         private const int WMSZ_BOTTOMRIGHT = 8;
 
-        private Dictionary<int, int> ResizingLocationsToCmd = new Dictionary<int, int>() 
+        private readonly Dictionary<int, int> resizingLocationsToCmd = new Dictionary<int, int>() 
         {
             {HTTOP,         WMSZ_TOP},
             {HTTOPLEFT,     WMSZ_TOPLEFT},
@@ -94,8 +94,8 @@ namespace MaterialSkin.Controls
         private const int STATUS_BAR_HEIGHT = 24;
         private const int ACTION_BAR_HEIGHT = 40;
 
-        private uint TPM_LEFTALIGN = 0x0000;
-        private uint TPM_RETURNCMD = 0x0100;
+        private const uint TPM_LEFTALIGN = 0x0000;
+        private const uint TPM_RETURNCMD = 0x0100;
 
         private const int WM_SYSCOMMAND = 0x0112;
         private const int WS_MINIMIZEBOX = 0x20000;
@@ -122,6 +122,8 @@ namespace MaterialSkin.Controls
             None
         }
 
+        private readonly Cursor[] resizeCursors = { Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE, Cursors.SizeNS };
+
         private Rectangle minButtonBounds;
         private Rectangle maxButtonBounds;
         private Rectangle xButtonBounds;
@@ -137,7 +139,7 @@ namespace MaterialSkin.Controls
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
-            MouseMessageFilter.MouseMove += new MouseEventHandler(OnGlobalMouseMove);
+            MouseMessageFilter.MouseMove += OnGlobalMouseMove;
         }
 
         protected override void WndProc(ref Message m)
@@ -173,8 +175,8 @@ namespace MaterialSkin.Controls
                 byte bFlag = 0;
 
                 // Get which side to resize from
-                if (ResizingLocationsToCmd.ContainsKey((int)m.WParam))
-                    bFlag = (byte)ResizingLocationsToCmd[(int)m.WParam];
+                if (resizingLocationsToCmd.ContainsKey((int)m.WParam))
+                    bFlag = (byte)resizingLocationsToCmd[(int)m.WParam];
 
                 if (bFlag != 0)
                     SendMessage(this.Handle, WM_SYSCOMMAND, (int)(0xF000 | bFlag), (int)m.LParam);
@@ -217,42 +219,39 @@ namespace MaterialSkin.Controls
 
             if (DesignMode) return;
 
-            // Don't show resize cursor when over a child control, since it wont work anyway
-            if (GetChildAtPoint(e.Location) != null)
+            if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
             {
-                resizeDir = ResizeDirection.None;
-                Cursor = Cursors.Default;
+                resizeDir = ResizeDirection.BottomLeft;
+                Cursor = Cursors.SizeNESW;
+            }
+            else if (e.Location.X < BORDER_WIDTH)
+            {
+                resizeDir = ResizeDirection.Left;
+                Cursor = Cursors.SizeWE;
+            }
+            else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
+            {
+                resizeDir = ResizeDirection.BottomRight;
+                Cursor = Cursors.SizeNWSE;
+            }
+            else if (e.Location.X > Width - BORDER_WIDTH)
+            {
+                resizeDir = ResizeDirection.Right;
+                Cursor = Cursors.SizeWE;
+            }
+            else if (e.Location.Y > Height - BORDER_WIDTH)
+            {
+                resizeDir = ResizeDirection.Bottom;
+                Cursor = Cursors.SizeNS;
             }
             else
             {
-                if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
+                resizeDir = ResizeDirection.None;
+                
+                //Only reset the cursur when needed, this prevents it from flickering when a child control changes the cursor to its own needs
+                var resetCursorRect = new Rectangle(BORDER_WIDTH, BORDER_WIDTH, Width - 2 * BORDER_WIDTH, Height - 2 * BORDER_WIDTH);
+                if (resetCursorRect.Contains(e.Location) && resizeCursors.Contains(Cursor))
                 {
-                    resizeDir = ResizeDirection.BottomLeft;
-                    Cursor = Cursors.SizeNESW;
-                }
-                else if (e.Location.X < BORDER_WIDTH && e.Location.Y > 40)
-                {
-                    resizeDir = ResizeDirection.Left;
-                    Cursor = Cursors.SizeWE;
-                }
-                else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH)
-                {
-                    resizeDir = ResizeDirection.BottomRight;
-                    Cursor = Cursors.SizeNWSE;
-                }
-                else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > 40)
-                {
-                    resizeDir = ResizeDirection.Right;
-                    Cursor = Cursors.SizeWE;
-                }
-                else if (e.Location.Y > Height - BORDER_WIDTH)
-                {
-                    resizeDir = ResizeDirection.Bottom;
-                    Cursor = Cursors.SizeNS;
-                }
-                else
-                {
-                    resizeDir = ResizeDirection.None;
                     Cursor = Cursors.Default;
                 }
             }
