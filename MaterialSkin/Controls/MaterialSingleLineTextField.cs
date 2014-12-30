@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
 
@@ -71,13 +70,13 @@ namespace MaterialSkin.Controls
             else
             {
                 //Animate
-                int animationWidth = (int) (baseTextBox.Width * animationManager.GetProgress());
+                int animationWidth = (int)(baseTextBox.Width * animationManager.GetProgress());
                 int halfAnimationWidth = animationWidth / 2;
                 int animationStart = baseTextBox.Location.X + baseTextBox.Width / 2;
 
                 //Unfocused background
                 g.FillRectangle(SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, 1);
-            
+
                 //Animated focus transition
                 g.FillRectangle(SkinManager.PrimaryColorBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
             }
@@ -89,7 +88,7 @@ namespace MaterialSkin.Controls
 
             baseTextBox.Location = new Point(0, 0);
             baseTextBox.Width = Width;
-            
+
             Height = baseTextBox.Height + 5;
         }
 
@@ -108,66 +107,27 @@ namespace MaterialSkin.Controls
             public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
             public MouseState MouseState { get; set; }
 
-            public string Hint { get; set; }
+            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, string lParam);
+
+            private const int EM_SETCUEBANNER = 0x1501;
+
+            private string _hint = string.Empty;
+
+            public string Hint
+            {
+                get { return _hint; }
+                set
+                {
+                    _hint = value;
+                    SendMessage(this.Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, this.Hint);
+                }
+            }
 
             public BaseTextBox()
             {
                 SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
                 DoubleBuffered = true;
-
-                KeyDown += OnKeyDown;
-                KeyUp += (sender, args) => CheckToDrawHint();
-                GotFocus += (sender, args) => CheckToDrawHint();
-                LostFocus += (sender, args) => CheckToDrawHint();
-            }
-
-            private void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
-            {
-                if (keyEventArgs.KeyCode != Keys.Back)
-                {
-                    //This fixes an issue when the Text is empty and the user holds a key, the background will flash cause otherwise the userpaint would still be on
-                    SetStyle(ControlStyles.UserPaint, false);
-                }
-            }
-
-            protected override void OnCreateControl()
-            {
-                base.OnCreateControl();
-
-                CheckToDrawHint();
-            }
-
-            private bool ShouldDrawHint()
-            {
-                return Text == "" && !string.IsNullOrEmpty(Hint);
-            }
-
-            private void CheckToDrawHint()
-            {
-                bool startUserPaint = GetStyle(ControlStyles.UserPaint);
-                bool shouldDrawHint = ShouldDrawHint();
-
-                //Enabled the userpaint if needed when the hint should be drawn
-                //Disables the userpaint if the hint doesn't need to be drawn
-                if (startUserPaint != shouldDrawHint)
-                {
-                    SetStyle(ControlStyles.UserPaint, shouldDrawHint);
-                    Invalidate();
-                }
-            }
-
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                base.OnPaint(e);
-                
-                if (ShouldDrawHint())
-                {
-                    var g = e.Graphics;
-                    g.Clear(BackColor);
-                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-                    g.DrawString(Hint, Font, SkinManager.GetDisabledOrHintBrush(), ClientRectangle, new StringFormat() {LineAlignment = StringAlignment.Center});
-                }
             }
         }
     }
