@@ -117,6 +117,10 @@ namespace MaterialSkin
         private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(64, 204, 204, 204);
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
 
+        //ContextMenuStrip
+        private static readonly Color CMS_BACKGROUND_HOVER = Color.FromArgb(255, 238, 238, 238);
+        private static readonly Brush CMS_BACKGROUND_HOVER_BRUSH = new SolidBrush(CMS_BACKGROUND_HOVER);
+
         //Application background
         private static readonly Color BACKGROUND_LIGHT = Color.FromArgb(255, 255, 255, 255);
         private static Brush BACKGROUND_LIGHT_BRUSH = new SolidBrush(BACKGROUND_LIGHT);
@@ -198,6 +202,11 @@ namespace MaterialSkin
         public Brush GetFlatButtonPressedBackgroundBrush()
         {
             return (Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH : FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH);
+        }
+
+        public Brush GetCmsSelectedItemBrush()
+        {
+            return CMS_BACKGROUND_HOVER_BRUSH;
         }
 
         public Color GetApplicationBackgroundColor()

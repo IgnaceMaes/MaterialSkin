@@ -100,13 +100,8 @@ namespace MaterialSkin.Controls
             baseTextBox.ForeColor = SkinManager.GetMainTextColor();
         }
 
-        private class BaseTextBox : TextBox, IMaterialControl
+        private class BaseTextBox : TextBox
         {
-            //Properties for managing the material design properties
-            public int Depth { get; set; }
-            public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
-            public MouseState MouseState { get; set; }
-
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, string lParam);
 
@@ -122,12 +117,6 @@ namespace MaterialSkin.Controls
                     _hint = value;
                     SendMessage(this.Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, this.Hint);
                 }
-            }
-
-            public BaseTextBox()
-            {
-                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
-                DoubleBuffered = true;
             }
         }
     }

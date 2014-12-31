@@ -54,10 +54,17 @@ namespace MaterialSkinExample
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.materialCheckBox5 = new MaterialSkin.Controls.MaterialCheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
+            this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.subItem2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.materialContextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialDivider1
@@ -318,7 +325,7 @@ namespace MaterialSkinExample
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(407, 161);
+            this.tabPage2.Size = new System.Drawing.Size(401, 161);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             // 
@@ -346,9 +353,56 @@ namespace MaterialSkinExample
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(407, 161);
+            this.tabPage3.Size = new System.Drawing.Size(401, 161);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "MaterialTabPage3";
+            // 
+            // materialContextMenuStrip1
+            // 
+            this.materialContextMenuStrip1.Depth = 0;
+            this.materialContextMenuStrip1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.item1ToolStripMenuItem,
+            this.item2ToolStripMenuItem,
+            this.item3ToolStripMenuItem});
+            this.materialContextMenuStrip1.Margin = new System.Windows.Forms.Padding(16, 8, 16, 8);
+            this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
+            this.materialContextMenuStrip1.Size = new System.Drawing.Size(121, 92);
+            // 
+            // item1ToolStripMenuItem
+            // 
+            this.item1ToolStripMenuItem.AutoSize = false;
+            this.item1ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subItem1ToolStripMenuItem,
+            this.subItem2ToolStripMenuItem});
+            this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
+            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(120, 32);
+            this.item1ToolStripMenuItem.Text = "Item 1";
+            // 
+            // subItem1ToolStripMenuItem
+            // 
+            this.subItem1ToolStripMenuItem.Name = "subItem1ToolStripMenuItem";
+            this.subItem1ToolStripMenuItem.Size = new System.Drawing.Size(152, 32);
+            this.subItem1ToolStripMenuItem.Text = "SubItem 1";
+            // 
+            // subItem2ToolStripMenuItem
+            // 
+            this.subItem2ToolStripMenuItem.Name = "subItem2ToolStripMenuItem";
+            this.subItem2ToolStripMenuItem.Size = new System.Drawing.Size(152, 32);
+            this.subItem2ToolStripMenuItem.Text = "SubItem 2";
+            // 
+            // item2ToolStripMenuItem
+            // 
+            this.item2ToolStripMenuItem.Name = "item2ToolStripMenuItem";
+            this.item2ToolStripMenuItem.Size = new System.Drawing.Size(120, 32);
+            this.item2ToolStripMenuItem.Text = "Item 2";
+            // 
+            // item3ToolStripMenuItem
+            // 
+            this.item3ToolStripMenuItem.Name = "item3ToolStripMenuItem";
+            this.item3ToolStripMenuItem.Size = new System.Drawing.Size(120, 32);
+            this.item3ToolStripMenuItem.Text = "Item 3";
             // 
             // MainForm
             // 
@@ -356,6 +410,7 @@ namespace MaterialSkinExample
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(434, 334);
+            this.ContextMenuStrip = this.materialContextMenuStrip1;
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialDivider1);
@@ -369,6 +424,7 @@ namespace MaterialSkinExample
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.materialContextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -396,5 +452,11 @@ namespace MaterialSkinExample
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private MaterialCheckBox materialCheckBox5;
+        private MaterialContextMenuStrip materialContextMenuStrip1;
+        private MaterialSkin.Controls.MaterialToolStripMenuItem item1ToolStripMenuItem;
+        private MaterialSkin.Controls.MaterialToolStripMenuItem subItem1ToolStripMenuItem;
+        private MaterialSkin.Controls.MaterialToolStripMenuItem subItem2ToolStripMenuItem;
+        private MaterialSkin.Controls.MaterialToolStripMenuItem item2ToolStripMenuItem;
+        private MaterialSkin.Controls.MaterialToolStripMenuItem item3ToolStripMenuItem;
     }
 }

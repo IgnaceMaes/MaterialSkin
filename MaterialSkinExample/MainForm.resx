@@ -120,4 +120,7 @@
   <data name="materialLabel1.Text" xml:space="preserve">
     <value>materialLabel1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed enim sodales, eleifend ex non, laoreet est. Praesent rhoncus lorem non nibh tincidunt, in semper nibh faucibus. Vivamus id ullamcorper mi, at venenatis sapien. Suspendisse justo erat, maximus vel viverra et, posuere non odio. Phasellus vitae metus augue. Morbi facilisis neque nec arcu gravida, sagittis fringilla leo dapibus. In eu malesuada metus.</value>
   </data>
+  <metadata name="materialContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
