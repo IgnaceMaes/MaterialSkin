@@ -1,7 +1,7 @@
-WinForms MaterialSkin
+MaterialSkin for .NET WinForms
 =====================
 
-Theming WinForms (C# or VB.Net) to Google's Material Design Principles.
+Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
 ![alt tag](http://i.imgur.com/f0QLfpa.gif)
 
@@ -17,6 +17,13 @@ Label | Yes | Yes | N/A | N/A
 Radio Button | Yes | Yes | Yes | Yes
 Raised Button | Yes | Yes | Yes | Yes 
 Single-line text field | Yes | Yes | No | Yes
+TabControl | Yes | N/A | N/A | Yes
+ContextMenuStrip | No | No | No | No
+FloatingActionButton | No | No | No | No
+ListView | No | No | No | No
+Dialogs | No | No | No | No
+Switch | No | No | No | No
+More... | No | No | No | No
 
 ---
 
