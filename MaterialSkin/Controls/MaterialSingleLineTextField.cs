@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -117,6 +118,78 @@ namespace MaterialSkin.Controls
                     _hint = value;
                     SendMessage(this.Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, this.Hint);
                 }
+            }
+
+            public BaseTextBox()
+            {
+                ContextMenuStrip = new TextBoxContextMenuStrip();
+                ContextMenuStrip.Opening += ContextMenuStripOnOpening;
+                ContextMenuStrip.ItemClicked += ContextMenuStripOnItemClicked;
+            }
+
+            private void ContextMenuStripOnItemClicked(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
+            {
+                switch (toolStripItemClickedEventArgs.ClickedItem.Text)
+                {
+                    case "Undo":
+                        Undo();
+                        break;
+                    case "Cut":
+                        Cut();
+                        break;
+                    case "Copy":
+                        Copy();
+                        break;
+                    case "Paste":
+                        Paste();
+                        break;
+                    case "Delete":
+                        break;
+                    case "Select All":
+                        SelectAll();
+                        break;
+                }
+            }
+
+            private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
+            {
+                var strip = sender as TextBoxContextMenuStrip;
+                if (strip != null)
+                {
+                    strip.undo.Enabled = CanUndo;
+                    strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.paste.Enabled = Clipboard.ContainsText();
+                    strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
+                }
+            }
+        }
+
+        private class TextBoxContextMenuStrip : MaterialContextMenuStrip
+        {
+            public readonly ToolStripItem undo = new MaterialToolStripMenuItem() { Text = "Undo" };
+            public readonly ToolStripItem seperator1 = new ToolStripSeparator();
+            public readonly ToolStripItem cut = new MaterialToolStripMenuItem() { Text = "Cut" };
+            public readonly ToolStripItem copy = new MaterialToolStripMenuItem() { Text = "Copy" };
+            public readonly ToolStripItem paste = new MaterialToolStripMenuItem() { Text = "Paste" };
+            public readonly ToolStripItem delete = new MaterialToolStripMenuItem() { Text = "Delete" };
+            public readonly ToolStripItem seperator2 = new ToolStripSeparator();
+            public readonly ToolStripItem selectAll = new MaterialToolStripMenuItem() { Text = "Select All" };
+
+            public TextBoxContextMenuStrip()
+            {
+                Items.AddRange(new[]
+                {
+                    undo,
+                    seperator1,
+                    cut,
+                    copy,
+                    paste,
+                    delete,
+                    seperator2,
+                    selectAll
+                });
             }
         }
     }
