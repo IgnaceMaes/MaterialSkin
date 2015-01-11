@@ -42,16 +42,19 @@ namespace MaterialSkin.Controls
         private ToolStripItemClickedEventArgs delayesArgs;
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
         {
-            if (delayesArgs != null && e == delayesArgs && e.ClickedItem != null)
+            if (e.ClickedItem != null && !(e.ClickedItem is ToolStripSeparator))
             {
-                //The event has been fired manualy because the args are the ones we saved for delay
-                base.OnItemClicked(e);
-            }
-            else
-            {
-                //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
-                delayesArgs = e;
-                animationManager.StartNewAnimation(AnimationDirection.In);
+                if (e == delayesArgs)
+                {
+                    //The event has been fired manualy because the args are the ones we saved for delay
+                    base.OnItemClicked(e);
+                }
+                else
+                {
+                    //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
+                    delayesArgs = e;
+                    animationManager.StartNewAnimation(AnimationDirection.In);
+                }
             }
         }
     }
@@ -119,12 +122,16 @@ namespace MaterialSkin.Controls
             }
         }
 
+        protected override void OnRenderImageMargin(ToolStripRenderEventArgs e)
+        {
+            //base.OnRenderImageMargin(e);
+        }
+
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
         {
             Graphics g = e.Graphics;
 
-            g.DrawLine(new Pen(Color.FromArgb(226, 227, 227)), new Point(e.Item.Bounds.Left + 22, e.Item.Bounds.Height / 2 - 1), new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2 - 1));
-            g.DrawLine(Pens.White, new Point(e.Item.Bounds.Left + 22, e.Item.Bounds.Height / 2), new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
+            g.DrawLine(new Pen(SkinManager.GetDividersColor()), new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2), new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
         }
 
         private Rectangle GetItemRect(ToolStripItem item)

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 
@@ -61,6 +62,7 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.disabledItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -364,8 +366,9 @@ namespace MaterialSkinExample
             this.materialContextMenuStrip1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.item1ToolStripMenuItem,
-            this.item2ToolStripMenuItem,
             this.disabledItemToolStripMenuItem,
+            this.item2ToolStripMenuItem,
+            this.toolStripSeparator1,
             this.item3ToolStripMenuItem});
             this.materialContextMenuStrip1.Margin = new System.Windows.Forms.Padding(16, 8, 16, 8);
             this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
@@ -417,6 +420,10 @@ namespace MaterialSkinExample
             this.disabledItemToolStripMenuItem.Name = "disabledItemToolStripMenuItem";
             this.disabledItemToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
             this.disabledItemToolStripMenuItem.Text = "Disabled item";
+            // 
+            // toolStripSeperator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeperator1";
             // 
             // MainForm
             // 
@@ -472,6 +479,7 @@ namespace MaterialSkinExample
         private MaterialSkin.Controls.MaterialToolStripMenuItem subItem2ToolStripMenuItem;
         private MaterialSkin.Controls.MaterialToolStripMenuItem item2ToolStripMenuItem;
         private MaterialSkin.Controls.MaterialToolStripMenuItem item3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem disabledItemToolStripMenuItem;
     }
 }
