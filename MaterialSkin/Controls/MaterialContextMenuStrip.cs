@@ -37,13 +37,12 @@ namespace MaterialSkin.Controls
             base.OnMouseUp(mea);
 
             animationSource = mea.Location;
-            animationManager.StartNewAnimation(AnimationDirection.In);
         }
 
         private ToolStripItemClickedEventArgs delayesArgs;
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
         {
-            if (e == delayesArgs)
+            if (delayesArgs != null && e == delayesArgs && e.ClickedItem != null)
             {
                 //The event has been fired manualy because the args are the ones we saved for delay
                 base.OnItemClicked(e);
@@ -52,6 +51,7 @@ namespace MaterialSkin.Controls
             {
                 //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
                 delayesArgs = e;
+                animationManager.StartNewAnimation(AnimationDirection.In);
             }
         }
     }
@@ -91,7 +91,7 @@ namespace MaterialSkin.Controls
 
             var itemRect = GetItemRect(e.Item);
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
-            g.DrawString(e.Text, SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetMainTextBrush(), textRect, new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(e.Text, SkinManager.ROBOTO_MEDIUM_10, e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), textRect, new StringFormat() { LineAlignment = StringAlignment.Center });
         }
 
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)

@@ -60,6 +60,7 @@ namespace MaterialSkinExample
             this.subItem2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.disabledItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -364,11 +365,12 @@ namespace MaterialSkinExample
             this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.item1ToolStripMenuItem,
             this.item2ToolStripMenuItem,
+            this.disabledItemToolStripMenuItem,
             this.item3ToolStripMenuItem});
             this.materialContextMenuStrip1.Margin = new System.Windows.Forms.Padding(16, 8, 16, 8);
             this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
-            this.materialContextMenuStrip1.Size = new System.Drawing.Size(121, 92);
+            this.materialContextMenuStrip1.Size = new System.Drawing.Size(171, 146);
             // 
             // item1ToolStripMenuItem
             // 
@@ -377,32 +379,44 @@ namespace MaterialSkinExample
             this.subItem1ToolStripMenuItem,
             this.subItem2ToolStripMenuItem});
             this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
-            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(120, 32);
+            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
             this.item1ToolStripMenuItem.Text = "Item 1";
             // 
             // subItem1ToolStripMenuItem
             // 
+            this.subItem1ToolStripMenuItem.AutoSize = false;
             this.subItem1ToolStripMenuItem.Name = "subItem1ToolStripMenuItem";
             this.subItem1ToolStripMenuItem.Size = new System.Drawing.Size(152, 32);
             this.subItem1ToolStripMenuItem.Text = "SubItem 1";
             // 
             // subItem2ToolStripMenuItem
             // 
+            this.subItem2ToolStripMenuItem.AutoSize = false;
             this.subItem2ToolStripMenuItem.Name = "subItem2ToolStripMenuItem";
             this.subItem2ToolStripMenuItem.Size = new System.Drawing.Size(152, 32);
             this.subItem2ToolStripMenuItem.Text = "SubItem 2";
             // 
             // item2ToolStripMenuItem
             // 
+            this.item2ToolStripMenuItem.AutoSize = false;
             this.item2ToolStripMenuItem.Name = "item2ToolStripMenuItem";
-            this.item2ToolStripMenuItem.Size = new System.Drawing.Size(120, 32);
+            this.item2ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
             this.item2ToolStripMenuItem.Text = "Item 2";
             // 
             // item3ToolStripMenuItem
             // 
+            this.item3ToolStripMenuItem.AutoSize = false;
             this.item3ToolStripMenuItem.Name = "item3ToolStripMenuItem";
-            this.item3ToolStripMenuItem.Size = new System.Drawing.Size(120, 32);
+            this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
             this.item3ToolStripMenuItem.Text = "Item 3";
+            // 
+            // disabledItemToolStripMenuItem
+            // 
+            this.disabledItemToolStripMenuItem.AutoSize = false;
+            this.disabledItemToolStripMenuItem.Enabled = false;
+            this.disabledItemToolStripMenuItem.Name = "disabledItemToolStripMenuItem";
+            this.disabledItemToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
+            this.disabledItemToolStripMenuItem.Text = "Disabled item";
             // 
             // MainForm
             // 
@@ -458,5 +472,6 @@ namespace MaterialSkinExample
         private MaterialSkin.Controls.MaterialToolStripMenuItem subItem2ToolStripMenuItem;
         private MaterialSkin.Controls.MaterialToolStripMenuItem item2ToolStripMenuItem;
         private MaterialSkin.Controls.MaterialToolStripMenuItem item3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disabledItemToolStripMenuItem;
     }
 }
