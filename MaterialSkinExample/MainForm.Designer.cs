@@ -59,10 +59,10 @@ namespace MaterialSkinExample
             this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.subItem2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.disabledItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -362,6 +362,7 @@ namespace MaterialSkinExample
             // 
             // materialContextMenuStrip1
             // 
+            this.materialContextMenuStrip1.BackColor = System.Drawing.Color.White;
             this.materialContextMenuStrip1.Depth = 0;
             this.materialContextMenuStrip1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -373,7 +374,7 @@ namespace MaterialSkinExample
             this.materialContextMenuStrip1.Margin = new System.Windows.Forms.Padding(16, 8, 16, 8);
             this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
-            this.materialContextMenuStrip1.Size = new System.Drawing.Size(171, 146);
+            this.materialContextMenuStrip1.Size = new System.Drawing.Size(171, 160);
             // 
             // item1ToolStripMenuItem
             // 
@@ -399,20 +400,6 @@ namespace MaterialSkinExample
             this.subItem2ToolStripMenuItem.Size = new System.Drawing.Size(152, 32);
             this.subItem2ToolStripMenuItem.Text = "SubItem 2";
             // 
-            // item2ToolStripMenuItem
-            // 
-            this.item2ToolStripMenuItem.AutoSize = false;
-            this.item2ToolStripMenuItem.Name = "item2ToolStripMenuItem";
-            this.item2ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
-            this.item2ToolStripMenuItem.Text = "Item 2";
-            // 
-            // item3ToolStripMenuItem
-            // 
-            this.item3ToolStripMenuItem.AutoSize = false;
-            this.item3ToolStripMenuItem.Name = "item3ToolStripMenuItem";
-            this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
-            this.item3ToolStripMenuItem.Text = "Item 3";
-            // 
             // disabledItemToolStripMenuItem
             // 
             this.disabledItemToolStripMenuItem.AutoSize = false;
@@ -421,9 +408,24 @@ namespace MaterialSkinExample
             this.disabledItemToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
             this.disabledItemToolStripMenuItem.Text = "Disabled item";
             // 
-            // toolStripSeperator1
+            // item2ToolStripMenuItem
             // 
-            this.toolStripSeparator1.Name = "toolStripSeperator1";
+            this.item2ToolStripMenuItem.AutoSize = false;
+            this.item2ToolStripMenuItem.Name = "item2ToolStripMenuItem";
+            this.item2ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
+            this.item2ToolStripMenuItem.Text = "Item 2";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+            // 
+            // item3ToolStripMenuItem
+            // 
+            this.item3ToolStripMenuItem.AutoSize = false;
+            this.item3ToolStripMenuItem.Name = "item3ToolStripMenuItem";
+            this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 32);
+            this.item3ToolStripMenuItem.Text = "Item 3";
             // 
             // MainForm
             // 

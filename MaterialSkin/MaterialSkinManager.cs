@@ -118,8 +118,11 @@ namespace MaterialSkin
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
 
         //ContextMenuStrip
-        private static readonly Color CMS_BACKGROUND_HOVER = Color.FromArgb(255, 238, 238, 238);
-        private static readonly Brush CMS_BACKGROUND_HOVER_BRUSH = new SolidBrush(CMS_BACKGROUND_HOVER);
+        private static readonly Color CMS_BACKGROUND_LIGHT_HOVER = Color.FromArgb(255, 238, 238, 238);
+        private static readonly Brush CMS_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(CMS_BACKGROUND_LIGHT_HOVER);
+
+        private static readonly Color CMS_BACKGROUND_DARK_HOVER = Color.FromArgb(38, 204, 204, 204);
+        private static readonly Brush CMS_BACKGROUND_HOVER_DARK_BRUSH = new SolidBrush(CMS_BACKGROUND_DARK_HOVER);
 
         //Application background
         private static readonly Color BACKGROUND_LIGHT = Color.FromArgb(255, 255, 255, 255);
@@ -206,7 +209,7 @@ namespace MaterialSkin
 
         public Brush GetCmsSelectedItemBrush()
         {
-            return CMS_BACKGROUND_HOVER_BRUSH;
+            return (Theme == Themes.LIGHT ? CMS_BACKGROUND_HOVER_LIGHT_BRUSH : CMS_BACKGROUND_HOVER_DARK_BRUSH);
         }
 
         public Color GetApplicationBackgroundColor()
@@ -271,21 +274,52 @@ namespace MaterialSkin
 
         private void UpdateBackgrounds()
         {
-            Color newBackColor = GetApplicationBackgroundColor();
+            var newBackColor = GetApplicationBackgroundColor();
             foreach (var materialForm in formsToManage)
             {
                 materialForm.BackColor = newBackColor;
-                foreach (Control control in materialForm.Controls)
+                UpdateControl(materialForm, newBackColor);
+            }
+        }
+
+        private void UpdateToolStrip(ToolStrip toolStrip, Color newBackColor)
+        {
+            if (toolStrip == null) return;
+
+            toolStrip.BackColor = newBackColor;
+            foreach (ToolStripItem control in toolStrip.Items)
+            {
+                control.BackColor = newBackColor;
+                if (control is MaterialToolStripMenuItem && (control as MaterialToolStripMenuItem).HasDropDown)
                 {
-                    if (control is MaterialTabControl)
-                    {
-                        control.BackColor = newBackColor;
-                        foreach (TabPage tabPage in (control as MaterialTabControl).TabPages)
-                        {
-                            tabPage.BackColor = newBackColor;
-                        }
-                    }
+
+                    //recursive call
+                    UpdateToolStrip((control as MaterialToolStripMenuItem).DropDown, newBackColor);
                 }
+            }
+        }
+
+        private void UpdateControl(Control controlToUpdate, Color newBackColor)
+        {
+            if (controlToUpdate == null) return;
+
+            if (controlToUpdate.ContextMenuStrip != null)
+            {
+                UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
+            }
+            var tabControl = controlToUpdate as MaterialTabControl;
+            if (tabControl != null)
+            {
+                foreach (TabPage tabPage in tabControl.TabPages)
+                {
+                    tabPage.BackColor = newBackColor;
+                }
+            }
+
+            //recursive call
+            foreach (Control control in controlToUpdate.Controls)
+            {
+                UpdateControl(control, newBackColor);
             }
         }
     }
