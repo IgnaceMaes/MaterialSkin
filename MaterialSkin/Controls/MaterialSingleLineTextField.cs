@@ -144,6 +144,7 @@ namespace MaterialSkin.Controls
                         Paste();
                         break;
                     case "Delete":
+                        SelectedText = string.Empty;
                         break;
                     case "Select All":
                         SelectAll();
