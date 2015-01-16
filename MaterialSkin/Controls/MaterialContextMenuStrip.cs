@@ -18,13 +18,16 @@ namespace MaterialSkin.Controls
         internal AnimationManager animationManager;
         internal Point animationSource;
 
+        public delegate void ItemClickStart(object sender, ToolStripItemClickedEventArgs e);
+        public event ItemClickStart OnItemClickStart;
+
         public MaterialContextMenuStrip()
         {
             Renderer = new MaterialToolStripRender();
 
             animationManager = new AnimationManager()
             {
-                Increment = 0.05,
+                Increment = 0.07,
                 AnimationType = AnimationType.Linear,
                 InterruptAnimation = true
             };
@@ -55,6 +58,11 @@ namespace MaterialSkin.Controls
                 {
                     //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
                     delayesArgs = e;
+                    
+                    //Fire custom event to trigger actions directly but keep cms open
+                    if (OnItemClickStart != null) OnItemClickStart(this, e);
+                    
+                    //Start animation
                     animationManager.StartNewAnimation(AnimationDirection.In);
                 }
             }
@@ -67,7 +75,7 @@ namespace MaterialSkin.Controls
         public MaterialToolStripMenuItem()
         {
             AutoSize = false;
-            Size = new Size(120, 32);
+            Size = new Size(120, 30);
         }
 
         protected override ToolStripDropDown CreateDefaultDropDown()
@@ -106,7 +114,7 @@ namespace MaterialSkin.Controls
 
             //Draw background
             var itemRect = GetItemRect(e.Item);
-            g.FillRectangle(e.Item.Selected ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()),itemRect);
+            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()),itemRect);
 
             //Ripple animation
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
@@ -118,7 +126,7 @@ namespace MaterialSkin.Controls
                 {
                     var animationValue = animationManager.GetProgress();
                     var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.Black));
-                    var rippleSize = (int)(animationValue * itemRect.Width * 3);
+                    var rippleSize = (int)(animationValue * itemRect.Width * 2.5);
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, itemRect.Y - itemRect.Height, rippleSize, itemRect.Height * 3));
                 }
             }

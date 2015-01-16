@@ -224,7 +224,7 @@ namespace MaterialSkin
         public Font ROBOTO_MEDIUM_10;
 
         //Other constants
-        public int FORM_PADDING = 10;
+        public int FORM_PADDING = 14;
 
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pvd, [In] ref uint pcFonts);
@@ -314,6 +314,11 @@ namespace MaterialSkin
                 {
                     tabPage.BackColor = newBackColor;
                 }
+            }
+
+            if (controlToUpdate is MaterialDivider)
+            {
+                controlToUpdate.BackColor = GetDividersColor();
             }
 
             //recursive call
