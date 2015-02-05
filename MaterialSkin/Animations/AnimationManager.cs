@@ -107,21 +107,7 @@ namespace MaterialSkin.Animations
                     this.animationSources.Add(animationSource);
                 }
 
-                if (Singular && animationProgresses.Count > 0)
-                {
-                    switch (this.animationDirections[0])
-                    {
-                        case AnimationDirection.In:
-                            //animationProgresses[0] = MIN_VALUE;
-                            break;
-                        case AnimationDirection.Out:
-                            //animationProgresses[0] = MAX_VALUE;
-                            break;
-                        default:
-                            throw new Exception("Invalid AnimationDirection");
-                    }
-                }
-                else
+                if (!(Singular && animationProgresses.Count > 0))
                 {
                     switch (this.animationDirections[this.animationDirections.Count - 1])
                     {
