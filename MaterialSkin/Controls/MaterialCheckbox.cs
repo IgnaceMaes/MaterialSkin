@@ -38,18 +38,6 @@ namespace MaterialSkin.Controls
             CheckedChanged += (sender, args) =>
             {
                 animationManager.StartNewAnimation(Checked ? AnimationDirection.In : AnimationDirection.Out);
-
-                if (Ripple)
-                {
-                    int boxOffset = Height/2 - 8;
-                    using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 16, 16, 2f))
-                    {
-                        if (checkmarkPath.IsVisible(MouseLocation))
-                        {
-                            rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, data: new object[] {Checked});
-                        }
-                    }
-                }
             };
 
             Ripple = false;
@@ -81,7 +69,7 @@ namespace MaterialSkin.Controls
                 {
                     var animationValue = rippleAnimationManager.GetProgress(i);
                     var animationSource = new Point(boxOffset + 8, boxOffset + 8);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), ((bool)rippleAnimationManager.GetData(i)[0]) ? brush.Color : Color.Black));
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), ((bool)rippleAnimationManager.GetData(i)[0]) ? Color.Black : brush.Color));
                     var rippleSize = (rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(Height * (0.8d + (0.2d * animationValue))) : Height;
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                 }
@@ -153,11 +141,29 @@ namespace MaterialSkin.Controls
             MouseDown += (sender, args) =>
             {
                 MouseState = MouseState.DOWN;
+
+
+                if (Ripple)
+                {
+                    int boxOffset = Height / 2 - 8;
+                    using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 16, 16, 2f))
+                    {
+                        if (checkmarkPath.IsVisible(MouseLocation))
+                        {
+                            rippleAnimationManager.SecondaryIncrement = 0;
+                            rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, data: new object[] { Checked });
+                        }
+                    }
+                }
+
                 Invalidate();
             };
             MouseUp += (sender, args) =>
             {
                 MouseState = MouseState.HOVER;
+
+                rippleAnimationManager.SecondaryIncrement = 0.08;
+
                 Invalidate();
             };
             MouseMove += (sender, args) =>

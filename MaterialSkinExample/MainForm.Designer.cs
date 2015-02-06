@@ -340,7 +340,7 @@ namespace MaterialSkinExample
             this.materialCheckBox8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckBox8.Name = "materialCheckBox8";
             this.materialCheckBox8.Ripple = true;
-            this.materialCheckBox8.Size = new System.Drawing.Size(214, 34);
+            this.materialCheckBox8.Size = new System.Drawing.Size(214, 38);
             this.materialCheckBox8.TabIndex = 16;
             this.materialCheckBox8.Text = "With ripple";
             this.materialCheckBox8.UseVisualStyleBackColor = true;
