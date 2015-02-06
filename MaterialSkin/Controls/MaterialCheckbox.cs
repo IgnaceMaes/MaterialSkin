@@ -140,7 +140,7 @@ namespace MaterialSkin.Controls
             {
                 MouseState = MouseState.DOWN;
 
-                if (Ripple)
+                if (Ripple && args.Button == MouseButtons.Left)
                 {
                     int boxOffset = Height / 2 - 8;
                     using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 16, 16, 2f))

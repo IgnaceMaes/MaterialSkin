@@ -126,7 +126,7 @@ namespace MaterialSkin.Controls
             {
                 MouseState = MouseState.DOWN;
 
-                if (Ripple)
+                if (Ripple && args.Button == MouseButtons.Left)
                 {
                     int boxOffset = Height / 2 - 8;
                     if (new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE).Contains(MouseLocation))
