@@ -10,5 +10,7 @@ namespace MaterialSkin.Animations
     {
         In,
         Out,
+        InOutIn,
+        InOutOut,
     }
 }

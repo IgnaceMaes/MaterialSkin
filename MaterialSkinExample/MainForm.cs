@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 
