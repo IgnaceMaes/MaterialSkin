@@ -13,7 +13,6 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
         public Point MouseLocation { get; set; }
-
         public bool Ripple { get; set; }
 
         private readonly AnimationManager animationManager;
@@ -84,7 +83,6 @@ namespace MaterialSkin.Controls
                     mouseHand = true;
                 }
 
-
                 g.FillPath(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), checkmarkPath);
                 g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset + 2, boxOffset + 2, 12, 12);
 
@@ -141,7 +139,6 @@ namespace MaterialSkin.Controls
             MouseDown += (sender, args) =>
             {
                 MouseState = MouseState.DOWN;
-
 
                 if (Ripple)
                 {
