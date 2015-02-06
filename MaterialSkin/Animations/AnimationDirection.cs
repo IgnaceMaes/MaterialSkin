@@ -9,6 +9,6 @@ namespace MaterialSkin.Animations
     enum AnimationDirection
     {
         In,
-        Out
+        Out,
     }
 }

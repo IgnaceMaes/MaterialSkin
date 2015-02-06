@@ -14,17 +14,15 @@ namespace MaterialSkin.Controls
         public bool Primary { get; set; }
 
         private readonly AnimationManager animationManager;
-        private Point animationSource;
 
         public MaterialRaisedButton()
         {
             Primary = true;
             
-            animationManager = new AnimationManager()
+            animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.Linear,
-                InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }
@@ -33,8 +31,7 @@ namespace MaterialSkin.Controls
         {
             base.OnMouseUp(mevent);
 
-            animationSource = mevent.Location;
-            animationManager.StartNewAnimation(AnimationDirection.In);
+            animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -56,11 +53,15 @@ namespace MaterialSkin.Controls
 
             if (animationManager.IsAnimating())
             {
-                var animationValue = animationManager.GetProgress();
-                var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.White));
-                var rippleSize = (int) (animationValue * Width * 2);
-                g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                for (int i = 0; i < animationManager.GetRippleCount(); i++)
+                {
+                    var animationValue = animationManager.GetProgress(i);
+                    var animationSource = animationManager.GetSource(i);
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - (animationValue*50)), Color.White));
+                    var rippleSize = (int) (animationValue*Width*2);
+                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize/2, animationSource.Y - rippleSize/2, rippleSize, rippleSize));
             }
+        }
             
             g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetRaisedButtonTextBrush(Primary), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }

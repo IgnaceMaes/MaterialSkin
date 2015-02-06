@@ -29,8 +29,9 @@ namespace MaterialSkin.Controls
                 {
                     previousSelectedTabIndex = baseTabControl.SelectedIndex;
                 };
-                baseTabControl.SelectedIndexChanged += (sender, args) => 
+                baseTabControl.SelectedIndexChanged += (sender, args) =>
                 {
+                    animationManager.SetProgress(0);
                     animationManager.StartNewAnimation(AnimationDirection.In);
                 };
                 baseTabControl.ControlAdded += delegate
@@ -61,7 +62,6 @@ namespace MaterialSkin.Controls
             {
                 AnimationType = AnimationType.EaseInOut,
                 Increment = 0.04,
-                InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }
