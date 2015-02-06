@@ -13,7 +13,18 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
         public Point MouseLocation { get; set; }
-        public bool Ripple { get; set; }
+
+        private bool _ripple = false;
+        public bool Ripple
+        {
+            get { return _ripple; }
+            set
+            {
+                _ripple = value;
+                AutoSize = AutoSize; //Make AutoSize directly set the bounds.
+                Invalidate();
+            } 
+        }
 
         private readonly AnimationManager animationManager;
         private readonly AnimationManager rippleAnimationManager;
@@ -43,7 +54,14 @@ namespace MaterialSkin.Controls
             MouseLocation = new Point(-1, -1);
         }
 
-        private static readonly Point[] CHECKMARK_LINE = { new Point(3, 8), new Point(6, 11), new Point(13, 4) };
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            int boxOffset = Height / 2 - 9;
+            int w = boxOffset + 20 + (int) CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            return Ripple ? new Size(w, 30) : new Size(w, 20);
+        }
+
+        private static readonly Point[] CHECKMARK_LINE = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -53,7 +71,7 @@ namespace MaterialSkin.Controls
             g.Clear(Parent.BackColor);
 
             bool mouseHand = false;
-            int boxOffset = Height / 2 - 8;
+            int boxOffset = Height / 2 - 9;
 
             double animationProgress = animationManager.GetProgress();
 
@@ -74,9 +92,9 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            var checkMarkLineFill = new Rectangle(boxOffset, boxOffset, (int)(16.0 * animationProgress), 16);
+            var checkMarkLineFill = new Rectangle(boxOffset, boxOffset, (int)(17.0 * animationProgress), 17);
 
-            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 16, 16, 2f))
+            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 2f))
             {
                 if (checkmarkPath.IsVisible(MouseLocation))
                 {
@@ -84,7 +102,7 @@ namespace MaterialSkin.Controls
                 }
 
                 g.FillPath(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), checkmarkPath);
-                g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset + 2, boxOffset + 2, 12, 12);
+                g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset + 2, boxOffset + 2, 13, 13);
 
                 if (Enabled)
                 {
@@ -92,7 +110,7 @@ namespace MaterialSkin.Controls
                 }
                 else if (Checked)
                 {
-                    g.FillRectangle(brush, boxOffset + 2, boxOffset + 2, 12, 12);
+                    g.FillRectangle(brush, boxOffset + 2, boxOffset + 2, 13, 13);
                 }
 
                 g.DrawImageUnscaledAndClipped(DrawCheckMarkBitmap(), checkMarkLineFill);
@@ -108,13 +126,26 @@ namespace MaterialSkin.Controls
 
         private Bitmap DrawCheckMarkBitmap()
         {
-            Bitmap checkMark = new Bitmap(16, 16);
+            Bitmap checkMark = new Bitmap(17, 17);
             Graphics g = Graphics.FromImage(checkMark);
 
             g.Clear(Color.Transparent);
             g.DrawLines(new Pen(Parent.BackColor, 2), CHECKMARK_LINE);
 
             return checkMark;
+        }
+
+        public override bool AutoSize
+        {
+            get { return base.AutoSize; }
+            set
+            {
+                base.AutoSize = value;
+                if (value)
+                {
+                    Size =new Size(10,10);
+                }
+            }
         }
 
         protected override void OnCreateControl()
@@ -142,8 +173,8 @@ namespace MaterialSkin.Controls
 
                 if (Ripple && args.Button == MouseButtons.Left)
                 {
-                    int boxOffset = Height / 2 - 8;
-                    using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 16, 16, 2f))
+                    int boxOffset = Height / 2 - 9;
+                    using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 2f))
                     {
                         if (checkmarkPath.IsVisible(MouseLocation))
                         {
