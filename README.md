@@ -5,6 +5,9 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
 <a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank">![alt tag](http://i.imgur.com/JAttoOo.png)</a>
 
+Because the video quality isn't 100%, here is a screenshot:
+![alt text](http://i.imgur.com/g7yS2uo.png)
+
 ---
 
 #### Current state of the MaterialSkin components
@@ -99,5 +102,4 @@ If you wish to contact me for anything, hit me up @
 
 - Twitter: https://twitter.com/Ignace_Maes
 - Google+: https://google.com/+IgnaceMaes
-- Facebook: https://www.facebook.com/ignace.maes
 - Personal Website: http://ignacemaes.com
