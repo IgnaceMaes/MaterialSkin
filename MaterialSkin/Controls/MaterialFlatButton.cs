@@ -24,7 +24,6 @@ namespace MaterialSkin.Controls
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.Linear,
-                InterruptAnimation = true,
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }
@@ -50,7 +49,7 @@ namespace MaterialSkin.Controls
 
             if (animationManager.IsAnimating())
             {
-                for (int i = 0; i < animationManager.GetRippleCount(); i++)
+                for (int i = 0; i < animationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = animationManager.GetProgress(i);
                     var animationSource = animationManager.GetSource(i);

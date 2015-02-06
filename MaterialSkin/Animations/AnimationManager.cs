@@ -12,6 +12,7 @@ namespace MaterialSkin.Animations
     {
         public bool InterruptAnimation { get; set; }
         public double Increment { get; set; }
+        public double SecondaryIncrement { get; set; }
         public AnimationType AnimationType { get; set; }
         public bool Singular { get; set; }
 
@@ -24,18 +25,26 @@ namespace MaterialSkin.Animations
         private List<double> animationProgresses;
         private List<Point> animationSources;
         private List<AnimationDirection> animationDirections;
+        private List<object[]> animationData;
+ 
         private const double MIN_VALUE = 0.00;
         private const double MAX_VALUE = 1.00;
 
         private readonly Timer animationTimer = new Timer { Interval = 5, Enabled = false };
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new anmation is added to the list.</param>
         public AnimationManager(bool singular = true)
         {
             animationProgresses = new List<double>();
             animationSources = new List<Point>();
             animationDirections = new List<AnimationDirection>();
+            animationData = new List<object[]>();
 
             Increment = 0.03;
+            SecondaryIncrement = 0.03;
             AnimationType = AnimationType.Linear;
             InterruptAnimation = true;
             Singular = singular;
@@ -43,8 +52,8 @@ namespace MaterialSkin.Animations
             if (Singular)
             {
                 animationProgresses.Add(0);
-                animationSources.Add(new Point(0,0));
-                animationDirections.Add(AnimationDirection.Out);
+                animationSources.Add(new Point(0, 0));
+                animationDirections.Add(AnimationDirection.In);
             }
 
             animationTimer.Tick += AnimationTimerOnTick;
@@ -58,12 +67,19 @@ namespace MaterialSkin.Animations
 
                 if (!Singular)
                 {
-                    if ((animationDirections[i] == AnimationDirection.In && animationProgresses[i] == MAX_VALUE) ||
-                        (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] == MIN_VALUE))
+                    if ((animationDirections[i] == AnimationDirection.InOutIn && animationProgresses[i] == MAX_VALUE))
+                    {
+                       animationDirections[i] = AnimationDirection.InOutOut;
+                    }
+                    else if (
+                        (animationDirections[i] == AnimationDirection.In && animationProgresses[i] == MAX_VALUE) ||
+                        (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] == MIN_VALUE) ||
+                        (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] == MIN_VALUE))
                     {
                         animationProgresses.RemoveAt(i);
                         animationSources.RemoveAt(i);
                         animationDirections.RemoveAt(i);
+                        animationData.RemoveAt(i);
                         i--;
                     }
                 }
@@ -80,12 +96,12 @@ namespace MaterialSkin.Animations
             return animationTimer.Enabled;
         }
 
-        public void StartNewAnimation(AnimationDirection animationDirection)
+        public void StartNewAnimation(AnimationDirection animationDirection, object[] data = null)
         {
-            StartNewAnimation(animationDirection, new Point(0,0));
+            StartNewAnimation(animationDirection, new Point(0, 0), data);
         }
 
-        public void StartNewAnimation(AnimationDirection animationDirection, Point animationSource)
+        public void StartNewAnimation(AnimationDirection animationDirection, Point animationSource, object[] data = null)
         {
             if (!IsAnimating() || InterruptAnimation)
             {
@@ -111,9 +127,11 @@ namespace MaterialSkin.Animations
                 {
                     switch (this.animationDirections[this.animationDirections.Count - 1])
                     {
+                        case AnimationDirection.InOutIn:
                         case AnimationDirection.In:
                             animationProgresses.Add(MIN_VALUE);
                             break;
+                        case AnimationDirection.InOutOut:
                         case AnimationDirection.Out:
                             animationProgresses.Add(MAX_VALUE);
                             break;
@@ -121,6 +139,8 @@ namespace MaterialSkin.Animations
                             throw new Exception("Invalid AnimationDirection");
                     }
                 }
+
+                animationData.Add(data ?? new object[] { });
             }
 
             animationTimer.Start();
@@ -130,9 +150,11 @@ namespace MaterialSkin.Animations
         {
             switch (animationDirections[index])
             {
+                case AnimationDirection.InOutIn:
                 case AnimationDirection.In:
                     IncrementProgress(index);
                     break;
+                case AnimationDirection.InOutOut:
                 case AnimationDirection.Out:
                     DecrementProgress(index);
                     break;
@@ -148,8 +170,10 @@ namespace MaterialSkin.Animations
             {
                 animationProgresses[index] = MAX_VALUE;
 
-                for (int i = 0; i < GetRippleCount(); i++)
+                for (int i = 0; i < GetAnimationCount(); i++)
                 {
+                    if (animationDirections[i] == AnimationDirection.InOutIn) return;
+                    if (animationDirections[i] == AnimationDirection.InOutIn && animationProgresses[i] != MAX_VALUE) return;
                     if (animationDirections[i] == AnimationDirection.In && animationProgresses[i] != MAX_VALUE) return;
                 }
 
@@ -160,13 +184,15 @@ namespace MaterialSkin.Animations
 
         private void DecrementProgress(int index)
         {
-            animationProgresses[index] -= Increment;
+            animationProgresses[index] -= (animationDirections[index] == AnimationDirection.InOutOut) ? SecondaryIncrement : Increment;
             if (animationProgresses[index] < MIN_VALUE)
             {
                 animationProgresses[index] = MIN_VALUE;
 
-                for (int i = 0; i < GetRippleCount(); i++)
+                for (int i = 0; i < GetAnimationCount(); i++)
                 {
+                    if (animationDirections[i] == AnimationDirection.InOutIn) return;
+                    if (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MIN_VALUE) return;
                     if (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] != MIN_VALUE) return;
                 }
 
@@ -177,7 +203,7 @@ namespace MaterialSkin.Animations
 
         public double GetProgress()
         {
-            if(!Singular)
+            if (!Singular)
                 throw new Exception("Animation is not set to Singular.");
 
             if (animationProgresses.Count == 0)
@@ -188,7 +214,7 @@ namespace MaterialSkin.Animations
 
         public double GetProgress(int index)
         {
-            if (!(index < GetRippleCount()))
+            if (!(index < GetAnimationCount()))
                 throw new IndexOutOfRangeException("Invalid animation index");
 
             switch (AnimationType)
@@ -204,7 +230,7 @@ namespace MaterialSkin.Animations
 
         public Point GetSource(int index)
         {
-            if (!(index < GetRippleCount()))
+            if (!(index < GetAnimationCount()))
                 throw new IndexOutOfRangeException("Invalid animation index");
 
             return animationSources[index];
@@ -221,7 +247,23 @@ namespace MaterialSkin.Animations
             return animationSources[0];
         }
 
-        public int GetRippleCount()
+        public AnimationDirection GetDirection(int index)
+        {
+            if (!(index < animationDirections.Count))
+                throw new IndexOutOfRangeException("Invalid animation index");
+
+            return animationDirections[index];
+        }
+
+        public object[] GetData(int index)
+        {
+            if (!(index < animationData.Count))
+                throw new IndexOutOfRangeException("Invalid animation index");
+
+            return animationData[index];
+        }
+
+        public int GetAnimationCount()
         {
             return animationProgresses.Count;
         }

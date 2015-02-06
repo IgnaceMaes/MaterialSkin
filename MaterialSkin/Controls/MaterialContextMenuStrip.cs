@@ -25,11 +25,10 @@ namespace MaterialSkin.Controls
         {
             Renderer = new MaterialToolStripRender();
 
-            animationManager = new AnimationManager()
+            animationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
                 AnimationType = AnimationType.Linear,
-                InterruptAnimation = true
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
             animationManager.OnAnimationFinished += sender => OnItemClicked(delayesArgs);
@@ -124,10 +123,13 @@ namespace MaterialSkin.Controls
                 var animationSource = toolStrip.animationSource;
                 if (toolStrip.animationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
                 {
-                    var animationValue = animationManager.GetProgress();
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.Black));
-                    var rippleSize = (int)(animationValue * itemRect.Width * 2.5);
-                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, itemRect.Y - itemRect.Height, rippleSize, itemRect.Height * 3));
+                    for (int i = 0; i < animationManager.GetAnimationCount(); i++)
+                    {
+                        var animationValue = animationManager.GetProgress(i);
+                        var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - (animationValue*50)), Color.Black));
+                        var rippleSize = (int) (animationValue*itemRect.Width*2.5);
+                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize/2, itemRect.Y - itemRect.Height, rippleSize, itemRect.Height*3));
+                    }
                 }
             }
         }

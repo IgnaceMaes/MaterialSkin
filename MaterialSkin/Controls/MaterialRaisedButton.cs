@@ -18,7 +18,7 @@ namespace MaterialSkin.Controls
         public MaterialRaisedButton()
         {
             Primary = true;
-            
+
             animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
@@ -53,16 +53,16 @@ namespace MaterialSkin.Controls
 
             if (animationManager.IsAnimating())
             {
-                for (int i = 0; i < animationManager.GetRippleCount(); i++)
+                for (int i = 0; i < animationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = animationManager.GetProgress(i);
                     var animationSource = animationManager.GetSource(i);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - (animationValue*50)), Color.White));
-                    var rippleSize = (int) (animationValue*Width*2);
-                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize/2, animationSource.Y - rippleSize/2, rippleSize, rippleSize));
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.White));
+                    var rippleSize = (int)(animationValue * Width * 2);
+                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                }
             }
-        }
-            
+
             g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetRaisedButtonTextBrush(Primary), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
     }
