@@ -23,7 +23,7 @@ namespace MaterialSkin.Controls
                 _ripple = value;
                 AutoSize = AutoSize; //Make AutoSize directly set the bounds.
                 Invalidate();
-            } 
+            }
         }
 
         private readonly AnimationManager animationManager;
@@ -57,7 +57,7 @@ namespace MaterialSkin.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             int boxOffset = Height / 2 - 9;
-            int w = boxOffset + 20 + (int) CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            int w = boxOffset + 20 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
@@ -70,7 +70,6 @@ namespace MaterialSkin.Controls
 
             g.Clear(Parent.BackColor);
 
-            bool mouseHand = false;
             int boxOffset = Height / 2 - 9;
 
             double animationProgress = animationManager.GetProgress();
@@ -96,11 +95,6 @@ namespace MaterialSkin.Controls
 
             using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 2f))
             {
-                if (checkmarkPath.IsVisible(MouseLocation))
-                {
-                    mouseHand = true;
-                }
-
                 g.FillPath(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), checkmarkPath);
                 g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset + 2, boxOffset + 2, 13, 13);
 
@@ -121,7 +115,6 @@ namespace MaterialSkin.Controls
 
             brush.Dispose();
 
-            Cursor = (mouseHand) ? Cursors.Hand : Cursors.Default;
         }
 
         private Bitmap DrawCheckMarkBitmap()
@@ -143,8 +136,17 @@ namespace MaterialSkin.Controls
                 base.AutoSize = value;
                 if (value)
                 {
-                    Size =new Size(10,10);
+                    Size = new Size(10, 10);
                 }
+            }
+        }
+
+        private bool IsMouseInCheckArea()
+        {
+            int boxOffset = Height / 2 - 9;
+            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 2f))
+            {
+                return checkmarkPath.IsVisible(MouseLocation);
             }
         }
 
@@ -159,45 +161,32 @@ namespace MaterialSkin.Controls
             MouseEnter += (sender, args) =>
             {
                 MouseState = MouseState.HOVER;
-                Invalidate();
             };
             MouseLeave += (sender, args) =>
             {
                 MouseLocation = new Point(-1, -1);
                 MouseState = MouseState.OUT;
-                Invalidate();
             };
             MouseDown += (sender, args) =>
             {
                 MouseState = MouseState.DOWN;
 
-                if (Ripple && args.Button == MouseButtons.Left)
+                if (Ripple && args.Button == MouseButtons.Left && IsMouseInCheckArea())
                 {
-                    int boxOffset = Height / 2 - 9;
-                    using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 2f))
-                    {
-                        if (checkmarkPath.IsVisible(MouseLocation))
-                        {
-                            rippleAnimationManager.SecondaryIncrement = 0;
-                            rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, data: new object[] { Checked });
-                        }
-                    }
+                    rippleAnimationManager.SecondaryIncrement = 0;
+                    rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, data: new object[] { Checked });
                 }
-
-                Invalidate();
             };
             MouseUp += (sender, args) =>
             {
                 MouseState = MouseState.HOVER;
 
                 rippleAnimationManager.SecondaryIncrement = 0.08;
-
-                Invalidate();
             };
             MouseMove += (sender, args) =>
             {
                 MouseLocation = args.Location;
-                Invalidate();
+                Cursor = IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
             };
         }
 

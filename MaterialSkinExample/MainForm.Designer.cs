@@ -352,7 +352,7 @@ namespace MaterialSkinExample
             this.materialCheckBox9.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialCheckBox9.Depth = 0;
             this.materialCheckBox9.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckBox9.Location = new System.Drawing.Point(6, 215);
+            this.materialCheckBox9.Location = new System.Drawing.Point(6, 218);
             this.materialCheckBox9.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckBox9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckBox9.Name = "materialCheckBox9";
@@ -386,7 +386,7 @@ namespace MaterialSkinExample
             this.materialRadioButton6.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton6.Depth = 0;
             this.materialRadioButton6.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton6.Location = new System.Drawing.Point(108, 218);
+            this.materialRadioButton6.Location = new System.Drawing.Point(123, 218);
             this.materialRadioButton6.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton6.Name = "materialRadioButton6";

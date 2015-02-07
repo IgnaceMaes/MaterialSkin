@@ -74,7 +74,6 @@ namespace MaterialSkin.Controls
 
             g.Clear(Parent.BackColor);
 
-            bool mouseHand = false;
             int boxOffset = Height / 2 - (int)Math.Ceiling(RADIOBUTTON_SIZE / 2d);
 
             var animationProgress = animationManager.GetProgress();
@@ -83,7 +82,7 @@ namespace MaterialSkin.Controls
             int backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
             float animationSize = (float)(animationProgress * 8f);
             float animationSizeHalf = animationSize / 2;
-            animationSize = (float)(animationProgress*9f);
+            animationSize = (float)(animationProgress * 9f);
 
             var transition = new RectangleF(RADIOBUTTON_CENTER_X - animationSizeHalf + boxOffset, RADIOBUTTON_CENTER_Y - animationSizeHalf + boxOffset, animationSize, animationSize);
 
@@ -101,11 +100,6 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            if (new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE).Contains(MouseLocation))
-            {
-                mouseHand = true;
-            }
-
             g.FillEllipse(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
 
             if (Enabled)
@@ -118,9 +112,13 @@ namespace MaterialSkin.Controls
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
             g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + 20, Height / 2 - stringSize.Height / 2);
 
-            brush.Dispose();
+            brush.Dispose();  
+        }
 
-            Cursor = (mouseHand) ? Cursors.Hand : Cursors.Default;
+        private bool IsMouseInCheckArea()
+        {
+            int boxOffset = Height / 2 - 8;
+            return new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE).Contains(MouseLocation);
         }
 
         protected override void OnCreateControl()
@@ -134,42 +132,31 @@ namespace MaterialSkin.Controls
             MouseEnter += (sender, args) =>
             {
                 MouseState = MouseState.HOVER;
-                Invalidate();
             };
             MouseLeave += (sender, args) =>
             {
                 MouseLocation = new Point(-1, -1);
                 MouseState = MouseState.OUT;
-                Invalidate();
             };
             MouseDown += (sender, args) =>
             {
                 MouseState = MouseState.DOWN;
 
-                if (Ripple && args.Button == MouseButtons.Left)
+                if (Ripple && args.Button == MouseButtons.Left && IsMouseInCheckArea())
                 {
-                    int boxOffset = Height / 2 - 8;
-                    if (new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE).Contains(MouseLocation))
-                    {
-                        rippleAnimationManager.SecondaryIncrement = 0;
-                        rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, data: new object[] { Checked });
-                    }
+                    rippleAnimationManager.SecondaryIncrement = 0;
+                    rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, data: new object[] { Checked });
                 }
-
-                Invalidate();
             };
             MouseUp += (sender, args) =>
             {
                 MouseState = MouseState.HOVER;
-
                 rippleAnimationManager.SecondaryIncrement = 0.08;
-
-                Invalidate();
             };
             MouseMove += (sender, args) =>
             {
                 MouseLocation = args.Location;
-                Invalidate();
+                Cursor = IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
             };
         }
     }
