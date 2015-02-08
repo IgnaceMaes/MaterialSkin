@@ -69,6 +69,7 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.materialFlatButton3 = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -405,7 +406,7 @@ namespace MaterialSkinExample
             this.materialRadioButton5.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton5.Depth = 0;
             this.materialRadioButton5.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton5.Location = new System.Drawing.Point(123, 192);
+            this.materialRadioButton5.Location = new System.Drawing.Point(15, 223);
             this.materialRadioButton5.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton5.Name = "materialRadioButton5";
@@ -422,7 +423,7 @@ namespace MaterialSkinExample
             this.materialRadioButton6.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton6.Depth = 0;
             this.materialRadioButton6.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton6.Location = new System.Drawing.Point(123, 217);
+            this.materialRadioButton6.Location = new System.Drawing.Point(15, 250);
             this.materialRadioButton6.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton6.Name = "materialRadioButton6";
@@ -565,6 +566,20 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item3ToolStripMenuItem.Text = "Item 3";
             // 
+            // materialFlatButton3
+            // 
+            this.materialFlatButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialFlatButton3.Depth = 0;
+            this.materialFlatButton3.Enabled = false;
+            this.materialFlatButton3.Location = new System.Drawing.Point(244, 412);
+            this.materialFlatButton3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButton3.Name = "materialFlatButton3";
+            this.materialFlatButton3.Primary = false;
+            this.materialFlatButton3.Size = new System.Drawing.Size(117, 36);
+            this.materialFlatButton3.TabIndex = 19;
+            this.materialFlatButton3.Text = "FlatButton2";
+            this.materialFlatButton3.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -572,6 +587,7 @@ namespace MaterialSkinExample
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(619, 453);
             this.ContextMenuStrip = this.materialContextMenuStrip1;
+            this.Controls.Add(this.materialFlatButton3);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialDivider1);
@@ -629,5 +645,6 @@ namespace MaterialSkinExample
         private MaterialCheckBox materialCheckBox7;
         private MaterialRaisedButton materialRaisedButton1;
         private MaterialCheckBox materialCheckBox8;
+        private MaterialFlatButton materialFlatButton3;
     }
 }

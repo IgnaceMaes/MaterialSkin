@@ -15,6 +15,7 @@ namespace MaterialSkin.Controls
         public bool Primary { get; set; }
 
         private readonly AnimationManager animationManager;
+        private readonly AnimationManager pressAnimationManager;
 
         public MaterialFlatButton()
         {
@@ -25,27 +26,29 @@ namespace MaterialSkin.Controls
                 Increment = 0.03,
                 AnimationType = AnimationType.Linear,
             };
+            pressAnimationManager = new AnimationManager()
+            {
+                Increment = 0.03,
+                AnimationType = AnimationType.Linear,
+            };
             animationManager.OnAnimationProgress += sender => Invalidate();
-        }
-
-        protected override void OnMouseUp(MouseEventArgs mevent)
-        {
-            base.OnMouseUp(mevent);
-
-            animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+            pressAnimationManager.OnAnimationProgress += sender => Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
+            //g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(Parent.BackColor);
-            if (MouseState != MouseState.OUT)
+            if (MouseState != MouseState.OUT )
             {
-                g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), ClientRectangle);
+                    g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), ClientRectangle);
             }
+
+            using (Brush b = new SolidBrush(Color.FromArgb((int)(pressAnimationManager.GetProgress() * 40.PercentageToColorComponent()), SkinManager.GetFlatButtonPressedBackgroundColor().RemoveAlpha()))) 
+                g.FillRectangle(b, ClientRectangle);
 
             if (animationManager.IsAnimating())
             {
@@ -53,13 +56,14 @@ namespace MaterialSkin.Controls
                 {
                     var animationValue = animationManager.GetProgress(i);
                     var animationSource = animationManager.GetSource(i);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.Black));
-                    var rippleSize = (int)(animationValue * Width * 2);
-                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                    using (Brush rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.Black)))
+                    {
+                        var rippleSize = (int)(animationValue * Width * 2);
+                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                    }
                 }
             }
-
-            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorPair.PrimaryBrush : SkinManager.GetMainTextBrush()) : SkinManager.GetDisabledOrHintBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorPair.PrimaryBrush : SkinManager.GetMainTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
 
         protected override void OnCreateControl()
@@ -81,11 +85,22 @@ namespace MaterialSkin.Controls
             MouseDown += (sender, args) =>
             {
                 MouseState = MouseState.DOWN;
-                Invalidate();
+
+                if (args.Button == MouseButtons.Left)
+                {
+                    pressAnimationManager.StartNewAnimation(AnimationDirection.In);
+                    Invalidate();
+                }
             };
             MouseUp += (sender, args) =>
             {
                 MouseState = MouseState.HOVER;
+
+                if (args.Button == MouseButtons.Left)
+                {
+                    animationManager.StartNewAnimation(AnimationDirection.In, args.Location);
+                    pressAnimationManager.StartNewAnimation(AnimationDirection.Out);
+                }
                 Invalidate();
             };
         }
