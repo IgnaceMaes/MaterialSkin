@@ -11,6 +11,8 @@ namespace MaterialSkin
         int Depth { get; set; }
         MaterialSkinManager SkinManager { get; }
         MouseState MouseState { get; set; }
+
+        AnimationUsage AnimationUsage { get; set; }
     }
 
     public enum MouseState
@@ -18,5 +20,12 @@ namespace MaterialSkin
         HOVER,
         DOWN,
         OUT
+    }
+
+    public enum AnimationUsage
+    {
+        FULL,
+        LITTLE,
+        NONE
     }
 }

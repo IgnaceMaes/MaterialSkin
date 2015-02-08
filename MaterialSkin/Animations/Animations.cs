@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MaterialSkin.Animations
 {
     enum AnimationType
     {
         Linear,
-        EaseInOut
+        EaseInOut,
+        EaseOut,
+        CustomQuadratic,
+        CustomQuadratic2
     }
 
     static class AnimationLinear
@@ -32,7 +37,33 @@ namespace MaterialSkin.Animations
 
         private static double EaseInOut(double s)
         {
-            return (Math.Sin(s * PI - PI_HALF) + 1) / 2;
+            return s - Math.Sin(s * 2 * PI) / (2 * PI);
+        }
+    }
+
+    public static class AnimationEaseOut
+    {
+        public static double CalculateProgress(double progress)
+        {
+            return -1 * progress * (progress - 2);
+        }
+    }
+
+    public static class AnimationCustomQuadratic
+    {
+        public static double CalculateProgress(double progress)
+        {
+            double kickoff = 0.6;
+            return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
+        }
+    }
+
+    public static class AnimationCustomQuadratic2
+    {
+        public static double CalculateProgress(double progress)
+        {
+            double kickoff = 0.8;
+            return Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
         }
     }
 }

@@ -15,6 +15,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
+        public AnimationUsage AnimationUsage { get; set; }
 
         private MaterialTabControl baseTabControl;
         public MaterialTabControl BaseTabControl

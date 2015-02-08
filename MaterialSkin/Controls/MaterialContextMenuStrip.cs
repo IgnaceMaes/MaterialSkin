@@ -13,6 +13,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
+        public AnimationUsage AnimationUsage { get; set; }
 
 
         internal AnimationManager animationManager;
@@ -95,6 +96,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
+        public AnimationUsage AnimationUsage { get; set; }
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {

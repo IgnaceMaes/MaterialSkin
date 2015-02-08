@@ -13,6 +13,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
+        public AnimationUsage AnimationUsage { get; set; }
 
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
         public string Hint { get { return baseTextBox.Hint; } set { baseTextBox.Hint = value; } }

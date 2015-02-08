@@ -34,5 +34,10 @@ namespace MaterialSkin
             int b = (int)((backgroundColor.B * invRatio) + (frontColor.B * ratio));
             return Color.FromArgb(r, g, b);
         }
+
+        public static Color BlendColor(Color backgroundColor, Color frontColor)
+        {
+            return BlendColor(backgroundColor, frontColor, frontColor.A);
+        }
     }
 }
