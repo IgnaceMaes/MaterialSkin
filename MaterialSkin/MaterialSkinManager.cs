@@ -21,7 +21,7 @@ namespace MaterialSkin
         private static MaterialSkinManager instance;
 
         //Forms to control
-        private readonly List<MaterialForm> formsToManage = new List<MaterialForm>(); 
+        private readonly List<MaterialForm> formsToManage = new List<MaterialForm>();
 
         //Theme
         private Themes theme;
@@ -35,38 +35,24 @@ namespace MaterialSkin
             }
         }
 
+        public ColorManager.ColorPair ColorPair;
+        private ColorManager.Colors palette;
+        public ColorManager.Colors Palette
+        {
+            get { return palette; }
+            set
+            {
+                palette = value;
+                ColorPair = ColorManager.Palettes[value];
+                UpdateBackgrounds();
+            }
+        }
+
         public enum Themes : byte
         {
             LIGHT,
             DARK
         }
-
-        //The primary color
-        private Color primaryColor;
-        public Color PrimaryColor
-        {
-            get { return primaryColor; }
-            set { primaryColor = value; PrimaryColorBrush = new SolidBrush(primaryColor); }
-        }
-        public SolidBrush PrimaryColorBrush { get; set; }
-
-        //A darker version of the primary color
-        private Color primaryColorDark;
-        public Color PrimaryColorDark
-        {
-            get { return primaryColorDark; }
-            set { primaryColorDark = value; PrimaryColorDarkBrush = new SolidBrush(primaryColorDark); }
-        }
-        public SolidBrush PrimaryColorDarkBrush { get; set; }
-
-        //The accent color
-        private Color accentColor;
-        public Color AccentColor
-        {
-            get { return accentColor; }
-            set { accentColor = value; AccentColorBrush = new SolidBrush(accentColor); }
-        }
-        public SolidBrush AccentColorBrush { get; set; }
 
         //Constant color values
         private static readonly Color MAIN_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
@@ -228,7 +214,7 @@ namespace MaterialSkin
 
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pvd, [In] ref uint pcFonts);
-        
+
         private MaterialSkinManager()
         {
             ROBOTO_MEDIUM_12 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 12f);
@@ -236,9 +222,7 @@ namespace MaterialSkin
             ROBOTO_REGULAR_11 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
             Theme = Themes.LIGHT;
-            PrimaryColor = Color.FromArgb(63, 81, 181);
-            PrimaryColorDark = Color.FromArgb(48, 63, 159);
-            AccentColor = Color.FromArgb(255, 64, 129);
+            Palette = ColorManager.Colors.Indigo;
         }
 
         public static MaterialSkinManager Instance
@@ -266,10 +250,10 @@ namespace MaterialSkin
             Marshal.Copy(fontResource, 0, fontPtr, dataLength);
 
             uint cFonts = 0;
-            AddFontMemResourceEx(fontPtr, (uint) fontResource.Length, IntPtr.Zero, ref cFonts);
+            AddFontMemResourceEx(fontPtr, (uint)fontResource.Length, IntPtr.Zero, ref cFonts);
             privateFontCollection.AddMemoryFont(fontPtr, dataLength);
-            
-           return privateFontCollection.Families.Last();
+
+            return privateFontCollection.Families.Last();
         }
 
         private void UpdateBackgrounds()
@@ -326,6 +310,8 @@ namespace MaterialSkin
             {
                 UpdateControl(control, newBackColor);
             }
+
+            controlToUpdate.Invalidate();
         }
     }
 }

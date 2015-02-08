@@ -39,8 +39,13 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-
         public bool Sizable { get; set; }
+
+        public ColorManager.Colors Palette
+        {
+            get { return SkinManager.Palette; }
+            set { SkinManager.Palette = value; }
+        }
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -182,6 +187,7 @@ namespace MaterialSkin.Controls
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
             DoubleBuffered = true;
+            Palette = ColorManager.Colors.Indigo;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
@@ -469,8 +475,8 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(SkinManager.PrimaryColorDarkBrush, statusBarBounds);
-            g.FillRectangle(SkinManager.PrimaryColorBrush, actionBarBounds);
+            g.FillRectangle(SkinManager.ColorPair.DarkPrimaryBrush, statusBarBounds);
+            g.FillRectangle(SkinManager.ColorPair.PrimaryBrush, actionBarBounds);
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
@@ -517,7 +523,7 @@ namespace MaterialSkin.Controls
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ACTION_BAR_TEXT_BRUSH, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorPair.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
         }
     }
 }

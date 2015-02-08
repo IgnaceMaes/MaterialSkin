@@ -54,17 +54,14 @@ namespace MaterialSkin.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             int boxOffset = Height / 2 - 9;
-            int w = boxOffset + 20 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            int w = boxOffset + 22 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
-        private const int RADIOBUTTON_SIZE = 17;
+        private const int RADIOBUTTON_SIZE = 19;
+        private const int RADIOBUTTON_SIZE_HALF = RADIOBUTTON_SIZE / 2;
         private const int RADIOBUTTON_OUTER_CIRCLE_WIDTH = 2;
         private const int RADIOBUTTON_INNER_CIRCLE_SIZE = RADIOBUTTON_SIZE - (2 * RADIOBUTTON_OUTER_CIRCLE_WIDTH);
-        private const int RADIOBUTTON_X = 0;
-        private const int RADIOBUTTON_Y = 0;
-        private const int RADIOBUTTON_CENTER_X = RADIOBUTTON_X + RADIOBUTTON_SIZE / 2;
-        private const int RADIOBUTTON_CENTER_Y = RADIOBUTTON_Y + RADIOBUTTON_SIZE / 2;
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
@@ -75,6 +72,7 @@ namespace MaterialSkin.Controls
             g.Clear(Parent.BackColor);
 
             int boxOffset = Height / 2 - (int)Math.Ceiling(RADIOBUTTON_SIZE / 2d);
+            var RADIOBUTTON_CENTER = boxOffset + RADIOBUTTON_SIZE_HALF;
 
             var animationProgress = animationManager.GetProgress();
 
@@ -84,41 +82,61 @@ namespace MaterialSkin.Controls
             float animationSizeHalf = animationSize / 2;
             animationSize = (float)(animationProgress * 9f);
 
-            var transition = new RectangleF(RADIOBUTTON_CENTER_X - animationSizeHalf + boxOffset, RADIOBUTTON_CENTER_Y - animationSizeHalf + boxOffset, animationSize, animationSize);
-
-            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            var pen = new Pen(brush.Color);
 
             if (Ripple && rippleAnimationManager.IsAnimating())
             {
                 for (int i = 0; i < rippleAnimationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = rippleAnimationManager.GetProgress(i);
-                    var animationSource = new Point(boxOffset + 8, boxOffset + 8);
+                    var animationSource = new Point(RADIOBUTTON_CENTER, RADIOBUTTON_CENTER);
                     var rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), ((bool)rippleAnimationManager.GetData(i)[0]) ? Color.Black : brush.Color));
-                    var rippleSize = (rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)((Height - 3) * (0.8d + (0.2d * animationValue))) : Height - 3;
-                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                    var rippleHeight = (Height % 2 == 0) ? Height - 3 : Height - 2;
+                    var rippleSize = (rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleHeight * (0.8d + (0.2d * animationValue))) : rippleHeight;
+                    using (var path = DrawHelper.CreateRoundRect(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize, rippleSize / 2))
+                    {
+                        g.FillPath(rippleBrush, path);
+                    }
+
+                    rippleBrush.Dispose();
                 }
             }
 
-            g.FillEllipse(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+            Color uncheckedColor = DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha);
+
+            using (var path = DrawHelper.CreateRoundRect(boxOffset, boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE, 9f))
+            {
+                g.FillPath(new SolidBrush(uncheckedColor), path);
+            }
 
             if (Enabled)
-                g.FillEllipse(brush, RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+            {
+                using (var path = DrawHelper.CreateRoundRect(boxOffset, boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE, 9f))
+                {
+                    g.FillPath(brush, path);
+                }
+            }
 
             g.FillEllipse(new SolidBrush(Parent.BackColor), RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_INNER_CIRCLE_SIZE, RADIOBUTTON_INNER_CIRCLE_SIZE);
 
-            g.FillEllipse(brush, transition);
+
+            using (var path = DrawHelper.CreateRoundRect(RADIOBUTTON_CENTER - animationSizeHalf, RADIOBUTTON_CENTER - animationSizeHalf, animationSize, animationSize, 4f))
+            {
+                g.FillPath(brush, path);
+            }
 
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + 20, Height / 2 - stringSize.Height / 2);
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + 22, Height / 2 - stringSize.Height / 2);
 
             brush.Dispose();  
+            pen.Dispose();
         }
 
         private bool IsMouseInCheckArea()
         {
             int boxOffset = Height / 2 - 8;
-            return new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE).Contains(MouseLocation);
+            return new Rectangle(boxOffset, boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE).Contains(MouseLocation);
         }
 
         protected override void OnCreateControl()

@@ -44,6 +44,7 @@
     <Compile Include="Animations\AnimationDirection.cs" />
     <Compile Include="Animations\AnimationManager.cs" />
     <Compile Include="Animations\Animations.cs" />
+    <Compile Include="ColorManager.cs" />
     <Compile Include="Controls\MaterialCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -22,7 +22,17 @@ namespace MaterialSkin
 
         public static GraphicsPath CreateRoundRect(Rectangle rect, float radius)
         {
-            return CreateRoundRect(rect.X, rect.Y,  rect.Width, rect.Height, radius);
+            return CreateRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);
+        }
+
+        public static Color BlendColor(Color backgroundColor, Color frontColor, double blend)
+        {
+            double ratio = blend / 255d;
+            double invRatio = 1d - ratio;
+            int r = (int)((backgroundColor.R * invRatio) + (frontColor.R * ratio));
+            int g = (int)((backgroundColor.G * invRatio) + (frontColor.G * ratio));
+            int b = (int)((backgroundColor.B * invRatio) + (frontColor.B * ratio));
+            return Color.FromArgb(r, g, b);
         }
     }
 }

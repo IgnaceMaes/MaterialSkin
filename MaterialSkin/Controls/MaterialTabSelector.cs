@@ -71,7 +71,7 @@ namespace MaterialSkin.Controls
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(SkinManager.PrimaryColor);
+            g.Clear(SkinManager.ColorPair.PrimaryColor);
 
             if (baseTabControl == null) return;
 
@@ -111,7 +111,7 @@ namespace MaterialSkin.Controls
             int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
             int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
 
-            g.FillRectangle(SkinManager.AccentColorBrush, x, y, width, TAB_INDICATOR_HEIGHT);
+            g.FillRectangle(SkinManager.ColorPair.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
         }
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
