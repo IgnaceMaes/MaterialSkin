@@ -52,10 +52,6 @@ namespace MaterialSkinExample
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.materialCheckBox9 = new MaterialSkin.Controls.MaterialCheckBox();
-            this.materialRadioButton5 = new MaterialSkin.Controls.MaterialRadioButton();
-            this.materialRadioButton6 = new MaterialSkin.Controls.MaterialRadioButton();
-            this.materialCheckBox7 = new MaterialSkin.Controls.MaterialCheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.materialCheckBox6 = new MaterialSkin.Controls.MaterialCheckBox();
             this.materialCheckBox5 = new MaterialSkin.Controls.MaterialCheckBox();
@@ -68,6 +64,12 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.materialCheckBox7 = new MaterialSkin.Controls.MaterialCheckBox();
+            this.materialCheckBox8 = new MaterialSkin.Controls.MaterialCheckBox();
+            this.materialCheckBox9 = new MaterialSkin.Controls.MaterialCheckBox();
+            this.materialRadioButton5 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialRadioButton6 = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialRadioButton7 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -96,6 +98,7 @@ namespace MaterialSkinExample
             this.materialRadioButton4.Enabled = false;
             this.materialRadioButton4.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialRadioButton4.Location = new System.Drawing.Point(1, 96);
+            this.materialRadioButton4.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton4.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton4.Name = "materialRadioButton4";
@@ -139,6 +142,7 @@ namespace MaterialSkinExample
             this.materialRadioButton3.Depth = 0;
             this.materialRadioButton3.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialRadioButton3.Location = new System.Drawing.Point(1, 68);
+            this.materialRadioButton3.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton3.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton3.Name = "materialRadioButton3";
@@ -155,6 +159,7 @@ namespace MaterialSkinExample
             this.materialRadioButton2.Depth = 0;
             this.materialRadioButton2.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialRadioButton2.Location = new System.Drawing.Point(1, 40);
+            this.materialRadioButton2.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton2.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton2.Name = "materialRadioButton2";
@@ -170,11 +175,12 @@ namespace MaterialSkinExample
             this.materialCheckbox4.Depth = 0;
             this.materialCheckbox4.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialCheckbox4.Location = new System.Drawing.Point(1, 96);
+            this.materialCheckbox4.Margin = new System.Windows.Forms.Padding(0);
             this.materialCheckbox4.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckbox4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox4.Name = "materialCheckbox4";
             this.materialCheckbox4.Ripple = false;
-            this.materialCheckbox4.Size = new System.Drawing.Size(144, 20);
+            this.materialCheckbox4.Size = new System.Drawing.Size(146, 20);
             this.materialCheckbox4.TabIndex = 7;
             this.materialCheckbox4.Text = "materialCheckbox4";
             this.materialCheckbox4.UseVisualStyleBackColor = true;
@@ -186,11 +192,12 @@ namespace MaterialSkinExample
             this.materialCheckbox3.Depth = 0;
             this.materialCheckbox3.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialCheckbox3.Location = new System.Drawing.Point(1, 68);
+            this.materialCheckbox3.Margin = new System.Windows.Forms.Padding(0);
             this.materialCheckbox3.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckbox3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox3.Name = "materialCheckbox3";
             this.materialCheckbox3.Ripple = false;
-            this.materialCheckbox3.Size = new System.Drawing.Size(144, 20);
+            this.materialCheckbox3.Size = new System.Drawing.Size(146, 20);
             this.materialCheckbox3.TabIndex = 6;
             this.materialCheckbox3.Text = "materialCheckbox3";
             this.materialCheckbox3.UseVisualStyleBackColor = true;
@@ -203,11 +210,12 @@ namespace MaterialSkinExample
             this.materialCheckbox2.Depth = 0;
             this.materialCheckbox2.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialCheckbox2.Location = new System.Drawing.Point(1, 40);
+            this.materialCheckbox2.Margin = new System.Windows.Forms.Padding(0);
             this.materialCheckbox2.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckbox2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox2.Name = "materialCheckbox2";
             this.materialCheckbox2.Ripple = false;
-            this.materialCheckbox2.Size = new System.Drawing.Size(144, 20);
+            this.materialCheckbox2.Size = new System.Drawing.Size(146, 20);
             this.materialCheckbox2.TabIndex = 5;
             this.materialCheckbox2.Text = "materialCheckbox2";
             this.materialCheckbox2.UseVisualStyleBackColor = true;
@@ -221,11 +229,12 @@ namespace MaterialSkinExample
             this.materialCheckbox1.Depth = 0;
             this.materialCheckbox1.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialCheckbox1.Location = new System.Drawing.Point(1, 12);
+            this.materialCheckbox1.Margin = new System.Windows.Forms.Padding(0);
             this.materialCheckbox1.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckbox1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckbox1.Name = "materialCheckbox1";
             this.materialCheckbox1.Ripple = false;
-            this.materialCheckbox1.Size = new System.Drawing.Size(144, 20);
+            this.materialCheckbox1.Size = new System.Drawing.Size(146, 20);
             this.materialCheckbox1.TabIndex = 4;
             this.materialCheckbox1.Text = "materialCheckbox1";
             this.materialCheckbox1.UseVisualStyleBackColor = true;
@@ -289,6 +298,7 @@ namespace MaterialSkinExample
             this.materialRadioButton1.Depth = 0;
             this.materialRadioButton1.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialRadioButton1.Location = new System.Drawing.Point(1, 12);
+            this.materialRadioButton1.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton1.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialRadioButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRadioButton1.Name = "materialRadioButton1";
@@ -331,9 +341,11 @@ namespace MaterialSkinExample
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.materialCheckBox9);
-            this.tabPage1.Controls.Add(this.materialRadioButton5);
+            this.tabPage1.Controls.Add(this.materialRadioButton7);
             this.tabPage1.Controls.Add(this.materialRadioButton6);
+            this.tabPage1.Controls.Add(this.materialRadioButton5);
+            this.tabPage1.Controls.Add(this.materialCheckBox9);
+            this.tabPage1.Controls.Add(this.materialCheckBox8);
             this.tabPage1.Controls.Add(this.materialCheckBox7);
             this.tabPage1.Controls.Add(this.materialSingleLineTextField1);
             this.tabPage1.Controls.Add(this.materialSingleLineTextField2);
@@ -345,74 +357,6 @@ namespace MaterialSkinExample
             this.tabPage1.Size = new System.Drawing.Size(578, 286);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
-            // 
-            // materialCheckBox9
-            // 
-            this.materialCheckBox9.AutoSize = true;
-            this.materialCheckBox9.Cursor = System.Windows.Forms.Cursors.Default;
-            this.materialCheckBox9.Depth = 0;
-            this.materialCheckBox9.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckBox9.Location = new System.Drawing.Point(6, 215);
-            this.materialCheckBox9.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialCheckBox9.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCheckBox9.Name = "materialCheckBox9";
-            this.materialCheckBox9.Ripple = true;
-            this.materialCheckBox9.Size = new System.Drawing.Size(96, 30);
-            this.materialCheckBox9.TabIndex = 20;
-            this.materialCheckBox9.Text = "With ripple";
-            this.materialCheckBox9.UseVisualStyleBackColor = true;
-            // 
-            // materialRadioButton5
-            // 
-            this.materialRadioButton5.AutoSize = true;
-            this.materialRadioButton5.Checked = true;
-            this.materialRadioButton5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.materialRadioButton5.Depth = 0;
-            this.materialRadioButton5.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton5.Location = new System.Drawing.Point(123, 192);
-            this.materialRadioButton5.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialRadioButton5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRadioButton5.Name = "materialRadioButton5";
-            this.materialRadioButton5.Ripple = false;
-            this.materialRadioButton5.Size = new System.Drawing.Size(111, 20);
-            this.materialRadioButton5.TabIndex = 19;
-            this.materialRadioButton5.TabStop = true;
-            this.materialRadioButton5.Text = "Without ripple";
-            this.materialRadioButton5.UseVisualStyleBackColor = true;
-            // 
-            // materialRadioButton6
-            // 
-            this.materialRadioButton6.AutoSize = true;
-            this.materialRadioButton6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.materialRadioButton6.Depth = 0;
-            this.materialRadioButton6.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButton6.Location = new System.Drawing.Point(108, 218);
-            this.materialRadioButton6.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialRadioButton6.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRadioButton6.Name = "materialRadioButton6";
-            this.materialRadioButton6.Ripple = true;
-            this.materialRadioButton6.Size = new System.Drawing.Size(96, 30);
-            this.materialRadioButton6.TabIndex = 18;
-            this.materialRadioButton6.Text = "With ripple";
-            this.materialRadioButton6.UseVisualStyleBackColor = true;
-            // 
-            // materialCheckBox7
-            // 
-            this.materialCheckBox7.AutoSize = true;
-            this.materialCheckBox7.Checked = true;
-            this.materialCheckBox7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.materialCheckBox7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.materialCheckBox7.Depth = 0;
-            this.materialCheckBox7.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialCheckBox7.Location = new System.Drawing.Point(6, 189);
-            this.materialCheckBox7.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialCheckBox7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCheckBox7.Name = "materialCheckBox7";
-            this.materialCheckBox7.Ripple = false;
-            this.materialCheckBox7.Size = new System.Drawing.Size(111, 20);
-            this.materialCheckBox7.TabIndex = 15;
-            this.materialCheckBox7.Text = "Without ripple";
-            this.materialCheckBox7.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -438,11 +382,12 @@ namespace MaterialSkinExample
             this.materialCheckBox6.Enabled = false;
             this.materialCheckBox6.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialCheckBox6.Location = new System.Drawing.Point(1, 152);
+            this.materialCheckBox6.Margin = new System.Windows.Forms.Padding(0);
             this.materialCheckBox6.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckBox6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckBox6.Name = "materialCheckBox6";
             this.materialCheckBox6.Ripple = false;
-            this.materialCheckBox6.Size = new System.Drawing.Size(145, 20);
+            this.materialCheckBox6.Size = new System.Drawing.Size(147, 20);
             this.materialCheckBox6.TabIndex = 9;
             this.materialCheckBox6.Text = "materialCheckBox6";
             this.materialCheckBox6.UseVisualStyleBackColor = true;
@@ -457,11 +402,12 @@ namespace MaterialSkinExample
             this.materialCheckBox5.Enabled = false;
             this.materialCheckBox5.Font = new System.Drawing.Font("Roboto", 10F);
             this.materialCheckBox5.Location = new System.Drawing.Point(1, 124);
+            this.materialCheckBox5.Margin = new System.Windows.Forms.Padding(0);
             this.materialCheckBox5.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialCheckBox5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckBox5.Name = "materialCheckBox5";
             this.materialCheckBox5.Ripple = false;
-            this.materialCheckBox5.Size = new System.Drawing.Size(145, 20);
+            this.materialCheckBox5.Size = new System.Drawing.Size(147, 20);
             this.materialCheckBox5.TabIndex = 8;
             this.materialCheckBox5.Text = "materialCheckBox5";
             this.materialCheckBox5.UseVisualStyleBackColor = true;
@@ -547,6 +493,106 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item3ToolStripMenuItem.Text = "Item 3";
             // 
+            // materialCheckBox7
+            // 
+            this.materialCheckBox7.AutoSize = true;
+            this.materialCheckBox7.Checked = true;
+            this.materialCheckBox7.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.materialCheckBox7.Depth = 0;
+            this.materialCheckBox7.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialCheckBox7.Location = new System.Drawing.Point(0, 188);
+            this.materialCheckBox7.Margin = new System.Windows.Forms.Padding(0);
+            this.materialCheckBox7.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialCheckBox7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCheckBox7.Name = "materialCheckBox7";
+            this.materialCheckBox7.Ripple = true;
+            this.materialCheckBox7.Size = new System.Drawing.Size(152, 30);
+            this.materialCheckBox7.TabIndex = 15;
+            this.materialCheckBox7.Text = "materialCheckBox7";
+            this.materialCheckBox7.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox8
+            // 
+            this.materialCheckBox8.AutoSize = true;
+            this.materialCheckBox8.Depth = 0;
+            this.materialCheckBox8.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialCheckBox8.Location = new System.Drawing.Point(0, 218);
+            this.materialCheckBox8.Margin = new System.Windows.Forms.Padding(0);
+            this.materialCheckBox8.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialCheckBox8.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCheckBox8.Name = "materialCheckBox8";
+            this.materialCheckBox8.Ripple = true;
+            this.materialCheckBox8.Size = new System.Drawing.Size(152, 30);
+            this.materialCheckBox8.TabIndex = 16;
+            this.materialCheckBox8.Text = "materialCheckBox8";
+            this.materialCheckBox8.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox9
+            // 
+            this.materialCheckBox9.AutoSize = true;
+            this.materialCheckBox9.Depth = 0;
+            this.materialCheckBox9.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialCheckBox9.Location = new System.Drawing.Point(0, 248);
+            this.materialCheckBox9.Margin = new System.Windows.Forms.Padding(0);
+            this.materialCheckBox9.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialCheckBox9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCheckBox9.Name = "materialCheckBox9";
+            this.materialCheckBox9.Ripple = true;
+            this.materialCheckBox9.Size = new System.Drawing.Size(152, 30);
+            this.materialCheckBox9.TabIndex = 17;
+            this.materialCheckBox9.Text = "materialCheckBox9";
+            this.materialCheckBox9.UseVisualStyleBackColor = true;
+            // 
+            // materialRadioButton5
+            // 
+            this.materialRadioButton5.AutoSize = true;
+            this.materialRadioButton5.Checked = true;
+            this.materialRadioButton5.Depth = 0;
+            this.materialRadioButton5.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialRadioButton5.Location = new System.Drawing.Point(191, 188);
+            this.materialRadioButton5.Margin = new System.Windows.Forms.Padding(0);
+            this.materialRadioButton5.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialRadioButton5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRadioButton5.Name = "materialRadioButton5";
+            this.materialRadioButton5.Ripple = true;
+            this.materialRadioButton5.Size = new System.Drawing.Size(164, 30);
+            this.materialRadioButton5.TabIndex = 18;
+            this.materialRadioButton5.TabStop = true;
+            this.materialRadioButton5.Text = "materialRadioButton5";
+            this.materialRadioButton5.UseVisualStyleBackColor = true;
+            // 
+            // materialRadioButton6
+            // 
+            this.materialRadioButton6.AutoSize = true;
+            this.materialRadioButton6.Depth = 0;
+            this.materialRadioButton6.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialRadioButton6.Location = new System.Drawing.Point(191, 218);
+            this.materialRadioButton6.Margin = new System.Windows.Forms.Padding(0);
+            this.materialRadioButton6.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialRadioButton6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRadioButton6.Name = "materialRadioButton6";
+            this.materialRadioButton6.Ripple = true;
+            this.materialRadioButton6.Size = new System.Drawing.Size(164, 30);
+            this.materialRadioButton6.TabIndex = 19;
+            this.materialRadioButton6.Text = "materialRadioButton6";
+            this.materialRadioButton6.UseVisualStyleBackColor = true;
+            // 
+            // materialRadioButton7
+            // 
+            this.materialRadioButton7.AutoSize = true;
+            this.materialRadioButton7.Depth = 0;
+            this.materialRadioButton7.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialRadioButton7.Location = new System.Drawing.Point(191, 248);
+            this.materialRadioButton7.Margin = new System.Windows.Forms.Padding(0);
+            this.materialRadioButton7.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialRadioButton7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRadioButton7.Name = "materialRadioButton7";
+            this.materialRadioButton7.Ripple = true;
+            this.materialRadioButton7.Size = new System.Drawing.Size(164, 30);
+            this.materialRadioButton7.TabIndex = 20;
+            this.materialRadioButton7.Text = "materialRadioButton7";
+            this.materialRadioButton7.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -605,9 +651,11 @@ namespace MaterialSkinExample
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem disabledItemToolStripMenuItem;
         private MaterialCheckBox materialCheckBox6;
-        private MaterialCheckBox materialCheckBox7;
+        private MaterialRadioButton materialRadioButton7;
         private MaterialRadioButton materialRadioButton6;
         private MaterialRadioButton materialRadioButton5;
         private MaterialCheckBox materialCheckBox9;
+        private MaterialCheckBox materialCheckBox8;
+        private MaterialCheckBox materialCheckBox7;
     }
 }
