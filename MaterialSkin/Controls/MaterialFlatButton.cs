@@ -44,7 +44,7 @@ namespace MaterialSkin.Controls
             };
             holdRippleAnimationManager = new AnimationManager()
             {
-                Increment = 0.05,
+                Increment = 0.01,
                 AnimationType = AnimationType.CustomQuadratic,
             };
 
