@@ -34,13 +34,13 @@ More... | No | No | No | No
 
 **1. Add the library to your project**
 
-  You can do this on multiple ways. The easiest way would be adding the binary as found in [releases](https://github.com/IgnaceMaes/MaterialSkin/releases). Right click on your project and add the library as reference. I highly recommand to enable copy local so you always have the lib in your build folder.
-  
-  Another way of doing this step would be downloading the project from GitHub, compiling the library yourself and adding it as a reference.
+  You can do this on multiple ways. The easiest way would be adding the [NuGet Package](https://www.nuget.org/packages/MaterialSkin/). Right click on your project and click 'Manage NuGet Packages...'. Search for 'MaterialSkin' and click on install. Once installed the library will be included in your project references. (Or install it through the package manager console: PM> Install-Package MaterialSkin)
+
+Another way of doing this step would be cloning the project from GitHub, compiling the library yourself and adding it as a reference.
   
 **2. Add the MaterialSkin components to your ToolBox**
 
-  Simply drag the MaterialSkin.dll file into your IDE's ToolBox and all the controls should be added there.
+  If you have installed the NuGet package, the MaterialSkin.dll file should be in the folder //bin/Debug. Simply drag the MaterialSkin.dll file into your IDE's ToolBox and all the controls should be added there.
   
 **3. Inherit from MaterialForm**
 
@@ -67,7 +67,6 @@ C# (Form1.cs)
   {
       InitializeComponent();
 
-      //Initialize MaterialSkinManager (example in C#)
       var materialSkinManager = MaterialSkinManager.Instance;
       materialSkinManager.AddFormToManage(this);
       materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
