@@ -9,7 +9,7 @@ namespace MaterialSkin.Animations
     enum AnimationType
     {
         Linear,
-        EaseInOut
+        EaseInOut,
     }
 
     static class AnimationLinear

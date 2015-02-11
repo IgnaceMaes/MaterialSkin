@@ -26,7 +26,7 @@ namespace MaterialSkin.Animations
         private List<Point> animationSources;
         private List<AnimationDirection> animationDirections;
         private List<object[]> animationData;
- 
+
         private const double MIN_VALUE = 0.00;
         private const double MAX_VALUE = 1.00;
 
@@ -69,7 +69,7 @@ namespace MaterialSkin.Animations
                 {
                     if ((animationDirections[i] == AnimationDirection.InOutIn && animationProgresses[i] == MAX_VALUE))
                     {
-                       animationDirections[i] = AnimationDirection.InOutOut;
+                        animationDirections[i] = AnimationDirection.InOutOut;
                     }
                     else if (
                         (animationDirections[i] == AnimationDirection.In && animationProgresses[i] == MAX_VALUE) ||
@@ -173,7 +173,7 @@ namespace MaterialSkin.Animations
                 for (int i = 0; i < GetAnimationCount(); i++)
                 {
                     if (animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutIn && animationProgresses[i] != MAX_VALUE) return;
+                    if (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MAX_VALUE) return;
                     if (animationDirections[i] == AnimationDirection.In && animationProgresses[i] != MAX_VALUE) return;
                 }
 
