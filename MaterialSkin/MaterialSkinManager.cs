@@ -21,7 +21,7 @@ namespace MaterialSkin
         private static MaterialSkinManager instance;
 
         //Forms to control
-        private readonly List<MaterialForm> formsToManage = new List<MaterialForm>(); 
+        private readonly List<MaterialForm> formsToManage = new List<MaterialForm>();
 
         //Theme
         private Themes theme;
@@ -228,7 +228,7 @@ namespace MaterialSkin
 
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pvd, [In] ref uint pcFonts);
-        
+
         private MaterialSkinManager()
         {
             ROBOTO_MEDIUM_12 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 12f);
@@ -266,10 +266,10 @@ namespace MaterialSkin
             Marshal.Copy(fontResource, 0, fontPtr, dataLength);
 
             uint cFonts = 0;
-            AddFontMemResourceEx(fontPtr, (uint) fontResource.Length, IntPtr.Zero, ref cFonts);
+            AddFontMemResourceEx(fontPtr, (uint)fontResource.Length, IntPtr.Zero, ref cFonts);
             privateFontCollection.AddMemoryFont(fontPtr, dataLength);
-            
-           return privateFontCollection.Families.Last();
+
+            return privateFontCollection.Families.Last();
         }
 
         private void UpdateBackgrounds()

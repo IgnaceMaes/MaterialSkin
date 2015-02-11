@@ -17,6 +17,6 @@ namespace MaterialSkin
     {
         HOVER,
         DOWN,
-        OUT
+        OUT,
     }
 }

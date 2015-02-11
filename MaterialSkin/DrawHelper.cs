@@ -22,7 +22,7 @@ namespace MaterialSkin
 
         public static GraphicsPath CreateRoundRect(Rectangle rect, float radius)
         {
-            return CreateRoundRect(rect.X, rect.Y,  rect.Width, rect.Height, radius);
+            return CreateRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);
         }
     }
 }
