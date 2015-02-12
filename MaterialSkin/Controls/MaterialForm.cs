@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -12,40 +14,23 @@ using System.Windows.Forms;
 
 namespace MaterialSkin.Controls
 {
-    public class MouseMessageFilter : IMessageFilter
-    {
-        private const int WM_MOUSEMOVE = 0x0200;
-
-        public static event MouseEventHandler MouseMove;
-
-        public bool PreFilterMessage(ref Message m)
-        {
-
-            if (m.Msg == WM_MOUSEMOVE)
-            {
-                if (MouseMove != null)
-                {
-                    int x = Control.MousePosition.X, y = Control.MousePosition.Y;
-
-                    MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
-                }
-            }
-            return false;
-        }
-    }
-
     public class MaterialForm : Form, IMaterialControl
     {
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        public AnimationUsage AnimationUsage { get; set; }
+        
         public bool Sizable { get; set; }
 
-        public ColorManager.Colors Palette
+        public ColorManager.PrimaryColors PrimaryPalette
         {
-            get { return SkinManager.Palette; }
-            set { SkinManager.Palette = value; }
+            get { return SkinManager.PrimaryPalette; }
+            set { SkinManager.PrimaryPalette = value; }
+        }
+        public ColorManager.AccentColors AccentPalette
+        {
+            get { return SkinManager.AccentPalette; }
+            set { SkinManager.AccentPalette = value; }
         }
 
         [DllImport("user32.dll")]
@@ -188,7 +173,8 @@ namespace MaterialSkin.Controls
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
             DoubleBuffered = true;
-            Palette = ColorManager.Colors.Indigo;
+            PrimaryPalette = ColorManager.PrimaryColors.Indigo;
+            AccentPalette = ColorManager.AccentColors.Pink;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
@@ -476,8 +462,8 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(SkinManager.ColorPair.DarkPrimaryBrush, statusBarBounds);
-            g.FillRectangle(SkinManager.ColorPair.PrimaryBrush, actionBarBounds);
+            g.FillRectangle(SkinManager.PrimaryColorPair.DarkPrimaryBrush, statusBarBounds);
+            g.FillRectangle(SkinManager.PrimaryColorPair.PrimaryBrush, actionBarBounds);
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
@@ -524,7 +510,38 @@ namespace MaterialSkin.Controls
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorPair.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.PrimaryColorPair.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
+        }
+    }
+
+    public class MouseMessageFilter : IMessageFilter
+    {
+        private const int WM_MOUSEMOVE = 0x0200;
+
+        public static event MouseEventHandler MouseMove;
+
+        public bool PreFilterMessage(ref Message m)
+        {
+
+            if (m.Msg == WM_MOUSEMOVE)
+            {
+                if (MouseMove != null)
+                {
+                    int x = Control.MousePosition.X, y = Control.MousePosition.Y;
+
+                    MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
+                }
+            }
+            return false;
+        }
+    }
+
+    public class MaterialFlatButtonTemplate
+    {
+        public MaterialFlatButton Button { get; set; }
+
+        public MaterialFlatButtonTemplate()
+        {
         }
     }
 }

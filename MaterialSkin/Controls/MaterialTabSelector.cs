@@ -15,7 +15,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        public AnimationUsage AnimationUsage { get; set; }
+        
 
         private MaterialTabControl baseTabControl;
         public MaterialTabControl BaseTabControl
@@ -72,7 +72,7 @@ namespace MaterialSkin.Controls
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(SkinManager.ColorPair.PrimaryColor);
+            g.Clear(SkinManager.PrimaryColorPair.PrimaryColor);
 
             if (baseTabControl == null) return;
 
@@ -97,7 +97,7 @@ namespace MaterialSkin.Controls
             foreach (TabPage tabPage in baseTabControl.TabPages)
             {
                 int currentTabIndex = tabPage.TabIndex;
-                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ACTION_BAR_TEXT));
+                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.PrimaryColorPair.TextColor));
 
                 g.DrawString(tabPage.Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, textBrush, TabRects[currentTabIndex], new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 textBrush.Dispose();
@@ -112,7 +112,7 @@ namespace MaterialSkin.Controls
             int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
             int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
 
-            g.FillRectangle(SkinManager.ColorPair.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
+            g.FillRectangle(SkinManager.AccentColorPair.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
         }
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)

@@ -19,40 +19,26 @@ namespace MaterialSkinExample
             // Initialize MaterialSkinManager
             materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            /*materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.PrimaryColor = Color.FromArgb(63, 81, 181);
-            materialSkinManager.PrimaryColorDark = Color.FromArgb(48, 63, 159);
-            materialSkinManager.AccentColor = Color.FromArgb(255, 64, 129);*/
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.Palette = ColorManager.Colors.Indigo;
-            /*materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.PrimaryColor = Color.FromArgb(32, 149, 242);
-            materialSkinManager.PrimaryColorDark = Color.FromArgb(24, 117, 209);
-            materialSkinManager.AccentColor = Color.FromArgb(254, 86, 33);*/
+            materialSkinManager.PrimaryPalette = ColorManager.PrimaryColors.Indigo;
+            materialSkinManager.AccentPalette = ColorManager.AccentColors.Pink;
         }
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
         private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
-            FieldInfo[] fieldInfos = typeof(ColorManager.Colors).GetFields(BindingFlags.Static | BindingFlags.Public);
-            var defaultValue = default(ColorManager.Colors);
-            List<ColorManager.Colors> colors = new List<ColorManager.Colors>();
+            FieldInfo[] fieldInfos = typeof(ColorManager.PrimaryColors).GetFields(BindingFlags.Static | BindingFlags.Public);
+            var defaultValue = default(ColorManager.PrimaryColors);
+            List<ColorManager.PrimaryColors> colors = new List<ColorManager.PrimaryColors>();
             foreach (FieldInfo info in fieldInfos)
             {
-                colors.Add((ColorManager.Colors)info.GetValue(defaultValue));
+                colors.Add((ColorManager.PrimaryColors)info.GetValue(defaultValue));
             }
-            int currentIndex = colors.IndexOf(materialSkinManager.Palette);
+            int currentIndex = colors.IndexOf(materialSkinManager.PrimaryPalette);
             if (currentIndex == colors.Count - 1)
             {
                 currentIndex = 0;
@@ -61,7 +47,33 @@ namespace MaterialSkinExample
             {
                 currentIndex++;
             }
-            materialSkinManager.Palette = colors[currentIndex];
+            materialSkinManager.PrimaryPalette = colors[currentIndex];
+        }
+
+        private void materialRaisedButton2_Click(object sender, EventArgs e)
+        {
+            FieldInfo[] fieldInfos = typeof(ColorManager.AccentColors).GetFields(BindingFlags.Static | BindingFlags.Public);
+            var defaultValue = default(ColorManager.AccentColors);
+            List<ColorManager.AccentColors> colors = new List<ColorManager.AccentColors>();
+            foreach (FieldInfo info in fieldInfos)
+            {
+                colors.Add((ColorManager.AccentColors)info.GetValue(defaultValue));
+            }
+            int currentIndex = colors.IndexOf(materialSkinManager.AccentPalette);
+            if (currentIndex == colors.Count - 1)
+            {
+                currentIndex = 0;
+            }
+            else
+            {
+                currentIndex++;
+            }
+            materialSkinManager.AccentPalette = colors[currentIndex];
+        }
+
+        private void materialFlatButton2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

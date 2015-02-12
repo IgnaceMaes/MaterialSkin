@@ -11,7 +11,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        public AnimationUsage AnimationUsage { get; set; }
+        
         public bool Primary { get; set; }
 
         private readonly AnimationManager animationManager;
@@ -49,7 +49,7 @@ namespace MaterialSkin.Controls
                 ClientRectangle.Height - 1,
                 1f))
             {
-                g.FillPath(Primary ? SkinManager.ColorPair.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                g.FillPath(Primary ? SkinManager.PrimaryColorPair.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
             }
 
             if (animationManager.IsAnimating())

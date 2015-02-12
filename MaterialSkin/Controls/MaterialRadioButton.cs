@@ -12,7 +12,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        public AnimationUsage AnimationUsage { get; set; }
+        
         public Point MouseLocation { get; set; }
 
         private bool _ripple = false;
@@ -83,7 +83,7 @@ namespace MaterialSkin.Controls
             float animationSizeHalf = animationSize / 2;
             animationSize = (float)(animationProgress * 9f);
 
-            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.AccentColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
             var pen = new Pen(brush.Color);
 
             if (Ripple && rippleAnimationManager.IsAnimating())
@@ -121,12 +121,13 @@ namespace MaterialSkin.Controls
 
             g.FillEllipse(new SolidBrush(Parent.BackColor), RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_INNER_CIRCLE_SIZE, RADIOBUTTON_INNER_CIRCLE_SIZE);
 
-
-            using (var path = DrawHelper.CreateRoundRect(RADIOBUTTON_CENTER - animationSizeHalf, RADIOBUTTON_CENTER - animationSizeHalf, animationSize, animationSize, 4f))
+            if (Checked)
             {
-                g.FillPath(brush, path);
+                using (var path = DrawHelper.CreateRoundRect(RADIOBUTTON_CENTER - animationSizeHalf, RADIOBUTTON_CENTER - animationSizeHalf, animationSize, animationSize, 4f))
+                {
+                    g.FillPath(brush, path);
+                }
             }
-
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
             g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + 22, Height / 2 - stringSize.Height / 2);
 

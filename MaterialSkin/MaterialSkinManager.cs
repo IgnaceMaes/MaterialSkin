@@ -35,18 +35,32 @@ namespace MaterialSkin
             }
         }
 
-        public ColorManager.ColorPair ColorPair;
-        private ColorManager.Colors palette;
-        public ColorManager.Colors Palette
+        public ColorManager.PrimaryColorPair PrimaryColorPair;
+        private ColorManager.PrimaryColors primaryPalette;
+        public ColorManager.PrimaryColors PrimaryPalette
         {
-            get { return palette; }
+            get { return primaryPalette; }
             set
             {
-                palette = value;
-                ColorPair = ColorManager.Palettes[value];
+                primaryPalette = value;
+                PrimaryColorPair = ColorManager.PrimaryPalettes[value];
                 UpdateBackgrounds();
             }
         }
+
+        public ColorManager.AccentColorPair AccentColorPair;
+        private ColorManager.AccentColors accentPalette;
+        public ColorManager.AccentColors AccentPalette
+        {
+            get { return accentPalette; }
+            set
+            {
+                accentPalette = value;
+                AccentColorPair = ColorManager.AccentPalettes[value];
+                UpdateBackgrounds();
+            }
+        }
+
 
         public enum Themes : byte
         {
@@ -241,7 +255,8 @@ namespace MaterialSkin
             ROBOTO_REGULAR_11 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
             Theme = Themes.LIGHT;
-            Palette = ColorManager.Colors.Indigo;
+            PrimaryPalette = ColorManager.PrimaryColors.Indigo;
+            AccentPalette = ColorManager.AccentColors.Pink;
         }
 
         public static MaterialSkinManager Instance

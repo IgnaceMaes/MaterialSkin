@@ -14,7 +14,6 @@ namespace MaterialSkin.Animations
         EaseInOut,
         EaseOut,
         CustomQuadratic,
-        CustomQuadratic2
     }
 
     static class AnimationLinear
@@ -55,15 +54,6 @@ namespace MaterialSkin.Animations
         {
             double kickoff = 0.6;
             return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
-        }
-    }
-
-    public static class AnimationCustomQuadratic2
-    {
-        public static double CalculateProgress(double progress)
-        {
-            double kickoff = 0.8;
-            return Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
         }
     }
 }

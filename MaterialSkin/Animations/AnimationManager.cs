@@ -265,8 +265,6 @@ namespace MaterialSkin.Animations
                     return AnimationEaseOut.CalculateProgress(animationProgresses[index]);
                 case AnimationType.CustomQuadratic:
                     return AnimationCustomQuadratic.CalculateProgress(animationProgresses[index]);
-                case AnimationType.CustomQuadratic2:
-                    return AnimationCustomQuadratic2.CalculateProgress(animationProgresses[index]);
             }
 
             throw new NotImplementedException("The given AnimationType is not implemented");

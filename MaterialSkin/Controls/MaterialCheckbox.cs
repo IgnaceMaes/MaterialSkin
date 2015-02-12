@@ -13,7 +13,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        public AnimationUsage AnimationUsage { get; set; }
+        
         public Point MouseLocation { get; set; }
 
         private bool _ripple = false;
@@ -34,6 +34,8 @@ namespace MaterialSkin.Controls
         private const int CHECKBOX_SIZE = 18;
         private const int CHECKBOX_SIZE_HALF = CHECKBOX_SIZE / 2;
         private const int CHECKBOX_INNER_BOX_SIZE = CHECKBOX_SIZE - 4;
+
+        private Rectangle boxRectangle;
 
         public MaterialCheckBox()
         {
@@ -58,6 +60,12 @@ namespace MaterialSkin.Controls
 
             Ripple = false;
             MouseLocation = new Point(-1, -1);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            int boxOffset = Height / 2 - 9;
+            boxRectangle = new Rectangle(boxOffset, boxOffset, CHECKBOX_SIZE - 1, CHECKBOX_SIZE - 1);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
@@ -85,8 +93,8 @@ namespace MaterialSkin.Controls
             int colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
             int backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
 
-            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
-            var brush3 = new SolidBrush(Enabled ? SkinManager.ColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor());
+            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.AccentColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            var brush3 = new SolidBrush(Enabled ? SkinManager.AccentColorPair.AccentColor : SkinManager.GetCheckBoxOffDisabledColor());
             var pen = new Pen(brush.Color);
 
             if (Ripple && rippleAnimationManager.IsAnimating())
@@ -171,11 +179,7 @@ namespace MaterialSkin.Controls
 
         private bool IsMouseInCheckArea()
         {
-            int boxOffset = Height / 2 - 9;
-            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 2f))
-            {
-                return checkmarkPath.IsVisible(MouseLocation);
-            }
+            return boxRectangle.Contains(MouseLocation);
         }
 
         protected override void OnCreateControl()
