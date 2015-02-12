@@ -18,7 +18,6 @@ namespace MaterialSkin.Controls
 
         private readonly AnimationManager animationManager;
         private readonly AnimationManager hoverAnimationManager;
-        private readonly AnimationManager pressAnimationManager;
         private readonly AnimationManager holdRippleAnimationManager;
 
         private SizeF textSize;
@@ -37,11 +36,6 @@ namespace MaterialSkin.Controls
                 Increment = 0.07,
                 AnimationType = AnimationType.Linear,
             };
-            pressAnimationManager = new AnimationManager()
-            {
-                Increment = 0.07,
-                AnimationType = AnimationType.Linear,
-            };
             holdRippleAnimationManager = new AnimationManager()
             {
                 Increment = 0.01,
@@ -49,7 +43,6 @@ namespace MaterialSkin.Controls
             };
 
             hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
-            pressAnimationManager.OnAnimationProgress += sender => Invalidate();
             animationManager.OnAnimationProgress += sender => Invalidate();
             holdRippleAnimationManager.OnAnimationProgress += sender => Invalidate();
 
@@ -93,11 +86,6 @@ namespace MaterialSkin.Controls
             using (Brush b = new SolidBrush(Color.FromArgb((int)(hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
                 g.FillRectangle(b, ClientRectangle);
 
-            //Down
-            Color c2 = SkinManager.GetFlatButtonPressedBackgroundColor();
-            using (Brush b = new SolidBrush(Color.FromArgb((int)(pressAnimationManager.GetProgress() * c2.A), c2.RemoveAlpha())))
-                g.FillRectangle(b, ClientRectangle);
-
             //Ripple
             if (animationManager.IsAnimating())
             {
@@ -122,7 +110,7 @@ namespace MaterialSkin.Controls
                 var animationValue = holdRippleAnimationManager.GetProgress();
                 var animationSource = new Point(Width / 2, Height / 2);
 
-                var artificalAlphaColor = DrawHelper.BlendColor(Parent.BackColor, SkinManager.GetFlatButtonHoverBackgroundColor());
+                var artificalAlphaColor = DrawHelper.BlendColor(Parent.BackColor, SkinManager.GetFlatButtonPressedBackgroundColor());
                 artificalAlphaColor = DrawHelper.BlendColor(artificalAlphaColor, Parent.BackColor, 0.PercentageToColorComponent());
                 using (Brush rippleBrush = new SolidBrush(artificalAlphaColor))
                 {
@@ -170,12 +158,13 @@ namespace MaterialSkin.Controls
                 if (args.Button == MouseButtons.Left)
                 {
                     MouseState = MouseState.DOWN;
-                    pressAnimationManager.StartNewAnimation(AnimationDirection.In);
 
                     holdRippleAnimationManager.SetProgress(0);
                     holdRippleAnimationManager.SecondaryIncrement = 0d;
                     holdRippleAnimationManager.AnimationType = AnimationType.CustomQuadratic;
                     holdRippleAnimationManager.StartNewAnimation(AnimationDirection.In, new object[] { false });
+
+                    animationManager.StartNewAnimation(AnimationDirection.In, args.Location);
                     Invalidate();
                 }
             };
@@ -185,13 +174,10 @@ namespace MaterialSkin.Controls
 
                 if (args.Button == MouseButtons.Left)
                 {
-                    animationManager.StartNewAnimation(AnimationDirection.In, args.Location);
-                    pressAnimationManager.StartNewAnimation(AnimationDirection.Out);
-
-                    holdRippleAnimationManager.AnimationType = AnimationType.Linear;
                     holdRippleAnimationManager.SetDirection(AnimationDirection.InOutOut);
+                    holdRippleAnimationManager.SetData(new object[] { false });
+                    holdRippleAnimationManager.SecondaryIncrement = 0.1d;
                 }
-                holdRippleAnimationManager.SecondaryIncrement = 0.1d;
                 Invalidate();
             };
         }
