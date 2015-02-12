@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -35,9 +36,14 @@ namespace MaterialSkin.Controls
 
     public class MaterialForm : Form, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
+        [Browsable(false)]
+        public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
 
         public bool Sizable { get; set; }
 

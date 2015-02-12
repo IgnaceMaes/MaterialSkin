@@ -3,14 +3,19 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
+using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
     public class MaterialRaisedButton : Button, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
+        [Browsable(false)]
         public bool Primary { get; set; }
 
         private readonly AnimationManager animationManager;

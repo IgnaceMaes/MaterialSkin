@@ -10,8 +10,11 @@ namespace MaterialSkin.Controls
     public class MaterialSingleLineTextField : Control, IMaterialControl
     {
         //Properties for managing the material design properties
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
 
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
