@@ -14,7 +14,6 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
 
-
         internal AnimationManager animationManager;
         internal Point animationSource;
 
@@ -57,10 +56,10 @@ namespace MaterialSkin.Controls
                 {
                     //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
                     delayesArgs = e;
-                    
+
                     //Fire custom event to trigger actions directly but keep cms open
                     if (OnItemClickStart != null) OnItemClickStart(this, e);
-                    
+
                     //Start animation
                     animationManager.StartNewAnimation(AnimationDirection.In);
                 }
@@ -70,7 +69,6 @@ namespace MaterialSkin.Controls
 
     public class MaterialToolStripMenuItem : ToolStripMenuItem
     {
-
         public MaterialToolStripMenuItem()
         {
             AutoSize = false;
@@ -113,7 +111,7 @@ namespace MaterialSkin.Controls
 
             //Draw background
             var itemRect = GetItemRect(e.Item);
-            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()),itemRect);
+            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()), itemRect);
 
             //Ripple animation
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
@@ -126,9 +124,9 @@ namespace MaterialSkin.Controls
                     for (int i = 0; i < animationManager.GetAnimationCount(); i++)
                     {
                         var animationValue = animationManager.GetProgress(i);
-                        var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - (animationValue*50)), Color.Black));
-                        var rippleSize = (int) (animationValue*itemRect.Width*2.5);
-                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize/2, itemRect.Y - itemRect.Height, rippleSize, itemRect.Height*3));
+                        var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.Black));
+                        var rippleSize = (int)(animationValue * itemRect.Width * 2.5);
+                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, itemRect.Y - itemRect.Height, rippleSize, itemRect.Height * 3));
                     }
                 }
             }
@@ -169,10 +167,10 @@ namespace MaterialSkin.Controls
                 g.FillPath(arrowBrush, arrowPath);
             }
         }
-        
+
         private Rectangle GetItemRect(ToolStripItem item)
         {
-            return  new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height);
+            return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height);
         }
     }
 }

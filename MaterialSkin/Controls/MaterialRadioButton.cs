@@ -14,13 +14,13 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public Point MouseLocation { get; set; }
 
-        private bool _ripple;
+        private bool ripple;
         public bool Ripple
         {
-            get { return _ripple; }
+            get { return ripple; }
             set
             {
-                _ripple = value;
+                ripple = value;
                 AutoSize = AutoSize; //Make AutoSize directly set the bounds.
 
                 if (value)
@@ -68,13 +68,13 @@ namespace MaterialSkin.Controls
         private int boxOffset;
         private void OnSizeChanged(object sender, EventArgs eventArgs)
         {
-            boxOffset = Height / 2 - (int) Math.Ceiling(RADIOBUTTON_SIZE / 2d);
+            boxOffset = Height / 2 - (int)Math.Ceiling(RADIOBUTTON_SIZE / 2d);
             radioButtonBounds = new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            int w = boxOffset + 20 + (int) CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            int w = boxOffset + 20 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
@@ -95,14 +95,14 @@ namespace MaterialSkin.Controls
 
             // clear the control
             g.Clear(Parent.BackColor);
-            
+
             var animationProgress = animationManager.GetProgress();
 
             int colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
             int backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
             float animationSize = (float)(animationProgress * 8f);
             float animationSizeHalf = animationSize / 2;
-            animationSize = (float)(animationProgress*9f);
+            animationSize = (float)(animationProgress * 9f);
 
             var transition = new RectangleF(RADIOBUTTON_CENTER_X - animationSizeHalf + boxOffset, RADIOBUTTON_CENTER_Y - animationSizeHalf + boxOffset, animationSize, animationSize);
 

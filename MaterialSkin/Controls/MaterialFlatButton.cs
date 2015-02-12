@@ -73,8 +73,8 @@ namespace MaterialSkin.Controls
                 MouseState = MouseState.HOVER;
                 Invalidate();
             };
-            MouseLeave += (sender, args) => 
-            { 
+            MouseLeave += (sender, args) =>
+            {
                 MouseState = MouseState.OUT;
                 Invalidate();
             };

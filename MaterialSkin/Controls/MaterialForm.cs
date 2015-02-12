@@ -20,7 +20,6 @@ namespace MaterialSkin.Controls
 
         public bool PreFilterMessage(ref Message m)
         {
-
             if (m.Msg == WM_MOUSEMOVE)
             {
                 if (MouseMove != null)
@@ -64,7 +63,7 @@ namespace MaterialSkin.Controls
         public const int HT_CAPTION = 0x2;
         public const int WM_MOUSEMOVE = 0x0200;
         public const int WM_LBUTTONDOWN = 0x0201;
-        public const int WM_LBUTTONUP= 0x0202;
+        public const int WM_LBUTTONUP = 0x0202;
         public const int WM_LBUTTONDBLCLK = 0x0203;
         public const int WM_RBUTTONDOWN = 0x0204;
         private const int HTBOTTOMLEFT = 16;
@@ -193,7 +192,7 @@ namespace MaterialSkin.Controls
         {
             base.WndProc(ref m);
             if (DesignMode || IsDisposed) return;
-            
+
             if (m.Msg == WM_LBUTTONDBLCLK)
             {
                 MaximizeWindow(!Maximized);
@@ -207,7 +206,7 @@ namespace MaterialSkin.Controls
 
                     Point mousePoint = PointToClient(Cursor.Position);
                     if (mousePoint.X < Width / 2)
-                        Location = mousePoint.X < previousSize.Width / 2 ? new Point(Cursor.Position.X - mousePoint.X , Cursor.Position.Y - mousePoint.Y) : new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
+                        Location = mousePoint.X < previousSize.Width / 2 ? new Point(Cursor.Position.X - mousePoint.X, Cursor.Position.Y - mousePoint.Y) : new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
                     else
                         Location = Width - mousePoint.X < previousSize.Width / 2 ? new Point(Cursor.Position.X - previousSize.Width + Width - mousePoint.X, Cursor.Position.Y - mousePoint.Y) : new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
 
