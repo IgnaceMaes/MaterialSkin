@@ -21,6 +21,7 @@ namespace MaterialSkin.Controls
         public Point MouseLocation { get; set; }
 
         private bool ripple;
+        [Category("Behavior")]
         public bool Ripple
         {
             get { return ripple; }
