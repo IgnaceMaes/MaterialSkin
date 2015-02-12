@@ -63,7 +63,12 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetRaisedButtonTextBrush(Primary), ClientRectangle, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(
+                Text.ToUpper(),
+                SkinManager.ROBOTO_MEDIUM_10, 
+                SkinManager.GetRaisedButtonTextBrush(Primary),
+                ClientRectangle,
+                new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
     }
 }

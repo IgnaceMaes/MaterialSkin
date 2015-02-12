@@ -968,7 +968,12 @@ namespace MaterialSkin.Controls
             if (!animationManager.IsAnimating())
             {
                 //No animation
-                g.FillRectangle(baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
+                g.FillRectangle(
+                    baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(),
+                    baseTextBox.Location.X,
+                    lineY,
+                    baseTextBox.Width, 
+                    baseTextBox.Focused ? 2 : 1);
             }
             else
             {

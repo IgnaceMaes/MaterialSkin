@@ -101,7 +101,12 @@ namespace MaterialSkin.Controls
 
             var itemRect = GetItemRect(e.Item);
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
-            g.DrawString(e.Text, SkinManager.ROBOTO_MEDIUM_10, e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), textRect, new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(
+                e.Text, 
+                SkinManager.ROBOTO_MEDIUM_10, 
+                e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                textRect, 
+                new StringFormat() { LineAlignment = StringAlignment.Center });
         }
 
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
@@ -142,14 +147,19 @@ namespace MaterialSkin.Controls
             var g = e.Graphics;
 
             g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
-            g.DrawLine(new Pen(SkinManager.GetDividersColor()), new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2), new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
+            g.DrawLine(
+                new Pen(SkinManager.GetDividersColor()),
+                new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2),
+                new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
         }
 
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
             var g = e.Graphics;
 
-            g.DrawRectangle(new Pen(SkinManager.GetDividersColor()), new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
+            g.DrawRectangle(
+                new Pen(SkinManager.GetDividersColor()),
+                new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
         }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
@@ -161,7 +171,11 @@ namespace MaterialSkin.Controls
             var arrowBrush = e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush();
             using (var arrowPath = new GraphicsPath())
             {
-                arrowPath.AddLines(new[] { new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y - ARROW_SIZE), new Point(arrowMiddle.X, arrowMiddle.Y), new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y + ARROW_SIZE) });
+                arrowPath.AddLines(
+                    new[] { 
+                        new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y - ARROW_SIZE), 
+                        new Point(arrowMiddle.X, arrowMiddle.Y), 
+                        new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y + ARROW_SIZE) });
                 arrowPath.CloseFigure();
 
                 g.FillPath(arrowBrush, arrowPath);

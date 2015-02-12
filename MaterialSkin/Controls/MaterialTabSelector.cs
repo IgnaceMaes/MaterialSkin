@@ -98,7 +98,12 @@ namespace MaterialSkin.Controls
                 int currentTabIndex = tabPage.TabIndex;
                 Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ACTION_BAR_TEXT));
 
-                g.DrawString(tabPage.Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, textBrush, tabRects[currentTabIndex], new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                g.DrawString(
+                    tabPage.Text.ToUpper(), 
+                    SkinManager.ROBOTO_MEDIUM_10, 
+                    textBrush, 
+                    tabRects[currentTabIndex], 
+                    new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 textBrush.Dispose();
             }
 

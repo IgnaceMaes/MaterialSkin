@@ -122,18 +122,33 @@ namespace MaterialSkin.Controls
             }
 
             // draw radiobutton circle
-            g.FillEllipse(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+            g.FillEllipse(
+                new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())),
+                RADIOBUTTON_X + boxOffset,
+                RADIOBUTTON_Y + boxOffset,
+                RADIOBUTTON_SIZE, 
+                RADIOBUTTON_SIZE);
 
             if (Enabled)
                 g.FillEllipse(brush, RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
 
-            g.FillEllipse(new SolidBrush(Parent.BackColor), RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_INNER_CIRCLE_SIZE, RADIOBUTTON_INNER_CIRCLE_SIZE);
+            g.FillEllipse(
+                new SolidBrush(Parent.BackColor), 
+                RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, 
+                RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, 
+                RADIOBUTTON_INNER_CIRCLE_SIZE,
+                RADIOBUTTON_INNER_CIRCLE_SIZE);
 
             g.FillEllipse(brush, transition);
 
             // draw radiobutton text
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
+            g.DrawString(
+                Text, 
+                SkinManager.ROBOTO_MEDIUM_10,
+                Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                boxOffset + TEXT_OFFSET, 
+                Height / 2 - stringSize.Height / 2);
 
 
             // dispose used paint objects
