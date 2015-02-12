@@ -38,7 +38,7 @@ namespace MaterialSkin
         public enum Themes : byte
         {
             LIGHT,
-            DARK
+            DARK,
         }
 
         //The primary color

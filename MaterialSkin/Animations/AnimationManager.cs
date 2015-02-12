@@ -172,9 +172,10 @@ namespace MaterialSkin.Animations
 
                 for (int i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MAX_VALUE) return;
-                    if (animationDirections[i] == AnimationDirection.In && animationProgresses[i] != MAX_VALUE) return;
+                    if ((animationDirections[i] == AnimationDirection.InOutIn) ||
+                        (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MAX_VALUE) ||
+                        (animationDirections[i] == AnimationDirection.In && animationProgresses[i] != MAX_VALUE))
+                        return;
                 }
 
                 animationTimer.Stop();
@@ -191,9 +192,10 @@ namespace MaterialSkin.Animations
 
                 for (int i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MIN_VALUE) return;
-                    if (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] != MIN_VALUE) return;
+                    if ((animationDirections[i] == AnimationDirection.InOutIn) ||
+                        (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MIN_VALUE) ||
+                        (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] != MIN_VALUE))
+                        return;
                 }
 
                 animationTimer.Stop();
@@ -223,9 +225,10 @@ namespace MaterialSkin.Animations
                     return AnimationLinear.CalculateProgress(animationProgresses[index]);
                 case AnimationType.EaseInOut:
                     return AnimationEaseInOut.CalculateProgress(animationProgresses[index]);
+                default:
+                    throw new NotImplementedException("The given AnimationType is not implemented");
             }
 
-            throw new NotImplementedException("The given AnimationType is not implemented");
         }
 
         public Point GetSource(int index)

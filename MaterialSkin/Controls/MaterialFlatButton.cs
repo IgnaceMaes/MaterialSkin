@@ -4,14 +4,19 @@ using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
+using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
     public class MaterialFlatButton : Button, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
+        [Browsable(false)]
         public bool Primary { get; set; }
 
         private readonly AnimationManager animationManager;
@@ -59,7 +64,12 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetMainTextBrush()) : SkinManager.GetDisabledOrHintBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(
+                Text.ToUpper(),
+                SkinManager.ROBOTO_MEDIUM_10,
+                Enabled ? (Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetMainTextBrush()) : SkinManager.GetDisabledOrHintBrush(), 
+                ClientRectangle,
+                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
 
         protected override void OnCreateControl()
@@ -73,8 +83,8 @@ namespace MaterialSkin.Controls
                 MouseState = MouseState.HOVER;
                 Invalidate();
             };
-            MouseLeave += (sender, args) => 
-            { 
+            MouseLeave += (sender, args) =>
+            {
                 MouseState = MouseState.OUT;
                 Invalidate();
             };

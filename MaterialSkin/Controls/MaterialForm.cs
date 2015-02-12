@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -20,7 +21,6 @@ namespace MaterialSkin.Controls
 
         public bool PreFilterMessage(ref Message m)
         {
-
             if (m.Msg == WM_MOUSEMOVE)
             {
                 if (MouseMove != null)
@@ -36,9 +36,14 @@ namespace MaterialSkin.Controls
 
     public class MaterialForm : Form, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
+        [Browsable(false)]
+        public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
 
         public bool Sizable { get; set; }
 
@@ -64,7 +69,7 @@ namespace MaterialSkin.Controls
         public const int HT_CAPTION = 0x2;
         public const int WM_MOUSEMOVE = 0x0200;
         public const int WM_LBUTTONDOWN = 0x0201;
-        public const int WM_LBUTTONUP= 0x0202;
+        public const int WM_LBUTTONUP = 0x0202;
         public const int WM_LBUTTONDBLCLK = 0x0203;
         public const int WM_RBUTTONDOWN = 0x0204;
         private const int HTBOTTOMLEFT = 16;
@@ -193,12 +198,14 @@ namespace MaterialSkin.Controls
         {
             base.WndProc(ref m);
             if (DesignMode || IsDisposed) return;
-            
+
             if (m.Msg == WM_LBUTTONDBLCLK)
             {
                 MaximizeWindow(!Maximized);
             }
-            else if (m.Msg == WM_MOUSEMOVE && Maximized && (statusBarBounds.Contains(PointToClient(Cursor.Position)) || actionBarBounds.Contains(PointToClient(Cursor.Position))) && !(minButtonBounds.Contains(PointToClient(Cursor.Position)) || maxButtonBounds.Contains(PointToClient(Cursor.Position)) || xButtonBounds.Contains(PointToClient(Cursor.Position))))
+            else if (m.Msg == WM_MOUSEMOVE && Maximized && 
+                (statusBarBounds.Contains(PointToClient(Cursor.Position)) || actionBarBounds.Contains(PointToClient(Cursor.Position))) && 
+                !(minButtonBounds.Contains(PointToClient(Cursor.Position)) || maxButtonBounds.Contains(PointToClient(Cursor.Position)) || xButtonBounds.Contains(PointToClient(Cursor.Position))))
             {
                 if (headerMouseDown)
                 {
@@ -207,16 +214,22 @@ namespace MaterialSkin.Controls
 
                     Point mousePoint = PointToClient(Cursor.Position);
                     if (mousePoint.X < Width / 2)
-                        Location = mousePoint.X < previousSize.Width / 2 ? new Point(Cursor.Position.X - mousePoint.X , Cursor.Position.Y - mousePoint.Y) : new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
+                        Location = mousePoint.X < previousSize.Width / 2 ?
+                            new Point(Cursor.Position.X - mousePoint.X, Cursor.Position.Y - mousePoint.Y) :
+                            new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
                     else
-                        Location = Width - mousePoint.X < previousSize.Width / 2 ? new Point(Cursor.Position.X - previousSize.Width + Width - mousePoint.X, Cursor.Position.Y - mousePoint.Y) : new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
+                        Location = Width - mousePoint.X < previousSize.Width / 2 ? 
+                            new Point(Cursor.Position.X - previousSize.Width + Width - mousePoint.X, Cursor.Position.Y - mousePoint.Y) : 
+                            new Point(Cursor.Position.X - previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
 
                     Size = previousSize;
                     ReleaseCapture();
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 }
             }
-            else if (m.Msg == WM_LBUTTONDOWN && (statusBarBounds.Contains(PointToClient(Cursor.Position)) || actionBarBounds.Contains(PointToClient(Cursor.Position))) && !(minButtonBounds.Contains(PointToClient(Cursor.Position)) || maxButtonBounds.Contains(PointToClient(Cursor.Position)) || xButtonBounds.Contains(PointToClient(Cursor.Position))))
+            else if (m.Msg == WM_LBUTTONDOWN &&
+                (statusBarBounds.Contains(PointToClient(Cursor.Position)) || actionBarBounds.Contains(PointToClient(Cursor.Position))) && 
+                !(minButtonBounds.Contains(PointToClient(Cursor.Position)) || maxButtonBounds.Contains(PointToClient(Cursor.Position)) || xButtonBounds.Contains(PointToClient(Cursor.Position))))
             {
                 if (!Maximized)
                 {
@@ -232,7 +245,8 @@ namespace MaterialSkin.Controls
             {
                 Point cursorPos = PointToClient(Cursor.Position);
 
-                if (statusBarBounds.Contains(cursorPos) && !minButtonBounds.Contains(cursorPos) && !maxButtonBounds.Contains(cursorPos) && !xButtonBounds.Contains(cursorPos))
+                if (statusBarBounds.Contains(cursorPos) && !minButtonBounds.Contains(cursorPos) && 
+                    !maxButtonBounds.Contains(cursorPos) && !xButtonBounds.Contains(cursorPos))
                 {
                     // Show default system menu when right clicking titlebar
                     int id = TrackPopupMenuEx(
@@ -509,18 +523,43 @@ namespace MaterialSkin.Controls
             using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY_BRUSH, 2))
             {
                 //Minimize
-                g.DrawLine(formButtonsPen, minButtonBounds.X + (int)(minButtonBounds.Width * 0.33), minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66), minButtonBounds.X + (int)(minButtonBounds.Width * 0.66), minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66));
+                g.DrawLine(
+                    formButtonsPen,
+                    minButtonBounds.X + (int)(minButtonBounds.Width * 0.33), 
+                    minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66),
+                    minButtonBounds.X + (int)(minButtonBounds.Width * 0.66),
+                    minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66));
 
                 //Maximize
-                g.DrawRectangle(formButtonsPen, maxButtonBounds.X + (int)(maxButtonBounds.Width * 0.33), maxButtonBounds.Y + (int)(maxButtonBounds.Height * 0.36), (int)(maxButtonBounds.Width * 0.39), (int)(maxButtonBounds.Height * 0.31));
+                g.DrawRectangle(
+                    formButtonsPen,
+                    maxButtonBounds.X + (int)(maxButtonBounds.Width * 0.33),
+                    maxButtonBounds.Y + (int)(maxButtonBounds.Height * 0.36), 
+                    (int)(maxButtonBounds.Width * 0.39),
+                    (int)(maxButtonBounds.Height * 0.31));
 
                 //Close
-                g.DrawLine(formButtonsPen, xButtonBounds.X + (int)(xButtonBounds.Width * 0.33), xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33), xButtonBounds.X + (int)(xButtonBounds.Width * 0.66), xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
-                g.DrawLine(formButtonsPen, xButtonBounds.X + (int)(xButtonBounds.Width * 0.66), xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33), xButtonBounds.X + (int)(xButtonBounds.Width * 0.33), xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
+                g.DrawLine(
+                    formButtonsPen, 
+                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.33),
+                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33),
+                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.66), 
+                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
+                g.DrawLine(
+                    formButtonsPen, 
+                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.66),
+                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33), 
+                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.33),
+                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ACTION_BAR_TEXT_BRUSH, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(
+                Text,
+                SkinManager.ROBOTO_MEDIUM_12, 
+                SkinManager.ACTION_BAR_TEXT_BRUSH, 
+                new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), 
+                new StringFormat() { LineAlignment = StringAlignment.Center });
         }
     }
 }

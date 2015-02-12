@@ -7,13 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
+using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
     public class MaterialTabSelector : Control, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
 
         private MaterialTabControl baseTabControl;
@@ -49,7 +53,7 @@ namespace MaterialSkin.Controls
         private Point animationSource;
         private readonly AnimationManager animationManager;
 
-        private List<Rectangle> TabRects;
+        private List<Rectangle> tabRects;
         private const int TAB_HEADER_PADDING = 24;
         private const int TAB_INDICATOR_HEIGHT = 2;
 
@@ -75,7 +79,7 @@ namespace MaterialSkin.Controls
 
             if (baseTabControl == null) return;
 
-            if (!animationManager.IsAnimating() || TabRects == null)
+            if (!animationManager.IsAnimating() || tabRects == null)
                 UpdateTabRects();
 
             double animationProgress = animationManager.GetProgress();
@@ -84,9 +88,9 @@ namespace MaterialSkin.Controls
             if (animationManager.IsAnimating())
             {
                 var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationProgress * 50)), Color.White));
-                var rippleSize = (int)(animationProgress * TabRects[baseTabControl.SelectedIndex].Width * 1.75);
+                var rippleSize = (int)(animationProgress * tabRects[baseTabControl.SelectedIndex].Width * 1.75);
 
-                g.SetClip(TabRects[baseTabControl.SelectedIndex]);
+                g.SetClip(tabRects[baseTabControl.SelectedIndex]);
                 g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                 g.ResetClip();
                 rippleBrush.Dispose();
@@ -98,14 +102,19 @@ namespace MaterialSkin.Controls
                 int currentTabIndex = tabPage.TabIndex;
                 Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ACTION_BAR_TEXT));
 
-                g.DrawString(tabPage.Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, textBrush, TabRects[currentTabIndex], new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                g.DrawString(
+                    tabPage.Text.ToUpper(), 
+                    SkinManager.ROBOTO_MEDIUM_10, 
+                    textBrush, 
+                    tabRects[currentTabIndex], 
+                    new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 textBrush.Dispose();
             }
 
             //Animate tab indicator
             int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
-            Rectangle previousActiveTabRect = TabRects[previousSelectedTabIndexIfHasOne];
-            Rectangle activeTabPageRect = TabRects[baseTabControl.SelectedIndex];
+            Rectangle previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne];
+            Rectangle activeTabPageRect = tabRects[baseTabControl.SelectedIndex];
 
             int y = activeTabPageRect.Bottom - 2;
             int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
@@ -129,7 +138,7 @@ namespace MaterialSkin.Controls
             }
             if (tabIndex == previousSelectedTabIndex)
             {
-                return primaryA - (int) ((primaryA - secondaryA)* animationProgress);
+                return primaryA - (int)((primaryA - secondaryA) * animationProgress);
             }
             return secondaryA + (int)((primaryA - secondaryA) * animationProgress);
         }
@@ -138,10 +147,10 @@ namespace MaterialSkin.Controls
         {
             base.OnMouseUp(e);
 
-            if (TabRects == null) UpdateTabRects();
-            for (int i = 0; i < TabRects.Count; i++)
+            if (tabRects == null) UpdateTabRects();
+            for (int i = 0; i < tabRects.Count; i++)
             {
-                if (TabRects[i].Contains(e.Location))
+                if (tabRects[i].Contains(e.Location))
                 {
                     baseTabControl.SelectedIndex = i;
                 }
@@ -152,21 +161,21 @@ namespace MaterialSkin.Controls
 
         private void UpdateTabRects()
         {
-            TabRects = new List<Rectangle>();
+            tabRects = new List<Rectangle>();
 
             //If there isn't a base tab control, the rects shouldn't be calculated
             //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
             if (baseTabControl == null || baseTabControl.TabCount == 0) return;
 
             //Caluclate the bounds of each tab header specified in the base tab control
-            using (var b = new Bitmap(1,1))
+            using (var b = new Bitmap(1, 1))
             {
                 using (var g = Graphics.FromImage(b))
                 {
-                    TabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                    tabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
                     for (int i = 1; i < baseTabControl.TabPages.Count; i++)
                     {
-                        TabRects.Add(new Rectangle(TabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                        tabRects.Add(new Rectangle(tabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
                     }
                 }
             }

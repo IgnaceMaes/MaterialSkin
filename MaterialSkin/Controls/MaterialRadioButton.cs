@@ -4,23 +4,29 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
+using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
     public class MaterialRadioButton : RadioButton, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
+        [Browsable(false)]
         public Point MouseLocation { get; set; }
 
-        private bool _ripple;
+        private bool ripple;
+        [Category("Behavior")]
         public bool Ripple
         {
-            get { return _ripple; }
+            get { return ripple; }
             set
             {
-                _ripple = value;
+                ripple = value;
                 AutoSize = AutoSize; //Make AutoSize directly set the bounds.
 
                 if (value)
@@ -68,13 +74,13 @@ namespace MaterialSkin.Controls
         private int boxOffset;
         private void OnSizeChanged(object sender, EventArgs eventArgs)
         {
-            boxOffset = Height / 2 - (int) Math.Ceiling(RADIOBUTTON_SIZE / 2d);
+            boxOffset = Height / 2 - (int)Math.Ceiling(RADIOBUTTON_SIZE / 2d);
             radioButtonBounds = new Rectangle(RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            int w = boxOffset + 20 + (int) CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            int w = boxOffset + 20 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
@@ -95,14 +101,14 @@ namespace MaterialSkin.Controls
 
             // clear the control
             g.Clear(Parent.BackColor);
-            
+
             var animationProgress = animationManager.GetProgress();
 
             int colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
             int backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
             float animationSize = (float)(animationProgress * 8f);
             float animationSizeHalf = animationSize / 2;
-            animationSize = (float)(animationProgress*9f);
+            animationSize = (float)(animationProgress * 9f);
 
             var transition = new RectangleF(RADIOBUTTON_CENTER_X - animationSizeHalf + boxOffset, RADIOBUTTON_CENTER_Y - animationSizeHalf + boxOffset, animationSize, animationSize);
 
@@ -122,18 +128,33 @@ namespace MaterialSkin.Controls
             }
 
             // draw radiobutton circle
-            g.FillEllipse(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+            g.FillEllipse(
+                new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())),
+                RADIOBUTTON_X + boxOffset,
+                RADIOBUTTON_Y + boxOffset,
+                RADIOBUTTON_SIZE, 
+                RADIOBUTTON_SIZE);
 
             if (Enabled)
                 g.FillEllipse(brush, RADIOBUTTON_X + boxOffset, RADIOBUTTON_Y + boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
 
-            g.FillEllipse(new SolidBrush(Parent.BackColor), RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, RADIOBUTTON_INNER_CIRCLE_SIZE, RADIOBUTTON_INNER_CIRCLE_SIZE);
+            g.FillEllipse(
+                new SolidBrush(Parent.BackColor), 
+                RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, 
+                RADIOBUTTON_OUTER_CIRCLE_WIDTH + boxOffset, 
+                RADIOBUTTON_INNER_CIRCLE_SIZE,
+                RADIOBUTTON_INNER_CIRCLE_SIZE);
 
             g.FillEllipse(brush, transition);
 
             // draw radiobutton text
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
+            g.DrawString(
+                Text, 
+                SkinManager.ROBOTO_MEDIUM_10,
+                Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                boxOffset + TEXT_OFFSET, 
+                Height / 2 - stringSize.Height / 2);
 
 
             // dispose used paint objects

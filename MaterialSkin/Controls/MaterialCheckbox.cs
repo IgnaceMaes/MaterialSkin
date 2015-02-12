@@ -5,23 +5,29 @@ using System.Drawing.Text;
 using System.Security.Principal;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
+using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
     public class MaterialCheckBox : CheckBox, IMaterialControl
     {
+        [Browsable(false)]
         public int Depth { get; set; }
+        [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
         public MouseState MouseState { get; set; }
+        [Browsable(false)]
         public Point MouseLocation { get; set; }
 
-        private bool _ripple;
+        private bool ripple;
+        [Category("Behavior")]
         public bool Ripple
         {
-            get { return _ripple; }
+            get { return ripple; }
             set
             {
-                _ripple = value;
+                ripple = value;
                 AutoSize = AutoSize; //Make AutoSize directly set the bounds.
 
                 if (value)
@@ -30,7 +36,7 @@ namespace MaterialSkin.Controls
                 }
 
                 Invalidate();
-            } 
+            }
         }
 
         private readonly AnimationManager animationManager;
@@ -73,12 +79,12 @@ namespace MaterialSkin.Controls
         private void OnSizeChanged(object sender, EventArgs eventArgs)
         {
             boxOffset = Height / 2 - 9;
-            checkBoxBounds = new Rectangle(boxOffset, boxOffset, (int) CHECKBOX_SIZE, (int) CHECKBOX_SIZE);
+            checkBoxBounds = new Rectangle(boxOffset, boxOffset, (int)CHECKBOX_SIZE, (int)CHECKBOX_SIZE);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            int w = boxOffset + TEXT_OFFSET + (int) CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            int w = boxOffset + TEXT_OFFSET + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
@@ -106,7 +112,7 @@ namespace MaterialSkin.Controls
                 for (int i = 0; i < rippleAnimationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = rippleAnimationManager.GetProgress(i);
-                    var animationSource = new Point((int) (boxOffset + Math.Floor(CHECKBOX_SIZE / 2)), (int) (boxOffset + Math.Floor(CHECKBOX_SIZE / 2)));
+                    var animationSource = new Point((int)(boxOffset + Math.Floor(CHECKBOX_SIZE / 2)), (int)(boxOffset + Math.Floor(CHECKBOX_SIZE / 2)));
                     var rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), ((bool)rippleAnimationManager.GetData(i)[0]) ? Color.Black : brush.Color));
                     var rippleSize = (rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(Height * (0.8d + (0.2d * animationValue))) : Height;
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
@@ -114,7 +120,7 @@ namespace MaterialSkin.Controls
             }
 
             // draw checkbox
-            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, (int) CHECKBOX_SIZE, (int) CHECKBOX_SIZE, 2f))
+            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, (int)CHECKBOX_SIZE, (int)CHECKBOX_SIZE, 2f))
             {
                 g.FillPath(new SolidBrush(Color.FromArgb(backgroundAlpha, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor())), checkmarkPath);
                 g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset + 2, boxOffset + 2, 13, 13);
@@ -128,13 +134,17 @@ namespace MaterialSkin.Controls
                     g.FillRectangle(brush, boxOffset + 2, boxOffset + 2, 13, 13);
                 }
 
-                var checkMarkLineFill = new Rectangle(boxOffset, boxOffset, (int)(CHECKBOX_SIZE * animationProgress), (int) CHECKBOX_SIZE);
+                var checkMarkLineFill = new Rectangle(boxOffset, boxOffset, (int)(CHECKBOX_SIZE * animationProgress), (int)CHECKBOX_SIZE);
                 g.DrawImageUnscaledAndClipped(DrawCheckMarkBitmap(), checkMarkLineFill);
             }
 
             // draw checkbox text
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
+            g.DrawString(
+                Text, 
+                SkinManager.ROBOTO_MEDIUM_10,
+                Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
 
             // dispose used paint objects
             brush.Dispose();
@@ -142,9 +152,9 @@ namespace MaterialSkin.Controls
 
         private Bitmap DrawCheckMarkBitmap()
         {
-            var checkMark = new Bitmap((int) CHECKBOX_SIZE, (int) CHECKBOX_SIZE);
+            var checkMark = new Bitmap((int)CHECKBOX_SIZE, (int)CHECKBOX_SIZE);
             var g = Graphics.FromImage(checkMark);
-            
+
             // clear everything, transparant
             g.Clear(Color.Transparent);
 
@@ -165,7 +175,7 @@ namespace MaterialSkin.Controls
                 base.AutoSize = value;
                 if (value)
                 {
-                    Size =new Size(10,10);
+                    Size = new Size(10, 10);
                 }
             }
         }
