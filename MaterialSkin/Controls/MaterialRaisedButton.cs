@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
-using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
@@ -15,7 +15,6 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-        [Browsable(false)]
         public bool Primary { get; set; }
 
         private readonly AnimationManager animationManager;
@@ -27,7 +26,7 @@ namespace MaterialSkin.Controls
             animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
-                AnimationType = AnimationType.Linear,
+                AnimationType = AnimationType.EaseOut
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }
@@ -53,7 +52,7 @@ namespace MaterialSkin.Controls
                 ClientRectangle.Height - 1,
                 1f))
             {
-                g.FillPath(Primary ? SkinManager.PrimaryColorBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
             }
 
             if (animationManager.IsAnimating())
@@ -73,7 +72,7 @@ namespace MaterialSkin.Controls
                 SkinManager.ROBOTO_MEDIUM_10, 
                 SkinManager.GetRaisedButtonTextBrush(Primary),
                 ClientRectangle,
-                new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
     }
 }

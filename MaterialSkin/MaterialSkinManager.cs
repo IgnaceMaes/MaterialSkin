@@ -1,17 +1,12 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
-
+using MaterialSkin.Properties;
 
 namespace MaterialSkin
 {
@@ -35,38 +30,22 @@ namespace MaterialSkin
             }
         }
 
+	    private ColorScheme colorScheme;
+        public ColorScheme ColorScheme
+        {
+			get { return colorScheme; }
+            set
+            {
+				colorScheme = value;
+                UpdateBackgrounds();
+            }
+        }
+
         public enum Themes : byte
         {
             LIGHT,
-            DARK,
+            DARK
         }
-
-        //The primary color
-        private Color primaryColor;
-        public Color PrimaryColor
-        {
-            get { return primaryColor; }
-            set { primaryColor = value; PrimaryColorBrush = new SolidBrush(primaryColor); }
-        }
-        public SolidBrush PrimaryColorBrush { get; set; }
-
-        //A darker version of the primary color
-        private Color primaryColorDark;
-        public Color PrimaryColorDark
-        {
-            get { return primaryColorDark; }
-            set { primaryColorDark = value; PrimaryColorDarkBrush = new SolidBrush(primaryColorDark); }
-        }
-        public SolidBrush PrimaryColorDarkBrush { get; set; }
-
-        //The accent color
-        private Color accentColor;
-        public Color AccentColor
-        {
-            get { return accentColor; }
-            set { accentColor = value; AccentColorBrush = new SolidBrush(accentColor); }
-        }
-        public SolidBrush AccentColorBrush { get; set; }
 
         //Constant color values
         private static readonly Color MAIN_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
@@ -107,15 +86,19 @@ namespace MaterialSkin
         private static readonly Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
 
         //Flat button
-        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(51, 153, 153, 153);
+        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor());
         private static readonly Brush FLAT_BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_HOVER_LIGHT);
-        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT = Color.FromArgb(102, 153, 153, 153);
+        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT = Color.FromArgb(40.PercentageToColorComponent(), 0x999999.ToColor());
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT);
+        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_LIGHT = Color.FromArgb(26.PercentageToColorComponent(), 0x000000.ToColor());
+        private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_LIGHT);
 
-        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_DARK = Color.FromArgb(38, 204, 204, 204);
+        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_DARK = Color.FromArgb(15.PercentageToColorComponent(), 0xCCCCCC.ToColor());
         private static readonly Brush FLAT_BUTTON_BACKGROUND_HOVER_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_HOVER_DARK);
-        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(64, 204, 204, 204);
+        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(25.PercentageToColorComponent(), 0xCCCCCC.ToColor());
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
+        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_DARK = Color.FromArgb(30.PercentageToColorComponent(), 0xFFFFFF.ToColor());
+        private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_DARK);
 
         //ContextMenuStrip
         private static readonly Color CMS_BACKGROUND_LIGHT_HOVER = Color.FromArgb(255, 238, 238, 238);
@@ -197,14 +180,29 @@ namespace MaterialSkin
             return (primary ? RAISED_BUTTON_TEXT_LIGHT_BRUSH : RAISED_BUTTON_TEXT_DARK_BRUSH);
         }
 
+        public Color GetFlatButtonHoverBackgroundColor()
+        {
+            return (Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_HOVER_LIGHT : FLAT_BUTTON_BACKGROUND_HOVER_DARK);
+        }
+
         public Brush GetFlatButtonHoverBackgroundBrush()
         {
             return (Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH : FLAT_BUTTON_BACKGROUND_HOVER_DARK_BRUSH);
         }
 
+        public Color GetFlatButtonPressedBackgroundColor()
+        {
+            return (Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT : FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
+        }
+
         public Brush GetFlatButtonPressedBackgroundBrush()
         {
             return (Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH : FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH);
+        }
+
+        public Brush GetFlatButtonDisabledTextBrush()
+        {
+            return (Theme == Themes.LIGHT ? FLAT_BUTTON_DISABLEDTEXT_LIGHT_BRUSH : FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH);
         }
 
         public Brush GetCmsSelectedItemBrush()
@@ -231,14 +229,12 @@ namespace MaterialSkin
 
         private MaterialSkinManager()
         {
-            ROBOTO_MEDIUM_12 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 12f);
-            ROBOTO_MEDIUM_10 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 10f);
-            ROBOTO_REGULAR_11 = new Font(LoadFont(Properties.Resources.Roboto_Regular), 11f);
-            ROBOTO_MEDIUM_11 = new Font(LoadFont(Properties.Resources.Roboto_Medium), 11f);
-            Theme = Themes.LIGHT;
-            PrimaryColor = Color.FromArgb(63, 81, 181);
-            PrimaryColorDark = Color.FromArgb(48, 63, 159);
-            AccentColor = Color.FromArgb(255, 64, 129);
+            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+            ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
+            ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
+			Theme = Themes.LIGHT;
+			ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 
         public static MaterialSkinManager Instance
@@ -326,6 +322,8 @@ namespace MaterialSkin
             {
                 UpdateControl(control, newBackColor);
             }
+
+            controlToUpdate.Invalidate();
         }
     }
 }

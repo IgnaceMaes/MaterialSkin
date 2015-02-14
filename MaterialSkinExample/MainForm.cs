@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using MaterialSkin;
@@ -9,31 +11,42 @@ namespace MaterialSkinExample
 {
     public partial class MainForm : MaterialForm
     {
+        private readonly MaterialSkinManager materialSkinManager;
         public MainForm()
         {
             InitializeComponent();
 
             // Initialize MaterialSkinManager
-            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            /*materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.PrimaryColor = Color.FromArgb(63, 81, 181);
-            materialSkinManager.PrimaryColorDark = Color.FromArgb(48, 63, 159);
-            materialSkinManager.AccentColor = Color.FromArgb(255, 64, 129);*/
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.PrimaryColor = Color.FromArgb(55, 71, 79);
-            materialSkinManager.PrimaryColorDark = Color.FromArgb(38, 50, 56);
-            materialSkinManager.AccentColor = Color.FromArgb(64, 196, 255);
-            /*materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.PrimaryColor = Color.FromArgb(32, 149, 242);
-            materialSkinManager.PrimaryColorDark = Color.FromArgb(24, 117, 209);
-            materialSkinManager.AccentColor = Color.FromArgb(254, 86, 33);*/
+			materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+			materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
+        }
+
+	    private int colorSchemeIndex;
+        private void materialRaisedButton1_Click(object sender, EventArgs e)
+        {
+	        colorSchemeIndex++;
+	        if (colorSchemeIndex > 2) colorSchemeIndex = 0;
+
+			//These are just example color schemes
+	        switch (colorSchemeIndex)
+	        {
+				case 0:
+					materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+			        break;
+				case 1:
+					materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
+			        break;
+				case 2:
+					materialSkinManager.ColorScheme = new ColorScheme(Primary.Green600, Primary.Green700, Primary.Green200, Accent.Red100, TextShade.WHITE);
+					break;
+	        }
         }
     }
 }

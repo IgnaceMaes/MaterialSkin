@@ -16,6 +16,7 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+        
 
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
         public string Hint { get { return baseTextBox.Hint; } set { baseTextBox.Hint = value; } }
@@ -929,7 +930,7 @@ namespace MaterialSkin.Controls
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
-            animationManager = new AnimationManager()
+            animationManager = new AnimationManager
             {
                 Increment = 0.06,
                 AnimationType = AnimationType.EaseInOut,
@@ -944,7 +945,7 @@ namespace MaterialSkin.Controls
                 ForeColor = SkinManager.GetMainTextColor(),
                 Location = new Point(0, 0),
                 Width = Width,
-                Height = Height - 5,
+                Height = Height - 5
             };
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
@@ -971,12 +972,7 @@ namespace MaterialSkin.Controls
             if (!animationManager.IsAnimating())
             {
                 //No animation
-                g.FillRectangle(
-                    baseTextBox.Focused ? SkinManager.PrimaryColorBrush : SkinManager.GetDividersBrush(),
-                    baseTextBox.Location.X,
-                    lineY,
-                    baseTextBox.Width, 
-                    baseTextBox.Focused ? 2 : 1);
+				g.FillRectangle(baseTextBox.Focused ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
             }
             else
             {
@@ -989,7 +985,7 @@ namespace MaterialSkin.Controls
                 g.FillRectangle(SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, 1);
 
                 //Animated focus transition
-                g.FillRectangle(SkinManager.PrimaryColorBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
+				g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
             }
         }
 
@@ -1025,7 +1021,7 @@ namespace MaterialSkin.Controls
                 set
                 {
                     hint = value;
-                    SendMessage(this.Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, this.Hint);
+                    SendMessage(Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, Hint);
                 }
             }
 
@@ -1080,14 +1076,14 @@ namespace MaterialSkin.Controls
 
         private class TextBoxContextMenuStrip : MaterialContextMenuStrip
         {
-            public readonly ToolStripItem undo = new MaterialToolStripMenuItem() { Text = "Undo" };
+            public readonly ToolStripItem undo = new MaterialToolStripMenuItem { Text = "Undo" };
             public readonly ToolStripItem seperator1 = new ToolStripSeparator();
-            public readonly ToolStripItem cut = new MaterialToolStripMenuItem() { Text = "Cut" };
-            public readonly ToolStripItem copy = new MaterialToolStripMenuItem() { Text = "Copy" };
-            public readonly ToolStripItem paste = new MaterialToolStripMenuItem() { Text = "Paste" };
-            public readonly ToolStripItem delete = new MaterialToolStripMenuItem() { Text = "Delete" };
+            public readonly ToolStripItem cut = new MaterialToolStripMenuItem { Text = "Cut" };
+            public readonly ToolStripItem copy = new MaterialToolStripMenuItem { Text = "Copy" };
+            public readonly ToolStripItem paste = new MaterialToolStripMenuItem { Text = "Paste" };
+            public readonly ToolStripItem delete = new MaterialToolStripMenuItem { Text = "Delete" };
             public readonly ToolStripItem seperator2 = new ToolStripSeparator();
-            public readonly ToolStripItem selectAll = new MaterialToolStripMenuItem() { Text = "Select All" };
+            public readonly ToolStripItem selectAll = new MaterialToolStripMenuItem { Text = "Select All" };
 
             public TextBoxContextMenuStrip()
             {

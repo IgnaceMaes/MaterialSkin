@@ -1,39 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MaterialSkin.Controls
 {
-    public class MouseMessageFilter : IMessageFilter
-    {
-        private const int WM_MOUSEMOVE = 0x0200;
-
-        public static event MouseEventHandler MouseMove;
-
-        public bool PreFilterMessage(ref Message m)
-        {
-            if (m.Msg == WM_MOUSEMOVE)
-            {
-                if (MouseMove != null)
-                {
-                    int x = Control.MousePosition.X, y = Control.MousePosition.Y;
-
-                    MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
-                }
-            }
-            return false;
-        }
-    }
-
     public class MaterialForm : Form, IMaterialControl
     {
         [Browsable(false)]
@@ -42,9 +17,7 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-        [Browsable(false)]
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
-
         public bool Sizable { get; set; }
 
         [DllImport("user32.dll")]
@@ -93,7 +66,7 @@ namespace MaterialSkin.Controls
         private const int WMSZ_BOTTOMLEFT = 7;
         private const int WMSZ_BOTTOMRIGHT = 8;
 
-        private readonly Dictionary<int, int> resizingLocationsToCmd = new Dictionary<int, int>() 
+        private readonly Dictionary<int, int> resizingLocationsToCmd = new Dictionary<int, int>
         {
             {HTTOP,         WMSZ_TOP},
             {HTTOPLEFT,     WMSZ_TOPLEFT},
@@ -177,10 +150,10 @@ namespace MaterialSkin.Controls
         private Rectangle actionBarBounds;
         private Rectangle statusBarBounds;
 
-        private bool Maximized = false;
+        private bool Maximized;
         private Size previousSize;
         private Point previousLocation;
-        private bool headerMouseDown = false;
+        private bool headerMouseDown;
 
         public MaterialForm()
         {
@@ -250,12 +223,12 @@ namespace MaterialSkin.Controls
                 {
                     // Show default system menu when right clicking titlebar
                     int id = TrackPopupMenuEx(
-                        GetSystemMenu(this.Handle, false),
+                        GetSystemMenu(Handle, false),
                         TPM_LEFTALIGN | TPM_RETURNCMD,
-                        Cursor.Position.X, Cursor.Position.Y, this.Handle, IntPtr.Zero);
+                        Cursor.Position.X, Cursor.Position.Y, Handle, IntPtr.Zero);
 
                     // Pass the command as a WM_SYSCOMMAND message
-                    SendMessage(this.Handle, WM_SYSCOMMAND, id, 0);
+                    SendMessage(Handle, WM_SYSCOMMAND, id, 0);
                 }
             }
             else if (m.Msg == WM_NCLBUTTONDOWN)
@@ -270,7 +243,7 @@ namespace MaterialSkin.Controls
                     bFlag = (byte)resizingLocationsToCmd[(int)m.WParam];
 
                 if (bFlag != 0)
-                    SendMessage(this.Handle, WM_SYSCOMMAND, (int)(0xF000 | bFlag), (int)m.LParam);
+                    SendMessage(Handle, WM_SYSCOMMAND, 0xF000 | bFlag, (int)m.LParam);
             }
             else if (m.Msg == WM_LBUTTONUP)
             {
@@ -363,7 +336,7 @@ namespace MaterialSkin.Controls
                 // Convert to client position and pass to Form.MouseMove
                 Point clientCursorPos = PointToClient(e.Location);
                 MouseEventArgs new_e = new MouseEventArgs(MouseButtons.None, 0, clientCursorPos.X, clientCursorPos.Y, 0);
-                this.OnMouseMove(new_e);
+                OnMouseMove(new_e);
             }
         }
 
@@ -486,8 +459,8 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(SkinManager.PrimaryColorDarkBrush, statusBarBounds);
-            g.FillRectangle(SkinManager.PrimaryColorBrush, actionBarBounds);
+            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, statusBarBounds);
+            g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, actionBarBounds);
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
@@ -554,12 +527,29 @@ namespace MaterialSkin.Controls
             }
 
             //Form title
-            g.DrawString(
-                Text,
-                SkinManager.ROBOTO_MEDIUM_12, 
-                SkinManager.ACTION_BAR_TEXT_BRUSH, 
-                new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), 
-                new StringFormat() { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+        }
+    }
+
+    public class MouseMessageFilter : IMessageFilter
+    {
+        private const int WM_MOUSEMOVE = 0x0200;
+
+        public static event MouseEventHandler MouseMove;
+
+        public bool PreFilterMessage(ref Message m)
+        {
+
+            if (m.Msg == WM_MOUSEMOVE)
+            {
+                if (MouseMove != null)
+                {
+                    int x = Control.MousePosition.X, y = Control.MousePosition.Y;
+
+                    MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
+                }
+            }
+            return false;
         }
     }
 }

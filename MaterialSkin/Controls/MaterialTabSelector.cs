@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
-using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
@@ -19,8 +15,8 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-
-        private MaterialTabControl baseTabControl;
+        
+		private MaterialTabControl baseTabControl;
         public MaterialTabControl BaseTabControl
         {
             get { return baseTabControl; }
@@ -62,10 +58,10 @@ namespace MaterialSkin.Controls
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             Height = 48;
 
-            animationManager = new AnimationManager()
+            animationManager = new AnimationManager
             {
-                AnimationType = AnimationType.EaseInOut,
-                Increment = 0.04,
+                AnimationType = AnimationType.EaseOut,
+                Increment = 0.04
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
         }
@@ -75,7 +71,7 @@ namespace MaterialSkin.Controls
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(SkinManager.PrimaryColor);
+			g.Clear(SkinManager.ColorScheme.PrimaryColor);
 
             if (baseTabControl == null) return;
 
@@ -100,14 +96,14 @@ namespace MaterialSkin.Controls
             foreach (TabPage tabPage in baseTabControl.TabPages)
             {
                 int currentTabIndex = tabPage.TabIndex;
-                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ACTION_BAR_TEXT));
+				Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
 
                 g.DrawString(
                     tabPage.Text.ToUpper(), 
                     SkinManager.ROBOTO_MEDIUM_10, 
                     textBrush, 
                     tabRects[currentTabIndex], 
-                    new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                    new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 textBrush.Dispose();
             }
 
@@ -120,7 +116,7 @@ namespace MaterialSkin.Controls
             int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
             int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
 
-            g.FillRectangle(SkinManager.AccentColorBrush, x, y, width, TAB_INDICATOR_HEIGHT);
+			g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
         }
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)

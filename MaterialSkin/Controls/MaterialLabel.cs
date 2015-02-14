@@ -11,7 +11,6 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-
         protected override void OnCreateControl()
         {
             base.OnCreateControl();

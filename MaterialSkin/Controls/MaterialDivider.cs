@@ -11,7 +11,7 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-
+        
         public MaterialDivider()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);

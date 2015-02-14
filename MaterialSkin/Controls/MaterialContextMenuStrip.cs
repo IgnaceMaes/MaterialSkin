@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
-using System.ComponentModel;
 
 namespace MaterialSkin.Controls
 {
@@ -17,6 +16,7 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+        
 
         internal AnimationManager animationManager;
         internal Point animationSource;
@@ -31,7 +31,7 @@ namespace MaterialSkin.Controls
             animationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
-                AnimationType = AnimationType.Linear,
+                AnimationType = AnimationType.Linear
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
             animationManager.OnAnimationFinished += sender => OnItemClicked(delayesArgs);
@@ -97,6 +97,7 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
+        
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
@@ -110,7 +111,7 @@ namespace MaterialSkin.Controls
                 SkinManager.ROBOTO_MEDIUM_10, 
                 e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
                 textRect, 
-                new StringFormat() { LineAlignment = StringAlignment.Center });
+                new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MaterialSkin.Animations
 {
@@ -10,6 +6,8 @@ namespace MaterialSkin.Animations
     {
         Linear,
         EaseInOut,
+        EaseOut,
+        CustomQuadratic
     }
 
     static class AnimationLinear
@@ -32,7 +30,24 @@ namespace MaterialSkin.Animations
 
         private static double EaseInOut(double s)
         {
-            return (Math.Sin(s * PI - PI_HALF) + 1) / 2;
+            return s - Math.Sin(s * 2 * PI) / (2 * PI);
+        }
+    }
+
+    public static class AnimationEaseOut
+    {
+        public static double CalculateProgress(double progress)
+        {
+            return -1 * progress * (progress - 2);
+        }
+    }
+
+    public static class AnimationCustomQuadratic
+    {
+        public static double CalculateProgress(double progress)
+        {
+            double kickoff = 0.6;
+            return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
         }
     }
 }
