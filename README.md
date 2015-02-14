@@ -70,9 +70,7 @@ C# (Form1.cs)
       var materialSkinManager = MaterialSkinManager.Instance;
       materialSkinManager.AddFormToManage(this);
       materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-      materialSkinManager.PrimaryColor = Color.FromArgb(63, 81, 181);
-      materialSkinManager.PrimaryColorDark = Color.FromArgb(48, 63, 159);
-      materialSkinManager.AccentColor = Color.FromArgb(255, 64, 129);
+			   materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
   }
   ```
 
@@ -86,9 +84,7 @@ Public Class Form1
         Dim SkinManager As MaterialSkinManager = MaterialSkinManager.Instance
         SkinManager.AddFormToManage(Me)
         SkinManager.Theme = MaterialSkinManager.Themes.LIGHT
-        SkinManager.PrimaryColor = Color.FromArgb(63, 81, 181)
-        SkinManager.PrimaryColorDark = Color.FromArgb(48, 63, 159)
-        SkinManager.AccentColor = Color.FromArgb(255, 64, 129)
+		      SkinManager.ColorScheme = New ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE)
     End Sub
 End Class
 ```
