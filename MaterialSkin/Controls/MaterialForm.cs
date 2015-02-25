@@ -393,7 +393,7 @@ namespace MaterialSkin.Controls
                 previousSize = Size;
                 previousLocation = Location;
                 Size = new Size(monitorInfo.rcWork.Width(), monitorInfo.rcWork.Height());
-                Location = new Point(monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top);
+                Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
             }
             else
             {
