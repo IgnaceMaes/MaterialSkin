@@ -498,7 +498,7 @@ namespace MaterialSkin.Controls
             if (buttonState == ButtonState.MinOver && showMin)
                 g.FillRectangle(hoverBrush, showMax ? minButtonBounds : maxButtonBounds);
 
-            if (buttonState == ButtonState.MinDown)
+            if (buttonState == ButtonState.MinDown && showMin)
                 g.FillRectangle(downBrush, showMax ? minButtonBounds : maxButtonBounds);
 
             if (buttonState == ButtonState.MaxOver && showMax)
