@@ -344,25 +344,39 @@ namespace MaterialSkin.Controls
         {
             if (DesignMode) return;
             ButtonState oldState = buttonState;
+            bool showMin = MinimizeBox && ControlBox;
+            bool showMax = MaximizeBox && ControlBox;
 
             if (e.Button == MouseButtons.Left && !up)
             {
-                if (minButtonBounds.Contains(e.Location)) buttonState = ButtonState.MinDown;
-                else if (maxButtonBounds.Contains(e.Location)) buttonState = ButtonState.MaxDown;
-                else if (xButtonBounds.Contains(e.Location)) buttonState = ButtonState.XDown;
-                else buttonState = ButtonState.None;
+                if (showMin && !showMax && maxButtonBounds.Contains(e.Location))
+                    buttonState = ButtonState.MinDown;
+                else if (showMin && showMax && minButtonBounds.Contains(e.Location))
+                    buttonState = ButtonState.MinDown;
+                else if (showMax && maxButtonBounds.Contains(e.Location))
+                    buttonState = ButtonState.MaxDown;
+                else if (ControlBox && xButtonBounds.Contains(e.Location))
+                    buttonState = ButtonState.XDown;
+                else
+                    buttonState = ButtonState.None;
             }
             else
             {
-                if (minButtonBounds.Contains(e.Location))
+                if (showMin && !showMax && maxButtonBounds.Contains(e.Location))
                 {
                     buttonState = ButtonState.MinOver;
 
                     if (oldState == ButtonState.MinDown)
                         WindowState = FormWindowState.Minimized;
-
                 }
-                else if (maxButtonBounds.Contains(e.Location))
+                else if (showMin && showMax && minButtonBounds.Contains(e.Location))
+                {
+                    buttonState = ButtonState.MinOver;
+
+                    if (oldState == ButtonState.MinDown)
+                        WindowState = FormWindowState.Minimized;
+                }
+                else if (MaximizeBox && ControlBox && maxButtonBounds.Contains(e.Location))
                 {
                     buttonState = ButtonState.MaxOver;
 
@@ -370,9 +384,10 @@ namespace MaterialSkin.Controls
                         MaximizeWindow(!Maximized);
 
                 }
-                else if (xButtonBounds.Contains(e.Location))
+                else if (ControlBox && xButtonBounds.Contains(e.Location))
                 {
                     buttonState = ButtonState.XOver;
+
                     if (oldState == ButtonState.XDown)
                         Close();
                 }
@@ -384,7 +399,10 @@ namespace MaterialSkin.Controls
 
         private void MaximizeWindow(bool maximize)
         {
+            if (!MaximizeBox || !ControlBox) return;
+
             Maximized = maximize;
+
             if (maximize)
             {
                 IntPtr monitorHandle = MonitorFromWindow(Handle, MONITOR_DEFAULTTONEAREST);
@@ -470,60 +488,78 @@ namespace MaterialSkin.Controls
                 g.DrawLine(borderPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
             }
 
-            //Minimize, maximize and close states
-            switch (buttonState)
+            // Determine whether or not we even should be drawing the buttons.
+            bool showMin = MinimizeBox && ControlBox;
+            bool showMax = MaximizeBox && ControlBox;
+            var hoverBrush = SkinManager.GetFlatButtonHoverBackgroundBrush();
+            var downBrush = SkinManager.GetFlatButtonPressedBackgroundBrush();
+
+            // When MaximizeButton == false, the minimize button will be painted in its place
+            if (buttonState == ButtonState.MinOver && showMin)
+                g.FillRectangle(hoverBrush, showMax ? minButtonBounds : maxButtonBounds);
+
+            if (buttonState == ButtonState.MinDown && showMin)
+                g.FillRectangle(downBrush, showMax ? minButtonBounds : maxButtonBounds);
+
+            if (buttonState == ButtonState.MaxOver && showMax)
+                g.FillRectangle(hoverBrush, maxButtonBounds);
+
+            if (buttonState == ButtonState.MaxDown && showMax)
+                g.FillRectangle(downBrush, maxButtonBounds);
+
+            if (buttonState == ButtonState.XOver && ControlBox)
+                g.FillRectangle(hoverBrush, xButtonBounds);
+
+            if (buttonState == ButtonState.XDown && ControlBox)
+                g.FillRectangle(downBrush, xButtonBounds);
+
+            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
             {
-                case ButtonState.MinOver:
-                    g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), minButtonBounds);
-                    break;
-                case ButtonState.MinDown:
-                    g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), minButtonBounds);
-                    break;
-                case ButtonState.MaxOver:
-                    g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), maxButtonBounds);
-                    break;
-                case ButtonState.MaxDown:
-                    g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), maxButtonBounds);
-                    break;
-                case ButtonState.XOver:
-                    g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), xButtonBounds);
-                    break;
-                case ButtonState.XDown:
-                    g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), xButtonBounds);
-                    break;
-            }
+                // Minimize button.
+                if (showMin)
+                {
+                    int x = showMax ? minButtonBounds.X : maxButtonBounds.X;
+                    int y = showMax ? minButtonBounds.Y : maxButtonBounds.Y;
 
-            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY_BRUSH, 2))
-            {
-                //Minimize
-                g.DrawLine(
-                    formButtonsPen,
-                    minButtonBounds.X + (int)(minButtonBounds.Width * 0.33), 
-                    minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66),
-                    minButtonBounds.X + (int)(minButtonBounds.Width * 0.66),
-                    minButtonBounds.Y + (int)(minButtonBounds.Height * 0.66));
+                    g.DrawLine(
+                        formButtonsPen,
+                        x + (int)(minButtonBounds.Width * 0.33),
+                        y + (int)(minButtonBounds.Height * 0.66),
+                        x + (int)(minButtonBounds.Width * 0.66),
+                        y + (int)(minButtonBounds.Height * 0.66)
+                   );
+                }
 
-                //Maximize
-                g.DrawRectangle(
-                    formButtonsPen,
-                    maxButtonBounds.X + (int)(maxButtonBounds.Width * 0.33),
-                    maxButtonBounds.Y + (int)(maxButtonBounds.Height * 0.36), 
-                    (int)(maxButtonBounds.Width * 0.39),
-                    (int)(maxButtonBounds.Height * 0.31));
+                // Maximize button
+                if (showMax)
+                {
+                    g.DrawRectangle(
+                        formButtonsPen,
+                        maxButtonBounds.X + (int)(maxButtonBounds.Width * 0.33),
+                        maxButtonBounds.Y + (int)(maxButtonBounds.Height * 0.36),
+                        (int)(maxButtonBounds.Width * 0.39),
+                        (int)(maxButtonBounds.Height * 0.31)
+                   );
+                }
 
-                //Close
-                g.DrawLine(
-                    formButtonsPen, 
-                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.33),
-                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33),
-                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.66), 
-                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
-                g.DrawLine(
-                    formButtonsPen, 
-                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.66),
-                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33), 
-                    xButtonBounds.X + (int)(xButtonBounds.Width * 0.33),
-                    xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
+                // Close button
+                if (ControlBox)
+                {
+                    g.DrawLine(
+                        formButtonsPen,
+                        xButtonBounds.X + (int)(xButtonBounds.Width * 0.33),
+                        xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33),
+                        xButtonBounds.X + (int)(xButtonBounds.Width * 0.66),
+                        xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66)
+                   );
+
+                    g.DrawLine(
+                        formButtonsPen,
+                        xButtonBounds.X + (int)(xButtonBounds.Width * 0.66),
+                        xButtonBounds.Y + (int)(xButtonBounds.Height * 0.33),
+                        xButtonBounds.X + (int)(xButtonBounds.Width * 0.33),
+                        xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
+                }
             }
 
             //Form title
