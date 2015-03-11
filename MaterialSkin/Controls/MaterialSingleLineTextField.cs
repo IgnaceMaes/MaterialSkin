@@ -21,6 +21,9 @@ namespace MaterialSkin.Controls
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
         public string Hint { get { return baseTextBox.Hint; } set { baseTextBox.Hint = value; } }
 
+        public bool UseSystemPasswordChar { get { return baseTextBox.UseSystemPasswordChar; } set { baseTextBox.UseSystemPasswordChar = value; } }
+        public char PasswordChar { get { return baseTextBox.PasswordChar; } set { baseTextBox.PasswordChar = value; } }
+
         # region Forwarding events to baseTextBox
         public event EventHandler AcceptsTabChanged
         {
@@ -1013,6 +1016,9 @@ namespace MaterialSkin.Controls
             private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, string lParam);
 
             private const int EM_SETCUEBANNER = 0x1501;
+            private const char EmptyChar = (char)0;
+            private const char VisualStylePasswordChar = '\u25CF';
+            private const char NonVisualStylePasswordChar = '\u002A';
 
             private string hint = string.Empty;
             public string Hint
@@ -1023,6 +1029,41 @@ namespace MaterialSkin.Controls
                     hint = value;
                     SendMessage(Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, Hint);
                 }
+            }
+
+            private char passwordChar = EmptyChar;
+            public new char PasswordChar
+            {
+                get { return passwordChar; }
+                set
+                {
+                    passwordChar = value;
+                    SetBasePasswordChar();
+                }
+            }
+
+            private char useSystemPasswordChar = EmptyChar;
+            public new bool UseSystemPasswordChar
+            {
+                get { return useSystemPasswordChar != EmptyChar; }
+                set
+                {
+                    if (value)
+                    {
+                        useSystemPasswordChar = Application.RenderWithVisualStyles ? VisualStylePasswordChar : NonVisualStylePasswordChar;
+                    }
+                    else
+                    {
+                        useSystemPasswordChar = EmptyChar;
+                    }
+
+                    SetBasePasswordChar();
+                }
+            }
+
+            private void SetBasePasswordChar()
+            {
+                base.PasswordChar = UseSystemPasswordChar ? useSystemPasswordChar : passwordChar;
             }
 
             public BaseTextBox()
