@@ -1050,7 +1050,7 @@ namespace MaterialSkin.Controls
                 {
                     if (value)
                     {
-                        useSystemPasswordChar = Application.RenderWithVisualStyles ? VisualStylePasswordChar : NonVisualStylePasswordChar; ;
+                        useSystemPasswordChar = Application.RenderWithVisualStyles ? VisualStylePasswordChar : NonVisualStylePasswordChar;
                     }
                     else
                     {
