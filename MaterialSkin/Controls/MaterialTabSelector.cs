@@ -75,7 +75,7 @@ namespace MaterialSkin.Controls
 
             if (baseTabControl == null) return;
 
-            if (!animationManager.IsAnimating() || tabRects == null)
+            if (!animationManager.IsAnimating() || tabRects == null ||  tabRects.Count != baseTabControl.TabCount)
                 UpdateTabRects();
 
             double animationProgress = animationManager.GetProgress();
