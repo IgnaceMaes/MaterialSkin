@@ -15,10 +15,10 @@ namespace MaterialSkin.Controls
         {
             base.OnCreateControl();
 
-            ForeColor = SkinManager.GetMainTextColor();
+            ForeColor = SkinManager.GetPrimaryTextColor();
             Font = SkinManager.ROBOTO_REGULAR_11;
 
-            BackColorChanged += (sender, args) => ForeColor = SkinManager.GetMainTextColor();
+            BackColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
         }
     }
 }

@@ -164,7 +164,7 @@ namespace MaterialSkin.Controls
             g.DrawString(
                 Text, 
                 SkinManager.ROBOTO_MEDIUM_10,
-                Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
                 boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
 
             // dispose used paint objects

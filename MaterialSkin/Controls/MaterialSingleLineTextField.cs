@@ -956,7 +956,7 @@ namespace MaterialSkin.Controls
             {
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.ROBOTO_REGULAR_11,
-                ForeColor = SkinManager.GetMainTextColor(),
+                ForeColor = SkinManager.GetPrimaryTextColor(),
                 Location = new Point(0, 0),
                 Width = Width,
                 Height = Height - 5
@@ -972,8 +972,12 @@ namespace MaterialSkin.Controls
             BackColorChanged += (sender, args) =>
             {
                 baseTextBox.BackColor = BackColor;
-                baseTextBox.ForeColor = SkinManager.GetMainTextColor();
+                baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
             };
+
+			//Fix for tabstop
+			baseTextBox.TabStop = true;
+			this.TabStop = false;
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -1018,7 +1022,7 @@ namespace MaterialSkin.Controls
             base.OnCreateControl();
 
             baseTextBox.BackColor = Parent.BackColor;
-            baseTextBox.ForeColor = SkinManager.GetMainTextColor();
+            baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
         }
 
         private class BaseTextBox : TextBox

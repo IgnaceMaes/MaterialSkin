@@ -63,6 +63,9 @@
     <Compile Include="Controls\MaterialLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -89,9 +92,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\MaterialTabSelector.resx">
-      <DependentUpon>MaterialTabSelector.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

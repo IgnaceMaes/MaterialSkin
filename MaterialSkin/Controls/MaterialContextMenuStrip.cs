@@ -109,7 +109,7 @@ namespace MaterialSkin.Controls
             g.DrawString(
                 e.Text, 
                 SkinManager.ROBOTO_MEDIUM_10, 
-                e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
                 textRect, 
                 new StringFormat { LineAlignment = StringAlignment.Center });
         }
@@ -173,7 +173,7 @@ namespace MaterialSkin.Controls
             const int ARROW_SIZE = 4;
 
             var arrowMiddle = new Point(e.ArrowRectangle.X + e.ArrowRectangle.Width / 2, e.ArrowRectangle.Y + e.ArrowRectangle.Height / 2);
-            var arrowBrush = e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush();
+            var arrowBrush = e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush();
             using (var arrowPath = new GraphicsPath())
             {
                 arrowPath.AddLines(

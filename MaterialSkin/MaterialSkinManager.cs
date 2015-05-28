@@ -48,8 +48,8 @@ namespace MaterialSkin
         }
 
         //Constant color values
-        private static readonly Color MAIN_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
-        private static readonly Brush MAIN_TEXT_BLACK_BRUSH = new SolidBrush(MAIN_TEXT_BLACK);
+        private static readonly Color PRIMARY_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
+        private static readonly Brush PRIMARY_TEXT_BLACK_BRUSH = new SolidBrush(PRIMARY_TEXT_BLACK);
         public static Color SECONDARY_TEXT_BLACK = Color.FromArgb(138, 0, 0, 0);
         public static Brush SECONDARY_TEXT_BLACK_BRUSH = new SolidBrush(SECONDARY_TEXT_BLACK);
         private static readonly Color DISABLED_OR_HINT_TEXT_BLACK = Color.FromArgb(66, 0, 0, 0);
@@ -57,8 +57,8 @@ namespace MaterialSkin
         private static readonly Color DIVIDERS_BLACK = Color.FromArgb(31, 0, 0, 0);
         private static readonly Brush DIVIDERS_BLACK_BRUSH = new SolidBrush(DIVIDERS_BLACK);
 
-        private static readonly Color MAIN_TEXT_WHITE = Color.FromArgb(255, 255, 255, 255);
-        private static readonly Brush MAIN_TEXT_WHITE_BRUSH = new SolidBrush(MAIN_TEXT_WHITE);
+        private static readonly Color PRIMARY_TEXT_WHITE = Color.FromArgb(255, 255, 255, 255);
+        private static readonly Brush PRIMARY_TEXT_WHITE_BRUSH = new SolidBrush(PRIMARY_TEXT_WHITE);
         public static Color SECONDARY_TEXT_WHITE = Color.FromArgb(179, 255, 255, 255);
         public static Brush SECONDARY_TEXT_WHITE_BRUSH = new SolidBrush(SECONDARY_TEXT_WHITE);
         private static readonly Color DISABLED_OR_HINT_TEXT_WHITE = Color.FromArgb(77, 255, 255, 255);
@@ -80,9 +80,9 @@ namespace MaterialSkin
         //Raised button
         private static readonly Color RAISED_BUTTON_BACKGROUND = Color.FromArgb(255, 255, 255, 255);
         private static readonly Brush RAISED_BUTTON_BACKGROUND_BRUSH = new SolidBrush(RAISED_BUTTON_BACKGROUND);
-        private static readonly Color RAISED_BUTTON_TEXT_LIGHT = MAIN_TEXT_WHITE;
+        private static readonly Color RAISED_BUTTON_TEXT_LIGHT = PRIMARY_TEXT_WHITE;
         private static readonly Brush RAISED_BUTTON_TEXT_LIGHT_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_LIGHT);
-        private static readonly Color RAISED_BUTTON_TEXT_DARK = MAIN_TEXT_BLACK;
+        private static readonly Color RAISED_BUTTON_TEXT_DARK = PRIMARY_TEXT_BLACK;
         private static readonly Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
 
         //Flat button
@@ -120,15 +120,25 @@ namespace MaterialSkin
         public readonly Color ACTION_BAR_TEXT_SECONDARY = Color.FromArgb(153, 255, 255, 255);
         public readonly Brush ACTION_BAR_TEXT_SECONDARY_BRUSH = new SolidBrush(Color.FromArgb(153, 255, 255, 255));
 
-        public Color GetMainTextColor()
+        public Color GetPrimaryTextColor()
         {
-            return (Theme == Themes.LIGHT ? MAIN_TEXT_BLACK : MAIN_TEXT_WHITE);
+            return (Theme == Themes.LIGHT ? PRIMARY_TEXT_BLACK : PRIMARY_TEXT_WHITE);
         }
 
-        public Brush GetMainTextBrush()
+        public Brush GetPrimaryTextBrush()
         {
-            return (Theme == Themes.LIGHT ? MAIN_TEXT_BLACK_BRUSH : MAIN_TEXT_WHITE_BRUSH);
-        }
+            return (Theme == Themes.LIGHT ? PRIMARY_TEXT_BLACK_BRUSH : PRIMARY_TEXT_WHITE_BRUSH);
+		}
+
+		public Color GetSecondaryTextColor()
+		{
+			return (Theme == Themes.LIGHT ? SECONDARY_TEXT_BLACK : SECONDARY_TEXT_WHITE);
+		}
+
+		public Brush GetSecondaryTextBrush()
+		{
+			return (Theme == Themes.LIGHT ? SECONDARY_TEXT_BLACK_BRUSH : SECONDARY_TEXT_WHITE_BRUSH);
+		}
 
         public Color GetDisabledOrHintColor()
         {
@@ -316,6 +326,12 @@ namespace MaterialSkin
             {
                 controlToUpdate.BackColor = GetDividersColor();
             }
+
+	        if (controlToUpdate is MaterialListView)
+	        {
+		        controlToUpdate.BackColor = newBackColor;
+
+	        }
 
             //recursive call
             foreach (Control control in controlToUpdate.Controls)
