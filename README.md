@@ -5,15 +5,16 @@ Bringing Google's Material Design Principles to .NET Windows Forms.
 
 <a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank">![alt tag](http://i.imgur.com/JAttoOo.png)</a>
 
+
 Screenshot:
+
 ![alt text](http://i.imgur.com/g7yS2uo.png)
 
 ---
 
 #### Current state of the MaterialSkin components
-
  | Supported | Dark & light version | Disabled mode | Animated | RTL Support
---- | --- | --- | --- | ---
+--- | --- | --- | --- | --- | ---
 Form | Yes | Yes | N/A | N/A | Yes
 Checkbox | Yes | Yes | Yes | Yes | Yes
 Divider | Yes | Yes | N/A | N/A | N/A
