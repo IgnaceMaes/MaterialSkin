@@ -21,14 +21,14 @@ Divider | Yes | Yes | N/A | N/A | N/A
 Flat Button | Yes | Yes | Yes | Yes | N/A
 Label | Yes | Yes | N/A | N/A | N/A
 Radio Button | Yes | Yes | Yes | Yes | Yes
-Raised Button | Yes | Yes | Yes | Yes 
+Raised Button | Yes | Yes | Yes | Yes | N/A
 Single-line text field | Yes | Yes | No | Yes | No
 TabControl | Yes | N/A | N/A | Yes | Yes
 ContextMenuStrip | Yes | Yes | Yes | Yes | No
 FloatingActionButton | No | No | No | No | No
 ListView | No | No | No | No | No
 Dialogs | No | No | No | No | No
-Switch | No | No | No | No | No
+Switch | No | No | No | No | N/A
 More... | No | No | No | No | No
 
 ---
@@ -47,7 +47,7 @@ Implementing is the same as <a href="https://github.com/IgnaceMaes/MaterialSkin"
 
 ### I want to use it in my WPF project, How can I do that?
 
-You can use >ButchersBoy's <a href="https://github.com/ButchersBoy/MaterialDesignInXamlToolkit">Implementation of Material Design in XAML</a> (which is inspired from this project) for your WPF applications.
+You can use ButchersBoy's <a href="https://github.com/ButchersBoy/MaterialDesignInXamlToolkit">Implementation of Material Design in XAML</a> (which is inspired from this project) for your WPF applications.
 
 ---
 
