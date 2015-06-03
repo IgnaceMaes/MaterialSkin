@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -295,22 +296,22 @@ namespace MaterialSkin.Controls
 
 				if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !Maximized)
 				{
-					resizeDir = ResizeDirection.BottomLeft;
+					resizeDir = (this.RightToLeft != RightToLeft.Yes && this.RightToLeftLayout != false) ? ResizeDirection.BottomLeft : ResizeDirection.BottomRight;
 					Cursor = Cursors.SizeNESW;
 				}
 				else if (e.Location.X < BORDER_WIDTH && !isChildUnderMouse && !Maximized)
 				{
-					resizeDir = ResizeDirection.Left;
+					resizeDir = (this.RightToLeft != RightToLeft.Yes && this.RightToLeftLayout != false) ? ResizeDirection.Left : ResizeDirection.Right;
 					Cursor = Cursors.SizeWE;
 				}
 				else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !Maximized)
 				{
-					resizeDir = ResizeDirection.BottomRight;
+					resizeDir = (this.RightToLeft != RightToLeft.Yes && this.RightToLeftLayout != false) ? ResizeDirection.BottomRight: ResizeDirection.BottomLeft;
 					Cursor = Cursors.SizeNWSE;
 				}
 				else if (e.Location.X > Width - BORDER_WIDTH && !isChildUnderMouse && !Maximized)
 				{
-					resizeDir = ResizeDirection.Right;
+					resizeDir = (this.RightToLeft != RightToLeft.Yes && this.RightToLeftLayout != false) ? ResizeDirection.Right: ResizeDirection.Left;
 					Cursor = Cursors.SizeWE;
 				}
 				else if (e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !Maximized)
@@ -567,7 +568,57 @@ namespace MaterialSkin.Controls
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            if (!this.RightToLeftLayout && this.RightToLeft != RightToLeft.Yes)
+            {
+                g.DrawString(Text, this.Font, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            }
+            else {
+                DrawFlippedText(
+                    g,
+                    this.Text,
+                    this.Font,
+                    SkinManager.ColorScheme.TextBrush,
+                    new Rectangle(
+                        SkinManager.FORM_PADDING,
+                        STATUS_BAR_HEIGHT,
+                        Width,
+                        ACTION_BAR_HEIGHT
+                    ),
+                    true,
+                    false,
+                    new StringFormat { 
+                        LineAlignment = StringAlignment.Center
+                    });
+            }
+        }
+        public void DrawFlippedText(Graphics gr, string text, Font the_font, Brush the_brush, Rectangle rect, bool flip_x, bool flip_y, StringFormat stringFormat)
+        {
+            // Save the current graphics state.
+            GraphicsState state = gr.Save();
+
+            float rx = rect.X;
+            float ry = rect.Y;
+            float r_width = rect.Width;
+            float r_height = rect.Height;
+
+            // Set up the transformation.
+            int scale_x = flip_x ? -1 : 1;
+            int scale_y = flip_y ? -1 : 1;
+
+            gr.ResetTransform();
+            gr.ScaleTransform(scale_x, scale_y);
+
+            // Figure out where to draw.
+            SizeF txt_size = gr.MeasureString(text, the_font);
+
+            rect.X = Convert.ToInt32(flip_x ? (-rx - txt_size.Width) : rx);
+            rect.Y = Convert.ToInt32(flip_y ? (-ry - txt_size.Height) : ry);
+
+            // Draw.
+            gr.DrawString(text, the_font, the_brush, rect, stringFormat);
+
+            // Restore the original graphics state.
+            gr.Restore(state);
         }
     }
 

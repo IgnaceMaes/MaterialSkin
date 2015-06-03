@@ -78,12 +78,23 @@ namespace MaterialSkin.Controls
 			base.OnSizeChanged(e);
 
             boxOffset = Height / 2 - 9;
-            boxRectangle = new Rectangle(boxOffset, boxOffset, CHECKBOX_SIZE - 1, CHECKBOX_SIZE - 1);
+
+            // Finding text width
+            Graphics g = this.CreateGraphics();
+            SizeF stringSize = g.MeasureString(Text, this.Font);
+            
+            // Fixing Offset in RTL
+            int boxOffset_rtl = 0;
+            //boxOffset_rtl = (RightToLeft != RightToLeft.Yes) ? boxOffset : (boxOffset + Convert.ToInt32(stringSize.Width)) - (CHECKBOX_SIZE_HALF*2) + TEXT_OFFSET;
+            boxOffset_rtl = (RightToLeft != RightToLeft.Yes) ? boxOffset : ((int) GetPreferredSize(new Size()).Width + TEXT_OFFSET+22);
+
+            boxRectangle = new Rectangle(this.Width - CHECKBOX_SIZE -1, boxOffset, CHECKBOX_SIZE - 1, CHECKBOX_SIZE - 1);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            int w = boxOffset + CHECKBOX_SIZE + 2 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            int w = 0;
+            w = boxOffset + CHECKBOX_SIZE + 2 + (int)CreateGraphics().MeasureString(Text, this.Font).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
@@ -92,13 +103,19 @@ namespace MaterialSkin.Controls
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
+            
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
+            SizeF stringSize = g.MeasureString(Text, this.Font);
+            int boxOffset_rtl = 0;
             // clear the control
             g.Clear(Parent.BackColor);
+            //boxOffset_rtl = (RightToLeft != RightToLeft.Yes) ? boxOffset : (boxOffset + Convert.ToInt32(stringSize.Width)) - (CHECKBOX_SIZE_HALF*2) + TEXT_OFFSET;
+            boxOffset_rtl = (RightToLeft != RightToLeft.Yes) ? boxOffset : (boxOffset + Convert.ToInt32(stringSize.Width));
+            var CHECKBOX_CENTER_X = boxOffset_rtl + CHECKBOX_SIZE_HALF -1;
+            var CHECKBOX_CENTER_Y = boxOffset + CHECKBOX_SIZE_HALF - 1;
 
-            var CHECKBOX_CENTER = boxOffset + CHECKBOX_SIZE_HALF -1;
 
             double animationProgress = animationManager.GetProgress();
 
@@ -115,7 +132,7 @@ namespace MaterialSkin.Controls
                 for (int i = 0; i < rippleAnimationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = rippleAnimationManager.GetProgress(i);
-                    var animationSource = new Point(CHECKBOX_CENTER, CHECKBOX_CENTER);
+                    var animationSource = new Point(CHECKBOX_CENTER_X, CHECKBOX_CENTER_Y);
                     var rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), ((bool)rippleAnimationManager.GetData(i)[0]) ? Color.Black : brush.Color));
                     var rippleHeight = (Height % 2 == 0) ? Height - 3 : Height - 2;
                     var rippleSize = (rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleHeight * (0.8d + (0.2d * animationValue))) : rippleHeight;
@@ -130,16 +147,16 @@ namespace MaterialSkin.Controls
 
             brush3.Dispose();
 
-            var checkMarkLineFill = new Rectangle(boxOffset, boxOffset, (int)(17.0 * animationProgress), 17);
-            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset, boxOffset, 17, 17, 1f))
+            var checkMarkLineFill = new Rectangle(boxOffset_rtl, boxOffset, (int)(17.0 * animationProgress), 17);
+            using (var checkmarkPath = DrawHelper.CreateRoundRect(boxOffset_rtl, boxOffset, 17, 17, 1f))
             {
                 SolidBrush brush2 = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha));
                 Pen pen2 = new Pen(brush2.Color);
                 g.FillPath(brush2, checkmarkPath);
                 g.DrawPath(pen2, checkmarkPath);
 
-                g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset + 2, boxOffset + 2, CHECKBOX_INNER_BOX_SIZE - 1, CHECKBOX_INNER_BOX_SIZE - 1);
-                g.DrawRectangle(new Pen(Parent.BackColor), boxOffset + 2, boxOffset + 2, CHECKBOX_INNER_BOX_SIZE - 1, CHECKBOX_INNER_BOX_SIZE - 1);
+                g.FillRectangle(new SolidBrush(Parent.BackColor), boxOffset_rtl + 2, boxOffset_rtl + 2, CHECKBOX_INNER_BOX_SIZE - 1, CHECKBOX_INNER_BOX_SIZE - 1);
+                g.DrawRectangle(new Pen(Parent.BackColor), boxOffset_rtl + 2, boxOffset_rtl + 2, CHECKBOX_INNER_BOX_SIZE - 1, CHECKBOX_INNER_BOX_SIZE - 1);
 
                 brush2.Dispose();
                 pen2.Dispose();
@@ -152,7 +169,7 @@ namespace MaterialSkin.Controls
                 else if (Checked)
                 {
                     g.SmoothingMode = SmoothingMode.None;
-                    g.FillRectangle(brush, boxOffset + 2, boxOffset + 2, CHECKBOX_INNER_BOX_SIZE, CHECKBOX_INNER_BOX_SIZE);
+                    g.FillRectangle(brush, boxOffset_rtl + 2, boxOffset + 2, CHECKBOX_INNER_BOX_SIZE, CHECKBOX_INNER_BOX_SIZE);
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                 }
 
@@ -160,12 +177,23 @@ namespace MaterialSkin.Controls
             }
 
             // draw checkbox text
-            SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(
-                Text, 
-                SkinManager.ROBOTO_MEDIUM_10,
-                Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
-                boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
+            if (this.RightToLeft == RightToLeft.Yes) {
+                g.DrawString(
+                 Text,
+                 this.Font,
+                 Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                 0, 
+                 Height / 2 - stringSize.Height / 2
+                 );
+            }
+            else
+            {
+                g.DrawString(
+                    Text,
+                    this.Font,
+                    Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                    boxOffset_rtl + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
+            }
 
             // dispose used paint objects
             pen.Dispose();
@@ -210,7 +238,7 @@ namespace MaterialSkin.Controls
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = SkinManager.ROBOTO_MEDIUM_10;
+            //Font = SkinManager.ROBOTO_MEDIUM_10;
 
             if (DesignMode) return;
 

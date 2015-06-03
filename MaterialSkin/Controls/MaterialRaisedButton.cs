@@ -69,7 +69,7 @@ namespace MaterialSkin.Controls
 
             g.DrawString(
                 Text.ToUpper(),
-                SkinManager.ROBOTO_MEDIUM_10, 
+                this.Font,
                 SkinManager.GetRaisedButtonTextBrush(Primary),
                 ClientRectangle,
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });

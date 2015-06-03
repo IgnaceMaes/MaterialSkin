@@ -42,7 +42,7 @@ namespace MaterialSkin.Controls
             animationManager.OnAnimationProgress += sender => Invalidate();
 
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AutoSize = true;
+            //AutoSize = true;
             Margin = new Padding(4, 6, 4, 6);
             Padding = new Padding(0);
         }
@@ -53,7 +53,7 @@ namespace MaterialSkin.Controls
             set
             {
                 base.Text = value;
-                textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                textSize = CreateGraphics().MeasureString(value.ToUpper(), this.Font);
                 if (AutoSize)
                     Size = GetPreferredSize();
                 Invalidate();
@@ -89,7 +89,7 @@ namespace MaterialSkin.Controls
                 }
                 g.SmoothingMode = SmoothingMode.None;
             }
-			g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+			g.DrawString(Text.ToUpper(), this.Font, Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
 
         private Size GetPreferredSize()

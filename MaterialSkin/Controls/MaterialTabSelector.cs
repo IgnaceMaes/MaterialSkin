@@ -99,8 +99,8 @@ namespace MaterialSkin.Controls
 				Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
 
                 g.DrawString(
-                    tabPage.Text.ToUpper(), 
-                    SkinManager.ROBOTO_MEDIUM_10, 
+                    tabPage.Text.ToUpper(),
+                    this.Font, 
                     textBrush, 
                     tabRects[currentTabIndex], 
                     new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
@@ -113,7 +113,14 @@ namespace MaterialSkin.Controls
             Rectangle activeTabPageRect = tabRects[baseTabControl.SelectedIndex];
 
             int y = activeTabPageRect.Bottom - 2;
-            int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
+            int x = 0;
+            if (this.RightToLeft != RightToLeft.No)
+            {
+                x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
+            }
+            else {
+                x = this.Width - (previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress));
+            }
             int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
 
 			g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
@@ -157,6 +164,11 @@ namespace MaterialSkin.Controls
 
         private void UpdateTabRects()
         {
+            int x = 0;
+            int y = 0;
+            int w = 0;
+            int h = 0;
+            int text_w = 0;
             tabRects = new List<Rectangle>();
 
             //If there isn't a base tab control, the rects shouldn't be calculated
@@ -168,10 +180,19 @@ namespace MaterialSkin.Controls
             {
                 using (var g = Graphics.FromImage(b))
                 {
-                    tabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                    tabRects.Add(new Rectangle(
+                        (RightToLeft != RightToLeft.Yes) ? SkinManager.FORM_PADDING : Width - ((int)g.MeasureString(baseTabControl.TabPages[0].Text, this.Font).Width) - SkinManager.FORM_PADDING - TAB_HEADER_PADDING*2,
+                        0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, this.Font).Width, Height));
                     for (int i = 1; i < baseTabControl.TabPages.Count; i++)
                     {
-                        tabRects.Add(new Rectangle(tabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                        text_w = (int)g.MeasureString(baseTabControl.TabPages[i].Text, this.Font).Width;
+                        w = TAB_HEADER_PADDING * 2 + text_w;
+                        h = Height;
+                        x = (RightToLeft == RightToLeft.Yes) ? (tabRects[i - 1].Left)-TAB_HEADER_PADDING*2-text_w : tabRects[i - 1].Right;
+                        y = 0;
+                        
+                        
+                        tabRects.Add(new Rectangle(x, y, w, h));
                     }
                 }
             }

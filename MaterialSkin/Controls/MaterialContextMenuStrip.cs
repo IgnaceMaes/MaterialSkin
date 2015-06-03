@@ -16,6 +16,7 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+        public new Font Font { get; set; }
         
 
         internal AnimationManager animationManager;
@@ -27,7 +28,6 @@ namespace MaterialSkin.Controls
         public MaterialContextMenuStrip()
         {
             Renderer = new MaterialToolStripRender();
-
             animationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
@@ -97,7 +97,6 @@ namespace MaterialSkin.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
@@ -108,7 +107,7 @@ namespace MaterialSkin.Controls
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
             g.DrawString(
                 e.Text, 
-                SkinManager.ROBOTO_MEDIUM_10, 
+                new Font(SkinManager.ff_DROID_ARABIC_UI,12f),
                 e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
                 textRect, 
                 new StringFormat { LineAlignment = StringAlignment.Center });
