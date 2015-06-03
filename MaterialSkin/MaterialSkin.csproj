@@ -103,6 +103,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Roboto-Medium.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DroidNaskhUI-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NotoNaskh-Bold.ttf" />
+    <EmbeddedResource Include="Resources\NotoNaskh-Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

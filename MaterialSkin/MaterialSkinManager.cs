@@ -225,6 +225,11 @@ namespace MaterialSkin
             return (Theme == Themes.LIGHT ? BACKGROUND_LIGHT : BACKGROUND_DARK);
         }
 
+        //Naskh Fonts
+        public FontFamily ff_NOTO_NASKH_REGULAR;
+        public FontFamily ff_NOTO_NASKH_BOLD;
+        public FontFamily ff_DROID_ARABIC_UI;
+
         //Roboto font
         public Font ROBOTO_MEDIUM_12;
         public Font ROBOTO_REGULAR_11;
@@ -239,6 +244,9 @@ namespace MaterialSkin
 
         private MaterialSkinManager()
         {
+            ff_NOTO_NASKH_REGULAR = LoadFont(Resources.NotoNaskh_Regular);
+            ff_NOTO_NASKH_BOLD = LoadFont(Resources.NotoNaskh_Bold);
+            ff_DROID_ARABIC_UI = LoadFont(Resources.DroidNaskhUI_Regular);
             ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
             ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);

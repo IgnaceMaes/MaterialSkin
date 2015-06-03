@@ -118,6 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="DroidNaskhUI_Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\droidnaskhui-regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NotoNaskh_Bold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NotoNaskh-Bold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NotoNaskh_Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NotoNaskh-Regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Roboto_Medium" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Roboto-Medium.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
