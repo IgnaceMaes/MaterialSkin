@@ -177,7 +177,7 @@ namespace MaterialSkin.Controls
             var checkMark = new Bitmap(CHECKBOX_SIZE, CHECKBOX_SIZE);
             var g = Graphics.FromImage(checkMark);
 
-            // clear everything, transparant
+            // clear everything, transparent
             g.Clear(Color.Transparent);
 
             // draw the checkmark lines

@@ -322,7 +322,7 @@ namespace MaterialSkin.Controls
 				{
 					resizeDir = ResizeDirection.None;
 
-					//Only reset the cursur when needed, this prevents it from flickering when a child control changes the cursor to its own needs
+					//Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
 					if (resizeCursors.Contains(Cursor))
 					{
 						Cursor = Cursors.Default;
