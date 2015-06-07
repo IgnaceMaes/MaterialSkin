@@ -41,19 +41,7 @@ namespace MaterialSkinExample
 			//Add
 			foreach (string[] version in data)
 			{
-				ListViewItem item = null;
-				foreach (string property in version)
-				{
-					if (item == null)
-					{
-						item = new ListViewItem(property);
-					}
-					else
-					{
-						item.SubItems.Add(property);
-					}
-				}
-
+				var item = new ListViewItem(version);
 				materialListView1.Items.Add(item);
 			}
 	    }
