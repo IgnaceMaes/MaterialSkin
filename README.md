@@ -22,6 +22,7 @@ Raised Button | Yes | Yes | Yes | Yes
 Single-line text field | Yes | Yes | No | Yes
 TabControl | Yes | N/A | N/A | Yes
 ContextMenuStrip | Yes | Yes | Yes | Yes
+ProgressBar | Yes | Yes | No | No 
 FloatingActionButton | No | No | No | No
 ListView | No | No | No | No
 Dialogs | No | No | No | No
