@@ -92,7 +92,7 @@ End Class
 
 #### Material Design in WPF
 
-If you love .NET and Material Design, you should definitly check out [Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) by ButchersBoy. It's a similar project but for WPF in stead of WinForms.
+If you love .NET and Material Design, you should definitly check out [Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) by ButchersBoy. It's a similar project but for WPF instead of WinForms.
 
 ---
 
