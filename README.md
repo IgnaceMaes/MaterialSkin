@@ -5,8 +5,7 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
 <a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank">![alt tag](http://i.imgur.com/JAttoOo.png)</a>
 
-Because the video quality isn't 100%, here is a screenshot:
-![alt text](http://i.imgur.com/g7yS2uo.png)
+*High quality images can be found at the bottom of this page.*
 
 ---
 
@@ -70,7 +69,7 @@ C# (Form1.cs)
       var materialSkinManager = MaterialSkinManager.Instance;
       materialSkinManager.AddFormToManage(this);
       materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-			   materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+      materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
   }
   ```
 
@@ -84,17 +83,46 @@ Public Class Form1
         Dim SkinManager As MaterialSkinManager = MaterialSkinManager.Instance
         SkinManager.AddFormToManage(Me)
         SkinManager.Theme = MaterialSkinManager.Themes.LIGHT
-		      SkinManager.ColorScheme = New ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE)
+        SkinManager.ColorScheme = New ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE)
     End Sub
 End Class
 ```
 
 ---
 
+#### Material Design in WPF
+
+If you love .NET and Material Design, you should definitly check out [Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) by ButchersBoy. It's a similar project but for WPF in stead of WinForms.
+
+---
+
 #### Contact
 
-If you wish to contact me for anything, hit me up @
+If you wish to contact me for anything you can get in touch at:
 
 - Twitter: https://twitter.com/Ignace_Maes
-- Google+: https://google.com/+IgnaceMaes
 - Personal Website: http://ignacemaes.com
+
+---
+
+#### Images
+
+![alt tag](http://i.imgur.com/Ub0N9Xf.png)
+
+*A simple demo interface with MaterialSkin components.*
+
+![alt tag](http://i.imgur.com/eIAtRkc.png)
+
+*The MaterialSkin checkboxes.*
+
+![alt tag](http://i.imgur.com/sAPyvdH.png)
+
+*The MaterialSkin radiobuttons.*
+
+![alt tag](http://i.imgur.com/3Zpuv6x.png)
+
+*The MaterialSkin ListView.*
+
+![alt tag](http://i.imgur.com/07MrJZQ.png)
+
+*MaterialSkin using a custom color scheme.*
