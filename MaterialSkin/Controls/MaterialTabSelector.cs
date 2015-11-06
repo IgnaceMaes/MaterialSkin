@@ -95,7 +95,7 @@ namespace MaterialSkin.Controls
             //Draw tab headers
             foreach (TabPage tabPage in baseTabControl.TabPages)
             {
-                int currentTabIndex = tabPage.TabIndex;
+                int currentTabIndex = baseTabControl.TabPages.IndexOf(tabPage);
 				Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
 
                 g.DrawString(
