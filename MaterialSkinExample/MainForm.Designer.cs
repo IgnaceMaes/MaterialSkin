@@ -65,6 +65,7 @@ namespace MaterialSkinExample
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
 			this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
 			this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
@@ -73,11 +74,13 @@ namespace MaterialSkinExample
 			this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+			this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
 			this.materialTabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
+			this.tabPage5.SuspendLayout();
 			this.materialContextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -373,6 +376,7 @@ namespace MaterialSkinExample
 			this.materialTabControl1.Controls.Add(this.tabPage2);
 			this.materialTabControl1.Controls.Add(this.tabPage3);
 			this.materialTabControl1.Controls.Add(this.tabPage4);
+			this.materialTabControl1.Controls.Add(this.tabPage5);
 			this.materialTabControl1.Depth = 0;
 			this.materialTabControl1.Location = new System.Drawing.Point(14, 111);
 			this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
@@ -552,6 +556,17 @@ namespace MaterialSkinExample
 			this.columnHeader4.Text = "Protein (g)";
 			this.columnHeader4.Width = 154;
 			// 
+			// tabPage5
+			// 
+			this.tabPage5.Controls.Add(this.materialProgressBar1);
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage5.Size = new System.Drawing.Size(569, 230);
+			this.tabPage5.TabIndex = 4;
+			this.tabPage5.Text = "tabPage5";
+			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
 			// materialContextMenuStrip1
 			// 
 			this.materialContextMenuStrip1.BackColor = System.Drawing.Color.White;
@@ -619,6 +634,16 @@ namespace MaterialSkinExample
 			this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
 			this.item3ToolStripMenuItem.Text = "Item 3";
 			// 
+			// materialProgressBar1
+			// 
+			this.materialProgressBar1.Depth = 0;
+			this.materialProgressBar1.Location = new System.Drawing.Point(16, 208);
+			this.materialProgressBar1.MouseState = MaterialSkin.MouseState.HOVER;
+			this.materialProgressBar1.Name = "materialProgressBar1";
+			this.materialProgressBar1.Size = new System.Drawing.Size(534, 5);
+			this.materialProgressBar1.TabIndex = 0;
+			this.materialProgressBar1.Value = 45;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -641,6 +666,7 @@ namespace MaterialSkinExample
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
 			this.tabPage4.ResumeLayout(false);
+			this.tabPage5.ResumeLayout(false);
 			this.materialContextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -688,5 +714,7 @@ namespace MaterialSkinExample
 		private ColumnHeader columnHeader2;
 		private ColumnHeader columnHeader3;
 		private ColumnHeader columnHeader4;
+        private TabPage tabPage5;
+        private MaterialProgressBar materialProgressBar1;
     }
 }
