@@ -22,6 +22,7 @@ Single-line text field | Yes | Yes | No | Yes
 TabControl | Yes | N/A | N/A | Yes
 ContextMenuStrip | Yes | Yes | Yes | Yes
 ListView | Yes | Yes | No | No
+ProgressBar | Yes | Yes | No | No 
 FloatingActionButton | No | No | No | No
 Dialogs | No | No | No | No
 Switch | No | No | No | No
