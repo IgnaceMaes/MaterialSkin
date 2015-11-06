@@ -32,7 +32,7 @@ namespace MaterialSkin.Animations
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new anmation is added to the list.</param>
+        /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new animation is added to the list.</param>
         public AnimationManager(bool singular = true)
         {
             animationProgresses = new List<double>();

@@ -86,7 +86,7 @@ namespace MaterialSkin.Controls
 			}
 
 
-			//Draw seperator
+			//Draw separator
 			g.DrawLine(new Pen(SkinManager.GetDividersColor()), e.Bounds.Left, 0, e.Bounds.Right, 0);
 			
 			foreach (ListViewItem.ListViewSubItem subItem in e.Item.SubItems)

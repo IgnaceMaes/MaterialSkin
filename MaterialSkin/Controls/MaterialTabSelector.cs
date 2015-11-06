@@ -163,7 +163,7 @@ namespace MaterialSkin.Controls
             //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
             if (baseTabControl == null || baseTabControl.TabCount == 0) return;
 
-            //Caluclate the bounds of each tab header specified in the base tab control
+            //Calculate the bounds of each tab header specified in the base tab control
             using (var b = new Bitmap(1, 1))
             {
                 using (var g = Graphics.FromImage(b))
