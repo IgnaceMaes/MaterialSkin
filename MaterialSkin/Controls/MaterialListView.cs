@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +20,8 @@ namespace MaterialSkin.Controls
 		public MouseState MouseState { get; set; }
 		[Browsable(false)]
 		public Point MouseLocation { get; set; }
+        [Browsable(false)]
+        private ListViewItem HoveredItem { get; set; }
 
 		public MaterialListView()
 		{
@@ -43,6 +46,7 @@ namespace MaterialSkin.Controls
 			{
 				MouseState = MouseState.OUT; 
 				MouseLocation = new Point(-1, -1);
+                HoveredItem = null;
 				Invalidate();
 			};
 			MouseDown += delegate { MouseState = MouseState.DOWN; };
@@ -50,7 +54,12 @@ namespace MaterialSkin.Controls
 			MouseMove += delegate(object sender, MouseEventArgs args)
 			{
 				MouseLocation = args.Location;
-				Invalidate();
+                var currentHoveredItem = this.GetItemAt(MouseLocation.X, MouseLocation.Y);
+                if (HoveredItem != currentHoveredItem)
+                {
+                    HoveredItem = currentHoveredItem;
+                    Invalidate();
+                }
 			};
 		}
 
@@ -113,14 +122,47 @@ namespace MaterialSkin.Controls
 			};
 		}
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public class LogFont
+        {
+            public int lfHeight = 0;
+            public int lfWidth = 0;
+            public int lfEscapement = 0;
+            public int lfOrientation = 0;
+            public int lfWeight = 0;
+            public byte lfItalic = 0;
+            public byte lfUnderline = 0;
+            public byte lfStrikeOut = 0;
+            public byte lfCharSet = 0;
+            public byte lfOutPrecision = 0;
+            public byte lfClipPrecision = 0;
+            public byte lfQuality = 0;
+            public byte lfPitchAndFamily = 0;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string lfFaceName = string.Empty;
+        }
+
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
 
-			//This is a hax for the needed padding.
-			//Another way would be intercepting all ListViewItems and changing the sizes, but really, that will be a lot of work
-			//This will do for now.
-			Font = new Font(SkinManager.ROBOTO_MEDIUM_12.FontFamily, 24);
+            // This hack tries to apply the Roboto (24) font to all ListViewItems in this ListView
+            // It only succeeds if the font is installed on the system.
+            // Otherwise, a default sans serif font is used.
+			Font roboto24 = new Font(SkinManager.ROBOTO_MEDIUM_12.FontFamily, 24);
+		    LogFont roboto24logfont = new LogFont();
+            roboto24.ToLogFont(roboto24logfont);
+
+            try
+            {
+                // Font.FromLogFont is the method used when drawing ListViewItems. I 'test' it in this safer context to avoid unhandled exceptions later.
+                Font = Font.FromLogFont(roboto24logfont);
+            }
+            catch (ArgumentException)
+            {
+                Font = new Font(FontFamily.GenericSansSerif, 24);
+            }
+
 		}
 	}
 }
