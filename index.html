@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Materialskin by IgnaceMaes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Materialskin</h1>
+      <h2 class="project-tagline">Theming .NET WinForms, C# or VB.Net, to Google&#39;s Material Design Principles.</h2>
+      <a href="https://github.com/IgnaceMaes/MaterialSkin" class="btn">View on GitHub</a>
+      <a href="https://github.com/IgnaceMaes/MaterialSkin/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/IgnaceMaes/MaterialSkin/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="materialskin-for-net-winforms" class="anchor" href="#materialskin-for-net-winforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>MaterialSkin for .NET WinForms</h1>
+
+<p>Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.</p>
+
+<p><a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank"><img src="http://i.imgur.com/JAttoOo.png" alt="alt tag"></a></p>
+
+<p><em>High quality images can be found at the bottom of this page.</em></p>
+
+<hr>
+
+<h4>
+<a id="current-state-of-the-materialskin-components" class="anchor" href="#current-state-of-the-materialskin-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Current state of the MaterialSkin components</h4>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Supported</th>
+<th>Dark &amp; light version</th>
+<th>Disabled mode</th>
+<th>Animated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Checkbox</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Divider</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Flat Button</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Label</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Radio Button</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Raised Button</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Single-line text field</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>TabControl</td>
+<td>Yes</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ContextMenuStrip</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>ListView</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>ProgressBar</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>FloatingActionButton</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Dialogs</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Switch</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>More...</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h4>
+<a id="implementing-materialskin-in-your-application" class="anchor" href="#implementing-materialskin-in-your-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementing MaterialSkin in your application</h4>
+
+<p><strong>1. Add the library to your project</strong></p>
+
+<p>You can do this on multiple ways. The easiest way would be adding the <a href="https://www.nuget.org/packages/MaterialSkin/">NuGet Package</a>. Right click on your project and click 'Manage NuGet Packages...'. Search for 'MaterialSkin' and click on install. Once installed the library will be included in your project references. (Or install it through the package manager console: PM&gt; Install-Package MaterialSkin)</p>
+
+<p>Another way of doing this step would be cloning the project from GitHub, compiling the library yourself and adding it as a reference.</p>
+
+<p><strong>2. Add the MaterialSkin components to your ToolBox</strong></p>
+
+<p>If you have installed the NuGet package, the MaterialSkin.dll file should be in the folder //bin/Debug. Simply drag the MaterialSkin.dll file into your IDE's ToolBox and all the controls should be added there.</p>
+
+<p><strong>3. Inherit from MaterialForm</strong></p>
+
+<p>Open the code behind your Form you wish to skin. Make it inherit from MaterialForm rather than Form. Don't forget to put the library in your imports, so it can find the MaterialForm class!</p>
+
+<p>C# (Form1.cs)</p>
+
+<div class="highlight highlight-source-cs"><pre>  <span class="pl-k">public</span> <span class="pl-k">partial</span> <span class="pl-k">class</span> <span class="pl-en">Form1</span> : <span class="pl-k">MaterialForm</span></pre></div>
+
+<p>VB.NET (Form1.Designer.vb)</p>
+
+<div class="highlight highlight-source-vbnet"><pre>  <span class="pl-k">Partial</span> <span class="pl-k">Class</span> <span class="pl-en">Form1</span>
+    <span class="pl-k">Inherits </span>MaterialSkin<span class="pl-k">.</span>Controls<span class="pl-k">.</span>MaterialForm</pre></div>
+
+<p><strong>4. Initialize your colorscheme</strong></p>
+
+<p>Set your prefered colors &amp; theme. Also add the form to the manager so it keeps updated if the color scheme or theme changes later on.</p>
+
+<p>C# (Form1.cs)</p>
+
+<div class="highlight highlight-source-cs"><pre>  <span class="pl-k">public</span> Form1()
+  {
+      InitializeComponent();
+
+      <span class="pl-k">var</span> materialSkinManager = MaterialSkinManager.Instance;
+      materialSkinManager.AddFormToManage(<span class="pl-c1">this</span>);
+      materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+      materialSkinManager.ColorScheme = <span class="pl-k">new</span> ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+  }</pre></div>
+
+<p>VB.NET (Form1.vb)</p>
+
+<div class="highlight highlight-source-vbnet"><pre><span class="pl-k">Imports</span> MaterialSkin
+
+<span class="pl-k">Public</span> <span class="pl-k">Class</span> <span class="pl-en">Form1</span>
+
+    <span class="pl-k">Private</span> <span class="pl-c1">Sub</span> <span class="pl-en">Form1_Load</span>(sender <span class="pl-k">As </span><span class="pl-c1">Object</span>, e <span class="pl-k">As </span>EventArgs) <span class="pl-k">Handles </span><span class="pl-k">MyBase.</span>Load
+        <span class="pl-k">Dim</span> SkinManager <span class="pl-k">As </span>MaterialSkinManager <span class="pl-k">=</span> MaterialSkinManager<span class="pl-k">.</span>Instance
+        SkinManager<span class="pl-k">.</span>AddFormToManage(Me)
+        SkinManager<span class="pl-k">.</span>Theme <span class="pl-k">=</span> MaterialSkinManager<span class="pl-k">.</span>Themes<span class="pl-k">.</span>LIGHT
+        SkinManager<span class="pl-k">.</span>ColorScheme <span class="pl-k">=</span> <span class="pl-c1">New</span> ColorScheme(Primary<span class="pl-k">.</span>BlueGrey800, Primary<span class="pl-k">.</span>BlueGrey900, Primary<span class="pl-k">.</span>BlueGrey500, Accent<span class="pl-k">.</span>LightBlue200, TextShade<span class="pl-k">.</span>WHITE)
+<span class="pl-k">    End Sub</span>
+<span class="pl-k">End Class</span></pre></div>
+
+<hr>
+
+<h4>
+<a id="material-design-in-wpf" class="anchor" href="#material-design-in-wpf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Material Design in WPF</h4>
+
+<p>If you love .NET and Material Design, you should definitly check out <a href="https://github.com/ButchersBoy/MaterialDesignInXamlToolkit">Material Design Xaml Toolkit</a> by ButchersBoy. It's a similar project but for WPF instead of WinForms.</p>
+
+<hr>
+
+<h4>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h4>
+
+<p>If you wish to contact me for anything you can get in touch at:</p>
+
+<ul>
+<li>Twitter: <a href="https://twitter.com/Ignace_Maes">https://twitter.com/Ignace_Maes</a>
+</li>
+<li>Personal Website: <a href="http://ignacemaes.com">http://ignacemaes.com</a>
+</li>
+</ul>
+
+<hr>
+
+<h4>
+<a id="images" class="anchor" href="#images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Images</h4>
+
+<p><img src="http://i.imgur.com/Ub0N9Xf.png" alt="alt tag"></p>
+
+<p><em>A simple demo interface with MaterialSkin components.</em></p>
+
+<p><img src="http://i.imgur.com/eIAtRkc.png" alt="alt tag"></p>
+
+<p><em>The MaterialSkin checkboxes.</em></p>
+
+<p><img src="http://i.imgur.com/sAPyvdH.png" alt="alt tag"></p>
+
+<p><em>The MaterialSkin radiobuttons.</em></p>
+
+<p><img src="http://i.imgur.com/3Zpuv6x.png" alt="alt tag"></p>
+
+<p><em>The MaterialSkin ListView.</em></p>
+
+<p><img src="http://i.imgur.com/07MrJZQ.png" alt="alt tag"></p>
+
+<p><em>MaterialSkin using a custom color scheme.</em></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/IgnaceMaes/MaterialSkin">Materialskin</a> is maintained by <a href="https://github.com/IgnaceMaes">IgnaceMaes</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
