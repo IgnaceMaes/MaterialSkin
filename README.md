@@ -59,7 +59,7 @@ Another way of doing this step would be cloning the project from GitHub, compili
   
 **4. Initialize your colorscheme**
 
-  Set your prefered colors & theme. Also add the form to the manager so it keeps updated if the color scheme or theme changes later on.
+  Set your preferred colors & theme. Also add the form to the manager so it keeps updated if the color scheme or theme changes later on.
 
 C# (Form1.cs)
   ```cs
@@ -93,7 +93,7 @@ End Class
 
 #### Material Design in WPF
 
-If you love .NET and Material Design, you should definitly check out [Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) by ButchersBoy. It's a similar project but for WPF instead of WinForms.
+If you love .NET and Material Design, you should definitely check out [Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) by ButchersBoy. It's a similar project but for WPF instead of WinForms.
 
 ---
 
