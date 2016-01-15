@@ -17,6 +17,15 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
 
+        bool useCustomBackColor = false;
+        [Browsable(true)]
+        [Category("Appearance")]
+        public bool UseCustomBackColor
+        {
+            get { return useCustomBackColor; }
+            set { useCustomBackColor = value; }
+        }
+
         private readonly AnimationManager animationManager;
 
         public MaterialRaisedButton()
@@ -52,7 +61,14 @@ namespace MaterialSkin.Controls
                 ClientRectangle.Height - 1,
                 1f))
             {
-                g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                if (useCustomBackColor)
+                {
+                    g.FillPath(new SolidBrush(BackColor), backgroundPath);
+                }
+                else
+                {
+                    g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                }
             }
 
             if (animationManager.IsAnimating())
