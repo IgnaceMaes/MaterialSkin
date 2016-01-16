@@ -364,7 +364,7 @@ namespace MaterialSkin.Controls
                 else
                     buttonState = ButtonState.None;
             }
-            else
+            else if (up)
             {
                 if (showMin && !showMax && maxButtonBounds.Contains(e.Location))
                 {
