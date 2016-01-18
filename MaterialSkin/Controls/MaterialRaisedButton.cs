@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
+using System;
 
 namespace MaterialSkin.Controls
 {
@@ -28,6 +29,21 @@ namespace MaterialSkin.Controls
 
         private readonly AnimationManager animationManager;
 
+        private SizeF textSize;
+
+        private Image _icon;
+        public Image Icon
+        {
+            get { return _icon; }
+            set
+            {
+                _icon = value;
+                if (AutoSize)
+                    Size = GetPreferredSize();
+                Invalidate();
+            }
+        }
+
         public MaterialRaisedButton()
         {
             Primary = true;
@@ -38,6 +54,22 @@ namespace MaterialSkin.Controls
                 AnimationType = AnimationType.EaseOut
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
+
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            AutoSize = true;
+        }
+
+        public override string Text
+        {
+            get { return base.Text; }
+            set
+            {
+                base.Text = value;
+                textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                if (AutoSize)
+                    Size = GetPreferredSize();
+                Invalidate();
+            }
         }
 
         protected override void OnMouseUp(MouseEventArgs mevent)
@@ -83,12 +115,61 @@ namespace MaterialSkin.Controls
                 }
             }
 
+            //Icon
+            Rectangle iconRect = new Rectangle(4, 6, 24, 24);
+
+            if (string.IsNullOrEmpty(Text))
+                // Center Icon
+                iconRect.X += 2;
+
+            if (Icon != null)
+                g.DrawImage(Icon, iconRect);
+
+            //Text
+            Rectangle textRect = ClientRectangle;
+
+            if (Icon != null)
+            {
+                //
+                // Resize and move Text container
+                //
+
+                // First 4: left padding
+                // 24: icon width
+                // Second 4: space between Icon and Text
+                // Third 4: right padding
+                textRect.Width -= 4 + 24 + 4 + 4;
+
+                // First 4: left padding
+                // 24: icon width
+                // Second 4: space between Icon and Text
+                textRect.X += 4 + 24 + 4;
+            }
+
             g.DrawString(
                 Text.ToUpper(),
                 SkinManager.ROBOTO_MEDIUM_10, 
                 SkinManager.GetRaisedButtonTextBrush(Primary),
-                ClientRectangle,
+                textRect,
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+        }
+
+        private Size GetPreferredSize()
+        {
+            return GetPreferredSize(new Size(0, 0));
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            // Provides extra space for proper padding for content
+            int extra = 8;
+
+            if (Icon != null)
+                // 24 is for icon size
+                // 4 is for the space between icon & text
+                extra += 24 + 4;
+
+            return new Size((int)Math.Ceiling(textSize.Width) + extra, 36);
         }
     }
 }
