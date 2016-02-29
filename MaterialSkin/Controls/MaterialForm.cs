@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -282,6 +281,7 @@ namespace MaterialSkin.Controls
             Invalidate();
         }
 
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -322,12 +322,10 @@ namespace MaterialSkin.Controls
 				{
 					resizeDir = ResizeDirection.None;
 
-					//Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
-					if (resizeCursors.Contains(Cursor))
-					{
-						Cursor = Cursors.Default;
-					}
-				}
+                    //Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
+                if(  ((IList<System.Windows.Forms.Cursor>)resizeCursors).Contains(Cursor) )
+                        Cursor = Cursors.Default;
+                }
 	        }
 
             UpdateButtons(e);

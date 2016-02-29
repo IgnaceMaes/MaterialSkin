@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MaterialSkin.Controls
@@ -64,7 +62,12 @@ namespace MaterialSkin.Controls
 				getStringFormat());
 		}
 
-		private const int ITEM_PADDING = 12;
+        public static bool HasFlag(Enum keys, Enum flag)
+        {
+            return (Convert.ToUInt64(keys) & Convert.ToUInt64(flag)) != 0;
+        }
+
+        private const int ITEM_PADDING = 12;
 		protected override void OnDrawItem(DrawListViewItemEventArgs e)
 		{
 			//We draw the current line of items (= item with subitems) on a temp bitmap, then draw the bitmap at once. This is to reduce flickering.
@@ -74,7 +77,7 @@ namespace MaterialSkin.Controls
 			//always draw default background
 			g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
 			
-			if (e.State.HasFlag(ListViewItemStates.Selected))
+			if(HasFlag(e.State, ListViewItemStates.Selected))
 			{
 				//selected background
 				g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));

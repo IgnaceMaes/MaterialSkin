@@ -69,7 +69,7 @@ namespace MaterialSkin.Controls
 
             //Hover
             Color c = SkinManager.GetFlatButtonHoverBackgroundColor();
-            using (Brush b = new SolidBrush(Color.FromArgb((int)(hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
+            using (Brush b = new SolidBrush(Color.FromArgb((int)(hoverAnimationManager.GetProgress() * c.A), ColorExtension.RemoveAlpha(c))))
                 g.FillRectangle(b, ClientRectangle);
 
             //Ripple
