@@ -939,7 +939,7 @@ namespace MaterialSkin.Controls
 
         private readonly AnimationManager animationManager;
 
-        private readonly BaseTextBox baseTextBox;
+        public BaseTextBox baseTextBox;
         public MaterialSingleLineTextField()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
@@ -1025,7 +1025,7 @@ namespace MaterialSkin.Controls
             baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
         }
 
-        private class BaseTextBox : TextBox
+        public class BaseTextBox : TextBox
         {
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, string lParam);
