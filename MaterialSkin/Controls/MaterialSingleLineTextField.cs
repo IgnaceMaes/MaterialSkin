@@ -990,7 +990,7 @@ namespace MaterialSkin.Controls
             if (!animationManager.IsAnimating())
             {
                 //No animation
-				g.FillRectangle(baseTextBox.Focused ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
+				g.FillRectangle(baseTextBox.Focused ? SkinManager.ColorScheme.DarkPrimaryBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
             }
             else
             {
@@ -1003,7 +1003,7 @@ namespace MaterialSkin.Controls
                 g.FillRectangle(SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, 1);
 
                 //Animated focus transition
-				g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
+				g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
             }
         }
 

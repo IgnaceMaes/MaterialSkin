@@ -52,7 +52,7 @@ namespace MaterialSkin.Controls
                 ClientRectangle.Height - 1,
                 1f))
             {
-                g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.ColorScheme.DarkPrimaryBrush, backgroundPath);
             }
 
             if (animationManager.IsAnimating())
@@ -70,7 +70,7 @@ namespace MaterialSkin.Controls
             g.DrawString(
                 Text.ToUpper(),
                 SkinManager.ROBOTO_MEDIUM_10, 
-                SkinManager.GetRaisedButtonTextBrush(Primary),
+                SkinManager.GetRaisedButtonTextBrush(true),
                 ClientRectangle,
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
