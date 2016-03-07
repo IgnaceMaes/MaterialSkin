@@ -68,7 +68,7 @@ namespace MaterialSkin.Controls
             }
 
             g.DrawString(
-                Text.ToUpper(),
+                Text,
                 SkinManager.ROBOTO_MEDIUM_10, 
                 SkinManager.GetRaisedButtonTextBrush(true),
                 ClientRectangle,

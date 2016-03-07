@@ -99,7 +99,7 @@ namespace MaterialSkin.Controls
 				Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
 
                 g.DrawString(
-                    tabPage.Text.ToUpper(), 
+                    tabPage.Text, 
                     SkinManager.ROBOTO_MEDIUM_10, 
                     textBrush, 
                     tabRects[currentTabIndex], 
