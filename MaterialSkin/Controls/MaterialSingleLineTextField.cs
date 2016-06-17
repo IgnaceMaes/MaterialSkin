@@ -33,6 +33,7 @@ namespace MaterialSkin.Controls
 
         public void SelectAll() { baseTextBox.SelectAll(); }
         public void Clear() { baseTextBox.Clear(); }
+        public void Focus() { baseTextBox.Focus(); }
 
 
         # region Forwarding events to baseTextBox
@@ -1066,6 +1067,13 @@ namespace MaterialSkin.Controls
                 });
             }
 
+            public new void Focus()
+            {
+                BeginInvoke((MethodInvoker)delegate ()
+                {
+                    base.Focus();
+                });
+            }
 
             private char useSystemPasswordChar = EmptyChar;
             public new bool UseSystemPasswordChar
