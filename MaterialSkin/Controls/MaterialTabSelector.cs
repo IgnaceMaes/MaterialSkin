@@ -99,8 +99,8 @@ namespace MaterialSkin.Controls
 				Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
 
                 g.DrawString(
-                    tabPage.Text.ToUpper(), 
-                    SkinManager.ROBOTO_MEDIUM_10, 
+                    tabPage.Text, 
+                    Font,//SkinManager.ROBOTO_MEDIUM_10, 
                     textBrush, 
                     tabRects[currentTabIndex], 
                     new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
@@ -168,10 +168,10 @@ namespace MaterialSkin.Controls
             {
                 using (var g = Graphics.FromImage(b))
                 {
-                    tabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                    tabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, Font).Width, Height));
                     for (int i = 1; i < baseTabControl.TabPages.Count; i++)
                     {
-                        tabRects.Add(new Rectangle(tabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                        tabRects.Add(new Rectangle(tabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, Font).Width, Height));
                     }
                 }
             }

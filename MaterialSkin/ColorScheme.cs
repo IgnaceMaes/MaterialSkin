@@ -20,11 +20,11 @@ namespace MaterialSkin
 		public ColorScheme(Primary primary, Primary darkPrimary, Primary lightPrimary, Accent accent, TextShade textShade)
         {
             //Color
-            PrimaryColor = ((int) primary).ToColor();
-            DarkPrimaryColor = ((int) darkPrimary).ToColor();
-            LightPrimaryColor = ((int) lightPrimary).ToColor();
-            AccentColor = ((int) accent).ToColor();
-			TextColor = ((int) textShade).ToColor();
+            PrimaryColor = ColorExtension.ToColor((int)primary);
+            DarkPrimaryColor = ColorExtension.ToColor((int)darkPrimary);
+            LightPrimaryColor = ColorExtension.ToColor((int)lightPrimary);
+            AccentColor = ColorExtension.ToColor(((int)accent));
+			TextColor = ColorExtension.ToColor(((int) textShade));
 
             //Pen
             PrimaryPen = new Pen(PrimaryColor);
@@ -48,7 +48,7 @@ namespace MaterialSkin
         /// Convert an integer number to a Color.
         /// </summary>
         /// <returns></returns>
-        public static Color ToColor(this int argb)
+        public static Color ToColor(int argb)
         {
             return Color.FromArgb(
                 (argb & 0xff0000) >> 16,
@@ -61,7 +61,7 @@ namespace MaterialSkin
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        public static Color RemoveAlpha(this Color color)
+        public static Color RemoveAlpha(Color color)
         {
             return Color.FromArgb(color.R, color.G, color.B);
         }
@@ -71,7 +71,7 @@ namespace MaterialSkin
         /// </summary>
         /// <param name="percentage"></param>
         /// <returns></returns>
-        public static int PercentageToColorComponent(this int percentage)
+        public static int PercentageToColorComponent(int percentage)
         {
             return (int)((percentage / 100d) * 255d);
         }

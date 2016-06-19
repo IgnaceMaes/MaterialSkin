@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
@@ -86,18 +85,18 @@ namespace MaterialSkin
         private static readonly Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
 
         //Flat button
-        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor());
+        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(ColorExtension.PercentageToColorComponent(20), ColorExtension.ToColor(0x999999));
         private static readonly Brush FLAT_BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_HOVER_LIGHT);
-        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT = Color.FromArgb(40.PercentageToColorComponent(), 0x999999.ToColor());
+        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT = Color.FromArgb(ColorExtension.PercentageToColorComponent(40), ColorExtension.ToColor(0x999999));
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT);
-        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_LIGHT = Color.FromArgb(26.PercentageToColorComponent(), 0x000000.ToColor());
+        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_LIGHT = Color.FromArgb(ColorExtension.PercentageToColorComponent(26), ColorExtension.ToColor(0x000000));
         private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_LIGHT);
 
-        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_DARK = Color.FromArgb(15.PercentageToColorComponent(), 0xCCCCCC.ToColor());
+        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_DARK = Color.FromArgb(ColorExtension.PercentageToColorComponent(15), ColorExtension.ToColor(0xCCCCCC));
         private static readonly Brush FLAT_BUTTON_BACKGROUND_HOVER_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_HOVER_DARK);
-        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(25.PercentageToColorComponent(), 0xCCCCCC.ToColor());
+        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(ColorExtension.PercentageToColorComponent(25), ColorExtension.ToColor(0xCCCCCC));
         private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
-        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_DARK = Color.FromArgb(30.PercentageToColorComponent(), 0xFFFFFF.ToColor());
+        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_DARK = Color.FromArgb(ColorExtension.PercentageToColorComponent(30), ColorExtension.ToColor(0xFFFFFF));
         private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_DARK);
 
         //ContextMenuStrip
@@ -244,7 +243,8 @@ namespace MaterialSkin
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
 			Theme = Themes.LIGHT;
-			ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+			//ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            ColorScheme = new ColorScheme(Primary.Grey50, Primary.BlueGrey500, Primary.Grey500, Accent.LightBlue200, TextShade.BLACK);
         }
 
         public static MaterialSkinManager Instance
@@ -275,7 +275,7 @@ namespace MaterialSkin
             AddFontMemResourceEx(fontPtr, (uint)fontResource.Length, IntPtr.Zero, ref cFonts);
             privateFontCollection.AddMemoryFont(fontPtr, dataLength);
 
-            return privateFontCollection.Families.Last();
+            return privateFontCollection.Families[privateFontCollection.Families.Length - 1];
         }
 
         private void UpdateBackgrounds()
@@ -296,7 +296,7 @@ namespace MaterialSkin
             foreach (ToolStripItem control in toolStrip.Items)
             {
                 control.BackColor = newBackColor;
-                if (control is MaterialToolStripMenuItem && (control as MaterialToolStripMenuItem).HasDropDown)
+                if (control is MaterialToolStripMenuItem && (control as MaterialToolStripMenuItem).HasDropDownItems)
                 {
 
                     //recursive call

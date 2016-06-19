@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -157,6 +156,7 @@ namespace MaterialSkin.Controls
 
         public MaterialForm()
         {
+            //AutoScaleMode = AutoScaleMode.None;
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
             DoubleBuffered = true;
@@ -164,7 +164,7 @@ namespace MaterialSkin.Controls
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
-            MouseMessageFilter.MouseMove += OnGlobalMouseMove;
+            MouseMessageFilter.MouseMove += OnGlobalMouseMove;            
         }
 
         protected override void WndProc(ref Message m)
@@ -282,6 +282,7 @@ namespace MaterialSkin.Controls
             Invalidate();
         }
 
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -322,12 +323,10 @@ namespace MaterialSkin.Controls
 				{
 					resizeDir = ResizeDirection.None;
 
-					//Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
-					if (resizeCursors.Contains(Cursor))
-					{
-						Cursor = Cursors.Default;
-					}
-				}
+                    //Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
+                if(  ((IList<System.Windows.Forms.Cursor>)resizeCursors).Contains(Cursor) )
+                        Cursor = Cursors.Default;
+                }
 	        }
 
             UpdateButtons(e);
@@ -480,17 +479,17 @@ namespace MaterialSkin.Controls
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(BackColor);
             g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, statusBarBounds);
             g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, actionBarBounds);
 
             //Draw border
-            using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
+            /*using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
             {
                 g.DrawLine(borderPen, new Point(0, actionBarBounds.Bottom), new Point(0, Height - 2));
                 g.DrawLine(borderPen, new Point(Width - 1, actionBarBounds.Bottom), new Point(Width - 1, Height - 2));
                 g.DrawLine(borderPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
-            }
+            }*/
 
             // Determine whether or not we even should be drawing the buttons.
             bool showMin = MinimizeBox && ControlBox;
@@ -517,7 +516,8 @@ namespace MaterialSkin.Controls
             if (buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, xButtonBounds);
 
-            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
+            //using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
+            using (var formButtonsPen = new Pen(ForeColor, 2))
             {
                 // Minimize button.
                 if (showMin)
