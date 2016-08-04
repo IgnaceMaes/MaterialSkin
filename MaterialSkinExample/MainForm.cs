@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
