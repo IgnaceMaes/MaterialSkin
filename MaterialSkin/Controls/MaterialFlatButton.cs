@@ -104,7 +104,7 @@ namespace MaterialSkin.Controls
             }
 
             //Icon
-            Rectangle iconRect = new Rectangle(4, 6, 24, 24);
+            Rectangle iconRect = new Rectangle(8, 6, 24, 24);
 
             if (String.IsNullOrEmpty(Text))
                 // Center Icon
@@ -122,16 +122,16 @@ namespace MaterialSkin.Controls
                 // Resize and move Text container
                 //
 
-                // First 4: left padding
+                // First 8: left padding
                 // 24: icon width
                 // Second 4: space between Icon and Text
-                // Third 4: right padding
-                textRect.Width -= 4 + 24 + 4 + 4;
+                // Third 8: right padding
+                textRect.Width -= 8 + 24 + 4 + 8;
 
-                // First 4: left padding
+                // First 8: left padding
                 // 24: icon width
                 // Second 4: space between Icon and Text
-                textRect.X += 4 + 24 + 4;
+                textRect.X += 8 + 24 + 4;
             }
 
             g.DrawString(
@@ -151,7 +151,7 @@ namespace MaterialSkin.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             // Provides extra space for proper padding for content
-            int extra = 8;
+            int extra = 16;
 
             if (Icon != null)
                 // 24 is for icon size
