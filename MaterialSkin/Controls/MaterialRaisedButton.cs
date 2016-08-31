@@ -13,14 +13,14 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public int Depth { get; set; }
         [Browsable(false)]
-        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
 
-        private readonly AnimationManager animationManager;
+        private readonly AnimationManager _animationManager;
 
-        private SizeF textSize;
+        private SizeF _textSize;
 
         private Image _icon;
         public Image Icon
@@ -39,12 +39,12 @@ namespace MaterialSkin.Controls
         {
             Primary = true;
 
-            animationManager = new AnimationManager(false)
+            _animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.EaseOut
             };
-            animationManager.OnAnimationProgress += sender => Invalidate();
+            _animationManager.OnAnimationProgress += sender => Invalidate();
 
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             AutoSize = true;
@@ -56,7 +56,7 @@ namespace MaterialSkin.Controls
             set
             {
                 base.Text = value;
-                textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
                 if (AutoSize)
                     Size = GetPreferredSize();
                 Invalidate();
@@ -67,7 +67,7 @@ namespace MaterialSkin.Controls
         {
             base.OnMouseUp(mevent);
 
-            animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+            _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -87,12 +87,12 @@ namespace MaterialSkin.Controls
                 g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
             }
 
-            if (animationManager.IsAnimating())
+            if (_animationManager.IsAnimating())
             {
-                for (int i = 0; i < animationManager.GetAnimationCount(); i++)
+                for (int i = 0; i < _animationManager.GetAnimationCount(); i++)
                 {
-                    var animationValue = animationManager.GetProgress(i);
-                    var animationSource = animationManager.GetSource(i);
+                    var animationValue = _animationManager.GetProgress(i);
+                    var animationSource = _animationManager.GetSource(i);
                     var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.White));
                     var rippleSize = (int)(animationValue * Width * 2);
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
@@ -100,7 +100,7 @@ namespace MaterialSkin.Controls
             }
 
             //Icon
-            Rectangle iconRect = new Rectangle(8, 6, 24, 24);
+            var iconRect = new Rectangle(8, 6, 24, 24);
 
             if (string.IsNullOrEmpty(Text))
                 // Center Icon
@@ -110,7 +110,7 @@ namespace MaterialSkin.Controls
                 g.DrawImage(Icon, iconRect);
 
             //Text
-            Rectangle textRect = ClientRectangle;
+            var textRect = ClientRectangle;
 
             if (Icon != null)
             {
@@ -132,7 +132,7 @@ namespace MaterialSkin.Controls
 
             g.DrawString(
                 Text.ToUpper(),
-                SkinManager.ROBOTO_MEDIUM_10, 
+                SkinManager.ROBOTO_MEDIUM_10,
                 SkinManager.GetRaisedButtonTextBrush(Primary),
                 textRect,
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
@@ -146,14 +146,14 @@ namespace MaterialSkin.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             // Provides extra space for proper padding for content
-            int extra = 16;
+            var extra = 16;
 
             if (Icon != null)
                 // 24 is for icon size
                 // 4 is for the space between icon & text
                 extra += 24 + 4;
 
-            return new Size((int)Math.Ceiling(textSize.Width) + extra, 36);
+            return new Size((int)Math.Ceiling(_textSize.Width) + extra, 36);
         }
     }
 }
