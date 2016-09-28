@@ -24,46 +24,48 @@ namespace MaterialSkin.Controls
         private ListViewItem HoveredItem { get; set; }
 
         public MaterialListView()
-		{
-			GridLines = false;
-			FullRowSelect = true;
-			HeaderStyle = ColumnHeaderStyle.Nonclickable;
-			View = View.Details;
-			OwnerDraw = true;
-			ResizeRedraw = true;
-			BorderStyle = BorderStyle.None;
-			SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
+        {
+            GridLines = false;
+            FullRowSelect = true;
+            HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            View = View.Details;
+            OwnerDraw = true;
+            ResizeRedraw = true;
+            BorderStyle = BorderStyle.None;
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
-			//Fix for hovers, by default it doesn't redraw
-			//TODO: should only redraw when the hovered line changed, this to reduce unnecessary redraws
-			MouseLocation = new Point(-1, -1);
-			MouseState = MouseState.OUT;
-			MouseEnter += delegate
-			{
-				MouseState = MouseState.HOVER;
-			}; 
-			MouseLeave += delegate
-			{
-				MouseState = MouseState.OUT; 
-				MouseLocation = new Point(-1, -1);
-                HoveredItem = null;
-                Invalidate();
-			};
-			MouseDown += delegate { MouseState = MouseState.DOWN; };
-			MouseUp += delegate{ MouseState = MouseState.HOVER; };
-			MouseMove += delegate(object sender, MouseEventArgs args)
-			{
-				MouseLocation = args.Location;
-                var currentHoveredItem = this.GetItemAt(MouseLocation.X, MouseLocation.Y);
-                if (HoveredItem != currentHoveredItem)
-                {
-                    HoveredItem = currentHoveredItem;
-                    Invalidate();
-                }
+            //Fix for hovers, by default it doesn't redraw
+            //TODO: should only redraw when the hovered line changed, this to reduce unnecessary redraws
+            MouseLocation = new Point(-1, -1);
+            MouseState = MouseState.OUT;
+            MouseEnter += delegate
+            {
+                MouseState = MouseState.HOVER;
             };
-		}
+            MouseLeave += delegate
+            {
+                MouseState = MouseState.OUT;
+                MouseLocation = new Point(-1, -1);
+                HoveredItem = null;
+                Invalidate(Bounds);
+            };
+            MouseDown += delegate { MouseState = MouseState.DOWN; };
+            MouseUp += delegate { MouseState = MouseState.HOVER; };
+            MouseMove += MouseMoved;
+            MouseWheel += MouseMoved;
+        }
 
-		protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
+        private void MouseMoved(object sender, MouseEventArgs args)
+        {
+            MouseLocation = args.Location;
+            var currentHoveredItem = GetItemAt(MouseLocation.X, MouseLocation.Y);
+            if (HoveredItem == currentHoveredItem) return;
+            if (currentHoveredItem != null) Invalidate(currentHoveredItem.Bounds);
+            if (HoveredItem != null) Invalidate(HoveredItem.Bounds);
+            HoveredItem = currentHoveredItem;
+        }
+
+        protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
 		{
 			e.Graphics.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(e.Bounds.X, e.Bounds.Y, Width, e.Bounds.Height));
 			e.Graphics.DrawString(e.Header.Text, 
