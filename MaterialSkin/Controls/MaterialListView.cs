@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -76,14 +76,31 @@ namespace MaterialSkin.Controls
 		private const int ITEM_PADDING = 12;
 		protected override void OnDrawItem(DrawListViewItemEventArgs e)
 		{
+            float fillPercent = 0;
+            Color highlightColor = Color.White;
+            if (e.Item is MaterialListViewItem)
+            {
+                MaterialListViewItem mlvi = e.Item as MaterialListViewItem;
+                fillPercent = mlvi.fillPercent;
+                highlightColor = mlvi.highlightColor;
+            }
+
+
 			//We draw the current line of items (= item with subitems) on a temp bitmap, then draw the bitmap at once. This is to reduce flickering.
 			var b = new Bitmap(e.Item.Bounds.Width, e.Item.Bounds.Height);
 			var g = Graphics.FromImage(b);
 
-			//always draw default background
-			g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
-			
-			if (e.State.HasFlag(ListViewItemStates.Selected))
+            //always draw default background
+            int divideSpot = (int)((fillPercent * e.Bounds.Size.Width) / 100);      //The spot where the progress splits into background color
+
+            Rectangle firstRect = e.Bounds;     //Set the rectnagle of where
+            firstRect.Width = divideSpot;       //the progress is drawn
+
+            g.FillRectangle(new SolidBrush(e.Item.BackColor), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));      //Draw the item's normal background
+            g.FillRectangle(new SolidBrush(highlightColor), new Rectangle(new Point(e.Bounds.X, 0), firstRect.Size));       //Fill with highlight
+            
+
+            if (e.State.HasFlag(ListViewItemStates.Selected))
 			{
 				//selected background
 				g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
