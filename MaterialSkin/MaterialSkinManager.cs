@@ -296,7 +296,7 @@ namespace MaterialSkin
             foreach (ToolStripItem control in toolStrip.Items)
             {
                 control.BackColor = newBackColor;
-                if (control is MaterialToolStripMenuItem && (control as MaterialToolStripMenuItem).HasDropDown)
+                if (control is MaterialToolStripMenuItem)   // && (control as MaterialToolStripMenuItem).HasDropDown)
                 {
 
                     //recursive call
