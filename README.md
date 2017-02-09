@@ -3,6 +3,8 @@ MaterialSkin for .NET WinForms
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
+*Notice: this project is no longer under active development. Though, contributions are still welcome and the community will likely still help if you open an issue.*
+
 <a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank">![alt tag](http://i.imgur.com/JAttoOo.png)</a>
 
 *High quality images can be found at the bottom of this page.*
