@@ -13,13 +13,13 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public int Depth { get; set; }
         [Browsable(false)]
-        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-        
 
-        internal AnimationManager animationManager;
-        internal Point animationSource;
+
+        internal AnimationManager AnimationManager;
+        internal Point AnimationSource;
 
         public delegate void ItemClickStart(object sender, ToolStripItemClickedEventArgs e);
         public event ItemClickStart OnItemClickStart;
@@ -28,13 +28,13 @@ namespace MaterialSkin.Controls
         {
             Renderer = new MaterialToolStripRender();
 
-            animationManager = new AnimationManager(false)
+            AnimationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
                 AnimationType = AnimationType.Linear
             };
-            animationManager.OnAnimationProgress += sender => Invalidate();
-            animationManager.OnAnimationFinished += sender => OnItemClicked(delayesArgs);
+            AnimationManager.OnAnimationProgress += sender => Invalidate();
+            AnimationManager.OnAnimationFinished += sender => OnItemClicked(_delayesArgs);
 
             BackColor = SkinManager.GetApplicationBackgroundColor();
         }
@@ -43,15 +43,15 @@ namespace MaterialSkin.Controls
         {
             base.OnMouseUp(mea);
 
-            animationSource = mea.Location;
+            AnimationSource = mea.Location;
         }
 
-        private ToolStripItemClickedEventArgs delayesArgs;
+        private ToolStripItemClickedEventArgs _delayesArgs;
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem != null && !(e.ClickedItem is ToolStripSeparator))
             {
-                if (e == delayesArgs)
+                if (e == _delayesArgs)
                 {
                     //The event has been fired manualy because the args are the ones we saved for delay
                     base.OnItemClicked(e);
@@ -59,13 +59,13 @@ namespace MaterialSkin.Controls
                 else
                 {
                     //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
-                    delayesArgs = e;
+                    _delayesArgs = e;
 
                     //Fire custom event to trigger actions directly but keep cms open
-                    if (OnItemClickStart != null) OnItemClickStart(this, e);
+                    OnItemClickStart?.Invoke(this, e);
 
                     //Start animation
-                    animationManager.StartNewAnimation(AnimationDirection.In);
+                    AnimationManager.StartNewAnimation(AnimationDirection.In);
                 }
             }
         }
@@ -95,9 +95,9 @@ namespace MaterialSkin.Controls
     {
         //Properties for managing the material design properties
         public int Depth { get; set; }
-        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
         public MouseState MouseState { get; set; }
-        
+
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
@@ -107,10 +107,10 @@ namespace MaterialSkin.Controls
             var itemRect = GetItemRect(e.Item);
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
             g.DrawString(
-                e.Text, 
-                SkinManager.ROBOTO_MEDIUM_10, 
+                e.Text,
+                SkinManager.ROBOTO_MEDIUM_10,
                 e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
-                textRect, 
+                textRect,
                 new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
@@ -127,9 +127,9 @@ namespace MaterialSkin.Controls
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
             if (toolStrip != null)
             {
-                var animationManager = toolStrip.animationManager;
-                var animationSource = toolStrip.animationSource;
-                if (toolStrip.animationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
+                var animationManager = toolStrip.AnimationManager;
+                var animationSource = toolStrip.AnimationSource;
+                if (toolStrip.AnimationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
                 {
                     for (int i = 0; i < animationManager.GetAnimationCount(); i++)
                     {
@@ -177,9 +177,9 @@ namespace MaterialSkin.Controls
             using (var arrowPath = new GraphicsPath())
             {
                 arrowPath.AddLines(
-                    new[] { 
-                        new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y - ARROW_SIZE), 
-                        new Point(arrowMiddle.X, arrowMiddle.Y), 
+                    new[] {
+                        new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y - ARROW_SIZE),
+                        new Point(arrowMiddle.X, arrowMiddle.Y),
                         new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y + ARROW_SIZE) });
                 arrowPath.CloseFigure();
 

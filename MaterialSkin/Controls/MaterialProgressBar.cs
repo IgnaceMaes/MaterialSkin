@@ -33,10 +33,7 @@ namespace MaterialSkin.Controls
         /// The skin manager.
         /// </value>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager
-        {
-            get { return MaterialSkinManager.Instance; }
-        }
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the state of the mouse.

@@ -13,27 +13,30 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public int Depth { get; set; }
         [Browsable(false)]
-        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
-        public new object Tag { get { return baseTextBox.Tag; } set { baseTextBox.Tag = value; } }
-        public new int MaxLength { get { return baseTextBox.MaxLength; } set { baseTextBox.MaxLength = value; } }
-        
-        public string SelectedText { get { return baseTextBox.SelectedText; } set { baseTextBox.SelectedText = value; } }
-        public string Hint { get { return baseTextBox.Hint; } set { baseTextBox.Hint = value; } }
+        private readonly BaseTextBox _baseTextBox;
+        private readonly AnimationManager _animationManager;
 
-        public int SelectionStart { get { return baseTextBox.SelectionStart; } set { baseTextBox.SelectionStart = value; } }
-        public int SelectionLength { get { return baseTextBox.SelectionLength; } set { baseTextBox.SelectionLength = value; } }
-        public int TextLength { get { return baseTextBox.TextLength; } }
+        public override string Text { get { return _baseTextBox.Text; } set { _baseTextBox.Text = value; } }
+        public new object Tag { get { return _baseTextBox.Tag; } set { _baseTextBox.Tag = value; } }
+        public new int MaxLength { get { return _baseTextBox.MaxLength; } set { _baseTextBox.MaxLength = value; } }
 
-        public bool UseSystemPasswordChar { get { return baseTextBox.UseSystemPasswordChar; } set { baseTextBox.UseSystemPasswordChar = value; } }
-        public char PasswordChar { get { return baseTextBox.PasswordChar; } set { baseTextBox.PasswordChar = value; } }
+        public string SelectedText { get { return _baseTextBox.SelectedText; } set { _baseTextBox.SelectedText = value; } }
+        public string Hint { get { return _baseTextBox.Hint; } set { _baseTextBox.Hint = value; } }
 
-        public void SelectAll() { baseTextBox.SelectAll(); }
-        public void Clear() { baseTextBox.Clear(); }
-        public void Focus() { baseTextBox.Focus(); }
+        public int SelectionStart { get { return _baseTextBox.SelectionStart; } set { _baseTextBox.SelectionStart = value; } }
+        public int SelectionLength { get { return _baseTextBox.SelectionLength; } set { _baseTextBox.SelectionLength = value; } }
+        public int TextLength => _baseTextBox.TextLength;
+
+        public bool UseSystemPasswordChar { get { return _baseTextBox.UseSystemPasswordChar; } set { _baseTextBox.UseSystemPasswordChar = value; } }
+        public char PasswordChar { get { return _baseTextBox.PasswordChar; } set { _baseTextBox.PasswordChar = value; } }
+
+        public void SelectAll() { _baseTextBox.SelectAll(); }
+        public void Clear() { _baseTextBox.Clear(); }
+        public void Focus() { _baseTextBox.Focus(); }
 
 
         # region Forwarding events to baseTextBox
@@ -41,11 +44,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.AcceptsTabChanged += value;
+                _baseTextBox.AcceptsTabChanged += value;
             }
             remove
             {
-                baseTextBox.AcceptsTabChanged -= value;
+                _baseTextBox.AcceptsTabChanged -= value;
             }
         }
 
@@ -53,11 +56,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.AutoSizeChanged += value;
+                _baseTextBox.AutoSizeChanged += value;
             }
             remove
             {
-                baseTextBox.AutoSizeChanged -= value;
+                _baseTextBox.AutoSizeChanged -= value;
             }
         }
 
@@ -65,11 +68,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.BackgroundImageChanged += value;
+                _baseTextBox.BackgroundImageChanged += value;
             }
             remove
             {
-                baseTextBox.BackgroundImageChanged -= value;
+                _baseTextBox.BackgroundImageChanged -= value;
             }
         }
 
@@ -77,11 +80,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.BackgroundImageLayoutChanged += value;
+                _baseTextBox.BackgroundImageLayoutChanged += value;
             }
             remove
             {
-                baseTextBox.BackgroundImageLayoutChanged -= value;
+                _baseTextBox.BackgroundImageLayoutChanged -= value;
             }
         }
 
@@ -89,11 +92,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.BindingContextChanged += value;
+                _baseTextBox.BindingContextChanged += value;
             }
             remove
             {
-                baseTextBox.BindingContextChanged -= value;
+                _baseTextBox.BindingContextChanged -= value;
             }
         }
 
@@ -101,11 +104,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.BorderStyleChanged += value;
+                _baseTextBox.BorderStyleChanged += value;
             }
             remove
             {
-                baseTextBox.BorderStyleChanged -= value;
+                _baseTextBox.BorderStyleChanged -= value;
             }
         }
 
@@ -113,11 +116,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.CausesValidationChanged += value;
+                _baseTextBox.CausesValidationChanged += value;
             }
             remove
             {
-                baseTextBox.CausesValidationChanged -= value;
+                _baseTextBox.CausesValidationChanged -= value;
             }
         }
 
@@ -125,11 +128,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ChangeUICues += value;
+                _baseTextBox.ChangeUICues += value;
             }
             remove
             {
-                baseTextBox.ChangeUICues -= value;
+                _baseTextBox.ChangeUICues -= value;
             }
         }
 
@@ -137,11 +140,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Click += value;
+                _baseTextBox.Click += value;
             }
             remove
             {
-                baseTextBox.Click -= value;
+                _baseTextBox.Click -= value;
             }
         }
 
@@ -149,11 +152,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ClientSizeChanged += value;
+                _baseTextBox.ClientSizeChanged += value;
             }
             remove
             {
-                baseTextBox.ClientSizeChanged -= value;
+                _baseTextBox.ClientSizeChanged -= value;
             }
         }
 
@@ -161,11 +164,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ContextMenuChanged += value;
+                _baseTextBox.ContextMenuChanged += value;
             }
             remove
             {
-                baseTextBox.ContextMenuChanged -= value;
+                _baseTextBox.ContextMenuChanged -= value;
             }
         }
 
@@ -173,11 +176,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ContextMenuStripChanged += value;
+                _baseTextBox.ContextMenuStripChanged += value;
             }
             remove
             {
-                baseTextBox.ContextMenuStripChanged -= value;
+                _baseTextBox.ContextMenuStripChanged -= value;
             }
         }
 
@@ -185,11 +188,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ControlAdded += value;
+                _baseTextBox.ControlAdded += value;
             }
             remove
             {
-                baseTextBox.ControlAdded -= value;
+                _baseTextBox.ControlAdded -= value;
             }
         }
 
@@ -197,11 +200,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ControlRemoved += value;
+                _baseTextBox.ControlRemoved += value;
             }
             remove
             {
-                baseTextBox.ControlRemoved -= value;
+                _baseTextBox.ControlRemoved -= value;
             }
         }
 
@@ -209,11 +212,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.CursorChanged += value;
+                _baseTextBox.CursorChanged += value;
             }
             remove
             {
-                baseTextBox.CursorChanged -= value;
+                _baseTextBox.CursorChanged -= value;
             }
         }
 
@@ -221,11 +224,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Disposed += value;
+                _baseTextBox.Disposed += value;
             }
             remove
             {
-                baseTextBox.Disposed -= value;
+                _baseTextBox.Disposed -= value;
             }
         }
 
@@ -233,11 +236,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.DockChanged += value;
+                _baseTextBox.DockChanged += value;
             }
             remove
             {
-                baseTextBox.DockChanged -= value;
+                _baseTextBox.DockChanged -= value;
             }
         }
 
@@ -245,11 +248,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.DoubleClick += value;
+                _baseTextBox.DoubleClick += value;
             }
             remove
             {
-                baseTextBox.DoubleClick -= value;
+                _baseTextBox.DoubleClick -= value;
             }
         }
 
@@ -257,11 +260,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.DragDrop += value;
+                _baseTextBox.DragDrop += value;
             }
             remove
             {
-                baseTextBox.DragDrop -= value;
+                _baseTextBox.DragDrop -= value;
             }
         }
 
@@ -269,11 +272,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.DragEnter += value;
+                _baseTextBox.DragEnter += value;
             }
             remove
             {
-                baseTextBox.DragEnter -= value;
+                _baseTextBox.DragEnter -= value;
             }
         }
 
@@ -281,11 +284,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.DragLeave += value;
+                _baseTextBox.DragLeave += value;
             }
             remove
             {
-                baseTextBox.DragLeave -= value;
+                _baseTextBox.DragLeave -= value;
             }
         }
 
@@ -293,11 +296,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.DragOver += value;
+                _baseTextBox.DragOver += value;
             }
             remove
             {
-                baseTextBox.DragOver -= value;
+                _baseTextBox.DragOver -= value;
             }
         }
 
@@ -305,11 +308,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.EnabledChanged += value;
+                _baseTextBox.EnabledChanged += value;
             }
             remove
             {
-                baseTextBox.EnabledChanged -= value;
+                _baseTextBox.EnabledChanged -= value;
             }
         }
 
@@ -317,11 +320,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Enter += value;
+                _baseTextBox.Enter += value;
             }
             remove
             {
-                baseTextBox.Enter -= value;
+                _baseTextBox.Enter -= value;
             }
         }
 
@@ -329,11 +332,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.FontChanged += value;
+                _baseTextBox.FontChanged += value;
             }
             remove
             {
-                baseTextBox.FontChanged -= value;
+                _baseTextBox.FontChanged -= value;
             }
         }
 
@@ -341,11 +344,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ForeColorChanged += value;
+                _baseTextBox.ForeColorChanged += value;
             }
             remove
             {
-                baseTextBox.ForeColorChanged -= value;
+                _baseTextBox.ForeColorChanged -= value;
             }
         }
 
@@ -353,11 +356,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.GiveFeedback += value;
+                _baseTextBox.GiveFeedback += value;
             }
             remove
             {
-                baseTextBox.GiveFeedback -= value;
+                _baseTextBox.GiveFeedback -= value;
             }
         }
 
@@ -365,11 +368,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.GotFocus += value;
+                _baseTextBox.GotFocus += value;
             }
             remove
             {
-                baseTextBox.GotFocus -= value;
+                _baseTextBox.GotFocus -= value;
             }
         }
 
@@ -377,11 +380,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.HandleCreated += value;
+                _baseTextBox.HandleCreated += value;
             }
             remove
             {
-                baseTextBox.HandleCreated -= value;
+                _baseTextBox.HandleCreated -= value;
             }
         }
 
@@ -389,11 +392,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.HandleDestroyed += value;
+                _baseTextBox.HandleDestroyed += value;
             }
             remove
             {
-                baseTextBox.HandleDestroyed -= value;
+                _baseTextBox.HandleDestroyed -= value;
             }
         }
 
@@ -401,11 +404,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.HelpRequested += value;
+                _baseTextBox.HelpRequested += value;
             }
             remove
             {
-                baseTextBox.HelpRequested -= value;
+                _baseTextBox.HelpRequested -= value;
             }
         }
 
@@ -413,11 +416,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.HideSelectionChanged += value;
+                _baseTextBox.HideSelectionChanged += value;
             }
             remove
             {
-                baseTextBox.HideSelectionChanged -= value;
+                _baseTextBox.HideSelectionChanged -= value;
             }
         }
 
@@ -425,11 +428,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ImeModeChanged += value;
+                _baseTextBox.ImeModeChanged += value;
             }
             remove
             {
-                baseTextBox.ImeModeChanged -= value;
+                _baseTextBox.ImeModeChanged -= value;
             }
         }
 
@@ -437,11 +440,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Invalidated += value;
+                _baseTextBox.Invalidated += value;
             }
             remove
             {
-                baseTextBox.Invalidated -= value;
+                _baseTextBox.Invalidated -= value;
             }
         }
 
@@ -449,11 +452,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.KeyDown += value;
+                _baseTextBox.KeyDown += value;
             }
             remove
             {
-                baseTextBox.KeyDown -= value;
+                _baseTextBox.KeyDown -= value;
             }
         }
 
@@ -461,11 +464,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.KeyPress += value;
+                _baseTextBox.KeyPress += value;
             }
             remove
             {
-                baseTextBox.KeyPress -= value;
+                _baseTextBox.KeyPress -= value;
             }
         }
 
@@ -473,11 +476,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.KeyUp += value;
+                _baseTextBox.KeyUp += value;
             }
             remove
             {
-                baseTextBox.KeyUp -= value;
+                _baseTextBox.KeyUp -= value;
             }
         }
 
@@ -485,11 +488,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Layout += value;
+                _baseTextBox.Layout += value;
             }
             remove
             {
-                baseTextBox.Layout -= value;
+                _baseTextBox.Layout -= value;
             }
         }
 
@@ -497,11 +500,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Leave += value;
+                _baseTextBox.Leave += value;
             }
             remove
             {
-                baseTextBox.Leave -= value;
+                _baseTextBox.Leave -= value;
             }
         }
 
@@ -509,11 +512,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.LocationChanged += value;
+                _baseTextBox.LocationChanged += value;
             }
             remove
             {
-                baseTextBox.LocationChanged -= value;
+                _baseTextBox.LocationChanged -= value;
             }
         }
 
@@ -521,11 +524,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.LostFocus += value;
+                _baseTextBox.LostFocus += value;
             }
             remove
             {
-                baseTextBox.LostFocus -= value;
+                _baseTextBox.LostFocus -= value;
             }
         }
 
@@ -533,11 +536,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MarginChanged += value;
+                _baseTextBox.MarginChanged += value;
             }
             remove
             {
-                baseTextBox.MarginChanged -= value;
+                _baseTextBox.MarginChanged -= value;
             }
         }
 
@@ -545,11 +548,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ModifiedChanged += value;
+                _baseTextBox.ModifiedChanged += value;
             }
             remove
             {
-                baseTextBox.ModifiedChanged -= value;
+                _baseTextBox.ModifiedChanged -= value;
             }
         }
 
@@ -557,11 +560,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseCaptureChanged += value;
+                _baseTextBox.MouseCaptureChanged += value;
             }
             remove
             {
-                baseTextBox.MouseCaptureChanged -= value;
+                _baseTextBox.MouseCaptureChanged -= value;
             }
         }
 
@@ -569,11 +572,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseClick += value;
+                _baseTextBox.MouseClick += value;
             }
             remove
             {
-                baseTextBox.MouseClick -= value;
+                _baseTextBox.MouseClick -= value;
             }
         }
 
@@ -581,11 +584,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseDoubleClick += value;
+                _baseTextBox.MouseDoubleClick += value;
             }
             remove
             {
-                baseTextBox.MouseDoubleClick -= value;
+                _baseTextBox.MouseDoubleClick -= value;
             }
         }
 
@@ -593,11 +596,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseDown += value;
+                _baseTextBox.MouseDown += value;
             }
             remove
             {
-                baseTextBox.MouseDown -= value;
+                _baseTextBox.MouseDown -= value;
             }
         }
 
@@ -605,11 +608,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseEnter += value;
+                _baseTextBox.MouseEnter += value;
             }
             remove
             {
-                baseTextBox.MouseEnter -= value;
+                _baseTextBox.MouseEnter -= value;
             }
         }
 
@@ -617,11 +620,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseHover += value;
+                _baseTextBox.MouseHover += value;
             }
             remove
             {
-                baseTextBox.MouseHover -= value;
+                _baseTextBox.MouseHover -= value;
             }
         }
 
@@ -629,11 +632,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseLeave += value;
+                _baseTextBox.MouseLeave += value;
             }
             remove
             {
-                baseTextBox.MouseLeave -= value;
+                _baseTextBox.MouseLeave -= value;
             }
         }
 
@@ -641,11 +644,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseMove += value;
+                _baseTextBox.MouseMove += value;
             }
             remove
             {
-                baseTextBox.MouseMove -= value;
+                _baseTextBox.MouseMove -= value;
             }
         }
 
@@ -653,11 +656,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseUp += value;
+                _baseTextBox.MouseUp += value;
             }
             remove
             {
-                baseTextBox.MouseUp -= value;
+                _baseTextBox.MouseUp -= value;
             }
         }
 
@@ -665,11 +668,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MouseWheel += value;
+                _baseTextBox.MouseWheel += value;
             }
             remove
             {
-                baseTextBox.MouseWheel -= value;
+                _baseTextBox.MouseWheel -= value;
             }
         }
 
@@ -677,11 +680,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Move += value;
+                _baseTextBox.Move += value;
             }
             remove
             {
-                baseTextBox.Move -= value;
+                _baseTextBox.Move -= value;
             }
         }
 
@@ -689,11 +692,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.MultilineChanged += value;
+                _baseTextBox.MultilineChanged += value;
             }
             remove
             {
-                baseTextBox.MultilineChanged -= value;
+                _baseTextBox.MultilineChanged -= value;
             }
         }
 
@@ -701,11 +704,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.PaddingChanged += value;
+                _baseTextBox.PaddingChanged += value;
             }
             remove
             {
-                baseTextBox.PaddingChanged -= value;
+                _baseTextBox.PaddingChanged -= value;
             }
         }
 
@@ -713,11 +716,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Paint += value;
+                _baseTextBox.Paint += value;
             }
             remove
             {
-                baseTextBox.Paint -= value;
+                _baseTextBox.Paint -= value;
             }
         }
 
@@ -725,11 +728,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ParentChanged += value;
+                _baseTextBox.ParentChanged += value;
             }
             remove
             {
-                baseTextBox.ParentChanged -= value;
+                _baseTextBox.ParentChanged -= value;
             }
         }
 
@@ -737,11 +740,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.PreviewKeyDown += value;
+                _baseTextBox.PreviewKeyDown += value;
             }
             remove
             {
-                baseTextBox.PreviewKeyDown -= value;
+                _baseTextBox.PreviewKeyDown -= value;
             }
         }
 
@@ -749,11 +752,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.QueryAccessibilityHelp += value;
+                _baseTextBox.QueryAccessibilityHelp += value;
             }
             remove
             {
-                baseTextBox.QueryAccessibilityHelp -= value;
+                _baseTextBox.QueryAccessibilityHelp -= value;
             }
         }
 
@@ -761,11 +764,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.QueryContinueDrag += value;
+                _baseTextBox.QueryContinueDrag += value;
             }
             remove
             {
-                baseTextBox.QueryContinueDrag -= value;
+                _baseTextBox.QueryContinueDrag -= value;
             }
         }
 
@@ -773,11 +776,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.ReadOnlyChanged += value;
+                _baseTextBox.ReadOnlyChanged += value;
             }
             remove
             {
-                baseTextBox.ReadOnlyChanged -= value;
+                _baseTextBox.ReadOnlyChanged -= value;
             }
         }
 
@@ -785,11 +788,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.RegionChanged += value;
+                _baseTextBox.RegionChanged += value;
             }
             remove
             {
-                baseTextBox.RegionChanged -= value;
+                _baseTextBox.RegionChanged -= value;
             }
         }
 
@@ -797,11 +800,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Resize += value;
+                _baseTextBox.Resize += value;
             }
             remove
             {
-                baseTextBox.Resize -= value;
+                _baseTextBox.Resize -= value;
             }
         }
 
@@ -809,11 +812,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.RightToLeftChanged += value;
+                _baseTextBox.RightToLeftChanged += value;
             }
             remove
             {
-                baseTextBox.RightToLeftChanged -= value;
+                _baseTextBox.RightToLeftChanged -= value;
             }
         }
 
@@ -821,11 +824,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.SizeChanged += value;
+                _baseTextBox.SizeChanged += value;
             }
             remove
             {
-                baseTextBox.SizeChanged -= value;
+                _baseTextBox.SizeChanged -= value;
             }
         }
 
@@ -833,11 +836,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.StyleChanged += value;
+                _baseTextBox.StyleChanged += value;
             }
             remove
             {
-                baseTextBox.StyleChanged -= value;
+                _baseTextBox.StyleChanged -= value;
             }
         }
 
@@ -845,11 +848,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.SystemColorsChanged += value;
+                _baseTextBox.SystemColorsChanged += value;
             }
             remove
             {
-                baseTextBox.SystemColorsChanged -= value;
+                _baseTextBox.SystemColorsChanged -= value;
             }
         }
 
@@ -857,11 +860,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.TabIndexChanged += value;
+                _baseTextBox.TabIndexChanged += value;
             }
             remove
             {
-                baseTextBox.TabIndexChanged -= value;
+                _baseTextBox.TabIndexChanged -= value;
             }
         }
 
@@ -869,11 +872,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.TabStopChanged += value;
+                _baseTextBox.TabStopChanged += value;
             }
             remove
             {
-                baseTextBox.TabStopChanged -= value;
+                _baseTextBox.TabStopChanged -= value;
             }
         }
 
@@ -881,11 +884,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.TextAlignChanged += value;
+                _baseTextBox.TextAlignChanged += value;
             }
             remove
             {
-                baseTextBox.TextAlignChanged -= value;
+                _baseTextBox.TextAlignChanged -= value;
             }
         }
 
@@ -893,11 +896,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.TextChanged += value;
+                _baseTextBox.TextChanged += value;
             }
             remove
             {
-                baseTextBox.TextChanged -= value;
+                _baseTextBox.TextChanged -= value;
             }
         }
 
@@ -905,11 +908,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Validated += value;
+                _baseTextBox.Validated += value;
             }
             remove
             {
-                baseTextBox.Validated -= value;
+                _baseTextBox.Validated -= value;
             }
         }
 
@@ -917,11 +920,11 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.Validating += value;
+                _baseTextBox.Validating += value;
             }
             remove
             {
-                baseTextBox.Validating -= value;
+                _baseTextBox.Validating -= value;
             }
         }
 
@@ -929,31 +932,29 @@ namespace MaterialSkin.Controls
         {
             add
             {
-                baseTextBox.VisibleChanged += value;
+                _baseTextBox.VisibleChanged += value;
             }
             remove
             {
-                baseTextBox.VisibleChanged -= value;
+                _baseTextBox.VisibleChanged -= value;
             }
         }
-        # endregion
+        #endregion
 
-        private readonly AnimationManager animationManager;
 
-        private readonly BaseTextBox baseTextBox;
         public MaterialSingleLineTextField()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
-            animationManager = new AnimationManager
+            _animationManager = new AnimationManager
             {
                 Increment = 0.06,
                 AnimationType = AnimationType.EaseInOut,
                 InterruptAnimation = false
             };
-            animationManager.OnAnimationProgress += sender => Invalidate();
+            _animationManager.OnAnimationProgress += sender => Invalidate();
 
-            baseTextBox = new BaseTextBox
+            _baseTextBox = new BaseTextBox
             {
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.ROBOTO_REGULAR_11,
@@ -963,22 +964,22 @@ namespace MaterialSkin.Controls
                 Height = Height - 5
             };
 
-            if (!Controls.Contains(baseTextBox) && !DesignMode)
+            if (!Controls.Contains(_baseTextBox) && !DesignMode)
             {
-                Controls.Add(baseTextBox);
+                Controls.Add(_baseTextBox);
             }
 
-            baseTextBox.GotFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.In);
-            baseTextBox.LostFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.Out);
+            _baseTextBox.GotFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.In);
+            _baseTextBox.LostFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.Out);
             BackColorChanged += (sender, args) =>
             {
-                baseTextBox.BackColor = BackColor;
-                baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
+                _baseTextBox.BackColor = BackColor;
+                _baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
             };
 
-			//Fix for tabstop
-			baseTextBox.TabStop = true;
-			this.TabStop = false;
+            //Fix for tabstop
+            _baseTextBox.TabStop = true;
+            this.TabStop = false;
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -986,25 +987,25 @@ namespace MaterialSkin.Controls
             var g = pevent.Graphics;
             g.Clear(Parent.BackColor);
 
-            int lineY = baseTextBox.Bottom + 3;
+            var lineY = _baseTextBox.Bottom + 3;
 
-            if (!animationManager.IsAnimating())
+            if (!_animationManager.IsAnimating())
             {
                 //No animation
-				g.FillRectangle(baseTextBox.Focused ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
+                g.FillRectangle(_baseTextBox.Focused ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetDividersBrush(), _baseTextBox.Location.X, lineY, _baseTextBox.Width, _baseTextBox.Focused ? 2 : 1);
             }
             else
             {
                 //Animate
-                int animationWidth = (int)(baseTextBox.Width * animationManager.GetProgress());
+                int animationWidth = (int)(_baseTextBox.Width * _animationManager.GetProgress());
                 int halfAnimationWidth = animationWidth / 2;
-                int animationStart = baseTextBox.Location.X + baseTextBox.Width / 2;
+                int animationStart = _baseTextBox.Location.X + _baseTextBox.Width / 2;
 
                 //Unfocused background
-                g.FillRectangle(SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, 1);
+                g.FillRectangle(SkinManager.GetDividersBrush(), _baseTextBox.Location.X, lineY, _baseTextBox.Width, 1);
 
                 //Animated focus transition
-				g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
+                g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
             }
         }
 
@@ -1012,18 +1013,18 @@ namespace MaterialSkin.Controls
         {
             base.OnResize(e);
 
-            baseTextBox.Location = new Point(0, 0);
-            baseTextBox.Width = Width;
+            _baseTextBox.Location = new Point(0, 0);
+            _baseTextBox.Width = Width;
 
-            Height = baseTextBox.Height + 5;
+            Height = _baseTextBox.Height + 5;
         }
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
 
-            baseTextBox.BackColor = Parent.BackColor;
-            baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
+            _baseTextBox.BackColor = Parent.BackColor;
+            _baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
         }
 
         private class BaseTextBox : TextBox
@@ -1047,20 +1048,20 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            private char passwordChar = EmptyChar;
+            private char _passwordChar = EmptyChar;
             public new char PasswordChar
             {
-                get { return passwordChar; }
+                get { return _passwordChar; }
                 set
                 {
-                    passwordChar = value;
+                    _passwordChar = value;
                     SetBasePasswordChar();
                 }
             }
 
             public new void SelectAll()
             {
-                BeginInvoke((MethodInvoker) delegate()
+                BeginInvoke((MethodInvoker)delegate ()
                 {
                     base.Focus();
                     base.SelectAll();
@@ -1075,19 +1076,19 @@ namespace MaterialSkin.Controls
                 });
             }
 
-            private char useSystemPasswordChar = EmptyChar;
+            private char _useSystemPasswordChar = EmptyChar;
             public new bool UseSystemPasswordChar
             {
-                get { return useSystemPasswordChar != EmptyChar; }
+                get { return _useSystemPasswordChar != EmptyChar; }
                 set
                 {
                     if (value)
                     {
-                        useSystemPasswordChar = Application.RenderWithVisualStyles ? VisualStylePasswordChar : NonVisualStylePasswordChar;
+                        _useSystemPasswordChar = Application.RenderWithVisualStyles ? VisualStylePasswordChar : NonVisualStylePasswordChar;
                     }
                     else
                     {
-                        useSystemPasswordChar = EmptyChar;
+                        _useSystemPasswordChar = EmptyChar;
                     }
 
                     SetBasePasswordChar();
@@ -1096,7 +1097,7 @@ namespace MaterialSkin.Controls
 
             private void SetBasePasswordChar()
             {
-                base.PasswordChar = UseSystemPasswordChar ? useSystemPasswordChar : passwordChar;
+                base.PasswordChar = UseSystemPasswordChar ? _useSystemPasswordChar : _passwordChar;
             }
 
             public BaseTextBox()
@@ -1138,39 +1139,39 @@ namespace MaterialSkin.Controls
                 var strip = sender as TextBoxContextMenuStrip;
                 if (strip != null)
                 {
-                    strip.undo.Enabled = CanUndo;
-                    strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText);
-                    strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
-                    strip.paste.Enabled = Clipboard.ContainsText();
-                    strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText);
-                    strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
+                    strip.Undo.Enabled = CanUndo;
+                    strip.Cut.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.Copy.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.Paste.Enabled = Clipboard.ContainsText();
+                    strip.Delete.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.SelectAll.Enabled = !string.IsNullOrEmpty(Text);
                 }
             }
         }
 
         private class TextBoxContextMenuStrip : MaterialContextMenuStrip
         {
-            public readonly ToolStripItem undo = new MaterialToolStripMenuItem { Text = "Undo" };
-            public readonly ToolStripItem seperator1 = new ToolStripSeparator();
-            public readonly ToolStripItem cut = new MaterialToolStripMenuItem { Text = "Cut" };
-            public readonly ToolStripItem copy = new MaterialToolStripMenuItem { Text = "Copy" };
-            public readonly ToolStripItem paste = new MaterialToolStripMenuItem { Text = "Paste" };
-            public readonly ToolStripItem delete = new MaterialToolStripMenuItem { Text = "Delete" };
-            public readonly ToolStripItem seperator2 = new ToolStripSeparator();
-            public readonly ToolStripItem selectAll = new MaterialToolStripMenuItem { Text = "Select All" };
+            public readonly ToolStripItem Undo = new MaterialToolStripMenuItem { Text = "Undo" };
+            public readonly ToolStripItem Seperator1 = new ToolStripSeparator();
+            public readonly ToolStripItem Cut = new MaterialToolStripMenuItem { Text = "Cut" };
+            public readonly ToolStripItem Copy = new MaterialToolStripMenuItem { Text = "Copy" };
+            public readonly ToolStripItem Paste = new MaterialToolStripMenuItem { Text = "Paste" };
+            public readonly ToolStripItem Delete = new MaterialToolStripMenuItem { Text = "Delete" };
+            public readonly ToolStripItem Seperator2 = new ToolStripSeparator();
+            public readonly ToolStripItem SelectAll = new MaterialToolStripMenuItem { Text = "Select All" };
 
             public TextBoxContextMenuStrip()
             {
                 Items.AddRange(new[]
                 {
-                    undo,
-                    seperator1,
-                    cut,
-                    copy,
-                    paste,
-                    delete,
-                    seperator2,
-                    selectAll
+                    Undo,
+                    Seperator1,
+                    Cut,
+                    Copy,
+                    Paste,
+                    Delete,
+                    Seperator2,
+                    SelectAll
                 });
             }
         }
