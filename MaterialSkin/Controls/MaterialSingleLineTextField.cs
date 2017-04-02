@@ -20,6 +20,18 @@ namespace MaterialSkin.Controls
         private readonly BaseTextBox _baseTextBox;
         private readonly AnimationManager _animationManager;
 
+        bool readOnly;
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+            set
+            {
+                readOnly = value;
+                _baseTextBox.ReadOnly = value;
+            }
+        }
+
+
         public override string Text { get { return _baseTextBox.Text; } set { _baseTextBox.Text = value; } }
         public new object Tag { get { return _baseTextBox.Tag; } set { _baseTextBox.Tag = value; } }
         public new int MaxLength { get { return _baseTextBox.MaxLength; } set { _baseTextBox.MaxLength = value; } }
@@ -34,10 +46,13 @@ namespace MaterialSkin.Controls
         public bool UseSystemPasswordChar { get { return _baseTextBox.UseSystemPasswordChar; } set { _baseTextBox.UseSystemPasswordChar = value; } }
         public char PasswordChar { get { return _baseTextBox.PasswordChar; } set { _baseTextBox.PasswordChar = value; } }
 
+        
+
         public void SelectAll() { _baseTextBox.SelectAll(); }
         public void Clear() { _baseTextBox.Clear(); }
         public void Focus() { _baseTextBox.Focus(); }
 
+        
 
         # region Forwarding events to baseTextBox
         public event EventHandler AcceptsTabChanged
