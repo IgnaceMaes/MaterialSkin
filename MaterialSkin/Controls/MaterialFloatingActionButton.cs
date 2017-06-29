@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -37,13 +38,21 @@ namespace MaterialSkin.Controls
         }
         private bool _animateShowButton;
 
+        public bool AnimateIcon
+        {
+            get { return _animateIcon; }
+            set { _animateIcon = value; }
+        }
+
+        private bool _animateIcon = false;
+
         public Image Icon
         {
             get { return _icon; }
             set { _icon = value; }
         }
-
         private Image _icon;
+
         private bool _isHiding = false;
 
         private readonly AnimationManager _animationManager;
@@ -117,6 +126,13 @@ namespace MaterialSkin.Controls
                 bounds.Height = target == 0 ? 1 : target;
                 bounds.X = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
                 bounds.Y = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
+
+                if(_animateIcon)
+                {
+                    g.TranslateTransform((float) ((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2), (float) ((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2));
+                    g.RotateTransform(-90.0f + (float) (90.0f * _showAnimationManager.GetProgress()));
+                    g.TranslateTransform(-(float) ((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2), -(float) ((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2));
+                }
             }
 
             if(Icon != null)
