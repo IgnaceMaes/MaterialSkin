@@ -78,9 +78,9 @@ namespace MaterialSkin.Controls
             {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
         };
 
-        private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
-        private const int STATUS_BAR_HEIGHT = 24;
-        private const int ACTION_BAR_HEIGHT = 40;
+        private readonly int STATUS_BAR_BUTTON_WIDTH;
+        private readonly int STATUS_BAR_HEIGHT;
+        private readonly int ACTION_BAR_HEIGHT;
 
         private const uint TPM_LEFTALIGN = 0x0000;
         private const uint TPM_RETURNCMD = 0x0100;
@@ -161,6 +161,14 @@ namespace MaterialSkin.Controls
             Sizable = true;
             DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            float scale;
+            using (Graphics g = this.CreateGraphics())
+            {
+                scale = g.DpiY / 96.0f;
+            }
+            ACTION_BAR_HEIGHT = (int)(40 * scale);
+            STATUS_BAR_HEIGHT = (int)(24 * scale);
+            STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
