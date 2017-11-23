@@ -19,7 +19,7 @@ namespace MaterialSkin
         }
 
         //Singleton instance
-        private static MaterialSkinManager _instance;
+        private static volatile MaterialSkinManager _instance;
 
         //Constant color values
         private static readonly Color PRIMARY_TEXT_BLACK = Color.FromArgb(222, 0, 0, 0);
@@ -88,6 +88,7 @@ namespace MaterialSkin
         private static Brush BACKGROUND_LIGHT_BRUSH = new SolidBrush(BACKGROUND_LIGHT);
         private static readonly Color BACKGROUND_DARK = Color.FromArgb(255, 51, 51, 51);
         private static Brush BACKGROUND_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
+        private static readonly object SyncRoot = new object();
 
         //Application action bar
         public readonly Color ACTION_BAR_TEXT = Color.FromArgb(255, 255, 255, 255);
@@ -116,7 +117,28 @@ namespace MaterialSkin
         //Theme
         private Themes _theme;
 
-        public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
+        public static MaterialSkinManager Instance
+        {
+            get
+            {
+                if (_instance != null)
+                {
+                    return _instance;
+                }
+
+                lock (SyncRoot)
+                {
+                    if (_instance != null)
+                    {
+                        return _instance;
+                    }
+
+                    _instance = new MaterialSkinManager();
+                }
+
+                return _instance;
+            }
+        }
 
         public ColorScheme ColorScheme
         {
