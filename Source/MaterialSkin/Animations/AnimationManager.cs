@@ -5,34 +5,38 @@ using System.Windows.Forms;
 
 namespace MaterialSkin.Animations
 {
-    class AnimationManager
+    internal class AnimationManager
     {
-        public bool InterruptAnimation { get; set; }
-        public double Increment { get; set; }
-        public double SecondaryIncrement { get; set; }
-        public AnimationType AnimationType { get; set; }
-        public bool Singular { get; set; }
-
-        public delegate void AnimationFinished(object sender);
-        public event AnimationFinished OnAnimationFinished;
-
-        public delegate void AnimationProgress(object sender);
-        public event AnimationProgress OnAnimationProgress;
-
-        private readonly List<double> _animationProgresses;
-        private readonly List<Point> _animationSources;
-        private readonly List<AnimationDirection> _animationDirections;
-        private readonly List<object[]> _animationDatas;
-
         private const double MIN_VALUE = 0.00;
         private const double MAX_VALUE = 1.00;
+        private readonly List<object[]> _animationDatas;
+        private readonly List<AnimationDirection> _animationDirections;
+        private readonly List<double> _animationProgresses;
+        private readonly List<Point> _animationSources;
 
-        private readonly Timer _animationTimer = new Timer { Interval = 5, Enabled = false };
+        private readonly Timer _animationTimer = new Timer
+        {
+            Interval = 5,
+            Enabled = false
+        };
+
+        public AnimationType AnimationType { get; set; }
+
+        public double Increment { get; set; }
+
+        public bool InterruptAnimation { get; set; }
+
+        public double SecondaryIncrement { get; set; }
+
+        public bool Singular { get; set; }
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
-        /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new animation is added to the list.</param>
+        /// <param name="singular">
+        ///     If true, only one animation is supported. The current animation will be replaced with the new
+        ///     one. If false, a new animation is added to the list.
+        /// </param>
         public AnimationManager(bool singular = true)
         {
             _animationProgresses = new List<double>();
@@ -56,60 +60,179 @@ namespace MaterialSkin.Animations
             _animationTimer.Tick += AnimationTimerOnTick;
         }
 
-        private void AnimationTimerOnTick(object sender, EventArgs eventArgs)
-        {
-            for (var i = 0; i < _animationProgresses.Count; i++)
-            {
-                UpdateProgress(i);
+        public delegate void AnimationFinished(object sender);
 
-                if (!Singular)
-                {
-                    if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
-                    }
-                    else if (
-                        (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] == MAX_VALUE) ||
-                        (_animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] == MIN_VALUE) ||
-                        (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationProgresses.RemoveAt(i);
-                        _animationSources.RemoveAt(i);
-                        _animationDirections.RemoveAt(i);
-                        _animationDatas.RemoveAt(i);
-                    }
-                }
-                else
-                {
-                    if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MAX_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
-                    }
-                }
+        public delegate void AnimationProgress(object sender);
+
+        public event AnimationFinished OnAnimationFinished;
+
+        public event AnimationProgress OnAnimationProgress;
+
+        public int GetAnimationCount()
+        {
+            return _animationProgresses.Count;
+        }
+
+        public object[] GetData()
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
             }
 
-            OnAnimationProgress?.Invoke(this);
+            if (_animationDatas.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            return _animationDatas[0];
+        }
+
+        public object[] GetData(int index)
+        {
+            if (!(index < _animationDatas.Count))
+            {
+                throw new IndexOutOfRangeException("Invalid animation index");
+            }
+
+            return _animationDatas[index];
+        }
+
+        public AnimationDirection GetDirection()
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
+            }
+
+            if (_animationDirections.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            return _animationDirections[0];
+        }
+
+        public AnimationDirection GetDirection(int index)
+        {
+            if (!(index < _animationDirections.Count))
+            {
+                throw new IndexOutOfRangeException("Invalid animation index");
+            }
+
+            return _animationDirections[index];
+        }
+
+        public double GetProgress()
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
+            }
+
+            if (_animationProgresses.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            return GetProgress(0);
+        }
+
+        public double GetProgress(int index)
+        {
+            if (!(index < GetAnimationCount()))
+            {
+                throw new IndexOutOfRangeException("Invalid animation index");
+            }
+
+            switch (AnimationType)
+            {
+                case AnimationType.Linear:
+                    return AnimationLinear.CalculateProgress(_animationProgresses[index]);
+                case AnimationType.EaseInOut:
+                    return AnimationEaseInOut.CalculateProgress(_animationProgresses[index]);
+                case AnimationType.EaseOut:
+                    return AnimationEaseOut.CalculateProgress(_animationProgresses[index]);
+                case AnimationType.CustomQuadratic:
+                    return AnimationCustomQuadratic.CalculateProgress(_animationProgresses[index]);
+                default:
+                    throw new NotImplementedException("The given AnimationType is not implemented");
+            }
+        }
+
+        public Point GetSource(int index)
+        {
+            if (!(index < GetAnimationCount()))
+            {
+                throw new IndexOutOfRangeException("Invalid animation index");
+            }
+
+            return _animationSources[index];
+        }
+
+        public Point GetSource()
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
+            }
+
+            if (_animationSources.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            return _animationSources[0];
         }
 
         public bool IsAnimating()
         {
             return _animationTimer.Enabled;
+        }
+
+        public void SetData(object[] data)
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
+            }
+
+            if (_animationDatas.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            _animationDatas[0] = data;
+        }
+
+        public void SetDirection(AnimationDirection direction)
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
+            }
+
+            if (_animationProgresses.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            _animationDirections[0] = direction;
+        }
+
+        public void SetProgress(double progress)
+        {
+            if (!Singular)
+            {
+                throw new Exception("Animation is not set to Singular.");
+            }
+
+            if (_animationProgresses.Count == 0)
+            {
+                throw new Exception("Invalid animation");
+            }
+
+            _animationProgresses[0] = progress;
         }
 
         public void StartNewAnimation(AnimationDirection animationDirection, object[] data = null)
@@ -166,7 +289,6 @@ namespace MaterialSkin.Animations
                 {
                     _animationDatas.Add(data ?? new object[] { });
                 }
-
             }
 
             _animationTimer.Start();
@@ -191,6 +313,90 @@ namespace MaterialSkin.Animations
             }
         }
 
+        private void AnimationTimerOnTick(object sender, EventArgs eventArgs)
+        {
+            for (int i = 0; i < _animationProgresses.Count; i++)
+            {
+                UpdateProgress(i);
+
+                if (!Singular)
+                {
+                    if (_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE)
+                    {
+                        _animationDirections[i] = AnimationDirection.InOutOut;
+                    }
+                    else if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MIN_VALUE)
+                    {
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                    }
+                    else if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE)
+                    {
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
+                    }
+                    else if (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] == MAX_VALUE || _animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] == MIN_VALUE || _animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] == MIN_VALUE)
+                    {
+                        _animationProgresses.RemoveAt(i);
+                        _animationSources.RemoveAt(i);
+                        _animationDirections.RemoveAt(i);
+                        _animationDatas.RemoveAt(i);
+                    }
+                }
+                else
+                {
+                    if (_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE)
+                    {
+                        _animationDirections[i] = AnimationDirection.InOutOut;
+                    }
+                    else if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MAX_VALUE)
+                    {
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                    }
+                    else if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE)
+                    {
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
+                    }
+                }
+            }
+
+            OnAnimationProgress?.Invoke(this);
+        }
+
+        private void DecrementProgress(int index)
+        {
+            _animationProgresses[index] -= _animationDirections[index] == AnimationDirection.InOutOut || _animationDirections[index] == AnimationDirection.InOutRepeatingOut ? SecondaryIncrement : Increment;
+            if (_animationProgresses[index] < MIN_VALUE)
+            {
+                _animationProgresses[index] = MIN_VALUE;
+
+                for (int i = 0; i < GetAnimationCount(); i++)
+                {
+                    if (_animationDirections[i] == AnimationDirection.InOutIn)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] != MIN_VALUE)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] != MIN_VALUE)
+                    {
+                        return;
+                    }
+                }
+
+                _animationTimer.Stop();
+                OnAnimationFinished?.Invoke(this);
+            }
+        }
+
         private void IncrementProgress(int index)
         {
             _animationProgresses[index] += Increment;
@@ -200,164 +406,31 @@ namespace MaterialSkin.Animations
 
                 for (int i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (_animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn) return;
-                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut) return;
-                    if (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] != MAX_VALUE) return;
-                    if (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] != MAX_VALUE) return;
+                    if (_animationDirections[i] == AnimationDirection.InOutIn)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] != MAX_VALUE)
+                    {
+                        return;
+                    }
+                    if (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] != MAX_VALUE)
+                    {
+                        return;
+                    }
                 }
 
                 _animationTimer.Stop();
                 OnAnimationFinished?.Invoke(this);
             }
-        }
-
-        private void DecrementProgress(int index)
-        {
-            _animationProgresses[index] -= (_animationDirections[index] == AnimationDirection.InOutOut || _animationDirections[index] == AnimationDirection.InOutRepeatingOut) ? SecondaryIncrement : Increment;
-            if (_animationProgresses[index] < MIN_VALUE)
-            {
-                _animationProgresses[index] = MIN_VALUE;
-
-                for (var i = 0; i < GetAnimationCount(); i++)
-                {
-                    if (_animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn) return;
-                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut) return;
-                    if (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] != MIN_VALUE) return;
-                    if (_animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] != MIN_VALUE) return;
-                }
-
-                _animationTimer.Stop();
-                OnAnimationFinished?.Invoke(this);
-            }
-        }
-
-        public double GetProgress()
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationProgresses.Count == 0)
-                throw new Exception("Invalid animation");
-
-            return GetProgress(0);
-        }
-
-        public double GetProgress(int index)
-        {
-            if (!(index < GetAnimationCount()))
-                throw new IndexOutOfRangeException("Invalid animation index");
-
-            switch (AnimationType)
-            {
-                case AnimationType.Linear:
-                    return AnimationLinear.CalculateProgress(_animationProgresses[index]);
-                case AnimationType.EaseInOut:
-                    return AnimationEaseInOut.CalculateProgress(_animationProgresses[index]);
-                case AnimationType.EaseOut:
-                    return AnimationEaseOut.CalculateProgress(_animationProgresses[index]);
-                case AnimationType.CustomQuadratic:
-                    return AnimationCustomQuadratic.CalculateProgress(_animationProgresses[index]);
-                default:
-                    throw new NotImplementedException("The given AnimationType is not implemented");
-            }
-
-        }
-
-        public Point GetSource(int index)
-        {
-            if (!(index < GetAnimationCount()))
-                throw new IndexOutOfRangeException("Invalid animation index");
-
-            return _animationSources[index];
-        }
-
-        public Point GetSource()
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationSources.Count == 0)
-                throw new Exception("Invalid animation");
-
-            return _animationSources[0];
-        }
-
-        public AnimationDirection GetDirection()
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationDirections.Count == 0)
-                throw new Exception("Invalid animation");
-
-            return _animationDirections[0];
-        }
-
-        public AnimationDirection GetDirection(int index)
-        {
-            if (!(index < _animationDirections.Count))
-                throw new IndexOutOfRangeException("Invalid animation index");
-
-            return _animationDirections[index];
-        }
-
-        public object[] GetData()
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationDatas.Count == 0)
-                throw new Exception("Invalid animation");
-
-            return _animationDatas[0];
-        }
-
-        public object[] GetData(int index)
-        {
-            if (!(index < _animationDatas.Count))
-                throw new IndexOutOfRangeException("Invalid animation index");
-
-            return _animationDatas[index];
-        }
-
-        public int GetAnimationCount()
-        {
-            return _animationProgresses.Count;
-        }
-
-        public void SetProgress(double progress)
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationProgresses.Count == 0)
-                throw new Exception("Invalid animation");
-
-            _animationProgresses[0] = progress;
-        }
-
-        public void SetDirection(AnimationDirection direction)
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationProgresses.Count == 0)
-                throw new Exception("Invalid animation");
-
-            _animationDirections[0] = direction;
-        }
-
-        public void SetData(object[] data)
-        {
-            if (!Singular)
-                throw new Exception("Animation is not set to Singular.");
-
-            if (_animationDatas.Count == 0)
-                throw new Exception("Invalid animation");
-
-            _animationDatas[0] = data;
         }
     }
 }

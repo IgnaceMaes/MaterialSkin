@@ -2,7 +2,7 @@
 
 namespace MaterialSkin.Animations
 {
-    enum AnimationType
+    internal enum AnimationType
     {
         Linear,
         EaseInOut,
@@ -10,7 +10,7 @@ namespace MaterialSkin.Animations
         CustomQuadratic
     }
 
-    static class AnimationLinear
+    internal static class AnimationLinear
     {
         public static double CalculateProgress(double progress)
         {
@@ -18,7 +18,7 @@ namespace MaterialSkin.Animations
         }
     }
 
-    static class AnimationEaseInOut
+    internal static class AnimationEaseInOut
     {
         public static double PI = Math.PI;
         public static double PI_HALF = Math.PI / 2;
@@ -46,8 +46,8 @@ namespace MaterialSkin.Animations
     {
         public static double CalculateProgress(double progress)
         {
-            var kickoff = 0.6;
-            return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
+            double kickoff = 0.6;
+            return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - 2 * kickoff));
         }
     }
 }

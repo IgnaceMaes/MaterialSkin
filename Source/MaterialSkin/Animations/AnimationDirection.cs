@@ -1,6 +1,6 @@
 ﻿namespace MaterialSkin.Animations
 {
-    enum AnimationDirection
+    internal enum AnimationDirection
     {
         In, //In. Stops if finished.
         Out, //Out. Stops if finished.

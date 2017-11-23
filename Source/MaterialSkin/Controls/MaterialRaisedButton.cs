@@ -1,36 +1,46 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
-using System;
 
 namespace MaterialSkin.Controls
 {
     public class MaterialRaisedButton : Button, IMaterialControl
     {
-        [Browsable(false)]
-        public int Depth { get; set; }
-        [Browsable(false)]
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
-        [Browsable(false)]
-        public MouseState MouseState { get; set; }
-        public bool Primary { get; set; }
-
         private readonly AnimationManager _animationManager;
-
+        private Image _icon;
         private SizeF _textSize;
 
-        private Image _icon;
         public Image Icon
         {
-            get { return _icon; }
+            get => _icon;
             set
             {
                 _icon = value;
                 if (AutoSize)
+                {
                     Size = GetPreferredSize();
+                }
+                Invalidate();
+            }
+        }
+
+        public bool Primary { get; set; }
+
+        public override string Text
+        {
+            get => base.Text;
+            set
+            {
+                base.Text = value;
+                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                if (AutoSize)
+                {
+                    Size = GetPreferredSize();
+                }
                 Invalidate();
             }
         }
@@ -50,17 +60,28 @@ namespace MaterialSkin.Controls
             AutoSize = true;
         }
 
-        public override string Text
+        [Browsable(false)]
+        public int Depth { get; set; }
+
+        [Browsable(false)]
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
+        [Browsable(false)]
+        public MouseState MouseState { get; set; }
+
+        public override Size GetPreferredSize(Size proposedSize)
         {
-            get { return base.Text; }
-            set
+            // Provides extra space for proper padding for content
+            int extra = 16;
+
+            if (Icon != null)
+                // 24 is for icon size
+                // 4 is for the space between icon & text
             {
-                base.Text = value;
-                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
-                if (AutoSize)
-                    Size = GetPreferredSize();
-                Invalidate();
+                extra += 24 + 4;
             }
+
+            return new Size((int) Math.Ceiling(_textSize.Width) + extra, 36);
         }
 
         protected override void OnMouseUp(MouseEventArgs mevent)
@@ -72,17 +93,13 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            var g = pevent.Graphics;
+            Graphics g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(Parent.BackColor);
 
-            using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
-                ClientRectangle.Y,
-                ClientRectangle.Width - 1,
-                ClientRectangle.Height - 1,
-                1f))
+            using (GraphicsPath backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width - 1, ClientRectangle.Height - 1, 1f))
             {
                 g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
             }
@@ -91,26 +108,30 @@ namespace MaterialSkin.Controls
             {
                 for (int i = 0; i < _animationManager.GetAnimationCount(); i++)
                 {
-                    var animationValue = _animationManager.GetProgress(i);
-                    var animationSource = _animationManager.GetSource(i);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationValue * 50)), Color.White));
-                    var rippleSize = (int)(animationValue * Width * 2);
+                    double animationValue = _animationManager.GetProgress(i);
+                    Point animationSource = _animationManager.GetSource(i);
+                    SolidBrush rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue * 50), Color.White));
+                    int rippleSize = (int) (animationValue * Width * 2);
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                 }
             }
 
             //Icon
-            var iconRect = new Rectangle(8, 6, 24, 24);
+            Rectangle iconRect = new Rectangle(8, 6, 24, 24);
 
             if (string.IsNullOrEmpty(Text))
                 // Center Icon
+            {
                 iconRect.X += 2;
+            }
 
             if (Icon != null)
+            {
                 g.DrawImage(Icon, iconRect);
+            }
 
             //Text
-            var textRect = ClientRectangle;
+            Rectangle textRect = ClientRectangle;
 
             if (Icon != null)
             {
@@ -130,30 +151,16 @@ namespace MaterialSkin.Controls
                 textRect.X += 8 + 24 + 4;
             }
 
-            g.DrawString(
-                Text.ToUpper(),
-                SkinManager.ROBOTO_MEDIUM_10,
-                SkinManager.GetRaisedButtonTextBrush(Primary),
-                textRect,
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetRaisedButtonTextBrush(Primary), textRect, new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            });
         }
 
         private Size GetPreferredSize()
         {
             return GetPreferredSize(new Size(0, 0));
-        }
-
-        public override Size GetPreferredSize(Size proposedSize)
-        {
-            // Provides extra space for proper padding for content
-            var extra = 16;
-
-            if (Icon != null)
-                // 24 is for icon size
-                // 4 is for the space between icon & text
-                extra += 24 + 4;
-
-            return new Size((int)Math.Ceiling(_textSize.Width) + extra, 36);
         }
     }
 }
