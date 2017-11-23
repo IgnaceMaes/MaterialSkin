@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MaterialSkinExample")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Example usage of MaterialSkin.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Ignace Maes")]
 [assembly: AssemblyProduct("MaterialSkinExample")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("MaterialSkinExample  Copyright (C) 2014  Ignace Maes")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
