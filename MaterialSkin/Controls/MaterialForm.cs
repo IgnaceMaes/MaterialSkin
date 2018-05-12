@@ -564,6 +564,49 @@ namespace MaterialSkin.Controls
             //Form title
             g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
         }
+        
+                private StringAlignment _textAlign;
+        
+        // Easier read in the properties window
+        public enum Align
+        {
+            Left = 0,
+            Center = 1,
+            Right = 2
+        }
+        
+        // Set Header Text Position
+        [Browsable(true)]
+        [Category("Appearance")]
+        public Align TextAlign
+        {
+            get { return (Align)_textAlign; }
+            set
+            {
+                _textAlign = (StringAlignment)value;
+            }
+        }
+        
+        // Fix the Startposition
+        [Browsable(true)]
+        public new FormStartPosition StartPosition
+        {
+            get { return base.StartPosition; }
+            set
+            {
+                switch (value)
+                {
+                    case FormStartPosition.CenterScreen:
+                        int x = (Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2);
+                        int y = (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2) - 50;
+                        this.Location = new Point(x, y);
+                        break;
+                    default:
+                        base.StartPosition = value;
+                        break;
+                }
+            }
+        }
     }
 
     public class MouseMessageFilter : IMessageFilter
