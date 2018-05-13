@@ -249,7 +249,7 @@ namespace MaterialSkin
 
         public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
 
-        public Font SetRoboFontSiz(float size)
+        public Font SetRoboFontSize(float size)
         {
             return new Font(LoadFont(Resources.Roboto_Regular), size);
         }
