@@ -53,6 +53,9 @@
     <Compile Include="Controls\MaterialFlatButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialFloatingActionButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialForm.cs">
       <SubType>Form</SubType>
     </Compile>
