@@ -364,7 +364,6 @@ namespace MaterialSkinExample
             this.materialTabSelector1.Size = new System.Drawing.Size(833, 59);
             this.materialTabSelector1.TabIndex = 17;
             this.materialTabSelector1.Text = "materialTabSelector1";
-            this.materialTabSelector1.Click += new System.EventHandler(this.materialTabSelector1_Click);
             // 
             // materialTabControl1
             // 
