@@ -36,7 +36,7 @@ namespace MaterialSkin.Controls
 
         public void SelectAll() { _baseTextBox.SelectAll(); }
         public void Clear() { _baseTextBox.Clear(); }
-        public void Focus() { _baseTextBox.Focus(); }
+        public new void Focus() { _baseTextBox.Focus(); }
 
 
         # region Forwarding events to baseTextBox
