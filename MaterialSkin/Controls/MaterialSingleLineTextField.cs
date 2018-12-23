@@ -1149,7 +1149,7 @@ namespace MaterialSkin.Controls
             }
         }
 
-        private class TextBoxContextMenuStrip : MaterialContextMenuStrip
+        public class TextBoxContextMenuStrip : MaterialContextMenuStrip
         {
             public readonly ToolStripItem Undo = new MaterialToolStripMenuItem { Text = "Undo" };
             public readonly ToolStripItem Seperator1 = new ToolStripSeparator();
