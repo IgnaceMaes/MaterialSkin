@@ -20,6 +20,14 @@ namespace MaterialSkinExample
 
 			// Add dummy data to the listview
 	        seedListView();
+            materialCheckedListBox1.Items.Add("Item1", false);
+            materialCheckedListBox1.Items.Add("Item2", true);
+            materialCheckedListBox1.Items.Add("Item3", true);
+            materialCheckedListBox1.Items.Add("Item4", false);
+            materialCheckedListBox1.Items.Add("Item5", true);
+            materialCheckedListBox1.Items.Add("Item6", false);
+            materialCheckedListBox1.Items.Add("Item7", false);
+
         }
 
 	    private void seedListView()
@@ -87,6 +95,10 @@ namespace MaterialSkinExample
         {
 
         }
-       
+
+        private void tabPage6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

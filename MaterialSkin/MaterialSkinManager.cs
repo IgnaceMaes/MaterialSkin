@@ -12,6 +12,7 @@ namespace MaterialSkin
 {
     public class MaterialSkinManager
     {
+   
         //Singleton instance
         private static MaterialSkinManager _instance;
 
@@ -324,11 +325,12 @@ namespace MaterialSkin
                 controlToUpdate.BackColor = GetDividersColor();
             }
 
-            if (controlToUpdate is MaterialListView)
+            if (controlToUpdate is MaterialListView || controlToUpdate is MaterialComboBox || controlToUpdate is MaterialCheckedListBox)
             {
                 controlToUpdate.BackColor = newBackColor;
 
             }
+         
 
             //recursive call
             foreach (Control control in controlToUpdate.Controls)

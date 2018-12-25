@@ -47,6 +47,9 @@
     <Compile Include="Controls\MaterialCheckedListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialContextMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
