@@ -8,8 +8,15 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 *High quality images can be found at the bottom of this page.*
 
 ---
-#### New Controls
-Combobox , Checkedlistbox and Floating Action Button
+#### Updates
+* [2018-12-24] New controls added 
+* [2018-12-26] Added support to theme / color non Material controls on a Material form
+
+### New Controls
+* Combobox
+* Checkedlistbox 
+* Floating Action Button
+
 
 #### Current state of the MaterialSkin components
 Component | Supported | Dark & light version | Disabled mode | Animated
@@ -30,7 +37,7 @@ ProgressBar | Yes | Yes | No | No
 FloatingActionButton | Yes | Yes | No | No
 Dialogs | No | No | No | No
 Switch | No | No | No | No
-More... | No | No | No | No
+More... | Yes | Yes | No | No
 
 ---
 
@@ -38,7 +45,9 @@ More... | No | No | No | No
 
 **1. Add the library to your project**
 
-  You can do this on multiple ways. The easiest way would be adding the [NuGet Package](https://www.nuget.org/packages/MaterialSkin/). Right click on your project and click 'Manage NuGet Packages...'. Search for 'MaterialSkin' and click on install. Once installed the library will be included in your project references. (Or install it through the package manager console: PM> Install-Package MaterialSkin)
+**working on this part**
+
+  ~~You can do this on multiple ways. The easiest way would be adding the [NuGet Package](https://www.nuget.org/packages/MaterialSkin/). Right click on your project and click 'Manage NuGet Packages...'. Search for 'MaterialSkin' and click on install. Once installed the library will be included in your project references. (Or install it through the package manager console: PM> Install-Package MaterialSkin)~~
 
 Another way of doing this step would be cloning the project from GitHub, compiling the library yourself and adding it as a reference.
   
@@ -104,16 +113,14 @@ If you love .NET and Material Design, you should definitely check out [Material 
 
 #### State of the project
 
-This project is no longer under active development. Though, contributions are still welcome and the community will likely still help if you open an issue.
+This project is **ACTIVE**
 
 ---
 
 #### Contact
 
-If you wish to contact me for anything you can get in touch at:
-
-- Twitter: https://twitter.com/Ignace_Maes
-- Personal Website: http://ignacemaes.com
+>###### This project was originally forked from https://github.com/IgnaceMaes/MaterialSkin
+> If you have any issues please open an issue or pull request. 
 
 ---
 

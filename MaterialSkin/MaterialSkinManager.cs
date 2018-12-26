@@ -307,11 +307,14 @@ namespace MaterialSkin
         {
             if (controlToUpdate == null) return;
 
+            var tabControl = controlToUpdate as MaterialTabControl;
+
+
             if (controlToUpdate.ContextMenuStrip != null)
             {
                 UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
             }
-            var tabControl = controlToUpdate as MaterialTabControl;
+           
             if (tabControl != null)
             {
                 foreach (TabPage tabPage in tabControl.TabPages)
@@ -323,15 +326,23 @@ namespace MaterialSkin
             if (controlToUpdate is MaterialDivider)
             {
                 controlToUpdate.BackColor = GetDividersColor();
-            }
-
-            if (controlToUpdate is MaterialListView || controlToUpdate is MaterialComboBox || controlToUpdate is MaterialCheckedListBox)
-            {
+            } else if(controlToUpdate.HasProperty("BackColor")) {         // if the control has a backcolor property set the colors    
                 controlToUpdate.BackColor = newBackColor;
+              if (!controlToUpdate.IsMaterialControl()) // if it is a material control , let it handle how to manage font and colors
+                {
+                    if (controlToUpdate.HasProperty("ForeColor") && controlToUpdate.ForeColor != GetPrimaryTextColor())
+                    {
+                        controlToUpdate.ForeColor = GetPrimaryTextColor(); 
+
+                        if (controlToUpdate.Font == SystemFonts.DefaultFont) // if the control has not had the font changed from default, set a default
+                        {
+                            controlToUpdate.Font = ROBOTO_REGULAR_11;
+                        }                       
+                    }
+                }
 
             }
          
-
             //recursive call
             foreach (Control control in controlToUpdate.Controls)
             {
@@ -340,5 +351,8 @@ namespace MaterialSkin
 
             controlToUpdate.Invalidate();
         }
+
+
+     
     }
 }

@@ -70,6 +70,7 @@ namespace MaterialSkinExample
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
@@ -637,6 +638,7 @@ namespace MaterialSkinExample
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.richTextBox1);
             this.tabPage6.Controls.Add(this.materialLabel5);
             this.tabPage6.Controls.Add(this.materialLabel4);
             this.tabPage6.Controls.Add(this.materialLabel3);
@@ -652,6 +654,14 @@ namespace MaterialSkinExample
             this.tabPage6.Text = "New Controls";
             this.tabPage6.UseVisualStyleBackColor = true;
             this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(258, 129);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(213, 96);
+            this.richTextBox1.TabIndex = 22;
+            this.richTextBox1.Text = "I am a generic rich text box! and change with the theme!";
             // 
             // materialLabel5
             // 
@@ -728,7 +738,7 @@ namespace MaterialSkinExample
             this.materialComboBox1.Location = new System.Drawing.Point(258, 66);
             this.materialComboBox1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialComboBox1.Name = "materialComboBox1";
-            this.materialComboBox1.Size = new System.Drawing.Size(121, 26);
+            this.materialComboBox1.Size = new System.Drawing.Size(121, 24);
             this.materialComboBox1.TabIndex = 2;
             // 
             // materialCheckedListBox1
@@ -917,5 +927,6 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel3;
         private MaterialFloatingActionButton materialFloatingActionButton1;
         private MaterialComboBox materialComboBox1;
+        private RichTextBox richTextBox1;
     }
 }
