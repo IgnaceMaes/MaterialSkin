@@ -11,11 +11,13 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 #### Updates
 * [2018-12-24] New controls added 
 * [2018-12-26] Added support to theme / color non Material controls on a Material form
+* [2018-12-27] Added Messagebox control
 
 ### New Controls
 * Combobox
 * Checkedlistbox 
 * Floating Action Button
+* Flexible Messagebox
 
 
 #### Current state of the MaterialSkin components
@@ -37,6 +39,7 @@ ProgressBar | Yes | Yes | No | No
 FloatingActionButton | Yes | Yes | No | No
 Dialogs | No | No | No | No
 Switch | No | No | No | No
+FlexibleMessageBox  | Yes   | Yes   | Yes   | No
 More... | Yes | Yes | No | No
 
 ---
@@ -145,3 +148,7 @@ This project is **ACTIVE**
 ![alt tag](http://i.imgur.com/07MrJZQ.png)
 
 *MaterialSkin using a custom color scheme.*
+
+
+![alt tag](https://i.imgur.com/i35Lfgn.png)
+*FlexibleMaterialMessagebox*

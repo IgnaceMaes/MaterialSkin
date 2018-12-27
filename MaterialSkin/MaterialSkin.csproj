@@ -41,6 +41,9 @@
     <Compile Include="Animations\AnimationManager.cs" />
     <Compile Include="Animations\Animations.cs" />
     <Compile Include="ColorScheme.cs" />
+    <Compile Include="Controls\FlexibleMaterialDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -71,6 +74,7 @@
     <Compile Include="Controls\MaterialListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialMessageBox.cs" />
     <Compile Include="Controls\MaterialRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -104,6 +108,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\FlexibleMaterialDialog.resx">
+      <DependentUpon>FlexibleMaterialDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MaterialForm.resx">
+      <DependentUpon>MaterialForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

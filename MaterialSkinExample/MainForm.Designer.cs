@@ -70,6 +70,7 @@ namespace MaterialSkinExample
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.materialFlatButton5 = new MaterialSkin.Controls.MaterialFlatButton();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
@@ -638,6 +639,7 @@ namespace MaterialSkinExample
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.materialFlatButton5);
             this.tabPage6.Controls.Add(this.richTextBox1);
             this.tabPage6.Controls.Add(this.materialLabel5);
             this.tabPage6.Controls.Add(this.materialLabel4);
@@ -654,6 +656,23 @@ namespace MaterialSkinExample
             this.tabPage6.Text = "New Controls";
             this.tabPage6.UseVisualStyleBackColor = true;
             this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
+            // 
+            // materialFlatButton5
+            // 
+            this.materialFlatButton5.AutoSize = true;
+            this.materialFlatButton5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton5.Depth = 0;
+            this.materialFlatButton5.Icon = null;
+            this.materialFlatButton5.Location = new System.Drawing.Point(498, 166);
+            this.materialFlatButton5.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButton5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButton5.Name = "materialFlatButton5";
+            this.materialFlatButton5.Primary = false;
+            this.materialFlatButton5.Size = new System.Drawing.Size(169, 36);
+            this.materialFlatButton5.TabIndex = 23;
+            this.materialFlatButton5.Text = "Display Messagebox";
+            this.materialFlatButton5.UseVisualStyleBackColor = true;
+            this.materialFlatButton5.Click += new System.EventHandler(this.materialFlatButton5_Click);
             // 
             // richTextBox1
             // 
@@ -856,6 +875,7 @@ namespace MaterialSkinExample
             this.Controls.Add(this.materialFlatButton1);
             this.Name = "MainForm";
             this.Text = "MaterialSkin Demo";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.materialTabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -928,5 +948,6 @@ namespace MaterialSkinExample
         private MaterialFloatingActionButton materialFloatingActionButton1;
         private MaterialComboBox materialComboBox1;
         private RichTextBox richTextBox1;
+        private MaterialFlatButton materialFlatButton5;
     }
 }

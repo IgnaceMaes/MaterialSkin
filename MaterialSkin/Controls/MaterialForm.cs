@@ -955,6 +955,24 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
             //Form title
             g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // MaterialForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "MaterialForm";
+            this.Load += new System.EventHandler(this.MaterialForm_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void MaterialForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
     /// <summary>
