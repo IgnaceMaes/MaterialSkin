@@ -1,37 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-using System.Drawing;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-using System.ComponentModel;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
-    public class MaterialCheckedListBox : Panel, IMaterialControl
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Windows.Forms;
 
+    /// <summary>
+    /// Defines the <see cref="MaterialCheckedListBox" />
+    /// </summary>
+    public class MaterialCheckedListBox : Panel, IMaterialControl
     {
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        /// <summary>
+        /// Defines the _itemsList
+        /// </summary>
         private ItemsList _itemsList;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Striped
+        /// </summary>
         public bool Striped { get; set; }
+
+        /// <summary>
+        /// Gets or sets the StripeDarkColor
+        /// </summary>
         public Color StripeDarkColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Items
+        /// </summary>
         public ItemsList Items { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialCheckedListBox"/> class.
+        /// </summary>
         public MaterialCheckedListBox() : base()
         {
             InitializeComponent();
@@ -41,8 +60,9 @@ namespace MaterialSkin.Controls
             return;
         }
 
-
-
+        /// <summary>
+        /// The InitializeComponent
+        /// </summary>
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -50,25 +70,50 @@ namespace MaterialSkin.Controls
             this.ResumeLayout(false);
         }
 
+        /// <summary>
+        /// Defines the <see cref="ItemsList" />
+        /// </summary>
         public class ItemsList : List<MaterialSkin.Controls.MaterialCheckBox>
         {
+            /// <summary>
+            /// Defines the _parent
+            /// </summary>
             private Panel _parent;
 
-
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ItemsList"/> class.
+            /// </summary>
+            /// <param name="parent">The parent<see cref="Panel"/></param>
             public ItemsList(Panel parent)
             {
                 _parent = parent;
             }
 
+            /// <summary>
+            /// Defines the SelectedIndexChanged
+            /// </summary>
             public event SelectedIndexChangedEventHandler SelectedIndexChanged;
 
+            /// <summary>
+            /// The SelectedIndexChangedEventHandler
+            /// </summary>
+            /// <param name="Index">The Index<see cref="int"/></param>
             public delegate void SelectedIndexChangedEventHandler(int Index);
 
-            public new void Add(string text)
+            /// <summary>
+            /// Add a new checkbox item by string only , defaults checked state to false
+            /// </summary>
+            /// <param name="text">The text<see cref="string"/></param>
+            public void Add(string text)
             {
                 Add(text, false);
             }
 
+            /// <summary>
+            /// Create a new checkbox item based on the string value passed, checked state defaults to false
+            /// </summary>
+            /// <param name="text">The text<see cref="string"/></param>
+            /// <param name="@checked">The checked<see cref="bool"/></param>
             public void Add(string text, bool @checked)
             {
                 MaterialSkin.Controls.MaterialCheckBox cb = new MaterialSkin.Controls.MaterialCheckBox();
@@ -78,20 +123,26 @@ namespace MaterialSkin.Controls
                 Add(cb);
             }
 
-            public  void Add(MaterialSkin.Controls.MaterialCheckBox value)
+            /// <summary>
+            /// Add a new checkbox item to the list
+            /// </summary>
+            /// <param name="value">The value<see cref="MaterialSkin.Controls.MaterialCheckBox"/></param>
+            public new void Add(MaterialSkin.Controls.MaterialCheckBox value)
             {
-                value.Dock = DockStyle.Bottom;
+                value.Dock = DockStyle.Top;
                 base.Add(value);
                 _parent.Controls.Add(value);
             }
 
-
-            public  void Remove(MaterialSkin.Controls.MaterialCheckBox value)
+            /// <summary>
+            /// Remove a checkedbox item control from the list
+            /// </summary>
+            /// <param name="value">The value<see cref="MaterialSkin.Controls.MaterialCheckBox"/></param>
+            public new void Remove(MaterialSkin.Controls.MaterialCheckBox value)
             {
                 base.Remove(value);
                 _parent.Controls.Remove(value);
             }
         }
-
     }
 }

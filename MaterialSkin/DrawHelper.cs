@@ -1,10 +1,22 @@
-﻿using System.Drawing;
-using System.Drawing.Drawing2D;
-
-namespace MaterialSkin
+﻿namespace MaterialSkin
 {
-    static class DrawHelper
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+
+    /// <summary>
+    /// Defines the <see cref="DrawHelper" />
+    /// </summary>
+    internal static class DrawHelper
     {
+        /// <summary>
+        /// The CreateRoundRect
+        /// </summary>
+        /// <param name="x">The x<see cref="float"/></param>
+        /// <param name="y">The y<see cref="float"/></param>
+        /// <param name="width">The width<see cref="float"/></param>
+        /// <param name="height">The height<see cref="float"/></param>
+        /// <param name="radius">The radius<see cref="float"/></param>
+        /// <returns>The <see cref="GraphicsPath"/></returns>
         public static GraphicsPath CreateRoundRect(float x, float y, float width, float height, float radius)
         {
             var gp = new GraphicsPath();
@@ -20,11 +32,24 @@ namespace MaterialSkin
             return gp;
         }
 
+        /// <summary>
+        /// The CreateRoundRect
+        /// </summary>
+        /// <param name="rect">The rect<see cref="Rectangle"/></param>
+        /// <param name="radius">The radius<see cref="float"/></param>
+        /// <returns>The <see cref="GraphicsPath"/></returns>
         public static GraphicsPath CreateRoundRect(Rectangle rect, float radius)
         {
             return CreateRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);
         }
 
+        /// <summary>
+        /// The BlendColor
+        /// </summary>
+        /// <param name="backgroundColor">The backgroundColor<see cref="Color"/></param>
+        /// <param name="frontColor">The frontColor<see cref="Color"/></param>
+        /// <param name="blend">The blend<see cref="double"/></param>
+        /// <returns>The <see cref="Color"/></returns>
         public static Color BlendColor(Color backgroundColor, Color frontColor, double blend)
         {
             var ratio = blend / 255d;
@@ -35,6 +60,12 @@ namespace MaterialSkin
             return Color.FromArgb(r, g, b);
         }
 
+        /// <summary>
+        /// The BlendColor
+        /// </summary>
+        /// <param name="backgroundColor">The backgroundColor<see cref="Color"/></param>
+        /// <param name="frontColor">The frontColor<see cref="Color"/></param>
+        /// <returns>The <see cref="Color"/></returns>
         public static Color BlendColor(Color backgroundColor, Color frontColor)
         {
             return BlendColor(backgroundColor, frontColor, frontColor.A);

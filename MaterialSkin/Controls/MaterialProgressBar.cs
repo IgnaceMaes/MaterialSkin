@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
-using System.Windows.Forms;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
     /// <summary>
     /// Material design-like progress bar
     /// </summary>
@@ -18,29 +18,20 @@ namespace MaterialSkin.Controls
         }
 
         /// <summary>
-        /// Gets or sets the depth.
+        /// Gets or sets the Depth
         /// </summary>
-        /// <value>
-        /// The depth.
-        /// </value>
         [Browsable(false)]
         public int Depth { get; set; }
 
         /// <summary>
         /// Gets the skin manager.
         /// </summary>
-        /// <value>
-        /// The skin manager.
-        /// </value>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the state of the mouse.
         /// </summary>
-        /// <value>
-        /// The state of the mouse.
-        /// </value>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 

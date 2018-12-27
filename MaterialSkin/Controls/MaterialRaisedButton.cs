@@ -1,28 +1,59 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-using System;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Text;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="MaterialRaisedButton" />
+    /// </summary>
     public class MaterialRaisedButton : Button, IMaterialControl
     {
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Primary
+        /// </summary>
         public bool Primary { get; set; }
 
+        /// <summary>
+        /// Defines the _animationManager
+        /// </summary>
         private readonly AnimationManager _animationManager;
 
+        /// <summary>
+        /// Defines the _textSize
+        /// </summary>
         private SizeF _textSize;
 
+        /// <summary>
+        /// Defines the _icon
+        /// </summary>
         private Image _icon;
+
+        /// <summary>
+        /// Gets or sets the Icon
+        /// </summary>
         public Image Icon
         {
             get { return _icon; }
@@ -35,6 +66,9 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialRaisedButton"/> class.
+        /// </summary>
         public MaterialRaisedButton()
         {
             Primary = true;
@@ -50,6 +84,9 @@ namespace MaterialSkin.Controls
             AutoSize = true;
         }
 
+        /// <summary>
+        /// Gets or sets the Text
+        /// </summary>
         public override string Text
         {
             get { return base.Text; }
@@ -63,6 +100,10 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// The OnMouseUp
+        /// </summary>
+        /// <param name="mevent">The mevent<see cref="MouseEventArgs"/></param>
         protected override void OnMouseUp(MouseEventArgs mevent)
         {
             base.OnMouseUp(mevent);
@@ -70,6 +111,10 @@ namespace MaterialSkin.Controls
             _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 
+        /// <summary>
+        /// The OnPaint
+        /// </summary>
+        /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -138,11 +183,20 @@ namespace MaterialSkin.Controls
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
         }
 
+        /// <summary>
+        /// The GetPreferredSize
+        /// </summary>
+        /// <returns>The <see cref="Size"/></returns>
         private Size GetPreferredSize()
         {
             return GetPreferredSize(new Size(0, 0));
         }
 
+        /// <summary>
+        /// The GetPreferredSize
+        /// </summary>
+        /// <param name="proposedSize">The proposedSize<see cref="Size"/></param>
+        /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
             // Provides extra space for proper padding for content

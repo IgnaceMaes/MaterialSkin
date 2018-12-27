@@ -1,25 +1,50 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Text;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="MaterialCheckBox" />
+    /// </summary>
     public class MaterialCheckBox : CheckBox, IMaterialControl
     {
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MouseLocation
+        /// </summary>
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
+        /// <summary>
+        /// Defines the _ripple
+        /// </summary>
         private bool _ripple;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Ripple
+        /// </summary>
         [Category("Behavior")]
         public bool Ripple
         {
@@ -38,16 +63,44 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// Defines the _animationManager
+        /// </summary>
         private readonly AnimationManager _animationManager;
+
+        /// <summary>
+        /// Defines the _rippleAnimationManager
+        /// </summary>
         private readonly AnimationManager _rippleAnimationManager;
 
+        /// <summary>
+        /// Defines the CHECKBOX_SIZE
+        /// </summary>
         private const int CHECKBOX_SIZE = 18;
+
+        /// <summary>
+        /// Defines the CHECKBOX_SIZE_HALF
+        /// </summary>
         private const int CHECKBOX_SIZE_HALF = CHECKBOX_SIZE / 2;
+
+        /// <summary>
+        /// Defines the CHECKBOX_INNER_BOX_SIZE
+        /// </summary>
         private const int CHECKBOX_INNER_BOX_SIZE = CHECKBOX_SIZE - 4;
 
+        /// <summary>
+        /// Defines the _boxOffset
+        /// </summary>
         private int _boxOffset;
+
+        /// <summary>
+        /// Defines the _boxRectangle
+        /// </summary>
         private Rectangle _boxRectangle;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialCheckBox"/> class.
+        /// </summary>
         public MaterialCheckBox()
         {
             _animationManager = new AnimationManager
@@ -73,6 +126,10 @@ namespace MaterialSkin.Controls
             MouseLocation = new Point(-1, -1);
         }
 
+        /// <summary>
+        /// The OnSizeChanged
+        /// </summary>
+        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -81,14 +138,31 @@ namespace MaterialSkin.Controls
             _boxRectangle = new Rectangle(_boxOffset, _boxOffset, CHECKBOX_SIZE - 1, CHECKBOX_SIZE - 1);
         }
 
+        /// <summary>
+        /// The GetPreferredSize
+        /// </summary>
+        /// <param name="proposedSize">The proposedSize<see cref="Size"/></param>
+        /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
             var w = _boxOffset + CHECKBOX_SIZE + 2 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
+        /// <summary>
+        /// Defines the CheckmarkLine
+        /// </summary>
         private static readonly Point[] CheckmarkLine = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
+
+        /// <summary>
+        /// Defines the TEXT_OFFSET
+        /// </summary>
         private const int TEXT_OFFSET = 22;
+
+        /// <summary>
+        /// The OnPaint
+        /// </summary>
+        /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -172,6 +246,10 @@ namespace MaterialSkin.Controls
             brush.Dispose();
         }
 
+        /// <summary>
+        /// The DrawCheckMarkBitmap
+        /// </summary>
+        /// <returns>The <see cref="Bitmap"/></returns>
         private Bitmap DrawCheckMarkBitmap()
         {
             var checkMark = new Bitmap(CHECKBOX_SIZE, CHECKBOX_SIZE);
@@ -189,6 +267,9 @@ namespace MaterialSkin.Controls
             return checkMark;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether AutoSize
+        /// </summary>
         public override bool AutoSize
         {
             get { return base.AutoSize; }
@@ -202,17 +283,27 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// The IsMouseInCheckArea
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         private bool IsMouseInCheckArea()
         {
             return _boxRectangle.Contains(MouseLocation);
         }
 
+        /// <summary>
+        /// The OnCreateControl
+        /// </summary>
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
             Font = SkinManager.ROBOTO_MEDIUM_10;
 
-            if (DesignMode) return;
+            if (DesignMode)
+            {
+                return;
+            }
 
             MouseState = MouseState.OUT;
             MouseEnter += (sender, args) =>
@@ -245,6 +336,5 @@ namespace MaterialSkin.Controls
                 Cursor = IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
             };
         }
-
     }
 }

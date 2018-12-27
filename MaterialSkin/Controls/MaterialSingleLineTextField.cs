@@ -1,12 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
     public class MaterialSingleLineTextField : Control, IMaterialControl
     {
         //Properties for managing the material design properties
@@ -39,8 +39,7 @@ namespace MaterialSkin.Controls
         public new void Focus() { _baseTextBox.Focus(); }
 
 
-        # region Forwarding events to baseTextBox
-        public event EventHandler AcceptsTabChanged
+                public event EventHandler AcceptsTabChanged
         {
             add
             {
@@ -939,8 +938,7 @@ namespace MaterialSkin.Controls
                 _baseTextBox.VisibleChanged -= value;
             }
         }
-        #endregion
-
+        
 
         public MaterialSingleLineTextField()
         {

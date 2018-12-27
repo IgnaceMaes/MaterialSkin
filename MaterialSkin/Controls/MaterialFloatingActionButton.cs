@@ -1,54 +1,121 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Text;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="MaterialFloatingActionButton" />
+    /// </summary>
     public class MaterialFloatingActionButton : Button, IMaterialControl
     {
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        /// <summary>
+        /// Defines the FAB_SIZE
+        /// </summary>
         private const int FAB_SIZE = 56;
+
+        /// <summary>
+        /// Defines the FAB_MINI_SIZE
+        /// </summary>
         private const int FAB_MINI_SIZE = 40;
+
+        /// <summary>
+        /// Defines the FAB_ICON_MARGIN
+        /// </summary>
         private const int FAB_ICON_MARGIN = 16;
+
+        /// <summary>
+        /// Defines the FAB_MINI_ICON_MARGIN
+        /// </summary>
         private const int FAB_MINI_ICON_MARGIN = 8;
+
+        /// <summary>
+        /// Defines the FAB_ICON_SIZE
+        /// </summary>
         private const int FAB_ICON_SIZE = 24;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether Mini
+        /// </summary>
         public bool Mini
         {
             get { return _mini; }
             set { setSize(value); }
         }
+
+        /// <summary>
+        /// Defines the _mini
+        /// </summary>
         private bool _mini = false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether AnimateShowHideButton
+        /// </summary>
         public bool AnimateShowHideButton
         {
             get { return _animateShowButton; }
             set { _animateShowButton = value; }
         }
+
+        /// <summary>
+        /// Defines the _animateShowButton
+        /// </summary>
         private bool _animateShowButton;
 
+        /// <summary>
+        /// Gets or sets the Icon
+        /// </summary>
         public Image Icon
         {
             get { return _icon; }
             set { _icon = value; }
         }
 
+        /// <summary>
+        /// Defines the _icon
+        /// </summary>
         private Image _icon;
+
+        /// <summary>
+        /// Defines the _isHiding
+        /// </summary>
         private bool _isHiding = false;
 
+        /// <summary>
+        /// Defines the _animationManager
+        /// </summary>
         private readonly AnimationManager _animationManager;
+
+        /// <summary>
+        /// Defines the _showAnimationManager
+        /// </summary>
         private readonly AnimationManager _showAnimationManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialFloatingActionButton"/> class.
+        /// </summary>
         public MaterialFloatingActionButton()
         {
             Size = new Size(FAB_SIZE, FAB_SIZE);
@@ -69,12 +136,20 @@ namespace MaterialSkin.Controls
             _showAnimationManager.OnAnimationFinished += _showAnimationManager_OnAnimationFinished;
         }
 
+        /// <summary>
+        /// The setSize
+        /// </summary>
+        /// <param name="mini">The mini<see cref="bool"/></param>
         private void setSize(bool mini)
         {
             Size = mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
             _mini = mini;
         }
 
+        /// <summary>
+        /// The _showAnimationManager_OnAnimationFinished
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
         private void _showAnimationManager_OnAnimationFinished(object sender)
         {
             if (_isHiding)
@@ -84,6 +159,10 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// The OnInvalidated
+        /// </summary>
+        /// <param name="e">The e<see cref="InvalidateEventArgs"/></param>
         protected override void OnInvalidated(InvalidateEventArgs e)
         {
             base.OnInvalidated(e);
@@ -91,6 +170,10 @@ namespace MaterialSkin.Controls
             InvokePaint(this, new PaintEventArgs(this.CreateGraphics(), this.ClientRectangle));
         }
 
+        /// <summary>
+        /// The OnPaint
+        /// </summary>
+        /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -129,13 +212,24 @@ namespace MaterialSkin.Controls
             Region = new Region(regionPath);
         }
 
+        /// <summary>
+        /// The OnMouseUp
+        /// </summary>
+        /// <param name="mevent">The mevent<see cref="MouseEventArgs"/></param>
         protected override void OnMouseUp(MouseEventArgs mevent)
         {
             base.OnMouseUp(mevent);
             _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
+
+        /// <summary>
+        /// Defines the origin
+        /// </summary>
         private Point origin;
 
+        /// <summary>
+        /// The Hide
+        /// </summary>
         public new void Hide()
         {
             if (Visible)
@@ -145,6 +239,9 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// The Show
+        /// </summary>
         public new void Show()
         {
             if (!Visible)

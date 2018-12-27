@@ -1,29 +1,61 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Text;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="MaterialContextMenuStrip" />
+    /// </summary>
     public class MaterialContextMenuStrip : ContextMenuStrip, IMaterialControl
     {
         //Properties for managing the material design properties
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-
+        /// <summary>
+        /// Defines the AnimationManager
+        /// </summary>
         internal AnimationManager AnimationManager;
+
+        /// <summary>
+        /// Defines the AnimationSource
+        /// </summary>
         internal Point AnimationSource;
 
+        /// <summary>
+        /// The ItemClickStart
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="ToolStripItemClickedEventArgs"/></param>
         public delegate void ItemClickStart(object sender, ToolStripItemClickedEventArgs e);
+
+        /// <summary>
+        /// Defines the OnItemClickStart
+        /// </summary>
         public event ItemClickStart OnItemClickStart;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialContextMenuStrip"/> class.
+        /// </summary>
         public MaterialContextMenuStrip()
         {
             Renderer = new MaterialToolStripRender();
@@ -39,6 +71,10 @@ namespace MaterialSkin.Controls
             BackColor = SkinManager.GetApplicationBackgroundColor();
         }
 
+        /// <summary>
+        /// The OnMouseUp
+        /// </summary>
+        /// <param name="mea">The mea<see cref="MouseEventArgs"/></param>
         protected override void OnMouseUp(MouseEventArgs mea)
         {
             base.OnMouseUp(mea);
@@ -46,7 +82,15 @@ namespace MaterialSkin.Controls
             AnimationSource = mea.Location;
         }
 
+        /// <summary>
+        /// Defines the _delayesArgs
+        /// </summary>
         private ToolStripItemClickedEventArgs _delayesArgs;
+
+        /// <summary>
+        /// The OnItemClicked
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripItemClickedEventArgs"/></param>
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem != null && !(e.ClickedItem is ToolStripSeparator))
@@ -71,14 +115,24 @@ namespace MaterialSkin.Controls
         }
     }
 
+    /// <summary>
+    /// Defines the <see cref="MaterialToolStripMenuItem" />
+    /// </summary>
     public class MaterialToolStripMenuItem : ToolStripMenuItem
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialToolStripMenuItem"/> class.
+        /// </summary>
         public MaterialToolStripMenuItem()
         {
             AutoSize = false;
             Size = new Size(120, 30);
         }
 
+        /// <summary>
+        /// The CreateDefaultDropDown
+        /// </summary>
+        /// <returns>The <see cref="ToolStripDropDown"/></returns>
         protected override ToolStripDropDown CreateDefaultDropDown()
         {
             var baseDropDown = base.CreateDefaultDropDown();
@@ -91,14 +145,31 @@ namespace MaterialSkin.Controls
         }
     }
 
+    /// <summary>
+    /// Defines the <see cref="MaterialToolStripRender" />
+    /// </summary>
     internal class MaterialToolStripRender : ToolStripProfessionalRenderer, IMaterialControl
     {
         //Properties for managing the material design properties
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         public int Depth { get; set; }
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
+        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         public MouseState MouseState { get; set; }
 
-
+        /// <summary>
+        /// The OnRenderItemText
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripItemTextRenderEventArgs"/></param>
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -114,6 +185,10 @@ namespace MaterialSkin.Controls
                 new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
+        /// <summary>
+        /// The OnRenderMenuItemBackground
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripItemRenderEventArgs"/></param>
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -142,11 +217,18 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// The OnRenderImageMargin
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripRenderEventArgs"/></param>
         protected override void OnRenderImageMargin(ToolStripRenderEventArgs e)
         {
-            //base.OnRenderImageMargin(e);
         }
 
+        /// <summary>
+        /// The OnRenderSeparator
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripSeparatorRenderEventArgs"/></param>
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -158,6 +240,10 @@ namespace MaterialSkin.Controls
                 new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
         }
 
+        /// <summary>
+        /// The OnRenderToolStripBorder
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripRenderEventArgs"/></param>
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -167,6 +253,10 @@ namespace MaterialSkin.Controls
                 new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
         }
 
+        /// <summary>
+        /// The OnRenderArrow
+        /// </summary>
+        /// <param name="e">The e<see cref="ToolStripArrowRenderEventArgs"/></param>
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -187,6 +277,11 @@ namespace MaterialSkin.Controls
             }
         }
 
+        /// <summary>
+        /// The GetItemRect
+        /// </summary>
+        /// <param name="item">The item<see cref="ToolStripItem"/></param>
+        /// <returns>The <see cref="Rectangle"/></returns>
         private Rectangle GetItemRect(ToolStripItem item)
         {
             return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height);

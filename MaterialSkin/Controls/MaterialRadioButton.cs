@@ -1,25 +1,50 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Text;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="MaterialRadioButton" />
+    /// </summary>
     public class MaterialRadioButton : RadioButton, IMaterialControl
     {
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MouseLocation
+        /// </summary>
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
+        /// <summary>
+        /// Defines the ripple
+        /// </summary>
         private bool ripple;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Ripple
+        /// </summary>
         [Category("Behavior")]
         public bool Ripple
         {
@@ -39,19 +64,51 @@ namespace MaterialSkin.Controls
         }
 
         // animation managers
+        /// <summary>
+        /// Defines the _animationManager
+        /// </summary>
         private readonly AnimationManager _animationManager;
+
+        /// <summary>
+        /// Defines the _rippleAnimationManager
+        /// </summary>
         private readonly AnimationManager _rippleAnimationManager;
 
         // size related variables which should be recalculated onsizechanged
+        /// <summary>
+        /// Defines the _radioButtonBounds
+        /// </summary>
         private Rectangle _radioButtonBounds;
+
+        /// <summary>
+        /// Defines the _boxOffset
+        /// </summary>
         private int _boxOffset;
 
         // size constants
+        /// <summary>
+        /// Defines the RADIOBUTTON_SIZE
+        /// </summary>
         private const int RADIOBUTTON_SIZE = 19;
+
+        /// <summary>
+        /// Defines the RADIOBUTTON_SIZE_HALF
+        /// </summary>
         private const int RADIOBUTTON_SIZE_HALF = RADIOBUTTON_SIZE / 2;
+
+        /// <summary>
+        /// Defines the RADIOBUTTON_OUTER_CIRCLE_WIDTH
+        /// </summary>
         private const int RADIOBUTTON_OUTER_CIRCLE_WIDTH = 2;
+
+        /// <summary>
+        /// Defines the RADIOBUTTON_INNER_CIRCLE_SIZE
+        /// </summary>
         private const int RADIOBUTTON_INNER_CIRCLE_SIZE = RADIOBUTTON_SIZE - (2 * RADIOBUTTON_OUTER_CIRCLE_WIDTH);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialRadioButton"/> class.
+        /// </summary>
         public MaterialRadioButton()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
@@ -77,18 +134,33 @@ namespace MaterialSkin.Controls
             Ripple = true;
             MouseLocation = new Point(-1, -1);
         }
+
+        /// <summary>
+        /// The OnSizeChanged
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="eventArgs">The eventArgs<see cref="EventArgs"/></param>
         private void OnSizeChanged(object sender, EventArgs eventArgs)
         {
             _boxOffset = Height / 2 - (int)Math.Ceiling(RADIOBUTTON_SIZE / 2d);
             _radioButtonBounds = new Rectangle(_boxOffset, _boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
         }
 
+        /// <summary>
+        /// The GetPreferredSize
+        /// </summary>
+        /// <param name="proposedSize">The proposedSize<see cref="Size"/></param>
+        /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
             var width = _boxOffset + 20 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
             return Ripple ? new Size(width, 30) : new Size(width, 20);
         }
 
+        /// <summary>
+        /// The OnPaint
+        /// </summary>
+        /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -164,11 +236,18 @@ namespace MaterialSkin.Controls
             pen.Dispose();
         }
 
+        /// <summary>
+        /// The IsMouseInCheckArea
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         private bool IsMouseInCheckArea()
         {
             return _radioButtonBounds.Contains(MouseLocation);
         }
 
+        /// <summary>
+        /// The OnCreateControl
+        /// </summary>
         protected override void OnCreateControl()
         {
             base.OnCreateControl();

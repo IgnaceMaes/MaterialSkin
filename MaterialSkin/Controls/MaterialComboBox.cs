@@ -1,39 +1,63 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
-
-namespace MaterialSkin.Controls 
+﻿namespace MaterialSkin.Controls
 {
-    public class MaterialComboBox : ComboBox , IMaterialControl
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="MaterialComboBox" />
+    /// </summary>
+    public class MaterialComboBox : ComboBox, IMaterialControl
     {
         //Properties for managing the material design properties
+        /// <summary>
+        /// Gets or sets the Depth
+        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
+
+        /// <summary>
+        /// Gets the SkinManager
+        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
+        /// <summary>
+        /// Gets or sets the MouseState
+        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
+        /// <summary>
+        /// Defines the BorderBrush
+        /// </summary>
         private Brush BorderBrush = new SolidBrush(SystemColors.Window);
+
+        /// <summary>
+        /// Defines the ArrowBrush
+        /// </summary>
         private Brush ArrowBrush = new SolidBrush(SystemColors.ControlText);
+
+        /// <summary>
+        /// Defines the DropButtonBrush
+        /// </summary>
         private Brush DropButtonBrush = new SolidBrush(SystemColors.Control);
-     
-       
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaterialComboBox"/> class.
+        /// </summary>
         public MaterialComboBox()
         {
 
             base.OnCreateControl();
             ResetColors();
-
-
         }
 
-
-        void ResetColors()
+        /// <summary>
+        /// The ResetColors
+        /// </summary>
+        internal void ResetColors()
         {
             Font = SkinManager.ROBOTO_REGULAR_11;
             BackColor = SkinManager.GetApplicationBackgroundColor();
@@ -45,26 +69,40 @@ namespace MaterialSkin.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
 
-
-       protected void colorchange(EventArgs args)
+        /// <summary>
+        /// The colorchange
+        /// </summary>
+        /// <param name="args">The args<see cref="EventArgs"/></param>
+        protected void colorchange(EventArgs args)
         {
             ResetColors();
             DrawCombobox();
         }
-       
 
+        /// <summary>
+        /// The OnBackColorChanged
+        /// </summary>
+        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnBackColorChanged(EventArgs e)
         {
             base.OnBackColorChanged(e);
             colorchange(e);
         }
 
+        /// <summary>
+        /// The OnForeColorChanged
+        /// </summary>
+        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnForeColorChanged(EventArgs e)
         {
             base.OnForeColorChanged(e);
             colorchange(e);
         }
 
+        /// <summary>
+        /// The WndProc
+        /// </summary>
+        /// <param name="m">The m<see cref="Message"/></param>
         protected override void WndProc(ref Message m)
         {
 
@@ -85,18 +123,23 @@ namespace MaterialSkin.Controls
             }
         }
 
-
         // Override mouse and focus events to draw
         // proper borders. Basically, set the color and Invalidate(),
         // In general, Invalidate causes a control to redraw itself.
-
+        /// <summary>
+        /// The OnSelectedIndexChanged
+        /// </summary>
+        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
             base.OnSelectedIndexChanged(e);
             BorderBrush = SkinManager.GetDividersBrush();
             this.Invalidate();
         }
-        
+
+        /// <summary>
+        /// The DrawCombobox
+        /// </summary>
         protected void DrawCombobox()
         {
             SuspendLayout();
@@ -124,20 +167,23 @@ namespace MaterialSkin.Controls
 
             // Determine the arrow's color.
             if (this.DroppedDown)
+            {
                 ArrowBrush = SkinManager.ColorScheme.AccentBrush;
+            }
             else
+            {
                 ArrowBrush = SkinManager.GetPrimaryTextBrush();
+            }
 
             // Draw the arrow
             g.FillPath(ArrowBrush, pth);
 
             if (DropDownStyle == ComboBoxStyle.DropDownList)
+            {
                 g.DrawString(this.Text, this.Font, SkinManager.GetPrimaryTextBrush(), ClientRectangle.X + 2, ClientRectangle.Y + 3);
+            }
 
             ResumeLayout();
-
         }
-
     }
 }
-
