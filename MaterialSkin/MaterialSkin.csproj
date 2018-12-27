@@ -40,6 +40,7 @@
     <Compile Include="Animations\AnimationDirection.cs" />
     <Compile Include="Animations\AnimationManager.cs" />
     <Compile Include="Animations\Animations.cs" />
+    <Compile Include="ColorHelper.cs" />
     <Compile Include="ColorScheme.cs" />
     <Compile Include="Controls\FlexibleMaterialDialog.cs">
       <SubType>Form</SubType>

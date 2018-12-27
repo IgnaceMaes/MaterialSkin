@@ -53,7 +53,9 @@
             this.DoubleBuffered = true;
             this.Items = new ItemsList(this);
             this.AutoScroll = true;
-            return;
+            BackColorChanged += (sender, args) => BackColor = SkinManager.GetControlBackgroundColor();
+            ForeColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
+            
         }
 
         /// <summary>

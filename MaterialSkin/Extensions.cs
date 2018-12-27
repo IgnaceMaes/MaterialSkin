@@ -1,6 +1,7 @@
 ﻿namespace MaterialSkin
 {
     using System;
+    using System.Drawing;
     using System.Reflection;
 
     /// <summary>
@@ -37,34 +38,63 @@
         /// <returns>The <see cref="bool"/></returns>
         public static bool IsMaterialControl(this Object obj)
         {
-            var type = obj.GetType();
-            return IsAbstractOf<IMaterialControl>(type);
-        }
-
-        /// <summary>
-        /// The IsAbstractOf
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <param name="type">The type<see cref="Type"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public static bool IsAbstractOf<TInterface>(this Type type)
-        {
-            try
+            if (obj is IMaterialControl)
             {
-                var map = type.GetInterfaceMap(typeof(TInterface));
-                foreach (var info in map.TargetMethods)
-                {
-                    if (!info.IsAbstract)
-                    {
-                        return false;
-                    }
-                }
                 return true;
-            }
-            catch (Exception)
+            } else
             {
                 return false;
             }
         }
+
+       
+
+
+        /// <summary>
+        /// Tints the color by the given percent.
+        /// </summary>
+        /// <param name="color">The color being tinted.</param>
+        /// <param name="percent">The percent to tint. Ex: 0.1 will make the color 10% lighter.</param>
+        /// <returns>The new tinted color.</returns>
+        public static Color Lighten(this Color color, float percent)
+        {
+            var lighting = color.GetBrightness();
+            lighting = lighting + lighting * percent;
+            if (lighting > 1.0)
+            {
+                lighting = 1;
+            }
+            else if (lighting <= 0)
+            {
+                lighting = 0.1f;
+            }
+            var tintedColor = ColorHelper.FromHsl(color.A, color.GetHue(), color.GetSaturation(), lighting);
+
+            return tintedColor;
+        }
+
+        /// <summary>
+        /// Tints the color by the given percent.
+        /// </summary>
+        /// <param name="color">The color being tinted.</param>
+        /// <param name="percent">The percent to tint. Ex: 0.1 will make the color 10% darker.</param>
+        /// <returns>The new tinted color.</returns>
+        public static Color Darken(this Color color, float percent)
+        {
+            var lighting = color.GetBrightness();
+            lighting = lighting - lighting * percent;
+            if (lighting > 1.0)
+            {
+                lighting = 1;
+            }
+            else if (lighting <= 0)
+            {
+                lighting = 0;
+            }
+            var tintedColor = ColorHelper.FromHsl(color.A, color.GetHue(), color.GetSaturation(), lighting);
+
+            return tintedColor;
+        }
+
     }
 }

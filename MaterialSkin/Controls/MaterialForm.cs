@@ -470,6 +470,12 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// </summary>
         private Rectangle _actionBarBounds;
 
+        public Rectangle UserArea {
+            get {
+                return new Rectangle(0, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Width, Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
+            }
+        }
+
         /// <summary>
         /// Defines the _statusBarBounds
         /// </summary>

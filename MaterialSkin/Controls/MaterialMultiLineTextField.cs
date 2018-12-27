@@ -8,7 +8,7 @@
     /// <summary>
     /// Defines the <see cref="MaterialMultiLineTextField" />
     /// </summary>
-    public class MaterialMultiLineTextField : TextBox, IMaterialControl
+    public class MaterialMultiLineTextField : RichTextBox , IMaterialControl
     {
         //Properties for managing the material design properties
         /// <summary>
@@ -78,23 +78,8 @@
             }
         }
 
-        /// <summary>
-        /// Defines the _passwordChar
-        /// </summary>
-        private char _passwordChar = EmptyChar;
-
-        /// <summary>
-        /// Gets or sets the PasswordChar
-        /// </summary>
-        public new char PasswordChar
-        {
-            get { return _passwordChar; }
-            set
-            {
-                _passwordChar = value;
-                SetBasePasswordChar();
-            }
-        }
+      
+       
 
         /// <summary>
         /// The SelectAll
@@ -119,40 +104,9 @@
             });
         }
 
-        /// <summary>
-        /// Defines the _useSystemPasswordChar
-        /// </summary>
-        private char _useSystemPasswordChar = EmptyChar;
+       
 
-        /// <summary>
-        /// Gets or sets a value indicating whether UseSystemPasswordChar
-        /// </summary>
-        public new bool UseSystemPasswordChar
-        {
-            get { return _useSystemPasswordChar != EmptyChar; }
-            set
-            {
-                if (value)
-                {
-                    _useSystemPasswordChar = Application.RenderWithVisualStyles ? VisualStylePasswordChar : NonVisualStylePasswordChar;
-                }
-                else
-                {
-                    _useSystemPasswordChar = EmptyChar;
-                }
-
-                SetBasePasswordChar();
-            }
-        }
-
-        /// <summary>
-        /// The SetBasePasswordChar
-        /// </summary>
-        private void SetBasePasswordChar()
-        {
-            base.PasswordChar = UseSystemPasswordChar ? _useSystemPasswordChar : _passwordChar;
-        }
-
+              
         /// <summary>
         /// Initializes a new instance of the <see cref="MaterialMultiLineTextField"/> class.
         /// </summary>
@@ -169,9 +123,9 @@
             ContextMenuStrip = cms;
             BorderStyle = BorderStyle.None;
             Font = SkinManager.ROBOTO_REGULAR_11;
-            BackColor = SkinManager.GetApplicationBackgroundColor();
+            BackColor = SkinManager.GetControlBackgroundColor();
             ForeColor = SkinManager.GetPrimaryTextColor();
-            BackColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
+            BackColorChanged += (sender, args) => BackColor = SkinManager.GetControlBackgroundColor();
             ForeColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
         }
 

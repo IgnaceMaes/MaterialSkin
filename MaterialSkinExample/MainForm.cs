@@ -131,5 +131,10 @@ namespace MaterialSkinExample
         {
 
         }
+
+        private void materialMultiLineTextField1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

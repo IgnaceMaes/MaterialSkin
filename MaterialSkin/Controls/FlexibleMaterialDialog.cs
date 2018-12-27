@@ -45,6 +45,7 @@ namespace MaterialSkin.Controls
         /// Default is: 90% of the working area height.
         /// </summary>
         public static double MAX_HEIGHT_FACTOR = 0.9;
+        private MaterialMultiLineTextField richTextBoxMessage;
 
         /// <summary>
         /// Erforderliche Designervariable.
@@ -72,12 +73,12 @@ namespace MaterialSkin.Controls
         {
             this.components = new System.ComponentModel.Container();
             this.button1 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.richTextBoxMessage = new System.Windows.Forms.RichTextBox();
             this.FlexibleMaterialFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBoxForIcon = new System.Windows.Forms.PictureBox();
             this.button2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.button3 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.richTextBoxMessage = new MaterialMultiLineTextField();
             ((System.ComponentModel.ISupportInitialize)(this.FlexibleMaterialFormBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForIcon)).BeginInit();
@@ -102,31 +103,9 @@ namespace MaterialSkin.Controls
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             // 
-            // richTextBoxMessage
-            // 
-            this.richTextBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxMessage.BackColor = System.Drawing.Color.White;
-            this.richTextBoxMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxMessage.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.FlexibleMaterialFormBindingSource, "MessageText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.richTextBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxMessage.Location = new System.Drawing.Point(50, 26);
-            this.richTextBoxMessage.Margin = new System.Windows.Forms.Padding(0);
-            this.richTextBoxMessage.Name = "richTextBoxMessage";
-            this.richTextBoxMessage.ReadOnly = true;
-            this.richTextBoxMessage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBoxMessage.Size = new System.Drawing.Size(200, 36);
-            this.richTextBoxMessage.TabIndex = 0;
-            this.richTextBoxMessage.TabStop = false;
-            this.richTextBoxMessage.Text = "<Message>";
-            this.richTextBoxMessage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxMessage_LinkClicked);
-            // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSize = true;
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.pictureBoxForIcon);
             this.panel1.Controls.Add(this.richTextBoxMessage);
@@ -182,6 +161,26 @@ namespace MaterialSkin.Controls
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Visible = false;
             // 
+            // richTextBoxMessage
+            // 
+            this.richTextBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxMessage.BackColor = System.Drawing.Color.White;
+            this.richTextBoxMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxMessage.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.FlexibleMaterialFormBindingSource, "MessageText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.richTextBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxMessage.Location = new System.Drawing.Point(50, 26);
+            this.richTextBoxMessage.Margin = new System.Windows.Forms.Padding(0);
+            this.richTextBoxMessage.Name = "richTextBoxMessage";
+            this.richTextBoxMessage.ReadOnly = true;
+            this.richTextBoxMessage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.richTextBoxMessage.Size = new System.Drawing.Size(200, 36);
+            this.richTextBoxMessage.TabIndex = 0;
+            this.richTextBoxMessage.TabStop = false;
+            this.richTextBoxMessage.Text = "<Message>";
+            this.richTextBoxMessage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxMessage_LinkClicked);
+            // 
             // FlexibleMaterialForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,6 +199,7 @@ namespace MaterialSkin.Controls
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "<Caption>";
+            this.Load += new System.EventHandler(this.FlexibleMaterialForm_Load);
             this.Shown += new System.EventHandler(this.FlexibleMaterialForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.FlexibleMaterialFormBindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -215,11 +215,6 @@ namespace MaterialSkin.Controls
         /// Defines the FlexibleMaterialFormBindingSource
         /// </summary>
         private System.Windows.Forms.BindingSource FlexibleMaterialFormBindingSource;
-
-        /// <summary>
-        /// Defines the richTextBoxMessage
-        /// </summary>
-        private System.Windows.Forms.RichTextBox richTextBoxMessage;
 
         /// <summary>
         /// Defines the panel1
@@ -752,6 +747,21 @@ namespace MaterialSkin.Controls
             //Show the dialog
             return FlexibleMaterialForm.ShowDialog(owner);
         }
+
+        private void FlexibleMaterialForm_Load(object sender, EventArgs e)
+        {
+            panel1.Top = UserArea.Top;
+            panel1.Width = UserArea.Width ;
+            panel1.Height = UserArea.Height - (int)(button1.Height * 1.77);
+
+          
+
+        }
+
+      
+        }
+
+
     }
 
-}
+

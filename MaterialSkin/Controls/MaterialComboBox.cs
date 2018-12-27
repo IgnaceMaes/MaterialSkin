@@ -59,13 +59,14 @@
         /// </summary>
         internal void ResetColors()
         {
+            Brush br = new SolidBrush(SkinManager.GetControlBackgroundColor());
             Font = SkinManager.ROBOTO_REGULAR_11;
-            BackColor = SkinManager.GetApplicationBackgroundColor();
+            BackColor = SkinManager.GetControlBackgroundColor();
             ForeColor = SkinManager.GetPrimaryTextColor();
-
-            DropButtonBrush = SkinManager.GetDividersBrush();
+        
+            DropButtonBrush = br;
             ArrowBrush = SkinManager.GetPrimaryTextBrush();
-            BorderBrush = SkinManager.GetDividersBrush();
+            BorderBrush = br;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
 

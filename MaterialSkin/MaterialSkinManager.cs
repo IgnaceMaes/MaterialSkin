@@ -4,6 +4,7 @@
     using MaterialSkin.Properties;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Text;
     using System.Linq;
@@ -15,19 +16,16 @@
     /// </summary>
     public class MaterialSkinManager
     {
-        //Singleton instance
         /// <summary>
         /// Defines the _instance
         /// </summary>
         private static MaterialSkinManager _instance;
 
-        //Forms to control
         /// <summary>
         /// Defines the _formsToManage
         /// </summary>
         private readonly List<MaterialForm> _formsToManage = new List<MaterialForm>();
 
-        //Theme
         /// <summary>
         /// Defines the _theme
         /// </summary>
@@ -73,14 +71,12 @@
             /// Defines the LIGHT
             /// </summary>
             LIGHT,
-
             /// <summary>
             /// Defines the DARK
             /// </summary>
             DARK
         }
 
-        //Constant color values
         /// <summary>
         /// Defines the PRIMARY_TEXT_BLACK
         /// </summary>
@@ -161,7 +157,6 @@
         /// </summary>
         private static readonly Brush DIVIDERS_WHITE_BRUSH = new SolidBrush(DIVIDERS_WHITE);
 
-        // Checkbox colors
         /// <summary>
         /// Defines the CHECKBOX_OFF_LIGHT
         /// </summary>
@@ -202,7 +197,6 @@
         /// </summary>
         private static readonly Brush CHECKBOX_OFF_DISABLED_DARK_BRUSH = new SolidBrush(CHECKBOX_OFF_DISABLED_DARK);
 
-        //Raised button
         /// <summary>
         /// Defines the RAISED_BUTTON_BACKGROUND
         /// </summary>
@@ -233,7 +227,6 @@
         /// </summary>
         private static readonly Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
 
-        //Flat button
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_HOVER_LIGHT
         /// </summary>
@@ -294,7 +287,6 @@
         /// </summary>
         private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_DARK);
 
-        //ContextMenuStrip
         /// <summary>
         /// Defines the CMS_BACKGROUND_LIGHT_HOVER
         /// </summary>
@@ -315,7 +307,6 @@
         /// </summary>
         private static readonly Brush CMS_BACKGROUND_HOVER_DARK_BRUSH = new SolidBrush(CMS_BACKGROUND_DARK_HOVER);
 
-        //Application background
         /// <summary>
         /// Defines the BACKGROUND_LIGHT
         /// </summary>
@@ -336,7 +327,6 @@
         /// </summary>
         private static Brush BACKGROUND_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
 
-        //Application action bar
         /// <summary>
         /// Defines the ACTION_BAR_TEXT
         /// </summary>
@@ -547,7 +537,15 @@
             return Theme == Themes.LIGHT ? BACKGROUND_LIGHT : BACKGROUND_DARK;
         }
 
-        //Roboto font
+        /// <summary>
+        /// The GetControlBackgroundColor
+        /// </summary>
+        /// <returns>The <see cref="Color"/></returns>
+        public Color GetControlBackgroundColor()
+        {
+            return Theme == Themes.LIGHT ? BACKGROUND_LIGHT.Darken((float)0.02) : BACKGROUND_DARK.Lighten((float)0.05);
+        }
+
         /// <summary>
         /// Defines the ROBOTO_MEDIUM_12
         /// </summary>
@@ -568,7 +566,6 @@
         /// </summary>
         public Font ROBOTO_MEDIUM_10;
 
-        //Other constants
         /// <summary>
         /// Defines the FORM_PADDING
         /// </summary>
@@ -683,12 +680,14 @@
             }
         }
 
-
+        /// <summary>
+        /// The UpdateControl
+        /// </summary>
+        /// <param name="controlToUpdate">The controlToUpdate<see cref="Control"/></param>
         public void UpdateControl(Control controlToUpdate)
         {
             UpdateControl(controlToUpdate, GetApplicationBackgroundColor());
         }
-
 
         /// <summary>
         /// The UpdateControl
@@ -697,19 +696,26 @@
         /// <param name="newBackColor">The newBackColor<see cref="Color"/></param>
         private void UpdateControl(Control controlToUpdate, Color newBackColor)
         {
+
+
             if (controlToUpdate == null)
             {
                 return;
             }
 
+            if (controlToUpdate.Name == "TrackMe")
+            {
+                //Debugger.Break();
+            }
+
             var tabControl = controlToUpdate as MaterialTabControl;
+            var CurrentTabPage = controlToUpdate as TabPage;
 
 
             if (controlToUpdate.ContextMenuStrip != null)
             {
                 UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
             }
-
             if (tabControl != null)
             {
                 foreach (TabPage tabPage in tabControl.TabPages)
@@ -717,20 +723,15 @@
                     tabPage.BackColor = newBackColor;
                 }
             }
-
-            if (controlToUpdate is MaterialDivider)
+            else if (controlToUpdate is MaterialDivider)
             {
                 controlToUpdate.BackColor = GetDividersColor();
             }
-            else if (controlToUpdate.HasProperty("BackColor"))
+            else if (controlToUpdate.HasProperty("BackColor") && CurrentTabPage == null && !controlToUpdate.IsMaterialControl())
             {         // if the control has a backcolor property set the colors  
-                if (controlToUpdate.BackColor != newBackColor)
+                if (controlToUpdate.BackColor != GetControlBackgroundColor())
                 {
-                    controlToUpdate.BackColor = newBackColor;
-                    controlToUpdate.Invalidate();
-                }
-                if (!controlToUpdate.IsMaterialControl()) // if it is a material control , let it handle how to manage font and colors
-                {
+                    controlToUpdate.BackColor = GetControlBackgroundColor();
                     if (controlToUpdate.HasProperty("ForeColor") && controlToUpdate.ForeColor != GetPrimaryTextColor())
                     {
                         controlToUpdate.ForeColor = GetPrimaryTextColor();
@@ -742,6 +743,12 @@
                     }
                 }
 
+            }
+            else if (controlToUpdate.IsMaterialControl())
+            {
+               
+                controlToUpdate.BackColor = newBackColor;
+                controlToUpdate.ForeColor = GetPrimaryTextColor();
             }
 
             //recursive call
