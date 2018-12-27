@@ -683,6 +683,13 @@
             }
         }
 
+
+        public void UpdateControl(Control controlToUpdate)
+        {
+            UpdateControl(controlToUpdate, GetApplicationBackgroundColor());
+        }
+
+
         /// <summary>
         /// The UpdateControl
         /// </summary>
@@ -716,8 +723,12 @@
                 controlToUpdate.BackColor = GetDividersColor();
             }
             else if (controlToUpdate.HasProperty("BackColor"))
-            {         // if the control has a backcolor property set the colors    
-                controlToUpdate.BackColor = newBackColor;
+            {         // if the control has a backcolor property set the colors  
+                if (controlToUpdate.BackColor != newBackColor)
+                {
+                    controlToUpdate.BackColor = newBackColor;
+                    controlToUpdate.Invalidate();
+                }
                 if (!controlToUpdate.IsMaterialControl()) // if it is a material control , let it handle how to manage font and colors
                 {
                     if (controlToUpdate.HasProperty("ForeColor") && controlToUpdate.ForeColor != GetPrimaryTextColor())
