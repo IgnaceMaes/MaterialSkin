@@ -27,11 +27,7 @@
         /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-
-        /// <summary>
-        /// Defines the _itemsList
-        /// </summary>
-        private ItemsList _itemsList;
+       
 
         /// <summary>
         /// Gets or sets a value indicating whether Striped
@@ -77,7 +73,7 @@
         /// <returns>The <see cref="CheckState"/></returns>
         public CheckState GetItemCheckState(int Index)
         {
-            return _itemsList[Index].CheckState;
+            return Items[Index].CheckState;
         }
 
         /// <summary>
