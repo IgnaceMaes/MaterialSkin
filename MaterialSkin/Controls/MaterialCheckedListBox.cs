@@ -71,6 +71,16 @@
         }
 
         /// <summary>
+        /// The GetItemCheckState
+        /// </summary>
+        /// <param name="Index">The Index<see cref="int"/></param>
+        /// <returns>The <see cref="CheckState"/></returns>
+        public CheckState GetItemCheckState(int Index)
+        {
+            return _itemsList[Index].CheckState;
+        }
+
+        /// <summary>
         /// Defines the <see cref="ItemsList" />
         /// </summary>
         public class ItemsList : List<MaterialSkin.Controls.MaterialCheckBox>
