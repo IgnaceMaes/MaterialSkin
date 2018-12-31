@@ -13,6 +13,14 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 * [2018-12-26] Added support to theme / color non Material controls on a Material form
 * [2018-12-27] Added Messagebox control
 
+
+#### BugFixes
+* New controls now use this to define the background color they should use
+* Fixed rendering bug when Theme is changed
+* Updated MaterialMultiLineTextBox to use richtext for rendering
+* Updated the MaterialMessageBox control to now use MaterialMultiLineTextBox
+* Updated the MaterialMessageBox control to properly calculate the spacing for controls on the form .
+
 ### New Controls
 * Combobox
 * Checkedlistbox 
