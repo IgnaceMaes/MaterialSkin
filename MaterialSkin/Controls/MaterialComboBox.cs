@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
 
     /// <summary>
@@ -10,6 +11,9 @@
     /// </summary>
     public class MaterialComboBox : ComboBox, IMaterialControl
     {
+
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always),Description("Auto adjust the width of the combobox to the longest item text"), Category("Data")]
+        public  override bool  AutoSize { get; set; }
         //Properties for managing the material design properties
         /// <summary>
         /// Gets or sets the Depth
@@ -52,6 +56,7 @@
 
             base.OnCreateControl();
             ResetColors();
+
         }
 
         /// <summary>
@@ -63,7 +68,7 @@
             Font = SkinManager.ROBOTO_REGULAR_11;
             BackColor = SkinManager.GetControlBackgroundColor();
             ForeColor = SkinManager.GetPrimaryTextColor();
-        
+
             DropButtonBrush = br;
             ArrowBrush = SkinManager.GetPrimaryTextBrush();
             BorderBrush = br;
@@ -136,6 +141,7 @@
             base.OnSelectedIndexChanged(e);
             BorderBrush = SkinManager.GetDividersBrush();
             this.Invalidate();
+
         }
 
         /// <summary>
@@ -185,6 +191,38 @@
             }
 
             ResumeLayout();
+        }
+
+        
+
+        protected override void OnDropDown (EventArgs e)
+        {
+            base.OnDropDown(e);
+;            
+            if (AutoSize == false) { return; }
+
+           
+            int width = this.DropDownWidth;
+            Graphics g = this.CreateGraphics();
+            Font font = this.Font;
+
+            int vertScrollBarWidth = (this.Items.Count > this.MaxDropDownItems)
+                    ? SystemInformation.VerticalScrollBarWidth : 0;
+
+            var itemsList = this.Items.Cast<object>().Select(item => item.ToString());
+
+            foreach (string s in itemsList)
+            {
+                int newWidth = (int)g.MeasureString(s, font).Width + vertScrollBarWidth;
+
+                if (width < newWidth)
+                {
+                    width = newWidth;
+                }
+            }
+
+            this.DropDownWidth = width;
+            this.Width = width + 15;
         }
     }
 }

@@ -745,13 +745,14 @@ namespace MaterialSkinExample
             // 
             // materialComboBox1
             // 
-            this.materialComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.materialComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.materialComboBox1.Depth = 0;
             this.materialComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.materialComboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.materialComboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.materialComboBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox1.FormattingEnabled = true;
+            this.materialComboBox1.AutoSize = true;
             this.materialComboBox1.Items.AddRange(new object[] {
             "Item1",
             "Item2",
@@ -768,6 +769,7 @@ namespace MaterialSkinExample
             // 
             this.materialCheckedListBox1.AutoScroll = true;
             this.materialCheckedListBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialCheckedListBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.materialCheckedListBox1.Depth = 0;
             this.materialCheckedListBox1.Location = new System.Drawing.Point(22, 81);
             this.materialCheckedListBox1.Margin = new System.Windows.Forms.Padding(2);
@@ -791,7 +793,7 @@ namespace MaterialSkinExample
             // 
             // TrackMe
             // 
-            this.TrackMe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.TrackMe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.TrackMe.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TrackMe.Depth = 0;
             this.TrackMe.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
