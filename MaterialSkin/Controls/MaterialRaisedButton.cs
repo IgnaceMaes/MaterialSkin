@@ -5,9 +5,20 @@ using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
 using System;
+using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 
 namespace MaterialSkin.Controls
 {
+    public enum Shades
+    {
+        Primary,
+        PrimaryDark,
+        PrimaryLight,
+        Accent,
+        Danger,
+        Warning,
+    }
     public class MaterialRaisedButton : Button, IMaterialControl
     {
         [Browsable(false)]
@@ -17,12 +28,25 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
+        public Shades Shade { get; set; }
+
+        public bool IsWidget
+        {
+            get => _isWidget;
+            set
+            {
+                _isWidget = value;
+                Text = Text;
+            }
+        }
 
         private readonly AnimationManager _animationManager;
 
         private SizeF _textSize;
 
         private Image _icon;
+        private bool _isWidget;
+
         public Image Icon
         {
             get { return _icon; }
@@ -38,6 +62,7 @@ namespace MaterialSkin.Controls
         public MaterialRaisedButton()
         {
             Primary = true;
+            Shade = Shades.PrimaryDark;
 
             _animationManager = new AnimationManager(false)
             {
@@ -56,18 +81,23 @@ namespace MaterialSkin.Controls
             set
             {
                 base.Text = value;
-                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                var font = IsWidget ? SkinManager.ROBOTO_TITLE : SkinManager.ROBOTO_MEDIUM_10;
+
+                _textSize = CreateGraphics().MeasureString(value.ToUpper(), font);
                 if (AutoSize)
                     Size = GetPreferredSize();
                 Invalidate();
             }
         }
 
-        protected override void OnMouseUp(MouseEventArgs mevent)
+        protected override void OnClick(EventArgs e)
         {
-            base.OnMouseUp(mevent);
-
-            _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+            var mevent = e as MouseEventArgs;
+            if (mevent != null)
+            {
+                _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+            }            
+            base.OnClick(e);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -75,7 +105,7 @@ namespace MaterialSkin.Controls
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
+           
             g.Clear(Parent.BackColor);
 
             using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
@@ -84,7 +114,9 @@ namespace MaterialSkin.Controls
                 ClientRectangle.Height - 1,
                 1f))
             {
-                g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                // g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                Brush fillBrush = MaterialSkinManager.GetMaterialBrush(Shade);
+                g.FillPath(fillBrush, backgroundPath);
             }
 
             if (_animationManager.IsAnimating())
@@ -100,14 +132,21 @@ namespace MaterialSkin.Controls
             }
 
             //Icon
-            var iconRect = new Rectangle(8, 6, 24, 24);
-
-            if (string.IsNullOrEmpty(Text))
-                // Center Icon
-                iconRect.X += 2;
 
             if (Icon != null)
-                g.DrawImage(Icon, iconRect);
+            {
+                var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
+
+                //create a color matrix object  & set the opacity
+                var matrix = new ColorMatrix { Matrix33 = (float) 0.75 };
+
+                //set the color(opacity) of the image                  
+                var attributes = new ImageAttributes();                 
+                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);                    
+
+                // Draw the image
+                g.DrawImage(Icon, iconRect, 0, 0, Icon.Width, Icon.Height, GraphicsUnit.Pixel, attributes );
+            }
 
             //Text
             var textRect = ClientRectangle;
@@ -127,15 +166,77 @@ namespace MaterialSkin.Controls
                 // First 8: left padding
                 // 24: icon width
                 // Second 4: space between Icon and Text
-                textRect.X += 8 + 24 + 4;
+                textRect.X += 8 + 24 + 4;                
             }
 
+            textRect.Y =  Height / 2 - (int) Math.Round(_textSize.Height / 2)+2;
+            textRect.Height = (int)Math.Round(_textSize.Height);
+            var font = IsWidget ? SkinManager.ROBOTO_TITLE : SkinManager.ROBOTO_MEDIUM_10;
             g.DrawString(
                 Text.ToUpper(),
-                SkinManager.ROBOTO_MEDIUM_10,
+                font,
                 SkinManager.GetRaisedButtonTextBrush(Primary),
                 textRect,
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                new StringFormat { Alignment = ContentToTextHAlignment(TextAlign), LineAlignment = ContentToTextVAlignment(TextAlign) });
+
+            if (Enabled == false)
+            {
+                
+            }
+        }        
+
+        public static StringAlignment ContentToTextHAlignment(ContentAlignment textAlign)
+        {
+            switch (textAlign)
+            {
+                case ContentAlignment.TopLeft:
+                    return StringAlignment.Near;                    
+                case ContentAlignment.TopCenter:
+                    return StringAlignment.Center;                    
+                case ContentAlignment.TopRight:
+                    return StringAlignment.Far;
+                case ContentAlignment.MiddleLeft:
+                    return StringAlignment.Near;
+                case ContentAlignment.MiddleCenter:
+                    return StringAlignment.Center;
+                case ContentAlignment.MiddleRight:
+                    return StringAlignment.Far;
+                case ContentAlignment.BottomLeft:
+                    return StringAlignment.Near;
+                case ContentAlignment.BottomCenter:
+                    return StringAlignment.Center;
+                case ContentAlignment.BottomRight:
+                    return StringAlignment.Far;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(textAlign), textAlign, null);
+            }
+        }
+
+        public static StringAlignment ContentToTextVAlignment(ContentAlignment textAlign)
+        {
+            switch (textAlign)
+            {
+                case ContentAlignment.TopLeft:
+                    return StringAlignment.Near;                    
+                case ContentAlignment.TopCenter:
+                    return StringAlignment.Near;
+                case ContentAlignment.TopRight:
+                    return StringAlignment.Near;
+                case ContentAlignment.MiddleLeft:
+                    return StringAlignment.Center;
+                case ContentAlignment.MiddleCenter:
+                    return StringAlignment.Center;
+                case ContentAlignment.MiddleRight:
+                    return StringAlignment.Center;
+                case ContentAlignment.BottomLeft:
+                    return StringAlignment.Far;
+                case ContentAlignment.BottomCenter:
+                    return StringAlignment.Far;
+                case ContentAlignment.BottomRight:
+                    return StringAlignment.Far;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(textAlign), textAlign, null);
+            }
         }
 
         private Size GetPreferredSize()

@@ -20,6 +20,18 @@ namespace MaterialSkin.Controls
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
 
+        public Shades StatusBarColor
+        {
+            get => _statusBarColor;
+            set { _statusBarColor = value;  Invalidate(new Rectangle(0,0,Width, STATUS_BAR_HEIGHT));}
+        }
+
+        public Shades ActionBarColor
+        {
+            get => _actionBarColor;
+            set { _actionBarColor = value; Invalidate(new Rectangle(0,STATUS_BAR_HEIGHT,Width, ACTION_BAR_HEIGHT));}
+        }
+
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
@@ -154,6 +166,8 @@ namespace MaterialSkin.Controls
         private Size _previousSize;
         private Point _previousLocation;
         private bool _headerMouseDown;
+        private Shades _actionBarColor;
+        private Shades _statusBarColor;
 
         public MaterialForm()
         {
@@ -474,10 +488,10 @@ namespace MaterialSkin.Controls
         {
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
+            
             g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);
-            g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, _actionBarBounds);
+            g.FillRectangle(MaterialSkinManager.GetMaterialBrush(StatusBarColor), _statusBarBounds);
+            DrawActionBar(g);
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
@@ -562,7 +576,25 @@ namespace MaterialSkin.Controls
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+        }
+
+        private void DrawActionBar(Graphics g)
+        {
+            g.FillRectangle(MaterialSkinManager.GetMaterialBrush(ActionBarColor), _actionBarBounds);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // MaterialForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ControlBox = false;
+            this.Name = "MaterialForm";
+            this.ResumeLayout(false);
+
         }
     }
 

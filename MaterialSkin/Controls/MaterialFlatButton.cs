@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
@@ -103,16 +104,23 @@ namespace MaterialSkin.Controls
                 g.SmoothingMode = SmoothingMode.None;
             }
 
-            //Icon
-            var iconRect = new Rectangle(8, 6, 24, 24);
-
-            if (string.IsNullOrEmpty(Text))
-                // Center Icon
-                iconRect.X += 2;
+            //Icon          
 
             if (Icon != null)
-                g.DrawImage(Icon, iconRect);
+            {
+                var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
 
+                //create a color matrix object  & set the opacity
+                var matrix = new ColorMatrix { Matrix33 = (float) 0.75 };
+
+                //set the color(opacity) of the image                  
+                var attributes = new ImageAttributes();                 
+                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);                    
+
+                // Draw the image
+                g.DrawImage(Icon, iconRect, 0, 0, Icon.Width, Icon.Height, GraphicsUnit.Pixel, attributes );
+            }
+            
             //Text
             var textRect = ClientRectangle;
 
@@ -139,8 +147,8 @@ namespace MaterialSkin.Controls
                 SkinManager.ROBOTO_MEDIUM_10,
                 Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(),
                 textRect,
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center }
-                );
+                new StringFormat { Alignment = MaterialRaisedButton.ContentToTextHAlignment(TextAlign), LineAlignment = MaterialRaisedButton.ContentToTextVAlignment(TextAlign) });
+                
         }
 
         private Size GetPreferredSize()

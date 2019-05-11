@@ -322,6 +322,7 @@ namespace MaterialSkinExample
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.Primary = true;
+            this.materialButton1.Shade = MaterialSkin.Controls.Shades.PrimaryDark;
             this.materialButton1.Size = new System.Drawing.Size(125, 36);
             this.materialButton1.TabIndex = 0;
             this.materialButton1.Text = "Change Theme";
@@ -422,6 +423,7 @@ namespace MaterialSkinExample
             this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
+            this.materialRaisedButton1.Shade = MaterialSkin.Controls.Shades.PrimaryLight;
             this.materialRaisedButton1.Size = new System.Drawing.Size(181, 36);
             this.materialRaisedButton1.TabIndex = 21;
             this.materialRaisedButton1.Text = "Change color scheme";
@@ -517,7 +519,7 @@ namespace MaterialSkinExample
             this.columnHeader4});
             this.materialListView1.Depth = 0;
             this.materialListView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialListView1.Font = new System.Drawing.Font("Roboto", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.materialListView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.materialListView1.FullRowSelect = true;
             this.materialListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.materialListView1.Location = new System.Drawing.Point(3, 3);
@@ -607,6 +609,7 @@ namespace MaterialSkinExample
             this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton2.Name = "materialRaisedButton2";
             this.materialRaisedButton2.Primary = true;
+            this.materialRaisedButton2.Shade = MaterialSkin.Controls.Shades.PrimaryDark;
             this.materialRaisedButton2.Size = new System.Drawing.Size(76, 36);
             this.materialRaisedButton2.TabIndex = 1;
             this.materialRaisedButton2.Text = "Add";
