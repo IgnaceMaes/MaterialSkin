@@ -377,5 +377,10 @@ namespace MaterialSkin
         {           
             return new SolidBrush(GetMaterialColor(shade));
         }
+
+        public static Pen GetMaterialPen(Shades shade)
+        {           
+            return new Pen(GetMaterialColor(shade));
+        }
     }
 }

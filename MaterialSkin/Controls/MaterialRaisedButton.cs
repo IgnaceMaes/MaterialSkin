@@ -29,7 +29,9 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
         public Shades Shade { get; set; }
-
+        public bool IsSmall { get; set; }
+        public Shades BorderShade { get; set; }
+        
         public bool IsWidget
         {
             get => _isWidget;
@@ -71,8 +73,8 @@ namespace MaterialSkin.Controls
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AutoSize = true;
+            // AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            // AutoSize = true;
         }
 
         public override string Text
@@ -107,16 +109,17 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
            
             g.Clear(Parent.BackColor);
-
+            var radius = IsSmall ? 3f : 6f;
             using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
                 ClientRectangle.Y,
                 ClientRectangle.Width - 1,
                 ClientRectangle.Height - 1,
-                1f))
+                radius))
             {
                 // g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
-                Brush fillBrush = MaterialSkinManager.GetMaterialBrush(Shade);
+                var fillBrush = MaterialSkinManager.GetMaterialBrush(Shade);
                 g.FillPath(fillBrush, backgroundPath);
+                g.DrawPath(MaterialSkinManager.GetMaterialPen(BorderShade), backgroundPath);
             }
 
             if (_animationManager.IsAnimating())
@@ -254,7 +257,7 @@ namespace MaterialSkin.Controls
                 // 4 is for the space between icon & text
                 extra += 24 + 4;
 
-            return new Size((int)Math.Ceiling(_textSize.Width) + extra, 36);
+            return new Size((int)Math.Ceiling(_textSize.Width) + extra, IsSmall ? 24 : 36);
         }
     }
 }
