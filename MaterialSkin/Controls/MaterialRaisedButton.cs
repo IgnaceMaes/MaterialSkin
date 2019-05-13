@@ -30,7 +30,8 @@ namespace MaterialSkin.Controls
         public bool Primary { get; set; }
         public Shades Shade { get; set; }
         public bool IsSmall { get; set; }
-
+        public Shades BorderShade { get; set; }
+        
         public bool IsWidget
         {
             get => _isWidget;
@@ -72,8 +73,8 @@ namespace MaterialSkin.Controls
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AutoSize = true;
+            // AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            // AutoSize = true;
         }
 
         public override string Text
@@ -108,16 +109,17 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
            
             g.Clear(Parent.BackColor);
-
+            var radius = IsSmall ? 3f : 6f;
             using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
                 ClientRectangle.Y,
                 ClientRectangle.Width - 1,
                 ClientRectangle.Height - 1,
-                1f))
+                radius))
             {
                 // g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
-                Brush fillBrush = MaterialSkinManager.GetMaterialBrush(Shade);
+                var fillBrush = MaterialSkinManager.GetMaterialBrush(Shade);
                 g.FillPath(fillBrush, backgroundPath);
+                g.DrawPath(MaterialSkinManager.GetMaterialPen(BorderShade), backgroundPath);
             }
 
             if (_animationManager.IsAnimating())
@@ -139,7 +141,7 @@ namespace MaterialSkin.Controls
                 var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
 
                 //create a color matrix object  & set the opacity
-                var matrix = new ColorMatrix { Matrix33 = Enabled ? (float)0.75 : (float)0.30 };
+                var matrix = new ColorMatrix { Matrix33 = (float) 0.75 };
 
                 //set the color(opacity) of the image                  
                 var attributes = new ImageAttributes();                 
@@ -173,13 +175,10 @@ namespace MaterialSkin.Controls
             textRect.Y =  Height / 2 - (int) Math.Round(_textSize.Height / 2)+2;
             textRect.Height = (int)Math.Round(_textSize.Height);
             var font = IsWidget ? SkinManager.ROBOTO_TITLE : SkinManager.ROBOTO_MEDIUM_10;
-            var fontColor = Enabled
-                ? (Primary ? SkinManager.GetRaisedButtonTextBrush(Primary) : SkinManager.ColorScheme.PrimaryBrush)
-                : SkinManager.GetFlatButtonDisabledTextBrush();
             g.DrawString(
                 Text.ToUpper(),
                 font,
-                fontColor,
+                SkinManager.GetRaisedButtonTextBrush(Primary),
                 textRect,
                 new StringFormat { Alignment = ContentToTextHAlignment(TextAlign), LineAlignment = ContentToTextVAlignment(TextAlign) });
 
