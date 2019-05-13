@@ -29,6 +29,7 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
         public Shades Shade { get; set; }
+        public bool IsSmall { get; set; }
 
         public bool IsWidget
         {
@@ -138,7 +139,7 @@ namespace MaterialSkin.Controls
                 var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
 
                 //create a color matrix object  & set the opacity
-                var matrix = new ColorMatrix { Matrix33 = (float) 0.75 };
+                var matrix = new ColorMatrix { Matrix33 = Enabled ? (float)0.75 : (float)0.30 };
 
                 //set the color(opacity) of the image                  
                 var attributes = new ImageAttributes();                 
@@ -172,10 +173,13 @@ namespace MaterialSkin.Controls
             textRect.Y =  Height / 2 - (int) Math.Round(_textSize.Height / 2)+2;
             textRect.Height = (int)Math.Round(_textSize.Height);
             var font = IsWidget ? SkinManager.ROBOTO_TITLE : SkinManager.ROBOTO_MEDIUM_10;
+            var fontColor = Enabled
+                ? (Primary ? SkinManager.GetRaisedButtonTextBrush(Primary) : SkinManager.ColorScheme.PrimaryBrush)
+                : SkinManager.GetFlatButtonDisabledTextBrush();
             g.DrawString(
                 Text.ToUpper(),
                 font,
-                SkinManager.GetRaisedButtonTextBrush(Primary),
+                fontColor,
                 textRect,
                 new StringFormat { Alignment = ContentToTextHAlignment(TextAlign), LineAlignment = ContentToTextVAlignment(TextAlign) });
 
@@ -254,7 +258,7 @@ namespace MaterialSkin.Controls
                 // 4 is for the space between icon & text
                 extra += 24 + 4;
 
-            return new Size((int)Math.Ceiling(_textSize.Width) + extra, 36);
+            return new Size((int)Math.Ceiling(_textSize.Width) + extra, IsSmall ? 24 : 36);
         }
     }
 }
