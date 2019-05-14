@@ -104,6 +104,7 @@ namespace MaterialSkin.Controls
                 g.SmoothingMode = SmoothingMode.None;
             }
 
+
             //Icon          
 
             if (Icon != null)
@@ -111,7 +112,7 @@ namespace MaterialSkin.Controls
                 var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
 
                 //create a color matrix object  & set the opacity
-                var matrix = new ColorMatrix { Matrix33 = (float) 0.75 };
+                var matrix = new ColorMatrix { Matrix33 = Enabled ? (float) 0.75 : (float) 0.30 };
 
                 //set the color(opacity) of the image                  
                 var attributes = new ImageAttributes();                 
@@ -142,10 +143,14 @@ namespace MaterialSkin.Controls
                 textRect.X += 8 + 24 + 4;
             }
 
+            var fontColor = Enabled
+                ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush())
+                : SkinManager.GetFlatButtonDisabledTextBrush();
+
             g.DrawString(
                 Text.ToUpper(),
                 SkinManager.ROBOTO_MEDIUM_10,
-                Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(),
+                fontColor,
                 textRect,
                 new StringFormat { Alignment = MaterialRaisedButton.ContentToTextHAlignment(TextAlign), LineAlignment = MaterialRaisedButton.ContentToTextVAlignment(TextAlign) });
                 
