@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,7 @@ namespace MaterialSkin.Controls
     public enum Style
     {
         Body,
+        Small,
         Title,
         Title1,
     }
@@ -35,6 +37,9 @@ namespace MaterialSkin.Controls
                 case Style.Body:
                     Font = SkinManager.ROBOTO_REGULAR_11;
                     break;
+                case Style.Small:
+                    Font = SkinManager.ROBOTO_REGULAR_8;
+                    break;
                 case Style.Title:
                     Font = SkinManager.ROBOTO_TITLE;
                     break;
@@ -50,9 +55,10 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            e.Graphics.TextRenderingHint = TextRenderingHint.SystemDefault; 
-            base.OnPaint(e);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+  
+            e.Graphics.DrawString(this.Text, this.Font, MaterialSkinManager.Instance.GetPrimaryTextBrush(), new Point(0, 0));  
         }
     }
 }

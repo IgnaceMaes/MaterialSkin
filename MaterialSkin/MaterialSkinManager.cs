@@ -228,6 +228,7 @@ namespace MaterialSkin
         //Roboto font
         public Font ROBOTO_MEDIUM_12;
         public Font ROBOTO_REGULAR_11;
+        public Font ROBOTO_REGULAR_8;
         public Font ROBOTO_MEDIUM_11;
         public Font ROBOTO_MEDIUM_10;
         public Font ROBOTO_TITLE;
@@ -243,6 +244,7 @@ namespace MaterialSkin
         {
             ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
             ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            ROBOTO_REGULAR_8 = new Font(LoadFont(Resources.Roboto_Regular), 8f);
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
             ROBOTO_TITLE = new Font(LoadFont(Resources.Roboto_Medium), 24f, FontStyle.Bold);
@@ -366,6 +368,9 @@ namespace MaterialSkin
                     break;
                 case Shades.Warning:
                     fillBrush = _instance.ColorScheme.WarningColor;
+                    break;
+                case Shades.Success:
+                    fillBrush = _instance.ColorScheme.SuccessColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
