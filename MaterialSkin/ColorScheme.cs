@@ -4,9 +4,9 @@ namespace MaterialSkin
 {
     public class ColorScheme
     {
-        public readonly Color PrimaryColor, DarkPrimaryColor, LightPrimaryColor, AccentColor, TextColor, DangerColor, WarningColor, SuccessColor;
-        public readonly Pen PrimaryPen, DarkPrimaryPen, LightPrimaryPen, AccentPen, TextPen, DangerPen, WarningPen, SuccessPen;
-        public readonly Brush PrimaryBrush, DarkPrimaryBrush, LightPrimaryBrush, AccentBrush, TextBrush, DangerBrush, WarningBrush, SuccessBrush;
+        public readonly Color PrimaryColor, DarkPrimaryColor, LightPrimaryColor, AccentColor, TextColor, DangerColor, WarningColor, SuccessColor, LightGrayColor;
+        public readonly Pen PrimaryPen, DarkPrimaryPen, LightPrimaryPen, AccentPen, TextPen, DangerPen, WarningPen, SuccessPen, LightGrayPen;
+        public readonly Brush PrimaryBrush, DarkPrimaryBrush, LightPrimaryBrush, AccentBrush, TextBrush, DangerBrush, WarningBrush, SuccessBrush, LightGrayBrush;
 
         /// <summary>
         /// Defines the Color Scheme to be used for all forms.
@@ -18,10 +18,10 @@ namespace MaterialSkin
         /// <param name="textShade">The text color, the one with the highest contrast is suggested.</param>
         public ColorScheme(Primary primary, Primary darkPrimary, Primary lightPrimary, Accent accent,
             TextShade textShade, Accent danger = Accent.Red400, Accent warning = Accent.Orange400,
-            Accent success = Accent.Green700)
+            Accent success = Accent.Green700, Primary lightGray = Primary.Grey100)
         {
             //Color
-            PrimaryColor = ((int)primary).ToColor();
+            PrimaryColor = ((int)primary).ToColor(); 
             DarkPrimaryColor = ((int)darkPrimary).ToColor();
             LightPrimaryColor = ((int)lightPrimary).ToColor();
             AccentColor = ((int)accent).ToColor();
@@ -29,6 +29,7 @@ namespace MaterialSkin
             DangerColor = ((int)danger).ToColor();
             WarningColor = ((int)warning).ToColor();
             SuccessColor = ((int)success).ToColor();
+            LightGrayColor = ((int)lightGray).ToColor();
 
             //Pen
             PrimaryPen = new Pen(PrimaryColor);
@@ -39,6 +40,7 @@ namespace MaterialSkin
             DangerPen = new Pen(DangerColor);
             WarningPen = new Pen(WarningColor);
             SuccessPen = new Pen(SuccessColor);
+            LightGrayPen = new Pen(LightGrayColor);
 
             //Brush
             PrimaryBrush = new SolidBrush(PrimaryColor);
@@ -49,7 +51,7 @@ namespace MaterialSkin
             DangerBrush = new SolidBrush(DangerColor);
             WarningBrush = new SolidBrush(WarningColor);
             SuccessBrush = new SolidBrush(SuccessColor);
-
+            LightGrayBrush = new SolidBrush(LightGrayColor);
         }
     }
 

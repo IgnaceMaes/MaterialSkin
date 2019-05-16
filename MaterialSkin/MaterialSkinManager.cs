@@ -247,6 +247,7 @@ namespace MaterialSkin
             ROBOTO_REGULAR_8 = new Font(LoadFont(Resources.Roboto_Regular), 8f);
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
+
             ROBOTO_TITLE = new Font(LoadFont(Resources.Roboto_Medium), 24f, FontStyle.Bold);
             ROBOTO_TITLE1 = new Font(LoadFont(Resources.Roboto_Medium), 18f, FontStyle.Bold);
 
@@ -350,6 +351,7 @@ namespace MaterialSkin
         {
             Color fillBrush;
             switch (shade)
+
             {
                 case Shades.Primary:
                     fillBrush = _instance.ColorScheme.PrimaryColor;
@@ -371,6 +373,9 @@ namespace MaterialSkin
                     break;
                 case Shades.Success:
                     fillBrush = _instance.ColorScheme.SuccessColor;
+                    break;
+                case Shades.LightGray:
+                    fillBrush = _instance.ColorScheme.LightGrayColor;
                     break;
                 default:
                     fillBrush = _instance.ColorScheme.PrimaryColor;

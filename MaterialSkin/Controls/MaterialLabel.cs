@@ -12,6 +12,7 @@ namespace MaterialSkin.Controls
     {
         Body,
         Small,
+        GrayCounter,        
         Title,
         Title1,
     }
@@ -25,6 +26,7 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         public Style Style { get; set; }
+        public Shades Shade { get; set; }
 
 
         protected override void OnCreateControl()
@@ -45,7 +47,7 @@ namespace MaterialSkin.Controls
                     break;
                 case Style.Title1:
                     Font = SkinManager.ROBOTO_TITLE1;
-                    break;
+                    break;              
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -57,8 +59,11 @@ namespace MaterialSkin.Controls
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-  
-            e.Graphics.DrawString(this.Text, this.Font, MaterialSkinManager.Instance.GetPrimaryTextBrush(), new Point(0, 0));  
+
+            Brush b = Shade == Shades.None
+                ? MaterialSkinManager.Instance.GetPrimaryTextBrush()
+                : MaterialSkinManager.GetMaterialBrush(Shade);
+            e.Graphics.DrawString(this.Text, this.Font, b, new Point(0, 0));  
         }
     }
 }

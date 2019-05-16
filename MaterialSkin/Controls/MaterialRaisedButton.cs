@@ -19,7 +19,8 @@ namespace MaterialSkin.Controls
         Accent,
         Danger,
         Warning,
-        Success
+        Success,
+        LightGray
     }
     public class MaterialRaisedButton : Button, IMaterialControl
     {
