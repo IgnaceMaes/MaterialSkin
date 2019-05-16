@@ -373,7 +373,8 @@ namespace MaterialSkin
                     fillBrush = _instance.ColorScheme.SuccessColor;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    fillBrush = _instance.ColorScheme.PrimaryColor;
+                    break;
             }
 
             return fillBrush;

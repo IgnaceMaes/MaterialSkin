@@ -12,6 +12,7 @@ namespace MaterialSkin.Controls
 {
     public enum Shades
     {
+        None,
         Primary,
         PrimaryDark,
         PrimaryLight,
@@ -110,7 +111,7 @@ namespace MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
            
             g.Clear(Parent.BackColor);
-            var radius = IsSmall ? 3f : 6f;
+            var radius = IsSmall ? 1f : 1f;
             using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
                 ClientRectangle.Y,
                 ClientRectangle.Width - 1,
@@ -118,7 +119,9 @@ namespace MaterialSkin.Controls
                 radius))
             {
                 // g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);
+                
                 var fillBrush = MaterialSkinManager.GetMaterialBrush(Shade);
+                
                 g.FillPath(fillBrush, backgroundPath);
                 g.DrawPath(MaterialSkinManager.GetMaterialPen(BorderShade), backgroundPath);
             }

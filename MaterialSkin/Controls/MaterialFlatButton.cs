@@ -18,6 +18,7 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
+        public Shades Shade { get; set; }
 
         private readonly AnimationManager _animationManager;
         private readonly AnimationManager _hoverAnimationManager;
@@ -146,6 +147,9 @@ namespace MaterialSkin.Controls
             var fontColor = Enabled
                 ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush())
                 : SkinManager.GetFlatButtonDisabledTextBrush();
+
+            if (Shade != Shades.None) fontColor = MaterialSkinManager.GetMaterialBrush(Shade);
+
 
             g.DrawString(
                 Text.ToUpper(),
