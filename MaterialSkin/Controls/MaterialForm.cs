@@ -140,6 +140,7 @@ namespace MaterialSkin.Controls
             Right,
             BottomRight,
             Bottom,
+            Top,
             None
         }
 
@@ -304,7 +305,12 @@ namespace MaterialSkin.Controls
                 //True if the mouse is hovering over a child control
                 var isChildUnderMouse = GetChildAtPoint(e.Location) != null;
 
-                if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                if (e.Location.Y < BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                {
+                    _resizeDir = ResizeDirection.Top;
+                    Cursor = Cursors.SizeNS;
+                }
+                else if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
                 {
                     _resizeDir = ResizeDirection.BottomLeft;
                     Cursor = Cursors.SizeNESW;
@@ -463,6 +469,9 @@ namespace MaterialSkin.Controls
                     break;
                 case ResizeDirection.Bottom:
                     dir = HTBOTTOM;
+                    break;
+                case ResizeDirection.Top:
+                    dir = HTTOP;
                     break;
             }
 
