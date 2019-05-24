@@ -19,6 +19,7 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
+        public Image Logo { get; set; }
 
         public Shades StatusBarColor
         {
@@ -93,6 +94,7 @@ namespace MaterialSkin.Controls
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
         private const int STATUS_BAR_HEIGHT = 24;
         private const int ACTION_BAR_HEIGHT = 40;
+        private const int LOGO_SIZE = 32;
 
         private const uint TPM_LEFTALIGN = 0x0000;
         private const uint TPM_RETURNCMD = 0x0100;
@@ -162,6 +164,7 @@ namespace MaterialSkin.Controls
         private Rectangle _xButtonBounds;
         private Rectangle _actionBarBounds;
         private Rectangle _statusBarBounds;
+        private Rectangle _textLabelBounds;
 
         private bool _maximized;
         private Size _previousSize;
@@ -491,6 +494,9 @@ namespace MaterialSkin.Controls
             _xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             _statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             _actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+            _textLabelBounds = Logo != null 
+                ? new Rectangle(SkinManager.FORM_PADDING + LOGO_SIZE + 5, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT) 
+                : new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -584,8 +590,18 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            // Logo
+            if (Logo != null)
+            {
+                int logoY = STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT - LOGO_SIZE) / 2;
+                g.DrawImage(Logo, 
+                    new Rectangle( SkinManager.FORM_PADDING, logoY,Logo.Width, LOGO_SIZE), 
+                    new Rectangle(0,0,Logo.Width, Logo.Height), GraphicsUnit.Pixel);
+            }
+
+            
+            // Form title
+            g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, _textLabelBounds, new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
         private void DrawActionBar(Graphics g)

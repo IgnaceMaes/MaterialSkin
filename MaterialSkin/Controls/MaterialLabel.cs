@@ -56,14 +56,22 @@ namespace MaterialSkin.Controls
         }
 
         protected override void OnPaint(PaintEventArgs e)
-        {
+        {            
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+            e.Graphics.Clear(Parent.BackColor);
 
             Brush b = Shade == Shades.None
                 ? MaterialSkinManager.Instance.GetPrimaryTextBrush()
                 : MaterialSkinManager.GetMaterialBrush(Shade);
-            e.Graphics.DrawString(this.Text, this.Font, b, new Point(0, 0));  
+
+            
+            e.Graphics.FillRectangle(new SolidBrush(BackColor), 0,0, Width, Height);
+
+            e.Graphics.DrawString(this.Text, this.Font, b, e.ClipRectangle, 
+                new StringFormat { 
+                    Alignment = MaterialRaisedButton.ContentToTextHAlignment(TextAlign), 
+                    LineAlignment = MaterialRaisedButton.ContentToTextVAlignment(TextAlign) });  
         }
     }
 }
