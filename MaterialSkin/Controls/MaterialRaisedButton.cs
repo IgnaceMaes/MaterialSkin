@@ -143,8 +143,13 @@ namespace MaterialSkin.Controls
 
             if (Icon != null)
             {
-                var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
-
+                float imgRatio = (float)Icon.Width / Icon.Height;
+                float buttonRatio = (float)Width / Height;
+                Rectangle iconRect;
+                if (imgRatio>buttonRatio) 
+                    iconRect = new Rectangle(8, 6, Width-16, (int)((Width)/buttonRatio)-16);
+                else
+                    iconRect = new Rectangle(8, 6, (int)((Width)/imgRatio)-16, (Height-16));
                 //create a color matrix object  & set the opacity
                 var matrix = new ColorMatrix { Matrix33 = (float) 0.75 };
 

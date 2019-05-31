@@ -20,6 +20,7 @@ namespace MaterialSkin.Controls
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
         public Image Logo { get; set; }
+        public bool ShowActionBar { get; set; } = true;
 
         public Shades StatusBarColor
         {
@@ -165,6 +166,7 @@ namespace MaterialSkin.Controls
         private Rectangle _actionBarBounds;
         private Rectangle _statusBarBounds;
         private Rectangle _textLabelBounds;
+        private Rectangle _logoBounds;
 
         private bool _maximized;
         private Size _previousSize;
@@ -494,9 +496,11 @@ namespace MaterialSkin.Controls
             _xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             _statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             _actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+
             _textLabelBounds = Logo != null 
                 ? new Rectangle(SkinManager.FORM_PADDING + LOGO_SIZE + 5, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT) 
                 : new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+            _logoBounds = new Rectangle(0, _textLabelBounds.Y, _textLabelBounds.X + _textLabelBounds.Width, _textLabelBounds.Height);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -506,7 +510,7 @@ namespace MaterialSkin.Controls
             
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.FillRectangle(MaterialSkinManager.GetMaterialBrush(StatusBarColor), _statusBarBounds);
-            DrawActionBar(g);
+            if (ShowActionBar) DrawActionBar(g);
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
@@ -593,6 +597,7 @@ namespace MaterialSkin.Controls
             // Logo
             if (Logo != null)
             {
+                g.FillRectangle(SkinManager.ColorScheme.LightGrayBrush, _logoBounds);
                 int logoY = STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT - LOGO_SIZE) / 2;
                 g.DrawImage(Logo, 
                     new Rectangle( SkinManager.FORM_PADDING, logoY,Logo.Width, LOGO_SIZE), 
