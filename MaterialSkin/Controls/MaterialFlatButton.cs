@@ -89,7 +89,7 @@ namespace MaterialSkin.Controls
             using (Brush b = Shade != Shades.None 
                 ? new SolidBrush(c) 
                 : new SolidBrush(Color.FromArgb((int)(_hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
-                g.FillRectangle(b, ClientRectangle);
+                // g.FillRectangle(b, ClientRectangle);
 
             //Ripple
             if (_animationManager.IsAnimating())
