@@ -119,7 +119,7 @@
         {
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             g.Clear(Parent.BackColor);
 

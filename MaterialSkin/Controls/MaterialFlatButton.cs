@@ -127,7 +127,7 @@
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             g.Clear(Parent.BackColor);
 

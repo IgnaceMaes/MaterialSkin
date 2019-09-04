@@ -173,7 +173,7 @@
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
             var g = e.Graphics;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             var itemRect = GetItemRect(e.Item);
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);

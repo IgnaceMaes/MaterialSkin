@@ -870,7 +870,7 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);

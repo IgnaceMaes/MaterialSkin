@@ -119,7 +119,7 @@
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             g.Clear(SkinManager.ColorScheme.PrimaryColor);
 
