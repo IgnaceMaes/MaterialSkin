@@ -88,6 +88,9 @@
     <Compile Include="Controls\MaterialTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialDrawer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialTabSelector.cs">
       <SubType>Component</SubType>
     </Compile>
