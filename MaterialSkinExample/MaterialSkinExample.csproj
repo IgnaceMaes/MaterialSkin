@@ -85,6 +85,33 @@
   <ItemGroup>
     <None Include="Resources\minus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_assessment_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_backup_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_bluetooth_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_bookmark_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_build_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_gps_fixed_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_http_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_report_problem_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_swap_vert_white_24dp.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
