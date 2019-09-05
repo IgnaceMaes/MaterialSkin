@@ -189,6 +189,8 @@
             _showHideAnimManager.SetProgress(_isOpen ? 0 : 1);
             showHideAnimation(this);
             Invalidate();
+
+            base.InitLayout();
         }
 
         /// <summary>
@@ -427,6 +429,9 @@
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
+
+            if (DesignMode)
+                return;
 
             if (_tabRects == null)
                 UpdateTabRects();
