@@ -48,16 +48,12 @@ namespace MaterialSkinExample
 			{
 				var item = new ListViewItem(version);
 				materialListView1.Items.Add(item);
-			}
+            }
 	    }
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
             materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
-        }
-        private void materialRaisedButton3_Click(object sender, EventArgs e)
-        {
-            materialDrawer1.Toggle();
         }
 
         private int colorSchemeIndex;
@@ -91,21 +87,6 @@ namespace MaterialSkinExample
             materialProgressBar1.Value = Math.Max(materialProgressBar1.Value - 10, 0);
         }
 
-        private void materialTabSelector1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void materialRadioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage6_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void materialFlatButton5_Click(object sender, EventArgs e)
         {
             var builder = new StringBuilder("Batch operation report:\n\n");
@@ -129,16 +110,6 @@ namespace MaterialSkinExample
             var batchOperationResults = builder.ToString();
             var mresult = MaterialMessageBox.Show(batchOperationResults, "Batch Operation");
             materialComboBox1.Items.Add("this is a very long string");
-
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void materialMultiLineTextField1_TextChanged(object sender, EventArgs e)
-        {
 
         }
     }
