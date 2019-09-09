@@ -5,7 +5,6 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Drawing.Drawing2D;
-    using System.Drawing.Text;
     using System.Windows.Forms;
 
     /// <summary>
@@ -23,7 +22,7 @@
         /// Gets the SkinManager
         /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the MouseState
@@ -118,8 +117,10 @@
         /// </summary>
         public MaterialFloatingActionButton()
         {
+
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
             Size = new Size(FAB_SIZE, FAB_SIZE);
-            DoubleBuffered = true;
             _animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
@@ -142,7 +143,7 @@
         /// <param name="mini">The mini<see cref="bool"/></param>
         private void setSize(bool mini)
         {
-            Size = mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
+            Size = mini ? new Size(FAB_MINI_SIZE + 10, FAB_MINI_SIZE + 14) : new Size(FAB_SIZE + 10, FAB_SIZE + 14);
             _mini = mini;
         }
 
@@ -159,15 +160,17 @@
             }
         }
 
-        /// <summary>
-        /// The OnInvalidated
-        /// </summary>
-        /// <param name="e">The e<see cref="InvalidateEventArgs"/></param>
-        protected override void OnInvalidated(InvalidateEventArgs e)
+        private const int CS_DROPSHADOW = 0x00020000;
+        protected override CreateParams CreateParams
         {
-            base.OnInvalidated(e);
-            // for some reason this is needed as Invalidate() does not trigger a repaint when animating.
-            InvokePaint(this, new PaintEventArgs(this.CreateGraphics(), this.ClientRectangle));
+            get
+            {
+                // add the drop shadow flag for automatically drawing
+                // a drop shadow around the form
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
         }
 
         /// <summary>
@@ -176,14 +179,32 @@
         /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            var g = pevent.Graphics;
-            Rectangle bounds = new Rectangle(new Point(0, 0), Size);
-            GraphicsPath regionPath = new GraphicsPath();
+            setSize(_mini);
 
-            g.FillEllipse(SkinManager.ColorScheme.AccentBrush, bounds);
+            var g = pevent.Graphics;
+
+            Rectangle fabBounds = _mini ? new Rectangle(4, 7, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(4, 7, FAB_SIZE, FAB_SIZE);
+
+            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(30, 0, 0, 0));
+            g.FillEllipse(shadowBrush, new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 2, fabBounds.Height + 2));
+            g.FillEllipse(shadowBrush, new Rectangle(fabBounds.X - 0, fabBounds.Y + 2, fabBounds.Width + 0, fabBounds.Height + 0));
+            g.FillEllipse(shadowBrush, new Rectangle(fabBounds.X - 0, fabBounds.Y + 1, fabBounds.Width + 0, fabBounds.Height + 0));
+
+            g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);
+
 
             if (_animationManager.IsAnimating())
             {
+                GraphicsPath regionPath = new GraphicsPath();
+                regionPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 2, fabBounds.Height + 2));
+                Region fabRegion = new Region(regionPath);
+
+                GraphicsContainer gcont = g.BeginContainer();
+                g.SetClip(fabRegion, CombineMode.Replace);
+
                 for (int i = 0; i < _animationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = _animationManager.GetProgress(i);
@@ -192,24 +213,30 @@
                     var rippleSize = (int)(animationValue * Width * 2);
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                 }
+
+                g.EndContainer(gcont);
             }
-            if (_showAnimationManager.IsAnimating())
-            {
-                int target = Convert.ToInt32((_mini ? FAB_MINI_SIZE : FAB_SIZE) * _showAnimationManager.GetProgress());
-                bounds.Width = target == 0 ? 1 : target;
-                bounds.Height = target == 0 ? 1 : target;
-                bounds.X = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
-                bounds.Y = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
-            }
+
 
             if (Icon != null)
             {
-                Point iconPos = _mini ? new Point(FAB_MINI_ICON_MARGIN, FAB_MINI_ICON_MARGIN) : new Point(FAB_ICON_MARGIN, FAB_ICON_MARGIN);
-                g.DrawImage(Icon, new Rectangle(iconPos, new Size(24, 24)));
+                g.DrawImage(Icon, new Rectangle(fabBounds.Width / 2 - 11 + 4, fabBounds.Height / 2 - 11 + 7, 24, 24));
             }
 
-            regionPath.AddEllipse(bounds);
-            Region = new Region(regionPath);
+
+            if (_showAnimationManager.IsAnimating())
+            {
+                int target = Convert.ToInt32((_mini ? FAB_MINI_SIZE : FAB_SIZE) * _showAnimationManager.GetProgress());
+                fabBounds.Width = target == 0 ? 1 : target;
+                fabBounds.Height = target == 0 ? 1 : target;
+                fabBounds.X = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
+                fabBounds.Y = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
+            }
+
+            // Clip to a round shape with a 1px padding
+            GraphicsPath clipPath = new GraphicsPath();
+            clipPath.AddEllipse(new Rectangle(fabBounds.X - 2, fabBounds.Y - 2, fabBounds.Width + 4, fabBounds.Height + 5));
+            Region = new Region(clipPath);
         }
 
         /// <summary>

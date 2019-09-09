@@ -69,13 +69,13 @@ namespace MaterialSkinExample
             this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.materialFlatButton5 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialFloatingActionButton1 = new MaterialSkin.Controls.MaterialFloatingActionButton();
             this.materialComboBox1 = new MaterialSkin.Controls.MaterialComboBox();
             this.materialCheckedListBox1 = new MaterialSkin.Controls.MaterialCheckedListBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.menuIconList = new System.Windows.Forms.ImageList(this.components);
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
@@ -601,13 +601,13 @@ namespace MaterialSkinExample
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.materialFlatButton5);
-            this.tabPage6.Controls.Add(this.richTextBox1);
             this.tabPage6.Controls.Add(this.materialLabel5);
             this.tabPage6.Controls.Add(this.materialLabel4);
             this.tabPage6.Controls.Add(this.materialLabel3);
             this.tabPage6.Controls.Add(this.materialFloatingActionButton1);
             this.tabPage6.Controls.Add(this.materialComboBox1);
             this.tabPage6.Controls.Add(this.materialCheckedListBox1);
+            this.tabPage6.Controls.Add(this.richTextBox1);
             this.tabPage6.ImageKey = "round_swap_vert_white_24dp.png";
             this.tabPage6.Location = new System.Drawing.Point(4, 31);
             this.tabPage6.Margin = new System.Windows.Forms.Padding(2);
@@ -629,21 +629,12 @@ namespace MaterialSkinExample
             this.materialFlatButton5.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFlatButton5.Name = "materialFlatButton5";
-            this.materialFlatButton5.Primary = false;
+            this.materialFlatButton5.Primary = true;
             this.materialFlatButton5.Size = new System.Drawing.Size(169, 36);
             this.materialFlatButton5.TabIndex = 23;
             this.materialFlatButton5.Text = "Display Messagebox";
             this.materialFlatButton5.UseVisualStyleBackColor = true;
             this.materialFlatButton5.Click += new System.EventHandler(this.materialFlatButton5_Click);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(226, 106);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(213, 96);
-            this.richTextBox1.TabIndex = 22;
-            this.richTextBox1.Text = "I am a generic rich text box! and change with the theme!";
             // 
             // materialLabel5
             // 
@@ -689,15 +680,15 @@ namespace MaterialSkinExample
             // 
             // materialFloatingActionButton1
             // 
-            this.materialFloatingActionButton1.AnimateShowHideButton = false;
+            this.materialFloatingActionButton1.AnimateShowHideButton = true;
             this.materialFloatingActionButton1.Depth = 0;
-            this.materialFloatingActionButton1.Icon = null;
-            this.materialFloatingActionButton1.Location = new System.Drawing.Point(546, 66);
+            this.materialFloatingActionButton1.Icon = global::MaterialSkinExample.Properties.Resources.plus;
+            this.materialFloatingActionButton1.Location = new System.Drawing.Point(489, 59);
             this.materialFloatingActionButton1.Margin = new System.Windows.Forms.Padding(2);
             this.materialFloatingActionButton1.Mini = false;
             this.materialFloatingActionButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
-            this.materialFloatingActionButton1.Size = new System.Drawing.Size(42, 41);
+            this.materialFloatingActionButton1.Size = new System.Drawing.Size(66, 70);
             this.materialFloatingActionButton1.TabIndex = 18;
             this.materialFloatingActionButton1.Text = "materialFloatingActionButton1";
             this.materialFloatingActionButton1.UseVisualStyleBackColor = true;
@@ -738,6 +729,15 @@ namespace MaterialSkinExample
             this.materialCheckedListBox1.StripeDarkColor = System.Drawing.Color.Empty;
             this.materialCheckedListBox1.TabIndex = 0;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(226, 106);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(213, 96);
+            this.richTextBox1.TabIndex = 22;
+            this.richTextBox1.Text = "I am a generic rich text box! and change with the theme!";
+            // 
             // menuIconList
             // 
             this.menuIconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("menuIconList.ImageStream")));
@@ -767,7 +767,7 @@ namespace MaterialSkinExample
             this.materialContextMenuStrip1.Margin = new System.Windows.Forms.Padding(16, 8, 16, 8);
             this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
-            this.materialContextMenuStrip1.Size = new System.Drawing.Size(166, 130);
+            this.materialContextMenuStrip1.Size = new System.Drawing.Size(170, 130);
             // 
             // item1ToolStripMenuItem
             // 
@@ -775,6 +775,7 @@ namespace MaterialSkinExample
             this.item1ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.subItem1ToolStripMenuItem,
             this.subItem2ToolStripMenuItem});
+            this.item1ToolStripMenuItem.Image = global::MaterialSkinExample.Properties.Resources.minus;
             this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
             this.item1ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item1ToolStripMenuItem.Text = "Item 1";
@@ -811,7 +812,7 @@ namespace MaterialSkinExample
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(162, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(166, 6);
             // 
             // item3ToolStripMenuItem
             // 
