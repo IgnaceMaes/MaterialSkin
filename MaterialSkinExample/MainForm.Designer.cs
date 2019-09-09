@@ -68,7 +68,9 @@ namespace MaterialSkinExample
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.materialFlatButton5 = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
@@ -87,6 +89,7 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.materialDrawer1 = new MaterialSkin.Controls.MaterialDrawer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.materialRaisedButton6 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -600,7 +603,11 @@ namespace MaterialSkinExample
             // 
             // tabPage6
             // 
-            this.tabPage6.Controls.Add(this.materialFlatButton5);
+            this.tabPage6.BackColor = System.Drawing.Color.White;
+            this.tabPage6.Controls.Add(this.materialRaisedButton6);
+            this.tabPage6.Controls.Add(this.materialLabel7);
+            this.tabPage6.Controls.Add(this.materialRaisedButton3);
+            this.tabPage6.Controls.Add(this.materialLabel6);
             this.tabPage6.Controls.Add(this.materialLabel5);
             this.tabPage6.Controls.Add(this.materialLabel4);
             this.tabPage6.Controls.Add(this.materialLabel3);
@@ -616,25 +623,51 @@ namespace MaterialSkinExample
             this.tabPage6.Size = new System.Drawing.Size(1040, 455);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "New Controls";
-            this.tabPage6.UseVisualStyleBackColor = true;
             this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
             // 
-            // materialFlatButton5
+            // materialLabel7
             // 
-            this.materialFlatButton5.AutoSize = true;
-            this.materialFlatButton5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton5.Depth = 0;
-            this.materialFlatButton5.Icon = null;
-            this.materialFlatButton5.Location = new System.Drawing.Point(498, 166);
-            this.materialFlatButton5.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton5.Name = "materialFlatButton5";
-            this.materialFlatButton5.Primary = true;
-            this.materialFlatButton5.Size = new System.Drawing.Size(169, 36);
-            this.materialFlatButton5.TabIndex = 23;
-            this.materialFlatButton5.Text = "Display Messagebox";
-            this.materialFlatButton5.UseVisualStyleBackColor = true;
-            this.materialFlatButton5.Click += new System.EventHandler(this.materialFlatButton5_Click);
+            this.materialLabel7.AutoSize = true;
+            this.materialLabel7.Depth = 0;
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel7.Location = new System.Drawing.Point(18, 219);
+            this.materialLabel7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(150, 19);
+            this.materialLabel7.TabIndex = 26;
+            this.materialLabel7.Text = "Generic Rich text box";
+            // 
+            // materialRaisedButton3
+            // 
+            this.materialRaisedButton3.AutoSize = true;
+            this.materialRaisedButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialRaisedButton3.Depth = 0;
+            this.materialRaisedButton3.Icon = null;
+            this.materialRaisedButton3.Location = new System.Drawing.Point(769, 66);
+            this.materialRaisedButton3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton3.Name = "materialRaisedButton3";
+            this.materialRaisedButton3.Primary = true;
+            this.materialRaisedButton3.Size = new System.Drawing.Size(153, 36);
+            this.materialRaisedButton3.TabIndex = 25;
+            this.materialRaisedButton3.Text = "Open Message box";
+            this.materialRaisedButton3.UseVisualStyleBackColor = true;
+            this.materialRaisedButton3.Click += new System.EventHandler(this.materialFlatButton5_Click);
+            // 
+            // materialLabel6
+            // 
+            this.materialLabel6.AutoSize = true;
+            this.materialLabel6.Depth = 0;
+            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel6.Location = new System.Drawing.Point(765, 26);
+            this.materialLabel6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel6.Name = "materialLabel6";
+            this.materialLabel6.Size = new System.Drawing.Size(154, 19);
+            this.materialLabel6.TabIndex = 24;
+            this.materialLabel6.Text = "Flexible Message Box";
             // 
             // materialLabel5
             // 
@@ -674,9 +707,9 @@ namespace MaterialSkinExample
             this.materialLabel3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(171, 19);
+            this.materialLabel3.Size = new System.Drawing.Size(159, 19);
             this.materialLabel3.TabIndex = 19;
-            this.materialLabel3.Text = "Right Click The Blue Dot";
+            this.materialLabel3.Text = "Floating Action Button";
             // 
             // materialFloatingActionButton1
             // 
@@ -732,11 +765,12 @@ namespace MaterialSkinExample
             // richTextBox1
             // 
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(226, 106);
+            this.richTextBox1.Location = new System.Drawing.Point(22, 251);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(213, 96);
+            this.richTextBox1.Size = new System.Drawing.Size(150, 96);
             this.richTextBox1.TabIndex = 22;
-            this.richTextBox1.Text = "I am a generic rich text box! and change with the theme!";
+            this.richTextBox1.Text = "Hello there! I am a generic rich text box and I change with the theme. Try it by " +
+    "clicking the button bellow!";
             // 
             // menuIconList
             // 
@@ -850,6 +884,22 @@ namespace MaterialSkinExample
             this.panel1.Size = new System.Drawing.Size(1110, 490);
             this.panel1.TabIndex = 21;
             // 
+            // materialRaisedButton6
+            // 
+            this.materialRaisedButton6.AutoSize = true;
+            this.materialRaisedButton6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialRaisedButton6.Depth = 0;
+            this.materialRaisedButton6.Icon = null;
+            this.materialRaisedButton6.Location = new System.Drawing.Point(22, 353);
+            this.materialRaisedButton6.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton6.Name = "materialRaisedButton6";
+            this.materialRaisedButton6.Primary = true;
+            this.materialRaisedButton6.Size = new System.Drawing.Size(125, 36);
+            this.materialRaisedButton6.TabIndex = 28;
+            this.materialRaisedButton6.Text = "Change Theme";
+            this.materialRaisedButton6.UseVisualStyleBackColor = true;
+            this.materialRaisedButton6.Click += new System.EventHandler(this.materialButton1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -929,10 +979,13 @@ namespace MaterialSkinExample
         private MaterialFloatingActionButton materialFloatingActionButton1;
         private MaterialComboBox materialComboBox1;
         private RichTextBox richTextBox1;
-        private MaterialFlatButton materialFlatButton5;
         private MaterialDrawer materialDrawer1;
         private Panel panel1;
         private ImageList menuIconList;
         private MaterialRaisedButton materialRaisedButton4;
+        private MaterialRaisedButton materialRaisedButton3;
+        private MaterialLabel materialLabel6;
+        private MaterialLabel materialLabel7;
+        private MaterialRaisedButton materialRaisedButton6;
     }
 }
