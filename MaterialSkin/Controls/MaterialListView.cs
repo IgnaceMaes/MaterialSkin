@@ -21,7 +21,7 @@
         /// Gets the SkinManager
         /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the MouseState
@@ -56,7 +56,6 @@
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
 
             //Fix for hovers, by default it doesn't redraw
-            //TODO: should only redraw when the hovered line changed, this to reduce unnecessary redraws
             MouseLocation = new Point(-1, -1);
             MouseState = MouseState.OUT;
             MouseEnter += delegate
@@ -70,12 +69,18 @@
                 HoveredItem = null;
                 Invalidate();
             };
-            MouseDown += delegate { MouseState = MouseState.DOWN; };
-            MouseUp += delegate { MouseState = MouseState.HOVER; };
+            MouseDown += delegate
+            {
+                MouseState = MouseState.DOWN;
+            };
+            MouseUp += delegate
+            {
+                MouseState = MouseState.HOVER;
+            };
             MouseMove += delegate (object sender, MouseEventArgs args)
             {
                 MouseLocation = args.Location;
-                var currentHoveredItem = this.GetItemAt(MouseLocation.X, MouseLocation.Y);
+                var currentHoveredItem = GetItemAt(MouseLocation.X, MouseLocation.Y);
                 if (HoveredItem != currentHoveredItem)
                 {
                     HoveredItem = currentHoveredItem;
@@ -114,9 +119,9 @@
             var g = Graphics.FromImage(b);
 
             //always draw default background
-            g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
+            g.Clear(SkinManager.GetApplicationBackgroundColor());
 
-            if (e.State.HasFlag(ListViewItemStates.Selected))
+            if (e.Item.Selected)
             {
                 //selected background
                 g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
