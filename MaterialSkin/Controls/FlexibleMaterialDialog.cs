@@ -22,7 +22,7 @@ namespace MaterialSkin.Controls
         /// 
         /// Default is: SystemFonts.MessageBoxFont
         /// </summary>
-        public static Font FONT = MaterialSkinManager.Instance.ROBOTO_MEDIUM_11;
+        public static Font FONT = MaterialSkinManager.Instance.ROBOTO_MEDIUM_10;
 
         /// <summary>
         /// Defines the maximum width for all FlexibleMessageBox instances in percent of the working area.
