@@ -1,5 +1,6 @@
 ﻿namespace MaterialSkin.Controls
 {
+    using MaterialSkin.Animations;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,7 +25,7 @@
         /// Gets the SkinManager
         /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the MouseState
@@ -37,7 +38,9 @@
         /// </summary>
         public new FormBorderStyle FormBorderStyle
         {
-get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }         }
+            get { return base.FormBorderStyle; }
+            set { base.FormBorderStyle = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether Sizable
@@ -375,75 +378,77 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// </summary>
         private enum ResizeDirection
         {
-/// <summary>
+            /// <summary>
             /// Defines the BottomLeft
             /// </summary>
-        BottomLeft,
+            BottomLeft,
 
             /// <summary>
             /// Defines the Left
             /// </summary>
-        Left,
+            Left,
 
             /// <summary>
             /// Defines the Right
             /// </summary>
-        Right,
+            Right,
 
             /// <summary>
             /// Defines the BottomRight
             /// </summary>
-        BottomRight,
+            BottomRight,
 
             /// <summary>
             /// Defines the Bottom
             /// </summary>
-        Bottom,
+            Bottom,
 
             /// <summary>
             /// Defines the None
             /// </summary>
-        None        }
+            None
+        }
 
         /// <summary>
         /// Defines the ButtonState
         /// </summary>
         private enum ButtonState
         {
-/// <summary>
+            /// <summary>
             /// Defines the XOver
             /// </summary>
-        XOver,
+            XOver,
 
             /// <summary>
             /// Defines the MaxOver
             /// </summary>
-        MaxOver,
+            MaxOver,
 
             /// <summary>
             /// Defines the MinOver
             /// </summary>
-        MinOver,
+            MinOver,
 
             /// <summary>
             /// Defines the XDown
             /// </summary>
-        XDown,
+            XDown,
 
             /// <summary>
             /// Defines the MaxDown
             /// </summary>
-        MaxDown,
+            MaxDown,
 
             /// <summary>
             /// Defines the MinDown
             /// </summary>
-        MinDown,
+            MinDown,
 
             /// <summary>
             /// Defines the None
             /// </summary>
-        None        }
+            None
+        }
 
         /// <summary>
         /// Defines the _resizeCursors
@@ -470,8 +475,10 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// </summary>
         private Rectangle _actionBarBounds;
 
-        public Rectangle UserArea {
-            get {
+        public Rectangle UserArea
+        {
+            get
+            {
                 return new Rectangle(0, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Width, Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
             }
         }
@@ -514,6 +521,13 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
             MouseMessageFilter.MouseMove += OnGlobalMouseMove;
+
+            _clickAnimManager = new AnimationManager()
+            {
+                AnimationType = AnimationType.EaseOut,
+                Increment = 0.04
+            };
+            _clickAnimManager.OnAnimationProgress += sender => Invalidate();
         }
 
         /// <summary>
@@ -523,12 +537,22 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            if (DesignMode || IsDisposed) return;
+            if (DesignMode || IsDisposed)
+                return;
 
-            if (m.Msg == WM_LBUTTONDBLCLK)
+            if (_drawer != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
+            {
+                _drawer.Toggle();
+                _clickAnimManager.SetProgress(0);
+                _clickAnimManager.StartNewAnimation(AnimationDirection.In);
+                _animationSource = (PointToClient(Cursor.Position));
+            }
+            // Double click to maximize
+            else if (m.Msg == WM_LBUTTONDBLCLK)
             {
                 MaximizeWindow(!_maximized);
             }
+            // move a maximized window
             else if (m.Msg == WM_MOUSEMOVE && _maximized &&
                 (_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
                 !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
@@ -553,6 +577,7 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 }
             }
+            // Status bar buttons
             else if (m.Msg == WM_LBUTTONDOWN &&
                 (_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
                 !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
@@ -567,6 +592,7 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
                     _headerMouseDown = true;
                 }
             }
+            // Default context menu
             else if (m.Msg == WM_RBUTTONDOWN)
             {
                 Point cursorPos = PointToClient(Cursor.Position);
@@ -585,7 +611,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
             {
                 // This re-enables resizing by letting the application know when the
                 // user is trying to resize a side. This is disabled by default when using WS_SYSMENU.
-                if (!Sizable) return;
+                if (!Sizable)
+                    return;
 
                 byte bFlag = 0;
 
@@ -623,7 +650,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (DesignMode) return;
+            if (DesignMode)
+                return;
             UpdateButtons(e);
 
             if (e.Button == MouseButtons.Left && !_maximized)
@@ -638,7 +666,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            if (DesignMode) return;
+            if (DesignMode)
+                return;
             _buttonState = ButtonState.None;
             Invalidate();
         }
@@ -651,7 +680,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         {
             base.OnMouseMove(e);
 
-            if (DesignMode) return;
+            if (DesignMode)
+                return;
 
             if (Sizable)
             {
@@ -705,7 +735,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected void OnGlobalMouseMove(object sender, MouseEventArgs e)
         {
-            if (IsDisposed) return;
+            if (IsDisposed)
+                return;
             // Convert to client position and pass to Form.MouseMove
             var clientCursorPos = PointToClient(e.Location);
             var newE = new MouseEventArgs(MouseButtons.None, 0, clientCursorPos.X, clientCursorPos.Y, 0);
@@ -719,7 +750,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// <param name="up">The up<see cref="bool"/></param>
         private void UpdateButtons(MouseEventArgs e, bool up = false)
         {
-            if (DesignMode) return;
+            if (DesignMode)
+                return;
             var oldState = _buttonState;
             bool showMin = MinimizeBox && ControlBox;
             bool showMax = MaximizeBox && ControlBox;
@@ -768,10 +800,12 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
                     if (oldState == ButtonState.XDown && up)
                         Close();
                 }
-                else _buttonState = ButtonState.None;
+                else
+                    _buttonState = ButtonState.None;
             }
 
-            if (oldState != _buttonState) Invalidate();
+            if (oldState != _buttonState)
+                Invalidate();
         }
 
         /// <summary>
@@ -780,7 +814,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// <param name="maximize">The maximize<see cref="bool"/></param>
         private void MaximizeWindow(bool maximize)
         {
-            if (!MaximizeBox || !ControlBox) return;
+            if (!MaximizeBox || !ControlBox)
+                return;
 
             _maximized = maximize;
 
@@ -807,7 +842,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (DesignMode) return;
+            if (DesignMode)
+                return;
             UpdateButtons(e, true);
 
             base.OnMouseUp(e);
@@ -820,7 +856,8 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
         /// <param name="direction">The direction<see cref="ResizeDirection"/></param>
         private void ResizeForm(ResizeDirection direction)
         {
-            if (DesignMode) return;
+            if (DesignMode)
+                return;
             var dir = -1;
             switch (direction)
             {
@@ -861,6 +898,27 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
             _xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             _statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             _actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+        }
+
+        /// <summary>
+        /// Defines the _drawer
+        /// </summary>
+        private MaterialDrawer _drawer;
+
+        /// <summary>
+        /// The Drawer
+        /// </summary>
+        public MaterialDrawer Drawer
+        {
+            get
+            {
+                return _drawer;
+            }
+            set
+            {
+                _drawer = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -958,26 +1016,98 @@ get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; }      
                 }
             }
 
+            // Drawer Icon
+            if (_drawer != null)
+            {
+                _drawerIconRect = new Rectangle(SkinManager.FORM_PADDING / 2, STATUS_BAR_HEIGHT, 24 + SkinManager.FORM_PADDING + SkinManager.FORM_PADDING / 2, ACTION_BAR_HEIGHT);
+                // Ripple
+                if (_clickAnimManager.IsAnimating())
+                {
+                    var clickAnimProgress = _clickAnimManager.GetProgress();
+
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (clickAnimProgress * 50)), Color.White));
+                    var rippleSize = (int)(clickAnimProgress * _drawerIconRect.Width * 1.75);
+
+                    g.SetClip(_drawerIconRect);
+                    g.FillEllipse(rippleBrush, new Rectangle(_animationSource.X - rippleSize / 2, _animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                    g.ResetClip();
+                    rippleBrush.Dispose();
+                }
+
+
+                using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2))
+                {
+                    // Middle line
+                    g.DrawLine(
+                       formButtonsPen,
+                       _drawerIconRect.X + (int)(SkinManager.FORM_PADDING),
+                       _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2),
+                       _drawerIconRect.X + (int)(SkinManager.FORM_PADDING) + 18,
+                       _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2));
+
+                    // Bottom line
+                    g.DrawLine(
+                       formButtonsPen,
+                       _drawerIconRect.X + (int)(SkinManager.FORM_PADDING),
+                       _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2) - 6,
+                       _drawerIconRect.X + (int)(SkinManager.FORM_PADDING) + 18,
+                       _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2) - 6);
+
+                    // Top line
+                    g.DrawLine(
+                       formButtonsPen,
+                       _drawerIconRect.X + (int)(SkinManager.FORM_PADDING),
+                       _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2) + 6,
+                       _drawerIconRect.X + (int)(SkinManager.FORM_PADDING) + 18,
+                       _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2) + 6);
+                }
+
+            }
+
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush,
+                new Rectangle(SkinManager.FORM_PADDING + (_drawer != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT),
+                new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
+        /// <summary>
+        /// Defines the _clickAnimManager
+        /// </summary>
+        private readonly AnimationManager _clickAnimManager;
+
+        /// <summary>
+        /// Defines the _drawerIconRect
+        /// </summary>
+        private Rectangle _drawerIconRect;
+
+        /// <summary>
+        /// Defines the _animationSource
+        /// </summary>
+        private Point _animationSource;
+
+        /// <summary>
+        /// Initializes the component
+        /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // MaterialForm
             // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "MaterialForm";
-            this.Load += new System.EventHandler(this.MaterialForm_Load);
-            this.ResumeLayout(false);
+            ClientSize = new System.Drawing.Size(284, 261);
+            Name = "MaterialForm";
+            Load += new System.EventHandler(MaterialForm_Load);
+            ResumeLayout(false);
 
         }
-
+        
+        /// <summary>
+        /// Load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MaterialForm_Load(object sender, EventArgs e)
         {
-
         }
     }
 

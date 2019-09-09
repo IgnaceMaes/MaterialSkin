@@ -77,7 +77,6 @@ namespace MaterialSkinExample
             this.materialComboBox1 = new MaterialSkin.Controls.MaterialComboBox();
             this.materialCheckedListBox1 = new MaterialSkin.Controls.MaterialCheckedListBox();
             this.menuIconList = new System.Windows.Forms.ImageList(this.components);
-            this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
@@ -753,22 +752,6 @@ namespace MaterialSkinExample
             this.menuIconList.Images.SetKeyName(7, "round_report_problem_white_24dp.png");
             this.menuIconList.Images.SetKeyName(8, "round_swap_vert_white_24dp.png");
             // 
-            // materialRaisedButton3
-            // 
-            this.materialRaisedButton3.AutoSize = true;
-            this.materialRaisedButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialRaisedButton3.Depth = 0;
-            this.materialRaisedButton3.Icon = null;
-            this.materialRaisedButton3.Location = new System.Drawing.Point(262, 26);
-            this.materialRaisedButton3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton3.Name = "materialRaisedButton3";
-            this.materialRaisedButton3.Primary = true;
-            this.materialRaisedButton3.Size = new System.Drawing.Size(146, 36);
-            this.materialRaisedButton3.TabIndex = 22;
-            this.materialRaisedButton3.Text = "Open/Close menu";
-            this.materialRaisedButton3.UseVisualStyleBackColor = true;
-            this.materialRaisedButton3.Click += new System.EventHandler(this.materialRaisedButton3_Click);
-            // 
             // materialContextMenuStrip1
             // 
             this.materialContextMenuStrip1.BackColor = System.Drawing.Color.White;
@@ -841,7 +824,7 @@ namespace MaterialSkinExample
             // 
             this.materialDrawer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.materialDrawer1.AutoHide = false;
+            this.materialDrawer1.AutoHide = true;
             this.materialDrawer1.BaseTabControl = this.materialTabControl1;
             this.materialDrawer1.Depth = 0;
             this.materialDrawer1.IndicatorWidth = 0;
@@ -873,8 +856,8 @@ namespace MaterialSkinExample
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1110, 553);
             this.ContextMenuStrip = this.materialContextMenuStrip1;
-            this.Controls.Add(this.materialRaisedButton3);
             this.Controls.Add(this.panel1);
+            this.Drawer = this.materialDrawer1;
             this.Name = "MainForm";
             this.Text = "MaterialSkin Demo";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -893,7 +876,6 @@ namespace MaterialSkinExample
             this.materialContextMenuStrip1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -950,7 +932,6 @@ namespace MaterialSkinExample
         private MaterialDrawer materialDrawer1;
         private Panel panel1;
         private ImageList menuIconList;
-        private MaterialRaisedButton materialRaisedButton3;
         private MaterialRaisedButton materialRaisedButton4;
     }
 }
