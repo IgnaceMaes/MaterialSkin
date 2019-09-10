@@ -45,6 +45,8 @@
         /// </summary>
         public bool HighEmphasis { get; set; }
 
+        public bool DrawShadows { get; set; }
+
         private MaterialButtonType _type;
 
         /// <summary>
@@ -59,7 +61,7 @@
             set
             {
                 _type = value;
-                if (Type == MaterialButtonType.Contained && Parent != null)
+                if (DrawShadows && Type == MaterialButtonType.Contained && Parent != null)
                 {
                     Parent.Paint += new PaintEventHandler(drawShadowOnParent);
                 }
@@ -116,7 +118,9 @@
         /// </summary>
         public MaterialButton()
         {
-            HighEmphasis = false;
+            DrawShadows = true;
+            HighEmphasis = true;
+            UseAccentColor = false;
             Type = MaterialButtonType.Contained;
 
             _animationManager = new AnimationManager(false)

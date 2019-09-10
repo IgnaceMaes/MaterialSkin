@@ -55,6 +55,8 @@
         /// </summary>
         private const int FAB_ICON_SIZE = 24;
 
+        public bool DrawShadows { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether Mini
         /// </summary>
@@ -63,7 +65,8 @@
             get { return _mini; }
             set
             {
-                if (Parent != null) Parent.Invalidate();
+                if (Parent != null)
+                    Parent.Invalidate();
                 setSize(value);
             }
         }
@@ -121,6 +124,7 @@
         /// </summary>
         public MaterialFloatingActionButton()
         {
+            DrawShadows = true;
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             Size = new Size(FAB_SIZE, FAB_SIZE);
@@ -142,7 +146,10 @@
 
         protected override void InitLayout()
         {
-            Parent.Paint += new PaintEventHandler(drawShadowOnParent);
+            if (DrawShadows)
+            {
+                Parent.Paint += new PaintEventHandler(drawShadowOnParent);
+            }
         }
 
         /// <summary>

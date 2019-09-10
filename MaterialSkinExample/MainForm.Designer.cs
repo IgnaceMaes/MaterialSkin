@@ -101,11 +101,11 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.materialDrawer1 = new MaterialSkin.Controls.MaterialDrawer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.materialButton23 = new MaterialSkin.Controls.MaterialButton();
-            this.materialButton24 = new MaterialSkin.Controls.MaterialButton();
             this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.subItem2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.materialButton24 = new MaterialSkin.Controls.MaterialButton();
+            this.materialButton23 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton22 = new MaterialSkin.Controls.MaterialButton();
             this.materialFlatButton2 = new MaterialSkin.Controls.MaterialButton();
             this.MaterialButton2 = new MaterialSkin.Controls.MaterialButton();
@@ -304,6 +304,7 @@ namespace MaterialSkinExample
             this.materialButton7.AutoSize = true;
             this.materialButton7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton7.Depth = 0;
+            this.materialButton7.DrawShadows = true;
             this.materialButton7.HighEmphasis = true;
             this.materialButton7.Icon = null;
             this.materialButton7.Location = new System.Drawing.Point(22, 235);
@@ -380,6 +381,7 @@ namespace MaterialSkinExample
             this.MaterialButton4.AutoSize = true;
             this.MaterialButton4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MaterialButton4.Depth = 0;
+            this.MaterialButton4.DrawShadows = true;
             this.MaterialButton4.HighEmphasis = true;
             this.MaterialButton4.Icon = null;
             this.MaterialButton4.Location = new System.Drawing.Point(22, 187);
@@ -419,6 +421,7 @@ namespace MaterialSkinExample
             this.MaterialButton1.AutoSize = true;
             this.MaterialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MaterialButton1.Depth = 0;
+            this.MaterialButton1.DrawShadows = true;
             this.MaterialButton1.HighEmphasis = true;
             this.MaterialButton1.Icon = null;
             this.MaterialButton1.Location = new System.Drawing.Point(1044, 184);
@@ -482,6 +485,7 @@ namespace MaterialSkinExample
             this.materialButton19.AutoSize = true;
             this.materialButton19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton19.Depth = 0;
+            this.materialButton19.DrawShadows = true;
             this.materialButton19.HighEmphasis = false;
             this.materialButton19.Icon = null;
             this.materialButton19.Location = new System.Drawing.Point(507, 220);
@@ -500,6 +504,7 @@ namespace MaterialSkinExample
             this.materialButton20.AutoSize = true;
             this.materialButton20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton20.Depth = 0;
+            this.materialButton20.DrawShadows = true;
             this.materialButton20.HighEmphasis = false;
             this.materialButton20.Icon = null;
             this.materialButton20.Location = new System.Drawing.Point(20, 220);
@@ -518,6 +523,7 @@ namespace MaterialSkinExample
             this.materialButton21.AutoSize = true;
             this.materialButton21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton21.Depth = 0;
+            this.materialButton21.DrawShadows = true;
             this.materialButton21.HighEmphasis = false;
             this.materialButton21.Icon = null;
             this.materialButton21.Location = new System.Drawing.Point(255, 220);
@@ -536,6 +542,7 @@ namespace MaterialSkinExample
             this.materialButton5.AutoSize = true;
             this.materialButton5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton5.Depth = 0;
+            this.materialButton5.DrawShadows = true;
             this.materialButton5.HighEmphasis = true;
             this.materialButton5.Icon = null;
             this.materialButton5.Location = new System.Drawing.Point(508, 124);
@@ -554,6 +561,7 @@ namespace MaterialSkinExample
             this.materialButton8.AutoSize = true;
             this.materialButton8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton8.Depth = 0;
+            this.materialButton8.DrawShadows = true;
             this.materialButton8.HighEmphasis = true;
             this.materialButton8.Icon = null;
             this.materialButton8.Location = new System.Drawing.Point(20, 124);
@@ -572,6 +580,7 @@ namespace MaterialSkinExample
             this.materialButton9.AutoSize = true;
             this.materialButton9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton9.Depth = 0;
+            this.materialButton9.DrawShadows = true;
             this.materialButton9.HighEmphasis = true;
             this.materialButton9.Icon = null;
             this.materialButton9.Location = new System.Drawing.Point(255, 124);
@@ -590,6 +599,7 @@ namespace MaterialSkinExample
             this.materialButton18.AutoSize = true;
             this.materialButton18.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton18.Depth = 0;
+            this.materialButton18.DrawShadows = true;
             this.materialButton18.Enabled = false;
             this.materialButton18.HighEmphasis = false;
             this.materialButton18.Icon = null;
@@ -609,6 +619,7 @@ namespace MaterialSkinExample
             this.materialButton17.AutoSize = true;
             this.materialButton17.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton17.Depth = 0;
+            this.materialButton17.DrawShadows = true;
             this.materialButton17.HighEmphasis = false;
             this.materialButton17.Icon = null;
             this.materialButton17.Location = new System.Drawing.Point(507, 268);
@@ -627,6 +638,7 @@ namespace MaterialSkinExample
             this.materialButton16.AutoSize = true;
             this.materialButton16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton16.Depth = 0;
+            this.materialButton16.DrawShadows = true;
             this.materialButton16.HighEmphasis = true;
             this.materialButton16.Icon = null;
             this.materialButton16.Location = new System.Drawing.Point(508, 172);
@@ -645,6 +657,7 @@ namespace MaterialSkinExample
             this.materialButton15.AutoSize = true;
             this.materialButton15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton15.Depth = 0;
+            this.materialButton15.DrawShadows = true;
             this.materialButton15.HighEmphasis = false;
             this.materialButton15.Icon = null;
             this.materialButton15.Location = new System.Drawing.Point(20, 268);
@@ -663,6 +676,7 @@ namespace MaterialSkinExample
             this.materialButton14.AutoSize = true;
             this.materialButton14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton14.Depth = 0;
+            this.materialButton14.DrawShadows = true;
             this.materialButton14.HighEmphasis = true;
             this.materialButton14.Icon = null;
             this.materialButton14.Location = new System.Drawing.Point(20, 172);
@@ -681,6 +695,7 @@ namespace MaterialSkinExample
             this.materialButton13.AutoSize = true;
             this.materialButton13.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton13.Depth = 0;
+            this.materialButton13.DrawShadows = true;
             this.materialButton13.Enabled = false;
             this.materialButton13.HighEmphasis = false;
             this.materialButton13.Icon = null;
@@ -700,6 +715,7 @@ namespace MaterialSkinExample
             this.materialButton12.AutoSize = true;
             this.materialButton12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton12.Depth = 0;
+            this.materialButton12.DrawShadows = true;
             this.materialButton12.Enabled = false;
             this.materialButton12.HighEmphasis = false;
             this.materialButton12.Icon = null;
@@ -719,6 +735,7 @@ namespace MaterialSkinExample
             this.materialButton11.AutoSize = true;
             this.materialButton11.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton11.Depth = 0;
+            this.materialButton11.DrawShadows = true;
             this.materialButton11.HighEmphasis = false;
             this.materialButton11.Icon = null;
             this.materialButton11.Location = new System.Drawing.Point(255, 268);
@@ -737,6 +754,7 @@ namespace MaterialSkinExample
             this.materialButton10.AutoSize = true;
             this.materialButton10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton10.Depth = 0;
+            this.materialButton10.DrawShadows = true;
             this.materialButton10.HighEmphasis = true;
             this.materialButton10.Icon = null;
             this.materialButton10.Location = new System.Drawing.Point(255, 172);
@@ -946,6 +964,7 @@ namespace MaterialSkinExample
             this.MaterialButton6.AutoSize = true;
             this.MaterialButton6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MaterialButton6.Depth = 0;
+            this.MaterialButton6.DrawShadows = true;
             this.MaterialButton6.HighEmphasis = true;
             this.MaterialButton6.Icon = null;
             this.MaterialButton6.Location = new System.Drawing.Point(22, 353);
@@ -979,6 +998,7 @@ namespace MaterialSkinExample
             this.MaterialButton3.AutoSize = true;
             this.MaterialButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MaterialButton3.Depth = 0;
+            this.MaterialButton3.DrawShadows = true;
             this.MaterialButton3.HighEmphasis = true;
             this.MaterialButton3.Icon = null;
             this.MaterialButton3.Location = new System.Drawing.Point(769, 66);
@@ -1166,7 +1186,7 @@ namespace MaterialSkinExample
             this.materialDrawer1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDrawer1.Name = "materialDrawer1";
             this.materialDrawer1.ShowIconsWhenHidden = true;
-            this.materialDrawer1.Size = new System.Drawing.Size(250, 490);
+            this.materialDrawer1.Size = new System.Drawing.Size(202, 490);
             this.materialDrawer1.TabIndex = 20;
             this.materialDrawer1.Text = "materialTabSelectorVertical1";
             // 
@@ -1181,42 +1201,6 @@ namespace MaterialSkinExample
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1110, 490);
             this.panel1.TabIndex = 21;
-            // 
-            // materialButton23
-            // 
-            this.materialButton23.AutoSize = true;
-            this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton23.Depth = 0;
-            this.materialButton23.HighEmphasis = false;
-            this.materialButton23.Icon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
-            this.materialButton23.Location = new System.Drawing.Point(255, 76);
-            this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton23.Name = "materialButton23";
-            this.materialButton23.Size = new System.Drawing.Size(128, 36);
-            this.materialButton23.TabIndex = 59;
-            this.materialButton23.Text = "CONT - ICON";
-            this.materialButton23.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton23.UseAccentColor = false;
-            this.materialButton23.UseVisualStyleBackColor = true;
-            // 
-            // materialButton24
-            // 
-            this.materialButton24.AutoSize = true;
-            this.materialButton24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton24.Depth = 0;
-            this.materialButton24.HighEmphasis = false;
-            this.materialButton24.Icon = global::MaterialSkinExample.Properties.Resources.baseline_build_black_24dp;
-            this.materialButton24.Location = new System.Drawing.Point(508, 76);
-            this.materialButton24.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton24.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton24.Name = "materialButton24";
-            this.materialButton24.Size = new System.Drawing.Size(147, 36);
-            this.materialButton24.TabIndex = 60;
-            this.materialButton24.Text = "OUTLINE - ICON";
-            this.materialButton24.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
-            this.materialButton24.UseAccentColor = false;
-            this.materialButton24.UseVisualStyleBackColor = true;
             // 
             // item1ToolStripMenuItem
             // 
@@ -1243,13 +1227,52 @@ namespace MaterialSkinExample
             this.subItem2ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
             this.subItem2ToolStripMenuItem.Text = "SubItem 2";
             // 
+            // materialButton24
+            // 
+            this.materialButton24.AutoSize = true;
+            this.materialButton24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton24.Depth = 0;
+            this.materialButton24.DrawShadows = true;
+            this.materialButton24.HighEmphasis = false;
+            this.materialButton24.Icon = global::MaterialSkinExample.Properties.Resources.baseline_bluetooth_black_24dp;
+            this.materialButton24.Location = new System.Drawing.Point(508, 76);
+            this.materialButton24.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton24.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton24.Name = "materialButton24";
+            this.materialButton24.Size = new System.Drawing.Size(147, 36);
+            this.materialButton24.TabIndex = 60;
+            this.materialButton24.Text = "OUTLINE - ICON";
+            this.materialButton24.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
+            this.materialButton24.UseAccentColor = false;
+            this.materialButton24.UseVisualStyleBackColor = true;
+            // 
+            // materialButton23
+            // 
+            this.materialButton23.AutoSize = true;
+            this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton23.Depth = 0;
+            this.materialButton23.DrawShadows = true;
+            this.materialButton23.HighEmphasis = false;
+            this.materialButton23.Icon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
+            this.materialButton23.Location = new System.Drawing.Point(255, 76);
+            this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton23.Name = "materialButton23";
+            this.materialButton23.Size = new System.Drawing.Size(128, 36);
+            this.materialButton23.TabIndex = 59;
+            this.materialButton23.Text = "CONT - ICON";
+            this.materialButton23.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton23.UseAccentColor = false;
+            this.materialButton23.UseVisualStyleBackColor = true;
+            // 
             // materialButton22
             // 
             this.materialButton22.AutoSize = true;
             this.materialButton22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialButton22.Depth = 0;
+            this.materialButton22.DrawShadows = true;
             this.materialButton22.HighEmphasis = false;
-            this.materialButton22.Icon = global::MaterialSkinExample.Properties.Resources.baseline_thumb_up_black_24dp;
+            this.materialButton22.Icon = global::MaterialSkinExample.Properties.Resources.baseline_favorite_border_black_24dp;
             this.materialButton22.Location = new System.Drawing.Point(20, 76);
             this.materialButton22.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton22.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1266,6 +1289,7 @@ namespace MaterialSkinExample
             this.materialFlatButton2.AutoSize = true;
             this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialFlatButton2.Depth = 0;
+            this.materialFlatButton2.DrawShadows = true;
             this.materialFlatButton2.HighEmphasis = false;
             this.materialFlatButton2.Icon = global::MaterialSkinExample.Properties.Resources.minus;
             this.materialFlatButton2.Location = new System.Drawing.Point(21, 95);
@@ -1286,6 +1310,7 @@ namespace MaterialSkinExample
             this.MaterialButton2.AutoSize = true;
             this.MaterialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MaterialButton2.Depth = 0;
+            this.MaterialButton2.DrawShadows = true;
             this.MaterialButton2.HighEmphasis = true;
             this.MaterialButton2.Icon = global::MaterialSkinExample.Properties.Resources.plus;
             this.MaterialButton2.Location = new System.Drawing.Point(930, 95);
@@ -1304,6 +1329,7 @@ namespace MaterialSkinExample
             // 
             this.materialFloatingActionButton1.AnimateShowHideButton = true;
             this.materialFloatingActionButton1.Depth = 0;
+            this.materialFloatingActionButton1.DrawShadows = true;
             this.materialFloatingActionButton1.Icon = global::MaterialSkinExample.Properties.Resources.plus;
             this.materialFloatingActionButton1.Location = new System.Drawing.Point(489, 59);
             this.materialFloatingActionButton1.Margin = new System.Windows.Forms.Padding(2);

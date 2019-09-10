@@ -121,6 +121,12 @@
   <ItemGroup>
     <None Include="Resources\baseline_thumb_up_black_24dp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_bluetooth_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_favorite_border_black_24dp.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
