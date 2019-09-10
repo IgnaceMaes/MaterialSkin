@@ -182,7 +182,12 @@
             Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
             gp.Transform = mx;
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-            drawShadow(gp, _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE));
+
+            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
+            fabBounds.Width -= 1;
+            fabBounds.Height -= 1;
+
+            drawShadow(gp, fabBounds);
         }
 
         void drawShadow(Graphics g, Rectangle bounds)
@@ -206,6 +211,8 @@
             var g = pevent.Graphics;
 
             Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
+            fabBounds.Width -= 1;
+            fabBounds.Height -= 1;
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -221,7 +228,7 @@
             if (_animationManager.IsAnimating())
             {
                 GraphicsPath regionPath = new GraphicsPath();
-                regionPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 2, fabBounds.Height + 2));
+                regionPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 3, fabBounds.Height + 2));
                 Region fabRegion = new Region(regionPath);
 
                 GraphicsContainer gcont = g.BeginContainer();
@@ -257,7 +264,7 @@
 
             // Clip to a round shape with a 1px padding
             GraphicsPath clipPath = new GraphicsPath();
-            clipPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 2, fabBounds.Height + 2));
+            clipPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 3, fabBounds.Height + 3));
             Region = new Region(clipPath);
         }
 
