@@ -36,23 +36,20 @@ namespace MaterialSkinExample
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.materialRadioButton4 = new MaterialSkin.Controls.MaterialRadioButton();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.materialRadioButton3 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialRadioButton2 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialCheckbox4 = new MaterialSkin.Controls.MaterialCheckBox();
             this.materialCheckbox3 = new MaterialSkin.Controls.MaterialCheckBox();
             this.materialCheckbox2 = new MaterialSkin.Controls.MaterialCheckBox();
             this.materialCheckbox1 = new MaterialSkin.Controls.MaterialCheckBox();
-            this.materialSingleLineTextField2 = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.materialButton7 = new MaterialSkin.Controls.MaterialButton();
             this.materialRadioButton1 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.MaterialButton4 = new MaterialSkin.Controls.MaterialButton();
-            this.materialSingleLineTextField3 = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.MaterialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.materialButton24 = new MaterialSkin.Controls.MaterialButton();
+            this.materialButton23 = new MaterialSkin.Controls.MaterialButton();
+            this.materialButton22 = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
             this.materialButton19 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton20 = new MaterialSkin.Controls.MaterialButton();
@@ -80,7 +77,9 @@ namespace MaterialSkinExample
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.materialFlatButton2 = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.MaterialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.materialProgressBar1 = new MaterialSkin.Controls.MaterialProgressBar();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.MaterialButton6 = new MaterialSkin.Controls.MaterialButton();
@@ -93,23 +92,30 @@ namespace MaterialSkinExample
             this.materialComboBox1 = new MaterialSkin.Controls.MaterialComboBox();
             this.materialCheckedListBox1 = new MaterialSkin.Controls.MaterialCheckedListBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.materialFloatingActionButton1 = new MaterialSkin.Controls.MaterialFloatingActionButton();
             this.menuIconList = new System.Windows.Forms.ImageList(this.components);
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
+            this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.subItem2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.disabledItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.materialDrawer1 = new MaterialSkin.Controls.MaterialDrawer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.subItem1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.subItem2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.materialButton24 = new MaterialSkin.Controls.MaterialButton();
-            this.materialButton23 = new MaterialSkin.Controls.MaterialButton();
-            this.materialButton22 = new MaterialSkin.Controls.MaterialButton();
-            this.materialFlatButton2 = new MaterialSkin.Controls.MaterialButton();
-            this.MaterialButton2 = new MaterialSkin.Controls.MaterialButton();
-            this.materialFloatingActionButton1 = new MaterialSkin.Controls.MaterialFloatingActionButton();
+            this.materialTabControl2 = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialButton7 = new MaterialSkin.Controls.MaterialButton();
+            this.materialSingleLineTextField2 = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialSingleLineTextField3 = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.MaterialButton4 = new MaterialSkin.Controls.MaterialButton();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -120,6 +126,9 @@ namespace MaterialSkinExample
             this.tabPage6.SuspendLayout();
             this.materialContextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.materialTabControl2.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialRadioButton4
@@ -141,20 +150,6 @@ namespace MaterialSkinExample
             this.materialRadioButton4.TabStop = true;
             this.materialRadioButton4.Text = "materialRadioButton4";
             this.materialRadioButton4.UseVisualStyleBackColor = true;
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(19, 117);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(1001, 64);
-            this.materialLabel1.TabIndex = 14;
-            this.materialLabel1.Text = resources.GetString("materialLabel1.Text");
             // 
             // materialRadioButton3
             // 
@@ -260,65 +255,6 @@ namespace MaterialSkinExample
             this.materialCheckbox1.Text = "materialCheckbox1";
             this.materialCheckbox1.UseVisualStyleBackColor = true;
             // 
-            // materialSingleLineTextField2
-            // 
-            this.materialSingleLineTextField2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialSingleLineTextField2.Depth = 0;
-            this.materialSingleLineTextField2.Hint = "Another example hint";
-            this.materialSingleLineTextField2.Location = new System.Drawing.Point(19, 51);
-            this.materialSingleLineTextField2.MaxLength = 32767;
-            this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
-            this.materialSingleLineTextField2.PasswordChar = '\0';
-            this.materialSingleLineTextField2.SelectedText = "";
-            this.materialSingleLineTextField2.SelectionLength = 0;
-            this.materialSingleLineTextField2.SelectionStart = 0;
-            this.materialSingleLineTextField2.Size = new System.Drawing.Size(482, 23);
-            this.materialSingleLineTextField2.TabIndex = 3;
-            this.materialSingleLineTextField2.TabStop = false;
-            this.materialSingleLineTextField2.UseSystemPasswordChar = false;
-            // 
-            // materialSingleLineTextField1
-            // 
-            this.materialSingleLineTextField1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialSingleLineTextField1.Depth = 0;
-            this.materialSingleLineTextField1.Hint = "This is a hint";
-            this.materialSingleLineTextField1.Location = new System.Drawing.Point(19, 14);
-            this.materialSingleLineTextField1.MaxLength = 32767;
-            this.materialSingleLineTextField1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
-            this.materialSingleLineTextField1.PasswordChar = '\0';
-            this.materialSingleLineTextField1.SelectedText = "";
-            this.materialSingleLineTextField1.SelectionLength = 0;
-            this.materialSingleLineTextField1.SelectionStart = 0;
-            this.materialSingleLineTextField1.Size = new System.Drawing.Size(482, 23);
-            this.materialSingleLineTextField1.TabIndex = 2;
-            this.materialSingleLineTextField1.TabStop = false;
-            this.materialSingleLineTextField1.UseSystemPasswordChar = false;
-            // 
-            // materialButton7
-            // 
-            this.materialButton7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialButton7.AutoSize = true;
-            this.materialButton7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton7.Depth = 0;
-            this.materialButton7.DrawShadows = true;
-            this.materialButton7.HighEmphasis = true;
-            this.materialButton7.Icon = null;
-            this.materialButton7.Location = new System.Drawing.Point(22, 235);
-            this.materialButton7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton7.Name = "materialButton7";
-            this.materialButton7.Size = new System.Drawing.Size(125, 36);
-            this.materialButton7.TabIndex = 0;
-            this.materialButton7.Text = "Change Theme";
-            this.materialButton7.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.materialButton7.UseAccentColor = false;
-            this.materialButton7.UseVisualStyleBackColor = true;
-            this.materialButton7.Click += new System.EventHandler(this.materialButton1_Click);
-            // 
             // materialRadioButton1
             // 
             this.materialRadioButton1.AutoSize = true;
@@ -360,13 +296,9 @@ namespace MaterialSkinExample
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.MaterialButton4);
-            this.tabPage1.Controls.Add(this.materialSingleLineTextField3);
+            this.tabPage1.Controls.Add(this.materialTabSelector1);
+            this.tabPage1.Controls.Add(this.materialTabControl2);
             this.tabPage1.Controls.Add(this.MaterialButton1);
-            this.tabPage1.Controls.Add(this.materialSingleLineTextField1);
-            this.tabPage1.Controls.Add(this.materialSingleLineTextField2);
-            this.tabPage1.Controls.Add(this.materialButton7);
-            this.tabPage1.Controls.Add(this.materialLabel1);
             this.tabPage1.ImageKey = "round_assessment_white_24dp.png";
             this.tabPage1.Location = new System.Drawing.Point(4, 31);
             this.tabPage1.Name = "tabPage1";
@@ -374,46 +306,6 @@ namespace MaterialSkinExample
             this.tabPage1.Size = new System.Drawing.Size(1043, 455);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Home";
-            // 
-            // MaterialButton4
-            // 
-            this.MaterialButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MaterialButton4.AutoSize = true;
-            this.MaterialButton4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.MaterialButton4.Depth = 0;
-            this.MaterialButton4.DrawShadows = true;
-            this.MaterialButton4.HighEmphasis = true;
-            this.MaterialButton4.Icon = null;
-            this.MaterialButton4.Location = new System.Drawing.Point(22, 187);
-            this.MaterialButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.MaterialButton4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.MaterialButton4.Name = "MaterialButton4";
-            this.MaterialButton4.Size = new System.Drawing.Size(131, 36);
-            this.MaterialButton4.TabIndex = 22;
-            this.MaterialButton4.Text = "Change Colors";
-            this.MaterialButton4.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.MaterialButton4.UseAccentColor = false;
-            this.MaterialButton4.UseVisualStyleBackColor = true;
-            this.MaterialButton4.Click += new System.EventHandler(this.MaterialButton1_Click);
-            // 
-            // materialSingleLineTextField3
-            // 
-            this.materialSingleLineTextField3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialSingleLineTextField3.Depth = 0;
-            this.materialSingleLineTextField3.Hint = "This is a password";
-            this.materialSingleLineTextField3.Location = new System.Drawing.Point(19, 88);
-            this.materialSingleLineTextField3.MaxLength = 32767;
-            this.materialSingleLineTextField3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSingleLineTextField3.Name = "materialSingleLineTextField3";
-            this.materialSingleLineTextField3.PasswordChar = '\0';
-            this.materialSingleLineTextField3.SelectedText = "";
-            this.materialSingleLineTextField3.SelectionLength = 0;
-            this.materialSingleLineTextField3.SelectionStart = 0;
-            this.materialSingleLineTextField3.Size = new System.Drawing.Size(482, 23);
-            this.materialSingleLineTextField3.TabIndex = 4;
-            this.materialSingleLineTextField3.TabStop = false;
-            this.materialSingleLineTextField3.UseSystemPasswordChar = true;
             // 
             // MaterialButton1
             // 
@@ -465,6 +357,63 @@ namespace MaterialSkinExample
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Buttons Galore";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // materialButton24
+            // 
+            this.materialButton24.AutoSize = true;
+            this.materialButton24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton24.Depth = 0;
+            this.materialButton24.DrawShadows = true;
+            this.materialButton24.HighEmphasis = false;
+            this.materialButton24.Icon = global::MaterialSkinExample.Properties.Resources.baseline_bluetooth_black_24dp;
+            this.materialButton24.Location = new System.Drawing.Point(508, 76);
+            this.materialButton24.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton24.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton24.Name = "materialButton24";
+            this.materialButton24.Size = new System.Drawing.Size(147, 36);
+            this.materialButton24.TabIndex = 60;
+            this.materialButton24.Text = "OUTLINE - ICON";
+            this.materialButton24.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
+            this.materialButton24.UseAccentColor = false;
+            this.materialButton24.UseVisualStyleBackColor = true;
+            // 
+            // materialButton23
+            // 
+            this.materialButton23.AutoSize = true;
+            this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton23.Depth = 0;
+            this.materialButton23.DrawShadows = true;
+            this.materialButton23.HighEmphasis = false;
+            this.materialButton23.Icon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
+            this.materialButton23.Location = new System.Drawing.Point(255, 76);
+            this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton23.Name = "materialButton23";
+            this.materialButton23.Size = new System.Drawing.Size(128, 36);
+            this.materialButton23.TabIndex = 59;
+            this.materialButton23.Text = "CONT - ICON";
+            this.materialButton23.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton23.UseAccentColor = false;
+            this.materialButton23.UseVisualStyleBackColor = true;
+            // 
+            // materialButton22
+            // 
+            this.materialButton22.AutoSize = true;
+            this.materialButton22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton22.Depth = 0;
+            this.materialButton22.DrawShadows = true;
+            this.materialButton22.HighEmphasis = false;
+            this.materialButton22.Icon = global::MaterialSkinExample.Properties.Resources.baseline_favorite_border_black_24dp;
+            this.materialButton22.Location = new System.Drawing.Point(20, 76);
+            this.materialButton22.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton22.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton22.Name = "materialButton22";
+            this.materialButton22.Size = new System.Drawing.Size(124, 36);
+            this.materialButton22.TabIndex = 58;
+            this.materialButton22.Text = "TEXT - ICON";
+            this.materialButton22.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.materialButton22.UseAccentColor = false;
+            this.materialButton22.UseVisualStyleBackColor = true;
             // 
             // materialLabel8
             // 
@@ -909,6 +858,26 @@ namespace MaterialSkinExample
             this.tabPage5.Text = "Progress Bar";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // materialFlatButton2
+            // 
+            this.materialFlatButton2.AutoSize = true;
+            this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton2.Depth = 0;
+            this.materialFlatButton2.DrawShadows = true;
+            this.materialFlatButton2.HighEmphasis = false;
+            this.materialFlatButton2.Icon = global::MaterialSkinExample.Properties.Resources.minus;
+            this.materialFlatButton2.Location = new System.Drawing.Point(21, 95);
+            this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButton2.Name = "materialFlatButton2";
+            this.materialFlatButton2.Size = new System.Drawing.Size(103, 36);
+            this.materialFlatButton2.TabIndex = 6;
+            this.materialFlatButton2.Text = "Remove";
+            this.materialFlatButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.materialFlatButton2.UseAccentColor = false;
+            this.materialFlatButton2.UseVisualStyleBackColor = true;
+            this.materialFlatButton2.Click += new System.EventHandler(this.materialFlatButton4_Click);
+            // 
             // materialLabel2
             // 
             this.materialLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -923,6 +892,27 @@ namespace MaterialSkinExample
             this.materialLabel2.TabIndex = 3;
             this.materialLabel2.Text = "Here we\'re showcasing the progressbar together with a FlatButton and a RaisedButt" +
     "on that have support for icons.";
+            // 
+            // MaterialButton2
+            // 
+            this.MaterialButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MaterialButton2.AutoSize = true;
+            this.MaterialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MaterialButton2.Depth = 0;
+            this.MaterialButton2.DrawShadows = true;
+            this.MaterialButton2.HighEmphasis = true;
+            this.MaterialButton2.Icon = global::MaterialSkinExample.Properties.Resources.plus;
+            this.MaterialButton2.Location = new System.Drawing.Point(930, 95);
+            this.MaterialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.MaterialButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.MaterialButton2.Name = "MaterialButton2";
+            this.MaterialButton2.Size = new System.Drawing.Size(76, 36);
+            this.MaterialButton2.TabIndex = 1;
+            this.MaterialButton2.Text = "Add";
+            this.MaterialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.MaterialButton2.UseAccentColor = false;
+            this.MaterialButton2.UseVisualStyleBackColor = true;
+            this.MaterialButton2.Click += new System.EventHandler(this.MaterialButton2_Click);
             // 
             // materialProgressBar1
             // 
@@ -1115,6 +1105,22 @@ namespace MaterialSkinExample
             this.richTextBox1.Text = "Hello there! I am a generic rich text box and I change with the theme. Try it by " +
     "clicking the button bellow!";
             // 
+            // materialFloatingActionButton1
+            // 
+            this.materialFloatingActionButton1.AnimateShowHideButton = true;
+            this.materialFloatingActionButton1.Depth = 0;
+            this.materialFloatingActionButton1.DrawShadows = true;
+            this.materialFloatingActionButton1.Icon = global::MaterialSkinExample.Properties.Resources.plus;
+            this.materialFloatingActionButton1.Location = new System.Drawing.Point(489, 59);
+            this.materialFloatingActionButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.materialFloatingActionButton1.Mini = false;
+            this.materialFloatingActionButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
+            this.materialFloatingActionButton1.Size = new System.Drawing.Size(56, 56);
+            this.materialFloatingActionButton1.TabIndex = 18;
+            this.materialFloatingActionButton1.Text = "materialFloatingActionButton1";
+            this.materialFloatingActionButton1.UseVisualStyleBackColor = true;
+            // 
             // menuIconList
             // 
             this.menuIconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("menuIconList.ImageStream")));
@@ -1145,6 +1151,31 @@ namespace MaterialSkinExample
             this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
             this.materialContextMenuStrip1.Size = new System.Drawing.Size(170, 130);
+            // 
+            // item1ToolStripMenuItem
+            // 
+            this.item1ToolStripMenuItem.AutoSize = false;
+            this.item1ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subItem1ToolStripMenuItem,
+            this.subItem2ToolStripMenuItem});
+            this.item1ToolStripMenuItem.Image = global::MaterialSkinExample.Properties.Resources.minus;
+            this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
+            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
+            this.item1ToolStripMenuItem.Text = "Item 1";
+            // 
+            // subItem1ToolStripMenuItem
+            // 
+            this.subItem1ToolStripMenuItem.AutoSize = false;
+            this.subItem1ToolStripMenuItem.Name = "subItem1ToolStripMenuItem";
+            this.subItem1ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
+            this.subItem1ToolStripMenuItem.Text = "SubItem 1";
+            // 
+            // subItem2ToolStripMenuItem
+            // 
+            this.subItem2ToolStripMenuItem.AutoSize = false;
+            this.subItem2ToolStripMenuItem.Name = "subItem2ToolStripMenuItem";
+            this.subItem2ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
+            this.subItem2ToolStripMenuItem.Text = "SubItem 2";
             // 
             // disabledItemToolStripMenuItem
             // 
@@ -1182,7 +1213,7 @@ namespace MaterialSkinExample
             this.materialDrawer1.Depth = 0;
             this.materialDrawer1.IndicatorWidth = 0;
             this.materialDrawer1.IsOpen = false;
-            this.materialDrawer1.Location = new System.Drawing.Point(-188, 0);
+            this.materialDrawer1.Location = new System.Drawing.Point(-140, 0);
             this.materialDrawer1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDrawer1.Name = "materialDrawer1";
             this.materialDrawer1.ShowIconsWhenHidden = true;
@@ -1202,144 +1233,196 @@ namespace MaterialSkinExample
             this.panel1.Size = new System.Drawing.Size(1110, 490);
             this.panel1.TabIndex = 21;
             // 
-            // item1ToolStripMenuItem
+            // materialTabControl2
             // 
-            this.item1ToolStripMenuItem.AutoSize = false;
-            this.item1ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.subItem1ToolStripMenuItem,
-            this.subItem2ToolStripMenuItem});
-            this.item1ToolStripMenuItem.Image = global::MaterialSkinExample.Properties.Resources.minus;
-            this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
-            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
-            this.item1ToolStripMenuItem.Text = "Item 1";
+            this.materialTabControl2.Controls.Add(this.tabPage8);
+            this.materialTabControl2.Controls.Add(this.tabPage9);
+            this.materialTabControl2.Depth = 0;
+            this.materialTabControl2.Location = new System.Drawing.Point(-4, 38);
+            this.materialTabControl2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabControl2.Name = "materialTabControl2";
+            this.materialTabControl2.SelectedIndex = 0;
+            this.materialTabControl2.Size = new System.Drawing.Size(1051, 421);
+            this.materialTabControl2.TabIndex = 23;
             // 
-            // subItem1ToolStripMenuItem
+            // tabPage8
             // 
-            this.subItem1ToolStripMenuItem.AutoSize = false;
-            this.subItem1ToolStripMenuItem.Name = "subItem1ToolStripMenuItem";
-            this.subItem1ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
-            this.subItem1ToolStripMenuItem.Text = "SubItem 1";
+            this.tabPage8.Controls.Add(this.materialLabel9);
+            this.tabPage8.Controls.Add(this.materialSingleLineTextField1);
+            this.tabPage8.Controls.Add(this.MaterialButton4);
+            this.tabPage8.Controls.Add(this.materialLabel1);
+            this.tabPage8.Controls.Add(this.materialSingleLineTextField3);
+            this.tabPage8.Controls.Add(this.materialButton7);
+            this.tabPage8.Controls.Add(this.materialSingleLineTextField2);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(1043, 395);
+            this.tabPage8.TabIndex = 0;
+            this.tabPage8.Text = "FIRST";
+            this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // subItem2ToolStripMenuItem
+            // tabPage9
             // 
-            this.subItem2ToolStripMenuItem.AutoSize = false;
-            this.subItem2ToolStripMenuItem.Name = "subItem2ToolStripMenuItem";
-            this.subItem2ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
-            this.subItem2ToolStripMenuItem.Text = "SubItem 2";
+            this.tabPage9.Controls.Add(this.materialLabel10);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(1043, 395);
+            this.tabPage9.TabIndex = 1;
+            this.tabPage9.Text = "Second";
+            this.tabPage9.UseVisualStyleBackColor = true;
             // 
-            // materialButton24
+            // materialTabSelector1
             // 
-            this.materialButton24.AutoSize = true;
-            this.materialButton24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton24.Depth = 0;
-            this.materialButton24.DrawShadows = true;
-            this.materialButton24.HighEmphasis = false;
-            this.materialButton24.Icon = global::MaterialSkinExample.Properties.Resources.baseline_bluetooth_black_24dp;
-            this.materialButton24.Location = new System.Drawing.Point(508, 76);
-            this.materialButton24.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton24.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton24.Name = "materialButton24";
-            this.materialButton24.Size = new System.Drawing.Size(147, 36);
-            this.materialButton24.TabIndex = 60;
-            this.materialButton24.Text = "OUTLINE - ICON";
-            this.materialButton24.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
-            this.materialButton24.UseAccentColor = false;
-            this.materialButton24.UseVisualStyleBackColor = true;
+            this.materialTabSelector1.BaseTabControl = this.materialTabControl2;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Location = new System.Drawing.Point(-4, 0);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(1051, 40);
+            this.materialTabSelector1.TabIndex = 24;
+            this.materialTabSelector1.Text = "materialTabSelector1";
             // 
-            // materialButton23
+            // materialLabel9
             // 
-            this.materialButton23.AutoSize = true;
-            this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton23.Depth = 0;
-            this.materialButton23.DrawShadows = true;
-            this.materialButton23.HighEmphasis = false;
-            this.materialButton23.Icon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
-            this.materialButton23.Location = new System.Drawing.Point(255, 76);
-            this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton23.Name = "materialButton23";
-            this.materialButton23.Size = new System.Drawing.Size(128, 36);
-            this.materialButton23.TabIndex = 59;
-            this.materialButton23.Text = "CONT - ICON";
-            this.materialButton23.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton23.UseAccentColor = false;
-            this.materialButton23.UseVisualStyleBackColor = true;
+            this.materialLabel9.AutoSize = true;
+            this.materialLabel9.Depth = 0;
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel9.Location = new System.Drawing.Point(7, 7);
+            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel9.Name = "materialLabel9";
+            this.materialLabel9.Size = new System.Drawing.Size(771, 19);
+            this.materialLabel9.TabIndex = 0;
+            this.materialLabel9.Text = "Tabs are a thing too!, They don\'t play very well with the VS Designer, but the co" +
+    "mponents work just fine at run-time";
             // 
-            // materialButton22
+            // materialLabel10
             // 
-            this.materialButton22.AutoSize = true;
-            this.materialButton22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton22.Depth = 0;
-            this.materialButton22.DrawShadows = true;
-            this.materialButton22.HighEmphasis = false;
-            this.materialButton22.Icon = global::MaterialSkinExample.Properties.Resources.baseline_favorite_border_black_24dp;
-            this.materialButton22.Location = new System.Drawing.Point(20, 76);
-            this.materialButton22.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton22.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton22.Name = "materialButton22";
-            this.materialButton22.Size = new System.Drawing.Size(124, 36);
-            this.materialButton22.TabIndex = 58;
-            this.materialButton22.Text = "TEXT - ICON";
-            this.materialButton22.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.materialButton22.UseAccentColor = false;
-            this.materialButton22.UseVisualStyleBackColor = true;
+            this.materialLabel10.AutoSize = true;
+            this.materialLabel10.Depth = 0;
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel10.Location = new System.Drawing.Point(6, 7);
+            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel10.Name = "materialLabel10";
+            this.materialLabel10.Size = new System.Drawing.Size(159, 19);
+            this.materialLabel10.TabIndex = 1;
+            this.materialLabel10.Text = "Everything is possible!";
             // 
-            // materialFlatButton2
+            // materialLabel1
             // 
-            this.materialFlatButton2.AutoSize = true;
-            this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton2.Depth = 0;
-            this.materialFlatButton2.DrawShadows = true;
-            this.materialFlatButton2.HighEmphasis = false;
-            this.materialFlatButton2.Icon = global::MaterialSkinExample.Properties.Resources.minus;
-            this.materialFlatButton2.Location = new System.Drawing.Point(21, 95);
-            this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton2.Name = "materialFlatButton2";
-            this.materialFlatButton2.Size = new System.Drawing.Size(103, 36);
-            this.materialFlatButton2.TabIndex = 6;
-            this.materialFlatButton2.Text = "Remove";
-            this.materialFlatButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.materialFlatButton2.UseAccentColor = false;
-            this.materialFlatButton2.UseVisualStyleBackColor = true;
-            this.materialFlatButton2.Click += new System.EventHandler(this.materialFlatButton4_Click);
+            this.materialLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(11, 142);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(605, 64);
+            this.materialLabel1.TabIndex = 14;
+            this.materialLabel1.Text = resources.GetString("materialLabel1.Text");
             // 
-            // MaterialButton2
+            // materialButton7
             // 
-            this.MaterialButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MaterialButton2.AutoSize = true;
-            this.MaterialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.MaterialButton2.Depth = 0;
-            this.MaterialButton2.DrawShadows = true;
-            this.MaterialButton2.HighEmphasis = true;
-            this.MaterialButton2.Icon = global::MaterialSkinExample.Properties.Resources.plus;
-            this.MaterialButton2.Location = new System.Drawing.Point(930, 95);
-            this.MaterialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.MaterialButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.MaterialButton2.Name = "MaterialButton2";
-            this.MaterialButton2.Size = new System.Drawing.Size(76, 36);
-            this.MaterialButton2.TabIndex = 1;
-            this.MaterialButton2.Text = "Add";
-            this.MaterialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.MaterialButton2.UseAccentColor = false;
-            this.MaterialButton2.UseVisualStyleBackColor = true;
-            this.MaterialButton2.Click += new System.EventHandler(this.MaterialButton2_Click);
+            this.materialButton7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialButton7.AutoSize = true;
+            this.materialButton7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton7.Depth = 0;
+            this.materialButton7.DrawShadows = true;
+            this.materialButton7.HighEmphasis = true;
+            this.materialButton7.Icon = null;
+            this.materialButton7.Location = new System.Drawing.Point(150, 212);
+            this.materialButton7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton7.Name = "materialButton7";
+            this.materialButton7.Size = new System.Drawing.Size(125, 36);
+            this.materialButton7.TabIndex = 0;
+            this.materialButton7.Text = "Change Theme";
+            this.materialButton7.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.materialButton7.UseAccentColor = false;
+            this.materialButton7.UseVisualStyleBackColor = true;
+            this.materialButton7.Click += new System.EventHandler(this.materialButton1_Click);
             // 
-            // materialFloatingActionButton1
+            // materialSingleLineTextField2
             // 
-            this.materialFloatingActionButton1.AnimateShowHideButton = true;
-            this.materialFloatingActionButton1.Depth = 0;
-            this.materialFloatingActionButton1.DrawShadows = true;
-            this.materialFloatingActionButton1.Icon = global::MaterialSkinExample.Properties.Resources.plus;
-            this.materialFloatingActionButton1.Location = new System.Drawing.Point(489, 59);
-            this.materialFloatingActionButton1.Margin = new System.Windows.Forms.Padding(2);
-            this.materialFloatingActionButton1.Mini = false;
-            this.materialFloatingActionButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
-            this.materialFloatingActionButton1.Size = new System.Drawing.Size(56, 56);
-            this.materialFloatingActionButton1.TabIndex = 18;
-            this.materialFloatingActionButton1.Text = "materialFloatingActionButton1";
-            this.materialFloatingActionButton1.UseVisualStyleBackColor = true;
+            this.materialSingleLineTextField2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialSingleLineTextField2.Depth = 0;
+            this.materialSingleLineTextField2.Hint = "Another example hint";
+            this.materialSingleLineTextField2.Location = new System.Drawing.Point(11, 76);
+            this.materialSingleLineTextField2.MaxLength = 32767;
+            this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
+            this.materialSingleLineTextField2.PasswordChar = '\0';
+            this.materialSingleLineTextField2.SelectedText = "";
+            this.materialSingleLineTextField2.SelectionLength = 0;
+            this.materialSingleLineTextField2.SelectionStart = 0;
+            this.materialSingleLineTextField2.Size = new System.Drawing.Size(299, 23);
+            this.materialSingleLineTextField2.TabIndex = 3;
+            this.materialSingleLineTextField2.TabStop = false;
+            this.materialSingleLineTextField2.UseSystemPasswordChar = false;
+            // 
+            // materialSingleLineTextField1
+            // 
+            this.materialSingleLineTextField1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialSingleLineTextField1.Depth = 0;
+            this.materialSingleLineTextField1.Hint = "This is a hint";
+            this.materialSingleLineTextField1.Location = new System.Drawing.Point(11, 39);
+            this.materialSingleLineTextField1.MaxLength = 32767;
+            this.materialSingleLineTextField1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
+            this.materialSingleLineTextField1.PasswordChar = '\0';
+            this.materialSingleLineTextField1.SelectedText = "";
+            this.materialSingleLineTextField1.SelectionLength = 0;
+            this.materialSingleLineTextField1.SelectionStart = 0;
+            this.materialSingleLineTextField1.Size = new System.Drawing.Size(299, 23);
+            this.materialSingleLineTextField1.TabIndex = 2;
+            this.materialSingleLineTextField1.TabStop = false;
+            this.materialSingleLineTextField1.UseSystemPasswordChar = false;
+            // 
+            // materialSingleLineTextField3
+            // 
+            this.materialSingleLineTextField3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialSingleLineTextField3.Depth = 0;
+            this.materialSingleLineTextField3.Hint = "This is a password";
+            this.materialSingleLineTextField3.Location = new System.Drawing.Point(11, 113);
+            this.materialSingleLineTextField3.MaxLength = 32767;
+            this.materialSingleLineTextField3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextField3.Name = "materialSingleLineTextField3";
+            this.materialSingleLineTextField3.PasswordChar = '\0';
+            this.materialSingleLineTextField3.SelectedText = "";
+            this.materialSingleLineTextField3.SelectionLength = 0;
+            this.materialSingleLineTextField3.SelectionStart = 0;
+            this.materialSingleLineTextField3.Size = new System.Drawing.Size(299, 23);
+            this.materialSingleLineTextField3.TabIndex = 4;
+            this.materialSingleLineTextField3.TabStop = false;
+            this.materialSingleLineTextField3.UseSystemPasswordChar = true;
+            // 
+            // MaterialButton4
+            // 
+            this.MaterialButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MaterialButton4.AutoSize = true;
+            this.MaterialButton4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MaterialButton4.Depth = 0;
+            this.MaterialButton4.DrawShadows = true;
+            this.MaterialButton4.HighEmphasis = true;
+            this.MaterialButton4.Icon = null;
+            this.MaterialButton4.Location = new System.Drawing.Point(11, 212);
+            this.MaterialButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.MaterialButton4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.MaterialButton4.Name = "MaterialButton4";
+            this.MaterialButton4.Size = new System.Drawing.Size(131, 36);
+            this.MaterialButton4.TabIndex = 22;
+            this.MaterialButton4.Text = "Change Colors";
+            this.MaterialButton4.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.MaterialButton4.UseAccentColor = false;
+            this.MaterialButton4.UseVisualStyleBackColor = true;
+            this.MaterialButton4.Click += new System.EventHandler(this.MaterialButton1_Click);
             // 
             // MainForm
             // 
@@ -1368,15 +1451,16 @@ namespace MaterialSkinExample
             this.tabPage6.PerformLayout();
             this.materialContextMenuStrip1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.materialTabControl2.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private MaterialSkin.Controls.MaterialButton materialButton7;
-        private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextField1;
-        private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextField2;
         private MaterialSkin.Controls.MaterialCheckBox materialCheckbox1;
         private MaterialSkin.Controls.MaterialCheckBox materialCheckbox2;
         private MaterialSkin.Controls.MaterialCheckBox materialCheckbox3;
@@ -1384,7 +1468,6 @@ namespace MaterialSkinExample
         private MaterialSkin.Controls.MaterialRadioButton materialRadioButton1;
         private MaterialRadioButton materialRadioButton2;
         private MaterialRadioButton materialRadioButton3;
-        private MaterialLabel materialLabel1;
         private MaterialRadioButton materialRadioButton4;
         private MaterialTabControl materialTabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -1401,7 +1484,6 @@ namespace MaterialSkinExample
         private System.Windows.Forms.ToolStripMenuItem disabledItemToolStripMenuItem;
 		private MaterialCheckBox materialCheckBox6;
 		private MaterialButton MaterialButton1;
-        private MaterialSingleLineTextField materialSingleLineTextField3;
 		private TabPage tabPage4;
         private TabPage tabPage5;
         private MaterialProgressBar materialProgressBar1;
@@ -1418,7 +1500,6 @@ namespace MaterialSkinExample
         private MaterialDrawer materialDrawer1;
         private Panel panel1;
         private ImageList menuIconList;
-        private MaterialButton MaterialButton4;
         private MaterialButton MaterialButton3;
         private MaterialLabel materialLabel6;
         private MaterialLabel materialLabel7;
@@ -1449,5 +1530,17 @@ namespace MaterialSkinExample
         private MaterialButton materialButton24;
         private MaterialButton materialButton23;
         private MaterialButton materialButton22;
+        private MaterialTabSelector materialTabSelector1;
+        private MaterialTabControl materialTabControl2;
+        private TabPage tabPage8;
+        private MaterialLabel materialLabel9;
+        private TabPage tabPage9;
+        private MaterialLabel materialLabel10;
+        private MaterialSingleLineTextField materialSingleLineTextField1;
+        private MaterialButton MaterialButton4;
+        private MaterialLabel materialLabel1;
+        private MaterialSingleLineTextField materialSingleLineTextField3;
+        private MaterialButton materialButton7;
+        private MaterialSingleLineTextField materialSingleLineTextField2;
     }
 }
