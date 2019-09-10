@@ -41,14 +41,14 @@
         public bool UseAccentColor { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Primary
+        /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
-        public bool Primary { get; set; }
+        public bool HighEmphasis { get; set; }
 
         private MaterialButtonType _type;
 
         /// <summary>
-        /// Gets or sets a value indicating whether Primary
+        /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
         public MaterialButtonType Type
         {
@@ -64,6 +64,12 @@
                     Parent.Paint += new PaintEventHandler(drawShadowOnParent);
                 }
             }
+        }
+
+        protected override void InitLayout()
+        {
+            base.InitLayout();
+            Invalidate();
         }
 
 
@@ -110,7 +116,7 @@
         /// </summary>
         public MaterialButton()
         {
-            Primary = false;
+            HighEmphasis = false;
             Type = MaterialButtonType.Contained;
 
             _animationManager = new AnimationManager(false)
@@ -142,7 +148,7 @@
             set
             {
                 base.Text = value;
-                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_BOLD_10);
+                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
                 if (AutoSize)
                 {
                     Size = GetPreferredSize();
@@ -190,11 +196,12 @@
                 // draw button rect
                 if (!Enabled)
                 {
-                    g.FillRectangle(new SolidBrush(SkinManager.GetCheckBoxOffDisabledColor()), ClientRectangle);
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(30, SkinManager.GetDisabledOrHintColor().RemoveAlpha())), ClientRectangle);
                 }
-                else if (Primary)
+                else if (HighEmphasis)
                 {
-                    g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, ClientRectangle);
+
+                    g.FillRectangle(UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, ClientRectangle);
                 }
                 else
                 {
@@ -209,7 +216,14 @@
             //Hover
             Color c = SkinManager.GetButtonHoverBackgroundColor();
 
-            g.FillRectangle(new SolidBrush(Color.FromArgb((int)(hoverAnimProgress * c.A), c.RemoveAlpha())), ClientRectangle);
+            g.FillRectangle(new SolidBrush(
+                Color.FromArgb(
+                    (int)(hoverAnimProgress * c.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                    SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
+                    SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
+                    (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
+                    SkinManager.ColorScheme.PrimaryColor)).RemoveAlpha())), // Normal or Emphasis without accent
+                ClientRectangle);
 
             if (Type == MaterialButtonType.Outlined)
             {
@@ -219,7 +233,7 @@
                     new Point(ClientRectangle.Width-2, ClientRectangle.Height-1), new Point(ClientRectangle.X+1, ClientRectangle.Height-1),
                     new Point(ClientRectangle.X, ClientRectangle.Height-2), new Point(ClientRectangle.X, ClientRectangle.Y+1)
                 };
-                g.DrawLines(SkinManager.ColorScheme.PrimaryPen, ClientRectPoints);
+                g.DrawLines(new Pen(SkinManager.GetDisabledOrHintColor(), 1), ClientRectPoints);
             }
 
             //Ripple
@@ -231,7 +245,13 @@
                     var animationValue = _animationManager.GetProgress(i);
                     var animationSource = _animationManager.GetSource(i);
 
-                    using (Brush rippleBrush = new SolidBrush(Color.FromArgb((int)(101 - (animationValue * 100)), SkinManager.ColorScheme.LightPrimaryColor)))
+                    using (Brush rippleBrush = new SolidBrush(
+                        Color.FromArgb((int)(100 - (animationValue * 100)),
+                        (Type == MaterialButtonType.Contained && HighEmphasis ? (UseAccentColor ?
+                            SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Emphasis with accent
+                            SkinManager.ColorScheme.LightPrimaryColor) : // Emphasis
+                            (UseAccentColor ? SkinManager.ColorScheme.AccentColor : // Normal with accent
+                            SkinManager.ColorScheme.PrimaryColor))))) // Normal
                     {
                         var rippleSize = (int)(animationValue * Width * 2);
                         g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
@@ -256,29 +276,20 @@
 
             //Text
             var textRect = ClientRectangle;
-
             if (Icon != null)
             {
-                //
-                // Resize and move Text container
-                //
-
-                // First 8: left padding
-                // 24: icon width
-                // Second 4: space between Icon and Text
-                // Third 8: right padding
-                textRect.Width -= 8 + 24 + 4 + 8;
-
-                // First 8: left padding
-                // 24: icon width
-                // Second 4: space between Icon and Text
-                textRect.X += 8 + 24 + 4;
+                textRect.Width -= 8 + 24 + 4 + 8; // left padding + icon width + space between Icon and Text + right padding
+                textRect.X += 8 + 24 + 4; // left padding + icon width + space between Icon and Text
             }
 
             g.DrawString(
                 Text.ToUpper(),
-                SkinManager.ROBOTO_BOLD_10,
-                Enabled ? (Primary ? Type == MaterialButtonType.Text ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.ColorScheme.TextBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetButtonDisabledTextBrush(),
+                SkinManager.ROBOTO_MEDIUM_10,
+                Enabled ? (HighEmphasis ? (Type == MaterialButtonType.Text || Type == MaterialButtonType.Outlined) ?
+                (UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush) : // Outline and text primary
+                SkinManager.ColorScheme.TextBrush : // Contained HighEmphasis
+                SkinManager.GetPrimaryTextBrush()) : // Secondary
+                SkinManager.GetButtonDisabledTextBrush(), // Disabled
                 textRect,
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center }
                 );

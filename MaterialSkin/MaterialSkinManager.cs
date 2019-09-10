@@ -100,7 +100,7 @@
         /// <summary>
         /// Defines the DISABLED_OR_HINT_TEXT_BLACK
         /// </summary>
-        private static readonly Color DISABLED_OR_HINT_TEXT_BLACK = Color.FromArgb(66, 0, 0, 0);
+        private static readonly Color DISABLED_OR_HINT_TEXT_BLACK = Color.FromArgb(60, 0, 0, 0);
 
         /// <summary>
         /// Defines the DISABLED_OR_HINT_TEXT_BLACK_BRUSH
@@ -140,7 +140,7 @@
         /// <summary>
         /// Defines the DISABLED_OR_HINT_TEXT_WHITE
         /// </summary>
-        private static readonly Color DISABLED_OR_HINT_TEXT_WHITE = Color.FromArgb(77, 255, 255, 255);
+        private static readonly Color DISABLED_OR_HINT_TEXT_WHITE = Color.FromArgb(30, 255, 255, 255);
 
         /// <summary>
         /// Defines the DISABLED_OR_HINT_TEXT_WHITE_BRUSH
@@ -617,10 +617,10 @@
         {
             ROBOTO_REGULAR_10 = new Font(LoadFont(Resources.Roboto_Regular), 10f);
             ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
-            ROBOTO_BOLD_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            ROBOTO_BOLD_10 = new Font(LoadFont(Resources.Roboto_Bold), 10f, FontStyle.Bold);
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
-            ROBOTO_BOLD_11 = new Font(LoadFont(Resources.Roboto_Bold), 11f);
+            ROBOTO_BOLD_11 = new Font(LoadFont(Resources.Roboto_Bold), 11f, FontStyle.Bold);
             ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
 
         Theme = Themes.LIGHT;

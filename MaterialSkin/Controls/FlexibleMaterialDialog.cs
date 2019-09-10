@@ -96,7 +96,7 @@ namespace MaterialSkin.Controls
             this.button1.MinimumSize = new System.Drawing.Size(0, 24);
             this.button1.MouseState = MaterialSkin.MouseState.HOVER;
             this.button1.Name = "button1";
-            this.button1.Primary = true;
+            this.button1.HighEmphasis = true;
             this.button1.Size = new System.Drawing.Size(39, 36);
             this.button1.TabIndex = 2;
             this.button1.Text = "OK";
@@ -135,7 +135,7 @@ namespace MaterialSkin.Controls
             this.button2.MinimumSize = new System.Drawing.Size(0, 24);
             this.button2.MouseState = MaterialSkin.MouseState.HOVER;
             this.button2.Name = "button2";
-            this.button2.Primary = true;
+            this.button2.HighEmphasis = true;
             this.button2.Size = new System.Drawing.Size(39, 36);
             this.button2.TabIndex = 3;
             this.button2.Text = "OK";
@@ -154,7 +154,7 @@ namespace MaterialSkin.Controls
             this.button3.MinimumSize = new System.Drawing.Size(0, 24);
             this.button3.MouseState = MaterialSkin.MouseState.HOVER;
             this.button3.Name = "button3";
-            this.button3.Primary = true;
+            this.button3.HighEmphasis = true;
             this.button3.Size = new System.Drawing.Size(39, 36);
             this.button3.TabIndex = 0;
             this.button3.Text = "OK";
