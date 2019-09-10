@@ -138,10 +138,6 @@
         /// Defines the TAB_HEADER_PADDING
         /// </summary>
         private const int TAB_HEADER_PADDING = 24;
-        /// <summary>
-        /// Defines the background accent alpha
-        /// </summary>
-        private const int ACCENT_ALPHA = 80;
 
         /// <summary>
         ///  Defines the individual item Heigth in the drawer
@@ -275,7 +271,7 @@
                 var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
 
                 // Background
-                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(ACCENT_ALPHA, 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), SkinManager.ColorScheme.AccentColor));
+                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(SkinManager.GetAccentAlpha(), 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), SkinManager.ColorScheme.AccentColor));
                 g.FillRectangle(bgBrush, _tabRects[currentTabIndex]);
                 bgBrush.Dispose();
 

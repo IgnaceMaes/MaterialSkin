@@ -124,12 +124,12 @@
             if (e.Item.Selected)
             {
                 //selected background
-                g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
+                g.FillRectangle(SkinManager.GetButtonPressedBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
             }
             else if (e.Bounds.Contains(MouseLocation) && MouseState == MouseState.HOVER)
             {
                 //hover background
-                g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
+                g.FillRectangle(SkinManager.GetButtonHoverBackgroundBrush(), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
             }
 
 

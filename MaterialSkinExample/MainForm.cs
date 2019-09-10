@@ -17,7 +17,7 @@ namespace MaterialSkinExample
             materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
 			materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
 
 			// Add dummy data to the listview
 	        seedListView();
@@ -57,7 +57,7 @@ namespace MaterialSkinExample
         }
 
         private int colorSchemeIndex;
-        private void materialRaisedButton1_Click(object sender, EventArgs e)
+        private void MaterialButton1_Click(object sender, EventArgs e)
         {
 	        colorSchemeIndex++;
 	        if (colorSchemeIndex > 2) colorSchemeIndex = 0;
@@ -77,7 +77,7 @@ namespace MaterialSkinExample
 	        }
         }
 
-        private void materialRaisedButton2_Click(object sender, EventArgs e)
+        private void MaterialButton2_Click(object sender, EventArgs e)
         {
             materialProgressBar1.Value = Math.Min(materialProgressBar1.Value + 10, 100);
         }

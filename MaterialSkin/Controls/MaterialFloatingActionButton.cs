@@ -61,7 +61,11 @@
         public bool Mini
         {
             get { return _mini; }
-            set { setSize(value); }
+            set
+            {
+                if (Parent != null) Parent.Invalidate();
+                setSize(value);
+            }
         }
 
         /// <summary>
@@ -117,7 +121,6 @@
         /// </summary>
         public MaterialFloatingActionButton()
         {
-
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             Size = new Size(FAB_SIZE, FAB_SIZE);
@@ -137,13 +140,18 @@
             _showAnimationManager.OnAnimationFinished += _showAnimationManager_OnAnimationFinished;
         }
 
+        protected override void InitLayout()
+        {
+            Parent.Paint += new PaintEventHandler(drawShadowOnParent);
+        }
+
         /// <summary>
         /// The setSize
         /// </summary>
         /// <param name="mini">The mini<see cref="bool"/></param>
         private void setSize(bool mini)
         {
-            Size = mini ? new Size(FAB_MINI_SIZE + 10, FAB_MINI_SIZE + 14) : new Size(FAB_SIZE + 10, FAB_SIZE + 14);
+            Size = mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
             _mini = mini;
         }
 
@@ -160,17 +168,24 @@
             }
         }
 
-        private const int CS_DROPSHADOW = 0x00020000;
-        protected override CreateParams CreateParams
+        private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
-            get
-            {
-                // add the drop shadow flag for automatically drawing
-                // a drop shadow around the form
-                CreateParams cp = base.CreateParams;
-                cp.ClassStyle |= CS_DROPSHADOW;
-                return cp;
-            }
+            // paint shadow on parent
+            Graphics gp = e.Graphics;
+            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
+            gp.Transform = mx;
+            gp.SmoothingMode = SmoothingMode.AntiAlias;
+            drawShadow(gp, _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE));
+        }
+
+        void drawShadow(Graphics g, Rectangle bounds)
+        {
+            SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 2, bounds.Y - 1, bounds.Width + 4, bounds.Height + 6));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 1, bounds.Y - 1, bounds.Width + 2, bounds.Height + 4));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y - 0, bounds.Width + 0, bounds.Height + 2));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 2, bounds.Width + 0, bounds.Height + 0));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 1, bounds.Width + 0, bounds.Height + 0));
         }
 
         /// <summary>
@@ -183,16 +198,16 @@
 
             var g = pevent.Graphics;
 
-            Rectangle fabBounds = _mini ? new Rectangle(4, 7, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(4, 7, FAB_SIZE, FAB_SIZE);
+            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(30, 0, 0, 0));
-            g.FillEllipse(shadowBrush, new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 2, fabBounds.Height + 2));
-            g.FillEllipse(shadowBrush, new Rectangle(fabBounds.X - 0, fabBounds.Y + 2, fabBounds.Width + 0, fabBounds.Height + 0));
-            g.FillEllipse(shadowBrush, new Rectangle(fabBounds.X - 0, fabBounds.Y + 1, fabBounds.Width + 0, fabBounds.Height + 0));
 
+            // Paint shadow on element to blend with the parent shadow
+            drawShadow(g, fabBounds);
+
+            // draw fab
             g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);
 
 
@@ -220,7 +235,7 @@
 
             if (Icon != null)
             {
-                g.DrawImage(Icon, new Rectangle(fabBounds.Width / 2 - 11 + 4, fabBounds.Height / 2 - 11 + 7, 24, 24));
+                g.DrawImage(Icon, new Rectangle(fabBounds.Width / 2 - 11, fabBounds.Height / 2 - 11, 24, 24));
             }
 
 
@@ -235,7 +250,7 @@
 
             // Clip to a round shape with a 1px padding
             GraphicsPath clipPath = new GraphicsPath();
-            clipPath.AddEllipse(new Rectangle(fabBounds.X - 2, fabBounds.Y - 2, fabBounds.Width + 4, fabBounds.Height + 5));
+            clipPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 2, fabBounds.Height + 2));
             Region = new Region(clipPath);
         }
 
@@ -243,9 +258,9 @@
         /// The OnMouseUp
         /// </summary>
         /// <param name="mevent">The mevent<see cref="MouseEventArgs"/></param>
-        protected override void OnMouseUp(MouseEventArgs mevent)
+        protected override void OnMouseClick(MouseEventArgs mevent)
         {
-            base.OnMouseUp(mevent);
+            base.OnMouseClick(mevent);
             _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 

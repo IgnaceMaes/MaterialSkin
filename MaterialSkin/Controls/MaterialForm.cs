@@ -516,7 +516,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
             DoubleBuffered = true;
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
@@ -540,6 +540,7 @@
             if (DesignMode || IsDisposed)
                 return;
 
+            // Drawer
             if (_drawer != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
             {
                 _drawer.Toggle();
@@ -893,9 +894,9 @@
         {
             base.OnResize(e);
 
-            _minButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            _maxButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            _xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            _minButtonBounds = new Rectangle((Width) - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            _maxButtonBounds = new Rectangle((Width) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            _xButtonBounds = new Rectangle((Width) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             _statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             _actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
         }
@@ -945,8 +946,8 @@
             // Determine whether or not we even should be drawing the buttons.
             bool showMin = MinimizeBox && ControlBox;
             bool showMax = MaximizeBox && ControlBox;
-            var hoverBrush = SkinManager.GetFlatButtonHoverBackgroundBrush();
-            var downBrush = SkinManager.GetFlatButtonPressedBackgroundBrush();
+            var hoverBrush = SkinManager.GetButtonHoverBackgroundBrush();
+            var downBrush = SkinManager.GetButtonPressedBackgroundBrush();
 
             // When MaximizeButton == false, the minimize button will be painted in its place
             if (_buttonState == ButtonState.MinOver && showMin)
@@ -1100,7 +1101,7 @@
             ResumeLayout(false);
 
         }
-        
+
         /// <summary>
         /// Load
         /// </summary>

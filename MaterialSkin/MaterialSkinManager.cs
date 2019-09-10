@@ -200,92 +200,97 @@
         /// <summary>
         /// Defines the RAISED_BUTTON_BACKGROUND
         /// </summary>
-        private static readonly Color RAISED_BUTTON_BACKGROUND = Color.FromArgb(255, 255, 255, 255);
+        private static readonly Color BUTTON_BACKGROUND = Color.FromArgb(255, 255, 255, 255);
 
         /// <summary>
         /// Defines the RAISED_BUTTON_BACKGROUND_BRUSH
         /// </summary>
-        private static readonly Brush RAISED_BUTTON_BACKGROUND_BRUSH = new SolidBrush(RAISED_BUTTON_BACKGROUND);
+        private static readonly Brush BUTTON_BACKGROUND_BRUSH = new SolidBrush(BUTTON_BACKGROUND);
+
+        /// <summary>
+        /// Defines the background accent alpha
+        /// </summary>
+        private static readonly int ACCENT_ALPHA = 80;
 
         /// <summary>
         /// Defines the RAISED_BUTTON_TEXT_LIGHT
         /// </summary>
-        private static readonly Color RAISED_BUTTON_TEXT_LIGHT = PRIMARY_TEXT_WHITE;
+        private static readonly Color BUTTON_TEXT_LIGHT = PRIMARY_TEXT_WHITE;
 
         /// <summary>
         /// Defines the RAISED_BUTTON_TEXT_LIGHT_BRUSH
         /// </summary>
-        private static readonly Brush RAISED_BUTTON_TEXT_LIGHT_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_LIGHT);
+        private static readonly Brush BUTTON_TEXT_LIGHT_BRUSH = new SolidBrush(BUTTON_TEXT_LIGHT);
 
         /// <summary>
         /// Defines the RAISED_BUTTON_TEXT_DARK
         /// </summary>
-        private static readonly Color RAISED_BUTTON_TEXT_DARK = PRIMARY_TEXT_BLACK;
+        private static readonly Color BUTTON_TEXT_DARK = PRIMARY_TEXT_BLACK;
 
         /// <summary>
         /// Defines the RAISED_BUTTON_TEXT_DARK_BRUSH
         /// </summary>
-        private static readonly Brush RAISED_BUTTON_TEXT_DARK_BRUSH = new SolidBrush(RAISED_BUTTON_TEXT_DARK);
+        private static readonly Brush BUTTON_TEXT_DARK_BRUSH = new SolidBrush(BUTTON_TEXT_DARK);
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_HOVER_LIGHT
         /// </summary>
-        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor());
+        private static readonly Color BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor());
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH
         /// </summary>
-        private static readonly Brush FLAT_BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_HOVER_LIGHT);
+        private static readonly Brush BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_HOVER_LIGHT);
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT
         /// </summary>
-        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT = Color.FromArgb(40.PercentageToColorComponent(), 0x999999.ToColor());
+        private static readonly Color BUTTON_BACKGROUND_PRESSED_LIGHT = Color.FromArgb(40.PercentageToColorComponent(), 0x999999.ToColor());
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH
         /// </summary>
-        private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT);
+        private static readonly Brush BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_PRESSED_LIGHT);
 
         /// <summary>
         /// Defines the FLAT_BUTTON_DISABLEDTEXT_LIGHT
         /// </summary>
-        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_LIGHT = Color.FromArgb(26.PercentageToColorComponent(), 0x000000.ToColor());
+        private static readonly Color BUTTON_DISABLEDTEXT_LIGHT = Color.FromArgb(26.PercentageToColorComponent(), 0x000000.ToColor());
 
         /// <summary>
         /// Defines the FLAT_BUTTON_DISABLEDTEXT_LIGHT_BRUSH
         /// </summary>
-        private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_LIGHT_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_LIGHT);
+        private static readonly Brush BUTTON_DISABLEDTEXT_LIGHT_BRUSH = new SolidBrush(BUTTON_DISABLEDTEXT_LIGHT);
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_HOVER_DARK
         /// </summary>
-        private static readonly Color FLAT_BUTTON_BACKGROUND_HOVER_DARK = Color.FromArgb(15.PercentageToColorComponent(), 0xCCCCCC.ToColor());
+        private static readonly Color BUTTON_BACKGROUND_HOVER_DARK = Color.FromArgb(15.PercentageToColorComponent(), 0xCCCCCC.ToColor());
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_HOVER_DARK_BRUSH
         /// </summary>
-        private static readonly Brush FLAT_BUTTON_BACKGROUND_HOVER_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_HOVER_DARK);
+        private static readonly Brush BUTTON_BACKGROUND_HOVER_DARK_BRUSH = new SolidBrush(BUTTON_BACKGROUND_HOVER_DARK);
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_PRESSED_DARK
         /// </summary>
-        private static readonly Color FLAT_BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(25.PercentageToColorComponent(), 0xCCCCCC.ToColor());
+        private static readonly Color BUTTON_BACKGROUND_PRESSED_DARK = Color.FromArgb(25.PercentageToColorComponent(), 0xCCCCCC.ToColor());
 
         /// <summary>
         /// Defines the FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH
         /// </summary>
-        private static readonly Brush FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_BACKGROUND_PRESSED_DARK);
+        private static readonly Brush BUTTON_BACKGROUND_PRESSED_DARK_BRUSH = new SolidBrush(BUTTON_BACKGROUND_PRESSED_DARK);
 
         /// <summary>
         /// Defines the FLAT_BUTTON_DISABLEDTEXT_DARK
         /// </summary>
-        private static readonly Color FLAT_BUTTON_DISABLEDTEXT_DARK = Color.FromArgb(30.PercentageToColorComponent(), 0xFFFFFF.ToColor());
+        private static readonly Color BUTTON_DISABLEDTEXT_DARK = Color.FromArgb(30.PercentageToColorComponent(), 0xFFFFFF.ToColor());
 
         /// <summary>
         /// Defines the FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH
         /// </summary>
-        private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_DARK);
+        private static readonly Brush BUTTON_DISABLEDTEXT_DARK_BRUSH = new SolidBrush(BUTTON_DISABLEDTEXT_DARK);
 
         /// <summary>
         /// Defines the CMS_BACKGROUND_LIGHT_HOVER
@@ -456,12 +461,12 @@
         }
 
         /// <summary>
-        /// The GetRaisedButtonBackgroundBrush
+        /// The GetRaisedButtonBackgroundColor
         /// </summary>
-        /// <returns>The <see cref="Brush"/></returns>
-        public Brush GetRaisedButtonBackgroundBrush()
+        /// <returns>The <see cref="Color"/></returns>
+        public Color GetButtonBackgroundColor()
         {
-            return RAISED_BUTTON_BACKGROUND_BRUSH;
+            return BUTTON_BACKGROUND;
         }
 
         /// <summary>
@@ -469,54 +474,62 @@
         /// </summary>
         /// <param name="primary">The primary<see cref="bool"/></param>
         /// <returns>The <see cref="Brush"/></returns>
-        public Brush GetRaisedButtonTextBrush(bool primary)
+        public Brush GetButtonTextBrush(bool primary)
         {
-            return primary ? RAISED_BUTTON_TEXT_LIGHT_BRUSH : RAISED_BUTTON_TEXT_DARK_BRUSH;
+            return primary ? BUTTON_TEXT_LIGHT_BRUSH : BUTTON_TEXT_DARK_BRUSH;
         }
 
         /// <summary>
-        /// The GetFlatButtonHoverBackgroundColor
+        /// The GetButtonHoverBackgroundColor
         /// </summary>
         /// <returns>The <see cref="Color"/></returns>
-        public Color GetFlatButtonHoverBackgroundColor()
+        public Color GetButtonHoverBackgroundColor()
         {
-            return Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_HOVER_LIGHT : FLAT_BUTTON_BACKGROUND_HOVER_DARK;
+            return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_HOVER_LIGHT : BUTTON_BACKGROUND_HOVER_DARK;
         }
 
         /// <summary>
         /// The GetFlatButtonHoverBackgroundBrush
         /// </summary>
         /// <returns>The <see cref="Brush"/></returns>
-        public Brush GetFlatButtonHoverBackgroundBrush()
+        public Brush GetButtonHoverBackgroundBrush()
         {
-            return Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH : FLAT_BUTTON_BACKGROUND_HOVER_DARK_BRUSH;
+            return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH : BUTTON_BACKGROUND_HOVER_DARK_BRUSH;
+        }
+        /// <summary>
+        /// The GetAccentAlpha
+        /// </summary>
+        /// <returns>The <see cref="int"/></returns>
+        public int GetAccentAlpha()
+        {
+            return ACCENT_ALPHA;
         }
 
         /// <summary>
         /// The GetFlatButtonPressedBackgroundColor
         /// </summary>
         /// <returns>The <see cref="Color"/></returns>
-        public Color GetFlatButtonPressedBackgroundColor()
+        public Color GetButtonPressedBackgroundColor()
         {
-            return Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT : FLAT_BUTTON_BACKGROUND_PRESSED_DARK;
+            return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_PRESSED_LIGHT : BUTTON_BACKGROUND_PRESSED_DARK;
         }
 
         /// <summary>
         /// The GetFlatButtonPressedBackgroundBrush
         /// </summary>
         /// <returns>The <see cref="Brush"/></returns>
-        public Brush GetFlatButtonPressedBackgroundBrush()
+        public Brush GetButtonPressedBackgroundBrush()
         {
-            return Theme == Themes.LIGHT ? FLAT_BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH : FLAT_BUTTON_BACKGROUND_PRESSED_DARK_BRUSH;
+            return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_PRESSED_LIGHT_BRUSH : BUTTON_BACKGROUND_PRESSED_DARK_BRUSH;
         }
 
         /// <summary>
         /// The GetFlatButtonDisabledTextBrush
         /// </summary>
         /// <returns>The <see cref="Brush"/></returns>
-        public Brush GetFlatButtonDisabledTextBrush()
+        public Brush GetButtonDisabledTextBrush()
         {
-            return Theme == Themes.LIGHT ? FLAT_BUTTON_DISABLEDTEXT_LIGHT_BRUSH : FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH;
+            return Theme == Themes.LIGHT ? BUTTON_DISABLEDTEXT_LIGHT_BRUSH : BUTTON_DISABLEDTEXT_DARK_BRUSH;
         }
 
         /// <summary>
@@ -562,9 +575,24 @@
         public Font ROBOTO_MEDIUM_11;
 
         /// <summary>
+        /// Defines the ROBOTO_MEDIUM_11
+        /// </summary>
+        public Font ROBOTO_BOLD_11;
+
+        /// <summary>
         /// Defines the ROBOTO_MEDIUM_10
         /// </summary>
         public Font ROBOTO_MEDIUM_10;
+
+        /// <summary>
+        /// Defines the ROBOTO_MEDIUM_10
+        /// </summary>
+        public Font ROBOTO_REGULAR_10;
+
+        /// <summary>
+        /// Defines the ROBOTO_MEDIUM_11
+        /// </summary>
+        public Font ROBOTO_BOLD_10;
 
         /// <summary>
         /// Defines the FORM_PADDING
@@ -587,11 +615,15 @@
         /// </summary>
         private MaterialSkinManager()
         {
-            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+            ROBOTO_REGULAR_10 = new Font(LoadFont(Resources.Roboto_Regular), 10f);
             ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            ROBOTO_BOLD_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
-            Theme = Themes.LIGHT;
+            ROBOTO_BOLD_11 = new Font(LoadFont(Resources.Roboto_Bold), 11f);
+            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+
+        Theme = Themes.LIGHT;
             ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 

@@ -72,12 +72,12 @@ namespace MaterialSkin.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button1 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.button1 = new MaterialSkin.Controls.MaterialButton();
             this.FlexibleMaterialFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBoxForIcon = new System.Windows.Forms.PictureBox();
-            this.button2 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.button3 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.button2 = new MaterialSkin.Controls.MaterialButton();
+            this.button3 = new MaterialSkin.Controls.MaterialButton();
             this.richTextBoxMessage = new MaterialMultiLineTextField();
             ((System.ComponentModel.ISupportInitialize)(this.FlexibleMaterialFormBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
@@ -209,7 +209,7 @@ namespace MaterialSkin.Controls
 
         }
 
-        private MaterialRaisedButton button1;
+        private MaterialButton button1;
 
         /// <summary>
         /// Defines the FlexibleMaterialFormBindingSource
@@ -225,8 +225,8 @@ namespace MaterialSkin.Controls
         /// Defines the pictureBoxForIcon
         /// </summary>
         private System.Windows.Forms.PictureBox pictureBoxForIcon;
-        private MaterialRaisedButton button2;
-        private MaterialRaisedButton button3;
+        private MaterialButton button2;
+        private MaterialButton button3;
 
         //These separators are used for the "copy to clipboard" standard operation, triggered by Ctrl + C (behavior and clipboard format is like in a standard MessageBox)
         /// <summary>
