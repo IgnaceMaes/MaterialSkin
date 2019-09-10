@@ -45,10 +45,27 @@
         /// </summary>
         public bool Primary { get; set; }
 
+        private MaterialButtonType _type;
+
         /// <summary>
         /// Gets or sets a value indicating whether Primary
         /// </summary>
-        public MaterialButtonType Type { get; set; }
+        public MaterialButtonType Type
+        {
+            get
+            {
+                return _type;
+            }
+            set
+            {
+                _type = value;
+                if (Type == MaterialButtonType.Contained && Parent != null)
+                {
+                    Parent.Paint += new PaintEventHandler(drawShadowOnParent);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Defines the _animationManager
@@ -132,14 +149,6 @@
                 }
 
                 Invalidate();
-            }
-        }
-
-        protected override void InitLayout()
-        {
-            if (Type == MaterialButtonType.Contained)
-            {
-                Parent.Paint += new PaintEventHandler(drawShadowOnParent);
             }
         }
 
