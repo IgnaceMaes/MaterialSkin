@@ -1,10 +1,10 @@
 ﻿namespace MaterialSkin.Controls
 {
     using MaterialSkin.Animations;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
-    using System.Drawing.Imaging;
     using System.Drawing.Text;
     using System.Windows.Forms;
 
@@ -72,6 +72,19 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        public delegate void DrawerStateHandler(object sender);
+        public event DrawerStateHandler DrawerStateChanged;
+        public event DrawerStateHandler DrawerBeginOpen;
+        public event DrawerStateHandler DrawerEndOpen;
+        public event DrawerStateHandler DrawerBeginClose;
+        public event DrawerStateHandler DrawerEndClose;
+
+        // icons
+        private Dictionary<string, TextureBrush> iconsBrushes;
+        private int prevLocation;
+
+        private int rippleSize = 0;
+
         /// <summary>
         /// Defines the _baseTabControl
         /// </summary>
@@ -88,6 +101,31 @@
                 _baseTabControl = value;
                 if (_baseTabControl == null)
                     return;
+
+                UpdateTabRects();
+
+                // pre-allocate texture brushes (icons)
+                if (_baseTabControl.ImageList != null)
+                {
+                    prevLocation = this.Location.X;
+
+                    iconsBrushes = new Dictionary<string, TextureBrush>(_baseTabControl.TabPages.Count);
+                    foreach (TabPage tabPage in _baseTabControl.TabPages)
+                    {
+                        if (String.IsNullOrEmpty(tabPage.ImageKey))
+                            continue;
+                        iconsBrushes.Add(tabPage.ImageKey, new TextureBrush(_baseTabControl.ImageList.Images[tabPage.ImageKey], System.Drawing.Drawing2D.WrapMode.Clamp));
+                        var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
+                        Rectangle iconRect = new Rectangle(
+                            _tabRects[currentTabIndex].X + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2),
+                            _tabRects[currentTabIndex].Y + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2),
+                            _baseTabControl.ImageList.Images[tabPage.ImageKey].Width, _baseTabControl.ImageList.Images[tabPage.ImageKey].Height);
+                        iconsBrushes[tabPage.ImageKey].TranslateTransform(iconRect.X + iconRect.Width / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2, iconRect.Y + iconRect.Height / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2);
+                    }
+                }
+
+                // Other helpers
+
                 _previousSelectedTabIndex = _baseTabControl.SelectedIndex;
                 _baseTabControl.Deselected += (sender, args) =>
                 {
@@ -143,7 +181,7 @@
         ///  Defines the individual item Heigth in the drawer
         /// </summary>
         private int tabHeight;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MaterialDrawer"/> class.
         /// </summary>
@@ -162,8 +200,24 @@
                 AnimationType = AnimationType.EaseInOut,
                 Increment = 0.04
             };
-            _showHideAnimManager.OnAnimationProgress += sender => Invalidate();
-            _showHideAnimManager.OnAnimationProgress += showHideAnimation;
+            _showHideAnimManager.OnAnimationProgress += sender =>
+            {
+                Invalidate();
+                showHideAnimation(sender);
+            };
+            _showHideAnimManager.OnAnimationFinished += sender =>
+            {
+                if (_baseTabControl != null && _tabRects.Count > 0)
+                rippleSize = _tabRects[_baseTabControl.SelectedIndex].Width;
+                if (_isOpen)
+                {
+                    DrawerEndOpen?.Invoke(this);
+                }
+                else
+                {
+                    DrawerEndClose?.Invoke(this);
+                }
+            };
 
 
             _clickAnimManager = new AnimationManager
@@ -252,18 +306,21 @@
             var clickAnimProgress = _clickAnimManager.GetProgress();
             // Show/Hide Drawer Animation
             var showHideAnimProgress = _showHideAnimManager.GetProgress();
+            var rSize = (int)(clickAnimProgress * rippleSize * 1.75);
 
             // Ripple
             if (_clickAnimManager.IsAnimating())
             {
                 var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (clickAnimProgress * 50)), Color.White));
-                var rippleSize = (int)(clickAnimProgress * _tabRects[_baseTabControl.SelectedIndex].Width * 1.75);
 
                 g.SetClip(_tabRects[_baseTabControl.SelectedIndex]);
-                g.FillEllipse(rippleBrush, new Rectangle(_animationSource.X - rippleSize / 2, _animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                g.FillEllipse(rippleBrush, new Rectangle(_animationSource.X - rSize / 2, _animationSource.Y - rSize / 2, rSize, rSize));
                 g.ResetClip();
                 rippleBrush.Dispose();
             }
+
+            int dx = prevLocation - this.Location.X;
+            prevLocation = this.Location.X;
 
             // Draw menu items
             foreach (TabPage tabPage in _baseTabControl.TabPages)
@@ -284,17 +341,17 @@
                 textBrush.Dispose();
 
                 // Icons
-                if (_baseTabControl.ImageList != null && tabPage.ImageKey != "")
+                if (_baseTabControl.ImageList != null && !String.IsNullOrEmpty(tabPage.ImageKey))
                 {
-                    ColorMatrix cm = new ColorMatrix();
-                    cm.Matrix33 = (float)(CalculateAlpha(255, SkinManager.ACTION_BAR_TEXT_SECONDARY.A, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress) / 255f);
-                    ImageAttributes ia = new ImageAttributes();
-                    ia.SetColorMatrix(cm);
                     Rectangle iconRect = new Rectangle(
                         _tabRects[currentTabIndex].X + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2),
                         _tabRects[currentTabIndex].Y + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2),
                         _baseTabControl.ImageList.Images[tabPage.ImageKey].Width, _baseTabControl.ImageList.Images[tabPage.ImageKey].Height);
-                    g.DrawImage(_baseTabControl.ImageList.Images[tabPage.ImageKey], iconRect, 0, 0, iconRect.Width, iconRect.Height, GraphicsUnit.Pixel, ia);
+
+                    if (ShowIconsWhenHidden)
+                        iconsBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
+
+                    g.FillRectangle(iconsBrushes[tabPage.ImageKey], iconRect);
 
                 }
             }
@@ -310,13 +367,15 @@
 
             g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, IndicatorWidth, height);
         }
-        
+
         /// <summary>
         /// Show the full drawer (aka open)
         /// </summary>
         public new void Show()
         {
             _isOpen = true;
+            DrawerStateChanged?.Invoke(this);
+            DrawerBeginOpen?.Invoke(this);
             _showHideAnimManager.StartNewAnimation(AnimationDirection.Out);
         }
 
@@ -326,6 +385,8 @@
         public new void Hide()
         {
             _isOpen = false;
+            DrawerStateChanged?.Invoke(this);
+            DrawerBeginClose?.Invoke(this);
             _showHideAnimManager.StartNewAnimation(AnimationDirection.In);
         }
 
