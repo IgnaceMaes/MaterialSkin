@@ -513,6 +513,12 @@
         /// </summary>
         public MaterialForm()
         {
+            DrawerWidth = 200;
+            DrawerIsOpen = false;
+            DrawerShowIconsWhenHidden = false;
+            DrawerAutoHide = true;
+            DrawerIndicatorWidth = 0;
+
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
             DoubleBuffered = true;
@@ -528,7 +534,156 @@
                 Increment = 0.04
             };
             _clickAnimManager.OnAnimationProgress += sender => Invalidate();
+
+            // Drawer
+            Shown += (sender, e) =>
+            {
+                AddDrawerOverlayForm();
+            };
         }
+
+        // Drawer overlay and speed improvements
+        public bool DrawerShowIconsWhenHidden { get; set; }
+        public int DrawerWidth { get; set; }
+        public bool DrawerAutoHide { get; set; }
+        public int DrawerIndicatorWidth { get; set; }
+        private bool _isOpen;
+        public bool DrawerIsOpen
+        {
+            get
+            {
+                return _isOpen;
+            }
+            set
+            {
+                _isOpen = value;
+                if (drawerControl != null)
+                {
+                    if (value)
+                        drawerControl.Show();
+                    else
+                        drawerControl.Hide();
+                }
+            }
+        }
+
+        Form drawerOverlay = new Form();
+        Form drawerForm = new Form();
+        MaterialDrawer drawerControl = new MaterialDrawer();
+        private MaterialTabControl _drawerTabControl;
+        public MaterialTabControl DrawerTabControl
+        {
+            get
+            {
+                return _drawerTabControl;
+            }
+            set
+            {
+                _drawerTabControl = value;
+            }
+        }
+
+        private AnimationManager _showHideAnimManager;
+
+        protected void AddDrawerOverlayForm()
+        {
+            if (DrawerTabControl == null)
+                return;
+
+            // Form opacity fade animation;
+            _showHideAnimManager = new AnimationManager
+            {
+                AnimationType = AnimationType.EaseInOut,
+                Increment = 0.04
+            };
+
+            _showHideAnimManager.OnAnimationProgress += (sender) =>
+            {
+                drawerOverlay.Opacity = (float)(_showHideAnimManager.GetProgress() * 0.55f);
+            };
+
+
+            int H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
+            int Y = Location.Y + _statusBarBounds.Height + _actionBarBounds.Height;
+
+            // Drawer Form definitions
+            drawerForm.BackColor = Color.LimeGreen;
+            drawerForm.TransparencyKey = Color.LimeGreen;
+            drawerForm.MinimizeBox = false;
+            drawerForm.MaximizeBox = false;
+            drawerForm.Text = "";
+            drawerForm.ShowIcon = false;
+            drawerForm.ControlBox = false;
+            drawerForm.FormBorderStyle = FormBorderStyle.None;
+            drawerForm.Visible = true;
+            drawerForm.Size = new Size(DrawerWidth, H);
+            drawerForm.Location = new Point(Location.X, Y);
+            drawerForm.ShowInTaskbar = false;
+            drawerForm.Owner = drawerOverlay;
+            drawerForm.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+
+            // Add drawer to overlay form
+            drawerForm.Controls.Add(drawerControl);
+            drawerControl.Location = new Point(0, 0);
+            drawerControl.Size = new Size(DrawerWidth, H);
+            drawerControl.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
+            drawerControl.BaseTabControl = DrawerTabControl;
+            drawerControl.ShowIconsWhenHidden = true;
+            // Init Options
+            drawerControl.IsOpen = DrawerIsOpen;
+            drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
+            drawerControl.AutoHide = DrawerAutoHide;
+            drawerControl.IndicatorWidth = DrawerIndicatorWidth;
+
+            // Overlay Form definitions
+            drawerOverlay.BackColor = Color.Black;
+            drawerOverlay.Opacity = 0;
+            drawerOverlay.MinimizeBox = false;
+            drawerOverlay.MaximizeBox = false;
+            drawerOverlay.Text = "";
+            drawerOverlay.ShowIcon = false;
+            drawerOverlay.ControlBox = false;
+            drawerOverlay.FormBorderStyle = FormBorderStyle.None;
+            drawerOverlay.Visible = true;
+            drawerOverlay.Size = new Size(Size.Width, H);
+            drawerOverlay.Location = new Point(Location.X, Y);
+            drawerOverlay.ShowInTaskbar = false;
+            drawerOverlay.Owner = this;
+            drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+
+            // Resize and move events
+            Resize += (sender, e) =>
+            {
+                H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
+                drawerForm.Size = new Size(DrawerIndicatorWidth, H);
+                drawerOverlay.Size = new Size(Size.Width, H);
+            };
+
+            Move += (sender, e) =>
+            {
+                Point pos = new Point(Location.X, Location.Y + _statusBarBounds.Height + _actionBarBounds.Height);
+                drawerForm.Location = pos;
+                drawerOverlay.Location = pos;
+            };
+
+            // Close when click outside menu
+            drawerOverlay.Click += (sender, e) =>
+            {
+                drawerControl.Hide();
+            };
+
+            // Animation and visibility
+            drawerControl.DrawerBeginOpen += (sender) =>
+            {
+                _showHideAnimManager.StartNewAnimation(AnimationDirection.In);
+            };
+
+            drawerControl.DrawerBeginClose += (sender) =>
+            {
+                _showHideAnimManager.StartNewAnimation(AnimationDirection.Out);
+            };
+        }
+
 
         /// <summary>
         /// The WndProc
@@ -541,9 +696,9 @@
                 return;
 
             // Drawer
-            if (_drawer != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
+            if (_drawerTabControl != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
             {
-                _drawer.Toggle();
+                drawerControl.Toggle();
                 _clickAnimManager.SetProgress(0);
                 _clickAnimManager.StartNewAnimation(AnimationDirection.In);
                 _animationSource = (PointToClient(Cursor.Position));
@@ -902,27 +1057,6 @@
         }
 
         /// <summary>
-        /// Defines the _drawer
-        /// </summary>
-        private MaterialDrawer _drawer;
-
-        /// <summary>
-        /// The Drawer
-        /// </summary>
-        public MaterialDrawer Drawer
-        {
-            get
-            {
-                return _drawer;
-            }
-            set
-            {
-                _drawer = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
         /// The OnPaint
         /// </summary>
         /// <param name="e">The e<see cref="PaintEventArgs"/></param>
@@ -1018,7 +1152,7 @@
             }
 
             // Drawer Icon
-            if (_drawer != null)
+            if (_drawerTabControl != null)
             {
                 _drawerIconRect = new Rectangle(SkinManager.FORM_PADDING / 2, STATUS_BAR_HEIGHT, 24 + SkinManager.FORM_PADDING + SkinManager.FORM_PADDING / 2, ACTION_BAR_HEIGHT);
                 // Ripple
@@ -1067,7 +1201,7 @@
 
             //Form title
             g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush,
-                new Rectangle(SkinManager.FORM_PADDING + (_drawer != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT),
+                new Rectangle(SkinManager.FORM_PADDING + (_drawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT),
                 new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
