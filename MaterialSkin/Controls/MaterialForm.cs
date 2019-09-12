@@ -538,6 +538,8 @@
             // Drawer
             Shown += (sender, e) =>
             {
+                if (DesignMode || IsDisposed)
+                    return;
                 AddDrawerOverlayForm();
             };
         }
