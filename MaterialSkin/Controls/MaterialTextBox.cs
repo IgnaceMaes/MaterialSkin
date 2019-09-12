@@ -7,7 +7,7 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
-    public class MaterialSingleLineTextField : Control, IMaterialControl
+    public class MaterialTextBox : Control, IMaterialControl
     {
         //Properties for managing the material design properties
         [Browsable(false)]
@@ -940,7 +940,7 @@
         }
         
 
-        public MaterialSingleLineTextField()
+        public MaterialTextBox()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 

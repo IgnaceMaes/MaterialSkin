@@ -45,7 +45,7 @@ namespace MaterialSkin.Controls
         /// Default is: 90% of the working area height.
         /// </summary>
         public static double MAX_HEIGHT_FACTOR = 0.9;
-        private MaterialMultiLineTextField richTextBoxMessage;
+        private MaterialMultiLineTextBox richTextBoxMessage;
 
         /// <summary>
         /// Erforderliche Designervariable.
@@ -78,7 +78,7 @@ namespace MaterialSkin.Controls
             this.pictureBoxForIcon = new System.Windows.Forms.PictureBox();
             this.button2 = new MaterialSkin.Controls.MaterialButton();
             this.button3 = new MaterialSkin.Controls.MaterialButton();
-            this.richTextBoxMessage = new MaterialMultiLineTextField();
+            this.richTextBoxMessage = new MaterialMultiLineTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.FlexibleMaterialFormBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForIcon)).BeginInit();

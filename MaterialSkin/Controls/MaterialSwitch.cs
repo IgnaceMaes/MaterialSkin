@@ -9,9 +9,9 @@
     using System.Windows.Forms;
 
     /// <summary>
-    /// Defines the <see cref="MaterialSwitch" />
+    /// Defines the <see cref="MaterialCheckBox" />
     /// </summary>
-    public class MaterialSwitch : CheckBox, IMaterialControl
+    public class MaterialCheckBox : CheckBox, IMaterialControl
     {
         /// <summary>
         /// Gets or sets the Depth
@@ -99,9 +99,9 @@
         private Rectangle _boxRectangle;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialSwitch"/> class.
+        /// Initializes a new instance of the <see cref="MaterialCheckBox"/> class.
         /// </summary>
-        public MaterialSwitch()
+        public MaterialCheckBox()
         {
             _animationManager = new AnimationManager
             {

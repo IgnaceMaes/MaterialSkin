@@ -45,6 +45,9 @@
     <Compile Include="Controls\FlexibleMaterialDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialSwitch.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -79,10 +82,10 @@
     <Compile Include="Controls\MaterialRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialMultiLineTextField.cs">
+    <Compile Include="Controls\MaterialMultiLineTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialSingleLineTextField.cs">
+    <Compile Include="Controls\MaterialTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialTabControl.cs">
