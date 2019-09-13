@@ -38,22 +38,22 @@ namespace MaterialSkinExample
             this.materialRadioButton4 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialRadioButton3 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialRadioButton2 = new MaterialSkin.Controls.MaterialRadioButton();
-            this.materialCheckbox4 = new MaterialSkin.Controls.MaterialCheckBox();
-            this.materialCheckbox3 = new MaterialSkin.Controls.MaterialCheckBox();
-            this.materialCheckbox2 = new MaterialSkin.Controls.MaterialCheckBox();
-            this.materialCheckbox1 = new MaterialSkin.Controls.MaterialCheckBox();
+            this.materialCheckbox4 = new MaterialSkin.Controls.MaterialCheckbox();
+            this.materialCheckbox3 = new MaterialSkin.Controls.MaterialCheckbox();
+            this.materialCheckbox2 = new MaterialSkin.Controls.MaterialCheckbox();
+            this.materialCheckbox1 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialRadioButton1 = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.materialTabControl2 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialTextBox();
             this.MaterialButton4 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton7 = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialSingleLineTextField3 = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.materialSingleLineTextField2 = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialSingleLineTextField3 = new MaterialSkin.Controls.MaterialTextBox();
+            this.materialSingleLineTextField2 = new MaterialSkin.Controls.MaterialTextBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
@@ -78,8 +78,8 @@ namespace MaterialSkinExample
             this.materialButton11 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton10 = new MaterialSkin.Controls.MaterialButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.materialCheckBox6 = new MaterialSkin.Controls.MaterialCheckBox();
-            this.materialCheckBox5 = new MaterialSkin.Controls.MaterialCheckBox();
+            this.materialCheckBox6 = new MaterialSkin.Controls.MaterialCheckbox();
+            this.materialCheckBox5 = new MaterialSkin.Controls.MaterialCheckbox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.materialListView1 = new MaterialSkin.Controls.MaterialListView();
@@ -113,6 +113,9 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.materialSwitch3 = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialSwitch2 = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialSwitch1 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.materialTabControl2.SuspendLayout();
@@ -879,6 +882,9 @@ namespace MaterialSkinExample
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.White;
+            this.tabPage2.Controls.Add(this.materialSwitch3);
+            this.tabPage2.Controls.Add(this.materialSwitch2);
+            this.tabPage2.Controls.Add(this.materialSwitch1);
             this.tabPage2.Controls.Add(this.materialCheckBox6);
             this.tabPage2.Controls.Add(this.materialCheckBox5);
             this.tabPage2.Controls.Add(this.materialCheckbox3);
@@ -1362,6 +1368,58 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item3ToolStripMenuItem.Text = "Item 3";
             // 
+            // materialSwitch3
+            // 
+            this.materialSwitch3.AutoSize = true;
+            this.materialSwitch3.Checked = true;
+            this.materialSwitch3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.materialSwitch3.Depth = 0;
+            this.materialSwitch3.Enabled = false;
+            this.materialSwitch3.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch3.Location = new System.Drawing.Point(257, 92);
+            this.materialSwitch3.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch3.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch3.Name = "materialSwitch3";
+            this.materialSwitch3.Ripple = true;
+            this.materialSwitch3.Size = new System.Drawing.Size(257, 37);
+            this.materialSwitch3.TabIndex = 28;
+            this.materialSwitch3.Text = "Switch - Checked and disabled";
+            this.materialSwitch3.UseVisualStyleBackColor = true;
+            // 
+            // materialSwitch2
+            // 
+            this.materialSwitch2.AutoSize = true;
+            this.materialSwitch2.Depth = 0;
+            this.materialSwitch2.Enabled = false;
+            this.materialSwitch2.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch2.Location = new System.Drawing.Point(257, 55);
+            this.materialSwitch2.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch2.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch2.Name = "materialSwitch2";
+            this.materialSwitch2.Ripple = true;
+            this.materialSwitch2.Size = new System.Drawing.Size(176, 37);
+            this.materialSwitch2.TabIndex = 27;
+            this.materialSwitch2.Text = "Switch - Disabled";
+            this.materialSwitch2.UseVisualStyleBackColor = true;
+            // 
+            // materialSwitch1
+            // 
+            this.materialSwitch1.AutoSize = true;
+            this.materialSwitch1.Depth = 0;
+            this.materialSwitch1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch1.Location = new System.Drawing.Point(257, 16);
+            this.materialSwitch1.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch1.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch1.Name = "materialSwitch1";
+            this.materialSwitch1.Ripple = true;
+            this.materialSwitch1.Size = new System.Drawing.Size(165, 37);
+            this.materialSwitch1.TabIndex = 26;
+            this.materialSwitch1.Text = "Material Switch";
+            this.materialSwitch1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1398,10 +1456,10 @@ namespace MaterialSkinExample
         }
 
         #endregion
-        private MaterialSkin.Controls.MaterialCheckBox materialCheckbox1;
-        private MaterialSkin.Controls.MaterialCheckBox materialCheckbox2;
-        private MaterialSkin.Controls.MaterialCheckBox materialCheckbox3;
-        private MaterialSkin.Controls.MaterialCheckBox materialCheckbox4;
+        private MaterialSkin.Controls.MaterialCheckbox materialCheckbox1;
+        private MaterialSkin.Controls.MaterialCheckbox materialCheckbox2;
+        private MaterialSkin.Controls.MaterialCheckbox materialCheckbox3;
+        private MaterialSkin.Controls.MaterialCheckbox materialCheckbox4;
         private MaterialSkin.Controls.MaterialRadioButton materialRadioButton1;
         private MaterialRadioButton materialRadioButton2;
         private MaterialRadioButton materialRadioButton3;
@@ -1410,7 +1468,7 @@ namespace MaterialSkinExample
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private MaterialCheckBox materialCheckBox5;
+        private MaterialCheckbox materialCheckBox5;
         private MaterialContextMenuStrip materialContextMenuStrip1;
         private MaterialSkin.Controls.MaterialToolStripMenuItem item1ToolStripMenuItem;
         private MaterialSkin.Controls.MaterialToolStripMenuItem subItem1ToolStripMenuItem;
@@ -1419,7 +1477,7 @@ namespace MaterialSkinExample
         private MaterialSkin.Controls.MaterialToolStripMenuItem item3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem disabledItemToolStripMenuItem;
-		private MaterialCheckBox materialCheckBox6;
+		private MaterialCheckbox materialCheckBox6;
 		private TabPage tabPage4;
         private TabPage tabPage5;
         private MaterialProgressBar materialProgressBar1;
@@ -1470,11 +1528,14 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel9;
         private TabPage tabPage9;
         private MaterialLabel materialLabel10;
-        private MaterialSingleLineTextField materialSingleLineTextField1;
+        private MaterialTextBox materialSingleLineTextField1;
         private MaterialButton MaterialButton4;
         private MaterialLabel materialLabel1;
-        private MaterialSingleLineTextField materialSingleLineTextField3;
+        private MaterialTextBox materialSingleLineTextField3;
         private MaterialButton materialButton7;
-        private MaterialSingleLineTextField materialSingleLineTextField2;
+        private MaterialTextBox materialSingleLineTextField2;
+        private MaterialSwitch materialSwitch3;
+        private MaterialSwitch materialSwitch2;
+        private MaterialSwitch materialSwitch1;
     }
 }

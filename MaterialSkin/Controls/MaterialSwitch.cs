@@ -9,9 +9,9 @@
     using System.Windows.Forms;
 
     /// <summary>
-    /// Defines the <see cref="MaterialCheckBox" />
+    /// Defines the <see cref="MaterialSwitch" />
     /// </summary>
-    public class MaterialCheckBox : CheckBox, IMaterialControl
+    public class MaterialSwitch : CheckBox, IMaterialControl
     {
         /// <summary>
         /// Gets or sets the Depth
@@ -45,7 +45,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether Ripple
         /// </summary>
-        [Category("Behavior")]
+        [Category("Appearance")]
         public bool Ripple
         {
             get { return _ripple; }
@@ -74,34 +74,35 @@
         private readonly AnimationManager _rippleAnimationManager;
 
         /// <summary>
-        /// Defines the CHECKBOX_SIZE
+        /// Defines the THUMB_SIZE
         /// </summary>
-        private const int CHECKBOX_SIZE = 18;
+        private const int THUMB_SIZE = 22;
 
         /// <summary>
-        /// Defines the CHECKBOX_SIZE_HALF
+        /// Defines the THUMB_SIZE_HALF
         /// </summary>
-        private const int CHECKBOX_SIZE_HALF = CHECKBOX_SIZE / 2;
+        private const int THUMB_SIZE_HALF = THUMB_SIZE / 2;
+
+        private const int TRACK_SIZE_HEIGHT = (int)(14);
+        private const int TRACK_SIZE_WIDTH = (int)(36);
+        private const int TRACK_RADIUS = (int)(TRACK_SIZE_HEIGHT / 2);
+
+        private int TRACK_CENTER_Y;
+        private int TRACK_CENTER_X_BEGIN;
+        private int TRACK_CENTER_X_END;
+        private int TRACK_CENTER_X_DELTA;
+
+        private const int RIPPLE_DIAMETER = 30;
 
         /// <summary>
-        /// Defines the CHECKBOX_INNER_BOX_SIZE
+        /// Defines the _trackOffsetY
         /// </summary>
-        private const int CHECKBOX_INNER_BOX_SIZE = CHECKBOX_SIZE - 4;
+        private int _trackOffsetY;
 
         /// <summary>
-        /// Defines the _boxOffset
+        /// Initializes a new instance of the <see cref="MaterialSwitch"/> class.
         /// </summary>
-        private int _boxOffset;
-
-        /// <summary>
-        /// Defines the _boxRectangle
-        /// </summary>
-        private Rectangle _boxRectangle;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialCheckBox"/> class.
-        /// </summary>
-        public MaterialCheckBox()
+        public MaterialSwitch()
         {
             _animationManager = new AnimationManager
             {
@@ -111,7 +112,7 @@
             _rippleAnimationManager = new AnimationManager(false)
             {
                 AnimationType = AnimationType.Linear,
-                Increment = 0.10,
+                Increment = 0.05,
                 SecondaryIncrement = 0.08
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
@@ -134,8 +135,12 @@
         {
             base.OnSizeChanged(e);
 
-            _boxOffset = Height / 2 - 9;
-            _boxRectangle = new Rectangle(_boxOffset, _boxOffset, CHECKBOX_SIZE - 1, CHECKBOX_SIZE - 1);
+            _trackOffsetY = Height / 2 - THUMB_SIZE_HALF;
+
+            TRACK_CENTER_Y = _trackOffsetY + THUMB_SIZE_HALF - 1;
+            TRACK_CENTER_X_BEGIN = TRACK_CENTER_Y;
+            TRACK_CENTER_X_END = TRACK_CENTER_X_BEGIN + TRACK_SIZE_WIDTH - (TRACK_RADIUS * 2);
+            TRACK_CENTER_X_DELTA = TRACK_CENTER_X_END - TRACK_CENTER_X_BEGIN;
         }
 
         /// <summary>
@@ -145,8 +150,8 @@
         /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
-            var w = _boxOffset + CHECKBOX_SIZE + 2 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
-            return Ripple ? new Size(w, 30) : new Size(w, 20);
+            var w = _trackOffsetY + THUMB_SIZE + TRACK_SIZE_WIDTH + 2 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            return Ripple ? new Size(w, THUMB_SIZE + RIPPLE_DIAMETER / 2) : new Size(w, THUMB_SIZE);
         }
 
         /// <summary>
@@ -157,7 +162,7 @@
         /// <summary>
         /// Defines the TEXT_OFFSET
         /// </summary>
-        private const int TEXT_OFFSET = 22;
+        private const int TEXT_OFFSET = THUMB_SIZE;
 
         /// <summary>
         /// The OnPaint
@@ -169,81 +174,79 @@
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-            // clear the control
             g.Clear(Parent.BackColor);
-
-            var CHECKBOX_CENTER = _boxOffset + CHECKBOX_SIZE_HALF - 1;
 
             var animationProgress = _animationManager.GetProgress();
 
-            var colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
-            var backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
+            // Draw Track
+            Color thumbColor = DrawHelper.BlendColor(
+                        (Enabled ? SkinManager.GetSwitchOffThumbColor() : SkinManager.GetSwitchOffDisabledThumbColor()), // Off color
+                        (Enabled ? SkinManager.ColorScheme.AccentColor : DrawHelper.BlendColor(SkinManager.ColorScheme.AccentColor, SkinManager.GetSwitchOffDisabledThumbColor(), 197)), // On color
+                        animationProgress * 255); // Blend amount
 
-            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
-            var brush3 = new SolidBrush(Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor());
-            var pen = new Pen(brush.Color);
+            using (var path = DrawHelper.CreateRoundRect(new Rectangle(TRACK_CENTER_X_BEGIN - TRACK_RADIUS, TRACK_CENTER_Y - TRACK_SIZE_HEIGHT / 2, TRACK_SIZE_WIDTH, TRACK_SIZE_HEIGHT), TRACK_RADIUS))
+            {
+                using (SolidBrush trackBrush = new SolidBrush(
+                    Color.FromArgb(Enabled ? SkinManager.GetSwitchOffTrackColor().A : SkinManager.GetSwitchOffDisabledTrackColor().A, // Track alpha
+                    DrawHelper.BlendColor( // animate color
+                        (Enabled ? SkinManager.GetSwitchOffTrackColor() : SkinManager.GetSwitchOffDisabledTrackColor()), // Off color
+                        SkinManager.ColorScheme.AccentColor, // On color
+                        animationProgress * 255) // Blend amount
+                        .RemoveAlpha())))
+                {
+                    g.FillPath(trackBrush, path);
+                }
+
+            }
+
+            // Calculate animation movement X position
+            int OffsetX = (int)(TRACK_CENTER_X_DELTA * animationProgress);
 
             // draw ripple animation
             if (Ripple && _rippleAnimationManager.IsAnimating())
             {
                 for (var i = 0; i < _rippleAnimationManager.GetAnimationCount(); i++)
                 {
-                    var animationValue = _rippleAnimationManager.GetProgress(i);
-                    var animationSource = new Point(CHECKBOX_CENTER, CHECKBOX_CENTER);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), ((bool)_rippleAnimationManager.GetData(i)[0]) ? Color.Black : brush.Color));
-                    var rippleHeight = (Height % 2 == 0) ? Height - 3 : Height - 2;
-                    var rippleSize = (_rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleHeight * (0.8d + (0.2d * animationValue))) : rippleHeight;
-                    using (var path = DrawHelper.CreateRoundRect(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize, rippleSize / 2))
+                    var rippleAnimProgress = _rippleAnimationManager.GetProgress(i);
+                    var rippleDiameter = (Height % 2 == 0) ? Height - 2 : Height - 3;
+                    var rippleAnimatedDiameter = (_rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleDiameter * (0.8d + (0.2d * rippleAnimProgress))) : rippleDiameter;
+
+                    Color rippleColor = Color.FromArgb((int)(40 * rippleAnimProgress), // color alpha
+                        (bool)_rippleAnimationManager.GetData(i)[0] ? SkinManager.ColorScheme.AccentColor : // On color
+                        (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White)); // Off color
+
+                    using (SolidBrush rippleBrush = new SolidBrush(rippleColor))
                     {
-                        g.FillPath(rippleBrush, path);
+                        g.FillEllipse(rippleBrush, new Rectangle(TRACK_CENTER_X_BEGIN + OffsetX - rippleAnimatedDiameter / 2, TRACK_CENTER_Y - rippleAnimatedDiameter / 2, rippleAnimatedDiameter, rippleAnimatedDiameter));
                     }
-
-                    rippleBrush.Dispose();
                 }
             }
 
-            brush3.Dispose();
 
-            var checkMarkLineFill = new Rectangle(_boxOffset, _boxOffset, (int)(17.0 * animationProgress), 17);
-            using (var checkmarkPath = DrawHelper.CreateRoundRect(_boxOffset, _boxOffset, 17, 17, 1f))
+            // draw Thumb Shadow
+            RectangleF thumbBounds = new RectangleF(TRACK_CENTER_X_BEGIN + OffsetX - THUMB_SIZE_HALF, TRACK_CENTER_Y - THUMB_SIZE_HALF, THUMB_SIZE, THUMB_SIZE);
+            using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0)))
             {
-                var brush2 = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha));
-                var pen2 = new Pen(brush2.Color);
-                g.FillPath(brush2, checkmarkPath);
-                g.DrawPath(pen2, checkmarkPath);
-
-                g.FillRectangle(new SolidBrush(Parent.BackColor), _boxOffset + 2, _boxOffset + 2, CHECKBOX_INNER_BOX_SIZE - 1, CHECKBOX_INNER_BOX_SIZE - 1);
-                g.DrawRectangle(new Pen(Parent.BackColor), _boxOffset + 2, _boxOffset + 2, CHECKBOX_INNER_BOX_SIZE - 1, CHECKBOX_INNER_BOX_SIZE - 1);
-
-                brush2.Dispose();
-                pen2.Dispose();
-
-                if (Enabled)
-                {
-                    g.FillPath(brush, checkmarkPath);
-                    g.DrawPath(pen, checkmarkPath);
-                }
-                else if (Checked)
-                {
-                    g.SmoothingMode = SmoothingMode.None;
-                    g.FillRectangle(brush, _boxOffset + 2, _boxOffset + 2, CHECKBOX_INNER_BOX_SIZE, CHECKBOX_INNER_BOX_SIZE);
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                }
-
-                g.DrawImageUnscaledAndClipped(DrawCheckMarkBitmap(), checkMarkLineFill);
+                g.FillEllipse(shadowBrush, new RectangleF(thumbBounds.X - 2, thumbBounds.Y - 1, thumbBounds.Width + 4, thumbBounds.Height + 6));
+                g.FillEllipse(shadowBrush, new RectangleF(thumbBounds.X - 1, thumbBounds.Y - 1, thumbBounds.Width + 2, thumbBounds.Height + 4));
+                g.FillEllipse(shadowBrush, new RectangleF(thumbBounds.X - 0, thumbBounds.Y - 0, thumbBounds.Width + 0, thumbBounds.Height + 2));
+                g.FillEllipse(shadowBrush, new RectangleF(thumbBounds.X - 0, thumbBounds.Y + 2, thumbBounds.Width + 0, thumbBounds.Height + 0));
+                g.FillEllipse(shadowBrush, new RectangleF(thumbBounds.X - 0, thumbBounds.Y + 1, thumbBounds.Width + 0, thumbBounds.Height + 0));
             }
 
-            // draw checkbox text
+            // draw Thumb
+            using (SolidBrush thumbBrush = new SolidBrush(thumbColor))
+            {
+                g.FillEllipse(thumbBrush, thumbBounds);
+            }
+
+            // draw switch text
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
             g.DrawString(
                 Text,
                 SkinManager.ROBOTO_MEDIUM_10,
                 Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
-                _boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
-
-            // dispose used paint objects
-            pen.Dispose();
-            brush.Dispose();
+                _trackOffsetY + TEXT_OFFSET + TRACK_SIZE_WIDTH, Height / 2 - stringSize.Height / 2);
         }
 
         /// <summary>
@@ -252,7 +255,7 @@
         /// <returns>The <see cref="Bitmap"/></returns>
         private Bitmap DrawCheckMarkBitmap()
         {
-            var checkMark = new Bitmap(CHECKBOX_SIZE, CHECKBOX_SIZE);
+            var checkMark = new Bitmap(THUMB_SIZE, THUMB_SIZE);
             var g = Graphics.FromImage(checkMark);
 
             // clear everything, transparent
@@ -284,15 +287,6 @@
         }
 
         /// <summary>
-        /// The IsMouseInCheckArea
-        /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
-        private bool IsMouseInCheckArea()
-        {
-            return _boxRectangle.Contains(MouseLocation);
-        }
-
-        /// <summary>
         /// The OnCreateControl
         /// </summary>
         protected override void OnCreateControl()
@@ -319,7 +313,7 @@
             {
                 MouseState = MouseState.DOWN;
 
-                if (Ripple && args.Button == MouseButtons.Left && IsMouseInCheckArea())
+                if (Ripple && args.Button == MouseButtons.Left)
                 {
                     _rippleAnimationManager.SecondaryIncrement = 0;
                     _rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, new object[] { Checked });
@@ -333,7 +327,7 @@
             MouseMove += (sender, args) =>
             {
                 MouseLocation = args.Location;
-                Cursor = IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
+                Cursor = ClientRectangle.Contains(MouseLocation) ? Cursors.Hand : Cursors.Default;
             };
         }
     }
