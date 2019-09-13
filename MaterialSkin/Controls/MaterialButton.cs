@@ -174,12 +174,21 @@
 
         void drawShadow(Graphics g, Rectangle bounds)
         {
-            SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0));
-            g.FillRectangle(shadowBrush, new Rectangle(bounds.X - 2, bounds.Y - 1, bounds.Width + 4, bounds.Height + 6));
-            g.FillRectangle(shadowBrush, new Rectangle(bounds.X - 1, bounds.Y - 1, bounds.Width + 2, bounds.Height + 4));
-            g.FillRectangle(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y - 0, bounds.Width + 0, bounds.Height + 2));
-            g.FillRectangle(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 2, bounds.Width + 0, bounds.Height + 0));
-            g.FillRectangle(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 1, bounds.Width + 0, bounds.Height + 0));
+            using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0)))
+            {
+                GraphicsPath path;
+                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 3.5f, bounds.Y - 1.5f, bounds.Width + 6, bounds.Height + 6), 8);
+                g.FillPath(shadowBrush, path);
+                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 2.5f, bounds.Y - 1.5f, bounds.Width + 4, bounds.Height + 4), 6);
+                g.FillPath(shadowBrush, path);
+                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 1.5f, bounds.Y - 0.5f, bounds.Width + 2, bounds.Height + 2), 4);
+                g.FillPath(shadowBrush, path);
+                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 0.5f, bounds.Y + 1.5f, bounds.Width + 0, bounds.Height + 0), 4);
+                g.FillPath(shadowBrush, path);
+                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 0.5f, bounds.Y + 2.5f, bounds.Width + 0, bounds.Height + 0), 4);
+                g.FillPath(shadowBrush, path);
+                path.Dispose();
+            }
         }
 
         /// <summary>
@@ -190,26 +199,44 @@
         {
             var g = pevent.Graphics;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.Clear(Parent.BackColor);
 
             double hoverAnimProgress = _hoverAnimationManager.GetProgress();
 
+
+            // button rectand path
+            RectangleF buttonRectF = new RectangleF(ClientRectangle.Location, ClientRectangle.Size);
+            buttonRectF.X -= 0.5f;
+            buttonRectF.Y -= 0.5f;
+            GraphicsPath buttonPath = DrawHelper.CreateRoundRect(buttonRectF, 4);
+
+            // button shadow (blend with form shadow)
+            drawShadow(g, ClientRectangle);
+
             if (Type == MaterialButtonType.Contained)
             {
-                g.Clear(Parent.BackColor);
-
                 // draw button rect
+                // Disabled
                 if (!Enabled)
                 {
-                    g.FillRectangle(new SolidBrush(Color.FromArgb(30, SkinManager.GetDisabledOrHintColor().RemoveAlpha())), ClientRectangle);
+                    using (SolidBrush disabledBrush = new SolidBrush(Color.FromArgb(30, SkinManager.GetButtonBackgroundColor().RemoveAlpha())))
+                    {
+                        g.FillPath(disabledBrush, buttonPath);
+                    }
                 }
+                // High emphasis
                 else if (HighEmphasis)
                 {
-
-                    g.FillRectangle(UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, ClientRectangle);
+                    g.FillPath(UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, buttonPath);
                 }
+                // Mormal
                 else
                 {
-                    g.FillRectangle(new SolidBrush(Parent.BackColor), ClientRectangle);
+                    using (SolidBrush normalBrush = new SolidBrush(SkinManager.GetButtonBackgroundColor()))
+                    {
+                        g.FillPath(normalBrush, buttonPath);
+                    }
                 }
             }
             else
@@ -220,48 +247,48 @@
             //Hover
             Color c = SkinManager.GetButtonHoverBackgroundColor();
 
-            g.FillRectangle(new SolidBrush(
-                Color.FromArgb(
-                    (int)(hoverAnimProgress * c.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
-                    SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
-                    SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
-                    (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
-                    SkinManager.ColorScheme.PrimaryColor)).RemoveAlpha())), // Normal or Emphasis without accent
-                ClientRectangle);
+            using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(
+                (int)(hoverAnimProgress * c.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
+                SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
+                (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
+                SkinManager.ColorScheme.PrimaryColor)).RemoveAlpha()))) // Normal or Emphasis without accent
+            {
+                g.FillPath(hoverBrush, buttonPath);
+            }
 
             if (Type == MaterialButtonType.Outlined)
             {
-                Point[] ClientRectPoints = new Point[] {
-                    new Point(ClientRectangle.X+1, ClientRectangle.Y), new Point(ClientRectangle.Width-2, ClientRectangle.Y),
-                    new Point(ClientRectangle.Width-1, ClientRectangle.Y+1), new Point(ClientRectangle.Width-1, ClientRectangle.Height-2),
-                    new Point(ClientRectangle.Width-2, ClientRectangle.Height-1), new Point(ClientRectangle.X+1, ClientRectangle.Height-1),
-                    new Point(ClientRectangle.X, ClientRectangle.Height-2), new Point(ClientRectangle.X, ClientRectangle.Y+1)
-                };
-                g.DrawLines(new Pen(SkinManager.GetDisabledOrHintColor(), 1), ClientRectPoints);
+                using (Pen outlinePen = new Pen(SkinManager.GetButtonOutlineColor(), 1))
+                {
+                    buttonRectF.X += 0.5f;
+                    buttonRectF.Y += 0.5f;
+                    g.DrawPath(outlinePen, buttonPath);
+                }
             }
 
             //Ripple
             if (_animationManager.IsAnimating())
             {
-                // g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.Clip = new Region(buttonRectF);
                 for (var i = 0; i < _animationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = _animationManager.GetProgress(i);
                     var animationSource = _animationManager.GetSource(i);
 
                     using (Brush rippleBrush = new SolidBrush(
-                        Color.FromArgb((int)(100 - (animationValue * 100)),
+                        Color.FromArgb((int)(100 - (animationValue * 100)), // Alpha animation
                         (Type == MaterialButtonType.Contained && HighEmphasis ? (UseAccentColor ?
                             SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Emphasis with accent
                             SkinManager.ColorScheme.LightPrimaryColor) : // Emphasis
                             (UseAccentColor ? SkinManager.ColorScheme.AccentColor : // Normal with accent
-                            SkinManager.ColorScheme.PrimaryColor))))) // Normal
+                            SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : SkinManager.ColorScheme.LightPrimaryColor))))) // Normal
                     {
                         var rippleSize = (int)(animationValue * Width * 2);
                         g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                     }
                 }
-                g.SmoothingMode = SmoothingMode.None;
+                g.ResetClip();
             }
 
             //Icon
@@ -288,14 +315,14 @@
 
             g.DrawString(
                 Text.ToUpper(),
-                SkinManager.ROBOTO_MEDIUM_10,
+                SkinManager.ROBOTO_MEDIUM_10, // Font
                 Enabled ? (HighEmphasis ? (Type == MaterialButtonType.Text || Type == MaterialButtonType.Outlined) ?
                 (UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush) : // Outline and text primary
                 SkinManager.ColorScheme.TextBrush : // Contained HighEmphasis
                 SkinManager.GetPrimaryTextBrush()) : // Secondary
                 SkinManager.GetButtonDisabledTextBrush(), // Disabled
-                textRect,
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center }
+                textRect, // placement
+                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center } // options
                 );
         }
 

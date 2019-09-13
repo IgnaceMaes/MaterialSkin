@@ -42,7 +42,7 @@
         {            LIGHT,            DARK
         }
 
-        private static readonly Color PRIMARY_TEXT_LIGHT = Color.FromArgb(255, 255, 255, 255);
+        private static readonly Color PRIMARY_TEXT_LIGHT = Color.FromArgb(222, 255, 255, 255);
         private static readonly Brush PRIMARY_TEXT_LIGHT_BRUSH = new SolidBrush(PRIMARY_TEXT_LIGHT);        private static readonly Color PRIMARY_TEXT_DARK = Color.FromArgb(222, 0, 0, 0);
         private static readonly Brush PRIMARY_TEXT_DARK_BRUSH = new SolidBrush(PRIMARY_TEXT_DARK);
         private static readonly Color SECONDARY_TEXT_LIGHT = Color.FromArgb(179, 255, 255, 255);
@@ -76,7 +76,7 @@
         private static readonly Color SWITCH_OFF_DISABLED_TRACK_DARK = Color.FromArgb(50, 255, 255, 255);
 
         private static readonly Color BUTTON_BACKGROUND_LIGHT = Color.FromArgb(255, 255, 255, 255);
-        private static readonly Brush BUTTON_BACKGROUND_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_LIGHT);        private static readonly Color BUTTON_BACKGROUND_DARK = Color.FromArgb(40, 40, 40, 255);
+        private static readonly Brush BUTTON_BACKGROUND_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_LIGHT);        private static readonly Color BUTTON_BACKGROUND_DARK = Color.FromArgb(40, 255, 255, 255);
         private static readonly Brush BUTTON_BACKGROUND_DARK_BRUSH = new SolidBrush(BUTTON_BACKGROUND_DARK);
         private static readonly Color BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor());
         private static readonly Brush BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_HOVER_LIGHT);
@@ -175,9 +175,13 @@
         {
             return Theme == Themes.LIGHT ? CHECKBOX_OFF_DISABLED_LIGHT_BRUSH : CHECKBOX_OFF_DISABLED_DARK_BRUSH;
         }
-        public Color GetButtonBackgroundColor()
+
+        public Color GetButtonBackgroundColor()
         {
-            return BUTTON_BACKGROUND_LIGHT;
+            return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_LIGHT : BUTTON_BACKGROUND_DARK;
+        }        public Color GetButtonOutlineColor()
+        {
+            return Theme == Themes.LIGHT ? BUTTON_TEXT_DARK : BUTTON_TEXT_LIGHT;
         }
         public Brush GetButtonTextBrush(bool primary)
         {
