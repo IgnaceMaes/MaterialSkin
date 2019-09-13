@@ -81,7 +81,7 @@
         /// <summary>
         /// Defines the <see cref="ItemsList" />
         /// </summary>
-        public class ItemsList : List<MaterialSkin.Controls.MaterialCheckBox>
+        public class ItemsList : List<MaterialSkin.Controls.MaterialCheckbox>
         {
             /// <summary>
             /// Defines the _parent
@@ -124,7 +124,7 @@
             /// <param name="@checked">The checked<see cref="bool"/></param>
             public void Add(string text, bool @checked)
             {
-                MaterialSkin.Controls.MaterialCheckBox cb = new MaterialSkin.Controls.MaterialCheckBox();
+                MaterialSkin.Controls.MaterialCheckbox cb = new MaterialSkin.Controls.MaterialCheckbox();
                 cb.Checked = @checked;
                 cb.Text = text;
                 // cb.Width = _parent.Width * 0.75
@@ -134,8 +134,8 @@
             /// <summary>
             /// Add a new checkbox item to the list
             /// </summary>
-            /// <param name="value">The value<see cref="MaterialSkin.Controls.MaterialCheckBox"/></param>
-            public new void Add(MaterialSkin.Controls.MaterialCheckBox value)
+            /// <param name="value">The value<see cref="MaterialSkin.Controls.MaterialCheckbox"/></param>
+            public new void Add(MaterialSkin.Controls.MaterialCheckbox value)
             {
                 value.Dock = DockStyle.Top;
                 base.Add(value);
@@ -145,8 +145,8 @@
             /// <summary>
             /// Remove a checkedbox item control from the list
             /// </summary>
-            /// <param name="value">The value<see cref="MaterialSkin.Controls.MaterialCheckBox"/></param>
-            public new void Remove(MaterialSkin.Controls.MaterialCheckBox value)
+            /// <param name="value">The value<see cref="MaterialSkin.Controls.MaterialCheckbox"/></param>
+            public new void Remove(MaterialSkin.Controls.MaterialCheckbox value)
             {
                 base.Remove(value);
                 _parent.Controls.Remove(value);

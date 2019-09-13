@@ -9,9 +9,9 @@
     using System.Windows.Forms;
 
     /// <summary>
-    /// Defines the <see cref="MaterialSwitch" />
+    /// Defines the <see cref="MaterialCheckbox" />
     /// </summary>
-    public class MaterialSwitch : CheckBox, IMaterialControl
+    public class MaterialCheckbox : CheckBox, IMaterialControl
     {
         /// <summary>
         /// Gets or sets the Depth
@@ -45,7 +45,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether Ripple
         /// </summary>
-        [Category("Behavior")]
+        [Category("Appearance")]
         public bool Ripple
         {
             get { return _ripple; }
@@ -99,9 +99,9 @@
         private Rectangle _boxRectangle;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialSwitch"/> class.
+        /// Initializes a new instance of the <see cref="MaterialCheckbox"/> class.
         /// </summary>
-        public MaterialSwitch()
+        public MaterialCheckbox()
         {
             _animationManager = new AnimationManager
             {

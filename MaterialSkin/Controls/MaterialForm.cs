@@ -45,6 +45,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether Sizable
         /// </summary>
+        [Category("Layout")]
         public bool Sizable { get; set; }
 
         /// <summary>
@@ -545,11 +546,16 @@
         }
 
         // Drawer overlay and speed improvements
+        [Category("Drawer")]
         public bool DrawerShowIconsWhenHidden { get; set; }
+        [Category("Drawer")]
         public int DrawerWidth { get; set; }
+        [Category("Drawer")]
         public bool DrawerAutoHide { get; set; }
+        [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
         private bool _isOpen;
+        [Category("Drawer")]
         public bool DrawerIsOpen
         {
             get
@@ -569,10 +575,9 @@
             }
         }
 
-        Form drawerOverlay = new Form();
-        Form drawerForm = new Form();
         MaterialDrawer drawerControl = new MaterialDrawer();
         private MaterialTabControl _drawerTabControl;
+        [Category("Drawer")]
         public MaterialTabControl DrawerTabControl
         {
             get
@@ -589,6 +594,9 @@
 
         protected void AddDrawerOverlayForm()
         {
+            Form drawerOverlay = new Form();
+            Form drawerForm = new Form();
+
             if (DrawerTabControl == null)
                 return;
 
@@ -636,6 +644,16 @@
             drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
             drawerControl.AutoHide = DrawerAutoHide;
             drawerControl.IndicatorWidth = DrawerIndicatorWidth;
+
+            // Changing colors or theme
+            SkinManager.ThemeChanged += sender =>
+            {
+                drawerForm.Refresh();
+            };
+            SkinManager.ColorSchemeChanged += sender =>
+            {
+                drawerForm.Refresh();
+            };
 
             // Overlay Form definitions
             drawerOverlay.BackColor = Color.Black;

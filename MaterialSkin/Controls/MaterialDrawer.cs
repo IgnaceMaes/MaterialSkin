@@ -328,7 +328,7 @@
                 var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
 
                 // Background
-                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(SkinManager.GetAccentAlpha(), 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), SkinManager.ColorScheme.AccentColor));
+                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(100, 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), SkinManager.ColorScheme.AccentColor));
                 g.FillRectangle(bgBrush, _tabRects[currentTabIndex]);
                 bgBrush.Dispose();
 
