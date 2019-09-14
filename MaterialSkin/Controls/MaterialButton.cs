@@ -220,7 +220,7 @@
                 // Disabled
                 if (!Enabled)
                 {
-                    using (SolidBrush disabledBrush = new SolidBrush(Color.FromArgb(30, SkinManager.GetButtonBackgroundColor().RemoveAlpha())))
+                    using (SolidBrush disabledBrush = new SolidBrush(DrawHelper.BlendColor(SkinManager.GetButtonHoverBackgroundColor(), Parent.BackColor, 220)))
                     {
                         g.FillPath(disabledBrush, buttonPath);
                     }
@@ -259,7 +259,7 @@
 
             if (Type == MaterialButtonType.Outlined)
             {
-                using (Pen outlinePen = new Pen(SkinManager.GetButtonOutlineColor(), 1))
+                using (Pen outlinePen = new Pen(Enabled? SkinManager.GetButtonOutlineColor() : SkinManager.GetButtonDisabledOutlineColor(), 1))
                 {
                     buttonRectF.X += 0.5f;
                     buttonRectF.Y += 0.5f;
@@ -317,9 +317,10 @@
                 Text.ToUpper(),
                 SkinManager.ROBOTO_MEDIUM_10, // Font
                 Enabled ? (HighEmphasis ? (Type == MaterialButtonType.Text || Type == MaterialButtonType.Outlined) ?
-                (UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush) : // Outline and text primary
-                SkinManager.ColorScheme.TextBrush : // Contained HighEmphasis
-                SkinManager.GetPrimaryTextBrush()) : // Secondary
+                (UseAccentColor ? SkinManager.ColorScheme.AccentBrush : // Outline or Text and accent and emphasis
+                SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.ColorScheme.PrimaryBrush) : // Outline or Text and emphasis
+                SkinManager.ColorScheme.TextBrush : // Contained and Emphasis
+                SkinManager.GetPrimaryTextBrush()) : // Cointained and accent
                 SkinManager.GetButtonDisabledTextBrush(), // Disabled
                 textRect, // placement
                 new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center } // options

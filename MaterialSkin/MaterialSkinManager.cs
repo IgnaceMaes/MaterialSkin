@@ -75,6 +75,8 @@
         private static readonly Color SWITCH_OFF_DISABLED_TRACK_LIGHT = Color.FromArgb(50, 0, 0, 0);
         private static readonly Color SWITCH_OFF_DISABLED_TRACK_DARK = Color.FromArgb(50, 255, 255, 255);
 
+        private static readonly Color BUTTON_OUTLINE_LIGHT = Color.FromArgb(255, 150, 150, 150);
+        private static readonly Color BUTTON_OUTLINE_DARK = Color.FromArgb(255, 200, 200, 200);
         private static readonly Color BUTTON_BACKGROUND_LIGHT = Color.FromArgb(255, 255, 255, 255);
         private static readonly Brush BUTTON_BACKGROUND_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_LIGHT);        private static readonly Color BUTTON_BACKGROUND_DARK = Color.FromArgb(40, 255, 255, 255);
         private static readonly Brush BUTTON_BACKGROUND_DARK_BRUSH = new SolidBrush(BUTTON_BACKGROUND_DARK);
@@ -179,9 +181,14 @@
         public Color GetButtonBackgroundColor()
         {
             return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_LIGHT : BUTTON_BACKGROUND_DARK;
-        }        public Color GetButtonOutlineColor()
+        }
+
+        public Color GetButtonOutlineColor()
         {
-            return Theme == Themes.LIGHT ? BUTTON_TEXT_DARK : BUTTON_TEXT_LIGHT;
+            return Theme == Themes.LIGHT ? BUTTON_OUTLINE_LIGHT : BUTTON_OUTLINE_DARK;
+        }        public Color GetButtonDisabledOutlineColor()
+        {
+            return Theme == Themes.LIGHT ? BUTTON_OUTLINE_DARK : BUTTON_OUTLINE_LIGHT;
         }
         public Brush GetButtonTextBrush(bool primary)
         {
