@@ -113,5 +113,10 @@ namespace MaterialSkinExample
             materialComboBox1.Items.Add("this is a very long string");
 
         }
+
+        private void materialSwitch4_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerUseColors = materialSwitch4.Checked;
+        }
     }
 }

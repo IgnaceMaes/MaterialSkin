@@ -5,29 +5,21 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
     using System.Drawing.Text;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Defines the <see cref="MaterialDrawer" />
-    /// </summary>
     public class MaterialDrawer : Control, IMaterialControl
     {
         // TODO: Invalidate when changing custom properties
 
-        /// <summary>
-        /// Define whether or not the icons should still be visible when the drawer is closed
-        /// </summary>
+        [Category("Appearance")]
         public bool ShowIconsWhenHidden { get; set; }
 
-        /// <summary>
-        /// Defines the _isOpen
-        /// </summary>
         private bool _isOpen;
 
-        /// <summary>
-        /// Gets or Sets the IsOpen
-        /// </summary>
+        [Category("Behavior")]
         public bool IsOpen
         {
             get
@@ -44,31 +36,33 @@
             }
         }
 
-        /// <summary>
-        /// Automatically hide the Drawer after a item is pressed
-        /// </summary>
+        [Category("Behavior")]
         public bool AutoHide { get; set; }
 
-        /// <summary>
-        /// Defines the Width of the indicator
-        /// </summary>
+        [Category("Appearance")]
+        private bool _useColors;
+        public bool UseColors
+        {
+            get
+            {
+                return _useColors;
+            }
+            set
+            {
+                _useColors = value;
+                preProcessIcons();
+            }
+        }
+
+        [Category("Appearance")]
         public int IndicatorWidth { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Depth
-        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
 
-        /// <summary>
-        /// Gets the SkinManager
-        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
-        /// <summary>
-        /// Gets or sets the MouseState
-        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
@@ -81,18 +75,14 @@
 
         // icons
         private Dictionary<string, TextureBrush> iconsBrushes;
+        private Dictionary<string, TextureBrush> iconsSelectedBrushes;
         private int prevLocation;
 
         private int rippleSize = 0;
 
-        /// <summary>
-        /// Defines the _baseTabControl
-        /// </summary>
         private MaterialTabControl _baseTabControl;
 
-        /// <summary>
-        /// Gets or sets the BaseTabControl
-        /// </summary>
+        [Category("Behavior")]
         public MaterialTabControl BaseTabControl
         {
             get { return _baseTabControl; }
@@ -103,26 +93,7 @@
                     return;
 
                 UpdateTabRects();
-
-                // pre-allocate texture brushes (icons)
-                if (_baseTabControl.ImageList != null)
-                {
-                    prevLocation = this.Location.X;
-
-                    iconsBrushes = new Dictionary<string, TextureBrush>(_baseTabControl.TabPages.Count);
-                    foreach (TabPage tabPage in _baseTabControl.TabPages)
-                    {
-                        if (String.IsNullOrEmpty(tabPage.ImageKey))
-                            continue;
-                        iconsBrushes.Add(tabPage.ImageKey, new TextureBrush(_baseTabControl.ImageList.Images[tabPage.ImageKey], System.Drawing.Drawing2D.WrapMode.Clamp));
-                        var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
-                        Rectangle iconRect = new Rectangle(
-                            _tabRects[currentTabIndex].X + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2),
-                            _tabRects[currentTabIndex].Y + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2),
-                            _baseTabControl.ImageList.Images[tabPage.ImageKey].Width, _baseTabControl.ImageList.Images[tabPage.ImageKey].Height);
-                        iconsBrushes[tabPage.ImageKey].TranslateTransform(iconRect.X + iconRect.Width / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2, iconRect.Y + iconRect.Height / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2);
-                    }
-                }
+                preProcessIcons();
 
                 // Other helpers
 
@@ -144,47 +115,125 @@
                 {
                     Invalidate();
                 };
+
             }
         }
 
-        /// <summary>
-        /// Defines the _previousSelectedTabIndex
-        /// </summary>
+        private void preProcessIcons()
+        {
+            // pre-process and pre-allocate texture brushes (icons)
+            if (_baseTabControl == null || _baseTabControl.TabCount == 0 || _baseTabControl.ImageList == null || _tabRects == null || _tabRects.Count == 0)
+                return;
+
+            // Calculate lightness and color
+            float l = SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? 0f : 1f;
+            float r = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT && !_useColors ? SkinManager.ColorScheme.PrimaryColor.R : SkinManager.ColorScheme.AccentColor.R) / 255f;
+            float g = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT && !_useColors ? SkinManager.ColorScheme.PrimaryColor.G : SkinManager.ColorScheme.AccentColor.G) / 255f;
+            float b = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT && !_useColors ? SkinManager.ColorScheme.PrimaryColor.B : SkinManager.ColorScheme.AccentColor.B) / 255f;
+
+            // Create matrices
+            float[][] matrixGray = {
+                    new float[] {   0,   0,   0,   0,  0}, // Red scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Green scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
+                    new float[] {   0,   0,   0, .5f,  0}, // alpha scale factor
+                    new float[] {   l,   l,   l,   0,  1}};// offset
+
+            float[][] matrixColor = {
+                    new float[] {   0,   0,   0,   0,  0}, // Red scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Green scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
+                    new float[] {   0,   0,   0,   1,  0}, // alpha scale factor
+                    new float[] {   r,   g,   b,   0,  1}};// offset
+
+            ColorMatrix colorMatrixGray = new ColorMatrix(matrixGray);
+            ColorMatrix colorMatrixColor = new ColorMatrix(matrixColor);
+
+            ImageAttributes grayImageAttributes = new ImageAttributes();
+            ImageAttributes colorImageAttributes = new ImageAttributes();
+
+            // Set color matrices
+            grayImageAttributes.SetColorMatrix(colorMatrixGray, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+            colorImageAttributes.SetColorMatrix(colorMatrixColor, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            // Create brushes
+            iconsBrushes = new Dictionary<string, TextureBrush>(_baseTabControl.TabPages.Count);
+            iconsSelectedBrushes = new Dictionary<string, TextureBrush>(_baseTabControl.TabPages.Count);
+
+            foreach (TabPage tabPage in _baseTabControl.TabPages)
+            {
+                // skip items without image
+                if (String.IsNullOrEmpty(tabPage.ImageKey) || _tabRects == null)
+                    continue;
+
+                // Image Rect
+                Rectangle destRect = new Rectangle(0, 0, _baseTabControl.ImageList.Images[tabPage.ImageKey].Width, _baseTabControl.ImageList.Images[tabPage.ImageKey].Height);
+
+                // Create a pre-processed copy of the image (GRAY)
+                Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gGray = Graphics.FromImage(bgray))
+                {
+                    gGray.DrawImage(_baseTabControl.ImageList.Images[tabPage.ImageKey],
+                        new Point[] {
+                                new Point(0, 0),
+                                new Point(destRect.Width, 0),
+                                new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, grayImageAttributes);
+                }
+
+                // Create a pre-processed copy of the image (PRIMARY COLOR)
+                Bitmap bcolor = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gColor = Graphics.FromImage(bcolor))
+                {
+                    gColor.DrawImage(_baseTabControl.ImageList.Images[tabPage.ImageKey],
+                        new Point[] {
+                                new Point(0, 0),
+                                new Point(destRect.Width, 0),
+                                new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, colorImageAttributes);
+                }
+
+                // added processed image to brush for drawing
+                TextureBrush textureBrushGray = new TextureBrush(bgray);
+                TextureBrush textureBrushColor = new TextureBrush(bcolor);
+
+                textureBrushGray.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+                textureBrushColor.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+
+                // Translate the brushes to the correct positions
+                var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
+
+                Rectangle iconRect = new Rectangle(
+                   _tabRects[currentTabIndex].X + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2),
+                   _tabRects[currentTabIndex].Y + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2),
+                   _baseTabControl.ImageList.Images[tabPage.ImageKey].Width, _baseTabControl.ImageList.Images[tabPage.ImageKey].Height);
+
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2, iconRect.Y + iconRect.Height / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2);
+                textureBrushColor.TranslateTransform(iconRect.X + iconRect.Width / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2, iconRect.Y + iconRect.Height / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2);
+
+                // add to dictionary
+                iconsBrushes.Add(tabPage.ImageKey, textureBrushGray);
+                iconsSelectedBrushes.Add(tabPage.ImageKey, textureBrushColor);
+            }
+        }
+
         private int _previousSelectedTabIndex;
 
-        /// <summary>
-        /// Defines the _animationSource
-        /// </summary>
         private Point _animationSource;
 
-        /// <summary>
-        /// Defines the _clickAnimManager
-        /// </summary>
         private readonly AnimationManager _clickAnimManager;
 
-        /// <summary>
-        /// Defines the _showHideAnimManager
-        /// </summary>
         private readonly AnimationManager _showHideAnimManager;
 
-        /// <summary>
-        /// Defines the _tabRects
-        /// </summary>
         private List<Rectangle> _tabRects;
+        private List<GraphicsPath> _tabPaths;
 
-        /// <summary>
-        /// Defines the TAB_HEADER_PADDING
-        /// </summary>
         private const int TAB_HEADER_PADDING = 24;
 
-        /// <summary>
-        ///  Defines the individual item Heigth in the drawer
-        /// </summary>
         private int tabHeight;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialDrawer"/> class.
-        /// </summary>
         public MaterialDrawer()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -198,7 +247,7 @@
             _showHideAnimManager = new AnimationManager
             {
                 AnimationType = AnimationType.EaseInOut,
-                Increment = 0.04
+                Increment = 0.08
             };
             _showHideAnimManager.OnAnimationProgress += sender =>
             {
@@ -208,7 +257,7 @@
             _showHideAnimManager.OnAnimationFinished += sender =>
             {
                 if (_baseTabControl != null && _tabRects.Count > 0)
-                rippleSize = _tabRects[_baseTabControl.SelectedIndex].Width;
+                    rippleSize = _tabRects[_baseTabControl.SelectedIndex].Width;
                 if (_isOpen)
                 {
                     DrawerEndOpen?.Invoke(this);
@@ -219,6 +268,15 @@
                 }
             };
 
+            SkinManager.ColorSchemeChanged += sender =>
+            {
+                preProcessIcons();
+            };
+
+            SkinManager.ThemeChanged += sender =>
+            {
+                preProcessIcons();
+            };
 
             _clickAnimManager = new AnimationManager
             {
@@ -228,9 +286,6 @@
             _clickAnimManager.OnAnimationProgress += sender => Invalidate();
         }
 
-        /// <summary>
-        /// Called once, when the layout is first being draw
-        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected override void InitLayout()
         {
@@ -243,10 +298,6 @@
             base.InitLayout();
         }
 
-        /// <summary>
-        /// Handles the movement of the drawer
-        /// </summary>
-        /// <param name="sender"></param>
         private void showHideAnimation(object sender)
         {
             var showHideAnimProgress = _showHideAnimManager.GetProgress();
@@ -255,7 +306,6 @@
                 if (ShowIconsWhenHidden)
                 {
                     Location = new Point((int)((-Width + SkinManager.FORM_PADDING * 1.5 + tabHeight) * showHideAnimProgress), Location.Y);
-                    // Width - SkinManager.FORM_PADDING
                 }
                 else
                 {
@@ -272,7 +322,7 @@
                 {
                     if (ShowIconsWhenHidden)
                     {
-                        Location = new Point((int)((-Width + SkinManager.FORM_PADDING * 1.5 + tabHeight) * showHideAnimProgress), Location.Y);
+                        Location = new Point((int)(-Width + SkinManager.FORM_PADDING * 1.5 + tabHeight), Location.Y);
                     }
                     else
                     {
@@ -283,10 +333,6 @@
             UpdateTabRects();
         }
 
-        /// <summary>
-        /// The OnPaint
-        /// </summary>
-        /// <param name="e">The e<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -294,7 +340,7 @@
 
 
             // redraw stuff
-            g.Clear(SkinManager.ColorScheme.PrimaryColor);
+            g.Clear(UseColors ? SkinManager.ColorScheme.PrimaryColor : SkinManager.GetApplicationBackgroundColor());
 
             if (_baseTabControl == null)
                 return;
@@ -302,25 +348,32 @@
             if (!_clickAnimManager.IsAnimating() || _tabRects == null || _tabRects.Count != _baseTabControl.TabCount)
                 UpdateTabRects();
 
+            if (_tabRects == null || _tabRects.Count != _baseTabControl.TabCount)
+                return;
+
+
             // Click Animation
             var clickAnimProgress = _clickAnimManager.GetProgress();
             // Show/Hide Drawer Animation
             var showHideAnimProgress = _showHideAnimManager.GetProgress();
             var rSize = (int)(clickAnimProgress * rippleSize * 1.75);
 
+            int dx = prevLocation - Location.X;
+            prevLocation = Location.X;
+
             // Ripple
             if (_clickAnimManager.IsAnimating())
             {
-                var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (clickAnimProgress * 50)), Color.White));
+                var rippleBrush = new SolidBrush(Color.FromArgb((int)(50 - (clickAnimProgress * 50)),
+                    UseColors ? SkinManager.ColorScheme.AccentColor : // Using colors
+                    SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : // light theme
+                    SkinManager.ColorScheme.LightPrimaryColor)); // dark theme
 
-                g.SetClip(_tabRects[_baseTabControl.SelectedIndex]);
-                g.FillEllipse(rippleBrush, new Rectangle(_animationSource.X - rSize / 2, _animationSource.Y - rSize / 2, rSize, rSize));
+                g.SetClip(_tabPaths[_baseTabControl.SelectedIndex]);
+                g.FillEllipse(rippleBrush, new Rectangle(_animationSource.X + dx - rSize / 2, _animationSource.Y - rSize / 2, rSize, rSize));
                 g.ResetClip();
                 rippleBrush.Dispose();
             }
-
-            int dx = prevLocation - this.Location.X;
-            prevLocation = this.Location.X;
 
             // Draw menu items
             foreach (TabPage tabPage in _baseTabControl.TabPages)
@@ -328,16 +381,24 @@
                 var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
 
                 // Background
-                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(100, 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), SkinManager.ColorScheme.AccentColor));
-                g.FillRectangle(bgBrush, _tabRects[currentTabIndex]);
+                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(100, 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress),
+                    UseColors ? SkinManager.ColorScheme.LightPrimaryColor : // Using colors
+                    SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : // light theme
+                    SkinManager.ColorScheme.PrimaryColor)); // dark theme
+                g.FillPath(bgBrush, _tabPaths[currentTabIndex]);
                 bgBrush.Dispose();
 
                 // Text
-                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.ACTION_BAR_TEXT.A, SkinManager.ACTION_BAR_TEXT_SECONDARY.A, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), SkinManager.ColorScheme.TextColor));
+                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.ACTION_BAR_TEXT.A, UseColors ? SkinManager.ACTION_BAR_TEXT_SECONDARY.A : 255, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), // alpha
+                    UseColors ? (currentTabIndex == _baseTabControl.SelectedIndex ? SkinManager.ColorScheme.AccentColor : SkinManager.GetPrimaryTextColor()) :  // Use colors
+                    (currentTabIndex == _baseTabControl.SelectedIndex ? SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.DarkPrimaryColor : // selected on light theme
+                    SkinManager.ColorScheme.AccentColor : // selected on dark theme
+                    SkinManager.GetPrimaryTextColor()))); // not selected
+
                 Rectangle textRect = _tabRects[currentTabIndex];
                 textRect.X += _baseTabControl.ImageList != null ? tabHeight : (int)(SkinManager.FORM_PADDING / 1.5);
                 textRect.Width -= SkinManager.FORM_PADDING;
-                g.DrawString(tabPage.Text, SkinManager.ROBOTO_MEDIUM_10, textBrush, textRect, new StringFormat { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap, Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+                g.DrawString(tabPage.Text, SkinManager.ROBOTO_BOLD_10, textBrush, textRect, new StringFormat { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap, Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                 textBrush.Dispose();
 
                 // Icons
@@ -350,11 +411,22 @@
 
                     if (ShowIconsWhenHidden)
                         iconsBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
+                    iconsSelectedBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
 
-                    g.FillRectangle(iconsBrushes[tabPage.ImageKey], iconRect);
+                    g.FillRectangle(currentTabIndex == _baseTabControl.SelectedIndex ? iconsSelectedBrushes[tabPage.ImageKey] : iconsBrushes[tabPage.ImageKey], iconRect);
 
                 }
             }
+
+            // Draw divider if not using colors
+            if (!UseColors)
+            {
+                using (Pen dividerPen = new Pen(SkinManager.GetDividersColor(), 1))
+                {
+                    g.DrawLine(dividerPen, Width - 1, 0, Width - 1, Height);
+                }
+            }
+
 
             // Animate tab indicator
             var previousSelectedTabIndexIfHasOne = _previousSelectedTabIndex == -1 ? _baseTabControl.SelectedIndex : _previousSelectedTabIndex;
@@ -368,9 +440,6 @@
             g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, IndicatorWidth, height);
         }
 
-        /// <summary>
-        /// Show the full drawer (aka open)
-        /// </summary>
         public new void Show()
         {
             _isOpen = true;
@@ -379,9 +448,6 @@
             _showHideAnimManager.StartNewAnimation(AnimationDirection.Out);
         }
 
-        /// <summary>
-        /// Hides the drawer or collapse it to just icons if the ShowIconsWhenHidden is set (aka close)
-        /// </summary>
         public new void Hide()
         {
             _isOpen = false;
@@ -390,9 +456,6 @@
             _showHideAnimManager.StartNewAnimation(AnimationDirection.In);
         }
 
-        /// <summary>
-        /// Toggles between Show and Hide
-        /// </summary>
         public void Toggle()
         {
             if (_isOpen)
@@ -401,12 +464,6 @@
                 Show();
         }
 
-        /// <summary>
-        /// The CalculateTextAlpha
-        /// </summary>
-        /// <param name="tabIndex">The tabIndex<see cref="int"/></param>
-        /// <param name="clickAnimProgress">The clickAnimProgress<see cref="double"/></param>
-        /// <returns>The <see cref="int"/></returns>
         private int CalculateAlphaZeroWhenClosed(int primaryA, int secondaryA, int tabIndex, double clickAnimProgress, double showHideAnimProgress)
         {
             // Drawer is closed
@@ -433,12 +490,6 @@
             return secondaryA + (int)((primaryA - secondaryA) * clickAnimProgress);
         }
 
-        /// <summary>
-        /// The CalculateBgAlpha
-        /// </summary>
-        /// <param name="tabIndex">The tabIndex<see cref="int"/></param>
-        /// <param name="clickAnimProgress">The clickAnimProgress<see cref="double"/></param>
-        /// <returns>The <see cref="int"/></returns>
         private int CalculateAlpha(int primaryA, int secondaryA, int tabIndex, double clickAnimProgress, double showHideAnimProgress)
         {
             if (tabIndex == _baseTabControl.SelectedIndex && !_clickAnimManager.IsAnimating())
@@ -456,10 +507,6 @@
             return secondaryA + (int)((primaryA - secondaryA) * clickAnimProgress);
         }
 
-        /// <summary>
-        /// The OnMouseUp
-        /// </summary>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
@@ -479,10 +526,6 @@
             _animationSource = e.Location;
         }
 
-        /// <summary>
-        /// The OnMouseMove
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -503,29 +546,38 @@
             Cursor = Cursors.Arrow;
         }
 
-        /// <summary>
-        /// The UpdateTabRects
-        /// </summary>
         private void UpdateTabRects()
         {
-            _tabRects = new List<Rectangle>();
-
             //If there isn't a base tab control, the rects shouldn't be calculated
-            //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
-            if (_baseTabControl == null || _baseTabControl.TabCount == 0)
+            //If there aren't tab pages in the base tab control, the list should just be empty; exit the void
+            if (_baseTabControl == null || _baseTabControl.TabCount == 0 || SkinManager == null || _tabRects == null)
+            {
+                _tabRects = new List<Rectangle>();
+                _tabPaths = new List<GraphicsPath>();
                 return;
+            }
+
+            if (_tabRects.Count != _baseTabControl.TabCount)
+            {
+                _tabRects = new List<Rectangle>(_baseTabControl.TabCount);
+                _tabPaths = new List<GraphicsPath>(_baseTabControl.TabCount);
+
+                for (var i = 0; i < _baseTabControl.TabCount; i++)
+                {
+                    _tabRects.Add(new Rectangle());
+                    _tabPaths.Add(new GraphicsPath());
+                }
+            }
 
             //Calculate the bounds of each tab header specified in the base tab control
-            _tabRects.Add(new Rectangle((int)(SkinManager.FORM_PADDING / 1.5) - (ShowIconsWhenHidden ? Location.X : 0),
-                SkinManager.FORM_PADDING / 2,
-                (Width + (ShowIconsWhenHidden ? Location.X : 0)) - (int)(SkinManager.FORM_PADDING * 1.5) - 1,
-                tabHeight));
-            for (int i = 1; i < _baseTabControl.TabPages.Count; i++)
+            for (int i = 0; i < _baseTabControl.TabPages.Count; i++)
             {
-                _tabRects.Add(new Rectangle((int)(SkinManager.FORM_PADDING / 1.5) - (ShowIconsWhenHidden ? Location.X : 0),
+                _tabRects[i] = (new Rectangle((int)(SkinManager.FORM_PADDING / 1.5) - (ShowIconsWhenHidden ? Location.X : 0),
                     (TAB_HEADER_PADDING * 2) * i + SkinManager.FORM_PADDING / 2,
                     (Width + (ShowIconsWhenHidden ? Location.X : 0)) - (int)(SkinManager.FORM_PADDING * 1.5) - 1,
                     tabHeight));
+
+                _tabPaths[i] = DrawHelper.CreateRoundRect(new RectangleF(_tabRects[i].X - 0.5f, _tabRects[i].Y - 0.5f, _tabRects[i].Width, _tabRects[i].Height), 4);
             }
         }
     }

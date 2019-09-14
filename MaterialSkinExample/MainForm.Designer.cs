@@ -47,6 +47,7 @@ namespace MaterialSkinExample
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.materialTabControl2 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.materialSwitch4 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialTextBox();
             this.MaterialButton4 = new MaterialSkin.Controls.MaterialButton();
@@ -78,6 +79,9 @@ namespace MaterialSkinExample
             this.materialButton11 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton10 = new MaterialSkin.Controls.MaterialButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.materialSwitch3 = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialSwitch2 = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialSwitch1 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialCheckBox6 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialCheckBox5 = new MaterialSkin.Controls.MaterialCheckbox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -113,9 +117,6 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.materialSwitch3 = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialSwitch2 = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialSwitch1 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.materialTabControl2.SuspendLayout();
@@ -324,6 +325,7 @@ namespace MaterialSkinExample
             // tabPage8
             // 
             this.tabPage8.BackColor = System.Drawing.Color.White;
+            this.tabPage8.Controls.Add(this.materialSwitch4);
             this.tabPage8.Controls.Add(this.materialLabel9);
             this.tabPage8.Controls.Add(this.materialSingleLineTextField1);
             this.tabPage8.Controls.Add(this.MaterialButton4);
@@ -337,6 +339,23 @@ namespace MaterialSkinExample
             this.tabPage8.Size = new System.Drawing.Size(1045, 401);
             this.tabPage8.TabIndex = 0;
             this.tabPage8.Text = "FIRST";
+            // 
+            // materialSwitch4
+            // 
+            this.materialSwitch4.AutoSize = true;
+            this.materialSwitch4.Depth = 0;
+            this.materialSwitch4.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch4.Location = new System.Drawing.Point(25, 279);
+            this.materialSwitch4.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch4.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch4.Name = "materialSwitch4";
+            this.materialSwitch4.Ripple = true;
+            this.materialSwitch4.Size = new System.Drawing.Size(189, 37);
+            this.materialSwitch4.TabIndex = 29;
+            this.materialSwitch4.Text = "Drawer - Use colors";
+            this.materialSwitch4.UseVisualStyleBackColor = true;
+            this.materialSwitch4.CheckedChanged += new System.EventHandler(this.materialSwitch4_CheckedChanged);
             // 
             // materialLabel9
             // 
@@ -376,7 +395,7 @@ namespace MaterialSkinExample
             this.MaterialButton4.DrawShadows = true;
             this.MaterialButton4.HighEmphasis = true;
             this.MaterialButton4.Icon = null;
-            this.MaterialButton4.Location = new System.Drawing.Point(28, 212);
+            this.MaterialButton4.Location = new System.Drawing.Point(25, 237);
             this.MaterialButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton4.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton4.Name = "MaterialButton4";
@@ -396,7 +415,7 @@ namespace MaterialSkinExample
             this.materialButton7.DrawShadows = true;
             this.materialButton7.HighEmphasis = true;
             this.materialButton7.Icon = null;
-            this.materialButton7.Location = new System.Drawing.Point(167, 212);
+            this.materialButton7.Location = new System.Drawing.Point(164, 237);
             this.materialButton7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton7.Name = "materialButton7";
@@ -899,6 +918,58 @@ namespace MaterialSkinExample
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Checkboxes";
             // 
+            // materialSwitch3
+            // 
+            this.materialSwitch3.AutoSize = true;
+            this.materialSwitch3.Checked = true;
+            this.materialSwitch3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.materialSwitch3.Depth = 0;
+            this.materialSwitch3.Enabled = false;
+            this.materialSwitch3.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch3.Location = new System.Drawing.Point(257, 92);
+            this.materialSwitch3.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch3.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch3.Name = "materialSwitch3";
+            this.materialSwitch3.Ripple = true;
+            this.materialSwitch3.Size = new System.Drawing.Size(257, 37);
+            this.materialSwitch3.TabIndex = 28;
+            this.materialSwitch3.Text = "Switch - Checked and disabled";
+            this.materialSwitch3.UseVisualStyleBackColor = true;
+            // 
+            // materialSwitch2
+            // 
+            this.materialSwitch2.AutoSize = true;
+            this.materialSwitch2.Depth = 0;
+            this.materialSwitch2.Enabled = false;
+            this.materialSwitch2.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch2.Location = new System.Drawing.Point(257, 55);
+            this.materialSwitch2.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch2.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch2.Name = "materialSwitch2";
+            this.materialSwitch2.Ripple = true;
+            this.materialSwitch2.Size = new System.Drawing.Size(176, 37);
+            this.materialSwitch2.TabIndex = 27;
+            this.materialSwitch2.Text = "Switch - Disabled";
+            this.materialSwitch2.UseVisualStyleBackColor = true;
+            // 
+            // materialSwitch1
+            // 
+            this.materialSwitch1.AutoSize = true;
+            this.materialSwitch1.Depth = 0;
+            this.materialSwitch1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialSwitch1.Location = new System.Drawing.Point(257, 16);
+            this.materialSwitch1.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch1.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch1.Name = "materialSwitch1";
+            this.materialSwitch1.Ripple = true;
+            this.materialSwitch1.Size = new System.Drawing.Size(165, 37);
+            this.materialSwitch1.TabIndex = 26;
+            this.materialSwitch1.Text = "Material Switch";
+            this.materialSwitch1.UseVisualStyleBackColor = true;
+            // 
             // materialCheckBox6
             // 
             this.materialCheckBox6.AutoSize = true;
@@ -1094,6 +1165,7 @@ namespace MaterialSkinExample
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.White;
+            this.tabPage6.Controls.Add(this.materialFloatingActionButton1);
             this.tabPage6.Controls.Add(this.MaterialButton6);
             this.tabPage6.Controls.Add(this.materialLabel7);
             this.tabPage6.Controls.Add(this.MaterialButton3);
@@ -1104,7 +1176,6 @@ namespace MaterialSkinExample
             this.tabPage6.Controls.Add(this.materialComboBox1);
             this.tabPage6.Controls.Add(this.materialCheckedListBox1);
             this.tabPage6.Controls.Add(this.richTextBox1);
-            this.tabPage6.Controls.Add(this.materialFloatingActionButton1);
             this.tabPage6.ImageKey = "round_swap_vert_white_24dp.png";
             this.tabPage6.Location = new System.Drawing.Point(4, 31);
             this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
@@ -1275,7 +1346,7 @@ namespace MaterialSkinExample
             this.materialFloatingActionButton1.Depth = 0;
             this.materialFloatingActionButton1.DrawShadows = true;
             this.materialFloatingActionButton1.Icon = global::MaterialSkinExample.Properties.Resources.plus;
-            this.materialFloatingActionButton1.Location = new System.Drawing.Point(489, 59);
+            this.materialFloatingActionButton1.Location = new System.Drawing.Point(487, 64);
             this.materialFloatingActionButton1.Margin = new System.Windows.Forms.Padding(2);
             this.materialFloatingActionButton1.Mini = false;
             this.materialFloatingActionButton1.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1367,58 +1438,6 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem.Name = "item3ToolStripMenuItem";
             this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item3ToolStripMenuItem.Text = "Item 3";
-            // 
-            // materialSwitch3
-            // 
-            this.materialSwitch3.AutoSize = true;
-            this.materialSwitch3.Checked = true;
-            this.materialSwitch3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.materialSwitch3.Depth = 0;
-            this.materialSwitch3.Enabled = false;
-            this.materialSwitch3.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialSwitch3.Location = new System.Drawing.Point(257, 92);
-            this.materialSwitch3.Margin = new System.Windows.Forms.Padding(0);
-            this.materialSwitch3.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialSwitch3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSwitch3.Name = "materialSwitch3";
-            this.materialSwitch3.Ripple = true;
-            this.materialSwitch3.Size = new System.Drawing.Size(257, 37);
-            this.materialSwitch3.TabIndex = 28;
-            this.materialSwitch3.Text = "Switch - Checked and disabled";
-            this.materialSwitch3.UseVisualStyleBackColor = true;
-            // 
-            // materialSwitch2
-            // 
-            this.materialSwitch2.AutoSize = true;
-            this.materialSwitch2.Depth = 0;
-            this.materialSwitch2.Enabled = false;
-            this.materialSwitch2.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialSwitch2.Location = new System.Drawing.Point(257, 55);
-            this.materialSwitch2.Margin = new System.Windows.Forms.Padding(0);
-            this.materialSwitch2.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialSwitch2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSwitch2.Name = "materialSwitch2";
-            this.materialSwitch2.Ripple = true;
-            this.materialSwitch2.Size = new System.Drawing.Size(176, 37);
-            this.materialSwitch2.TabIndex = 27;
-            this.materialSwitch2.Text = "Switch - Disabled";
-            this.materialSwitch2.UseVisualStyleBackColor = true;
-            // 
-            // materialSwitch1
-            // 
-            this.materialSwitch1.AutoSize = true;
-            this.materialSwitch1.Depth = 0;
-            this.materialSwitch1.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialSwitch1.Location = new System.Drawing.Point(257, 16);
-            this.materialSwitch1.Margin = new System.Windows.Forms.Padding(0);
-            this.materialSwitch1.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialSwitch1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSwitch1.Name = "materialSwitch1";
-            this.materialSwitch1.Ripple = true;
-            this.materialSwitch1.Size = new System.Drawing.Size(165, 37);
-            this.materialSwitch1.TabIndex = 26;
-            this.materialSwitch1.Text = "Material Switch";
-            this.materialSwitch1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -1537,5 +1556,6 @@ namespace MaterialSkinExample
         private MaterialSwitch materialSwitch3;
         private MaterialSwitch materialSwitch2;
         private MaterialSwitch materialSwitch1;
+        private MaterialSwitch materialSwitch4;
     }
 }

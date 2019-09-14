@@ -574,6 +574,23 @@
                 }
             }
         }
+        private bool _drawerUseColors;
+
+        [Category("Drawer")]
+        public bool DrawerUseColors
+        {
+            get
+            {
+                return _drawerUseColors;
+            }
+            set
+            {
+                _drawerUseColors = value;
+                if (drawerControl != null)
+                    drawerControl.UseColors = value;
+                    drawerControl.Refresh();
+            }
+        }
 
         MaterialDrawer drawerControl = new MaterialDrawer();
         private MaterialTabControl _drawerTabControl;
