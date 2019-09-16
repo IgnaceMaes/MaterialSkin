@@ -692,7 +692,7 @@
             Resize += (sender, e) =>
             {
                 H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
-                drawerForm.Size = new Size(DrawerIndicatorWidth, H);
+                drawerForm.Size = new Size(DrawerWidth, H);
                 drawerOverlay.Size = new Size(Size.Width, H);
             };
 
@@ -720,7 +720,6 @@
                 _showHideAnimManager.StartNewAnimation(AnimationDirection.Out);
             };
         }
-
 
         /// <summary>
         /// The WndProc
