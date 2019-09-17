@@ -53,6 +53,38 @@
             AccentBrush = new SolidBrush(AccentColor);
             TextBrush = new SolidBrush(TextColor);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorScheme"/> class.
+        /// </summary>
+        /// <param name="primary">The primary color</param>
+        /// <param name="darkPrimary">A darker version of the primary color</param>
+        /// <param name="lightPrimary">A lighter version of the primary color</param>
+        /// <param name="accent">The accent color</param>
+        /// <param name="textShade">The text color, the one with the highest contrast is suggested.</param>
+        public ColorScheme(Color primary, Color darkPrimary, Color lightPrimary, Color accent, TextShade textShade)
+        {
+            //Color
+            PrimaryColor = primary;
+            DarkPrimaryColor = darkPrimary;
+            LightPrimaryColor = lightPrimary;
+            AccentColor = accent;
+            TextColor = ((int)textShade).ToColor();
+
+            //Pen
+            PrimaryPen = new Pen(PrimaryColor);
+            DarkPrimaryPen = new Pen(DarkPrimaryColor);
+            LightPrimaryPen = new Pen(LightPrimaryColor);
+            AccentPen = new Pen(AccentColor);
+            TextPen = new Pen(TextColor);
+
+            //Brush
+            PrimaryBrush = new SolidBrush(PrimaryColor);
+            DarkPrimaryBrush = new SolidBrush(DarkPrimaryColor);
+            LightPrimaryBrush = new SolidBrush(LightPrimaryColor);
+            AccentBrush = new SolidBrush(AccentColor);
+            TextBrush = new SolidBrush(TextColor);
+        }
     }
 
     /// <summary>
