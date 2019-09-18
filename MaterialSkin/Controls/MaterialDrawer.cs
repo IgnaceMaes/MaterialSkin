@@ -14,12 +14,12 @@
     {
         // TODO: Invalidate when changing custom properties
 
-        [Category("Appearance")]
+        [Category("Drawer")]
         public bool ShowIconsWhenHidden { get; set; }
 
         private bool _isOpen;
 
-        [Category("Behavior")]
+        [Category("Drawer")]
         public bool IsOpen
         {
             get
@@ -36,10 +36,10 @@
             }
         }
 
-        [Category("Behavior")]
+        [Category("Drawer")]
         public bool AutoHide { get; set; }
 
-        [Category("Appearance")]
+        [Category("Drawer")]
         private bool _useColors;
         public bool UseColors
         {
@@ -51,10 +51,42 @@
             {
                 _useColors = value;
                 preProcessIcons();
+                Invalidate();
             }
         }
 
-        [Category("Appearance")]
+        [Category("Drawer")]
+        private bool _highlightWithAccent;
+        public bool HighlightWithAccent
+        {
+            get
+            {
+                return _highlightWithAccent;
+            }
+            set
+            {
+                _highlightWithAccent = value;
+                preProcessIcons();
+                Invalidate();
+            }
+        }
+
+        [Category("Drawer")]
+        private bool _backgroundWithAccent;
+        public bool BackgroundWithAccent
+        {
+            get
+            {
+                return _backgroundWithAccent;
+            }
+            set
+            {
+                _backgroundWithAccent = value;
+                Invalidate();
+            }
+        }
+
+        [Category("Drawer")]
         public int IndicatorWidth { get; set; }
 
         [Browsable(false)]
@@ -76,6 +108,7 @@
         // icons
         private Dictionary<string, TextureBrush> iconsBrushes;
         private Dictionary<string, TextureBrush> iconsSelectedBrushes;
+        private Dictionary<string, Rectangle> iconsSize;
         private int prevLocation;
 
         private int rippleSize = 0;
@@ -126,10 +159,10 @@
                 return;
 
             // Calculate lightness and color
-            float l = SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? 0f : 1f;
-            float r = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT && !_useColors ? SkinManager.ColorScheme.PrimaryColor.R : SkinManager.ColorScheme.AccentColor.R) / 255f;
-            float g = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT && !_useColors ? SkinManager.ColorScheme.PrimaryColor.G : SkinManager.ColorScheme.AccentColor.G) / 255f;
-            float b = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT && !_useColors ? SkinManager.ColorScheme.PrimaryColor.B : SkinManager.ColorScheme.AccentColor.B) / 255f;
+            float l = UseColors ? SkinManager.ColorScheme.TextColor.R / 255 : SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? 0f : 1f;
+            float r = (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor.R : SkinManager.ColorScheme.PrimaryColor.R) / 255f;
+            float g = (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor.G : SkinManager.ColorScheme.PrimaryColor.G) / 255f;
+            float b = (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor.B : SkinManager.ColorScheme.PrimaryColor.B) / 255f;
 
             // Create matrices
             float[][] matrixGray = {
@@ -159,6 +192,7 @@
             // Create brushes
             iconsBrushes = new Dictionary<string, TextureBrush>(_baseTabControl.TabPages.Count);
             iconsSelectedBrushes = new Dictionary<string, TextureBrush>(_baseTabControl.TabPages.Count);
+            iconsSize = new Dictionary<string, Rectangle>(_baseTabControl.TabPages.Count);
 
             foreach (TabPage tabPage in _baseTabControl.TabPages)
             {
@@ -216,6 +250,7 @@
                 // add to dictionary
                 iconsBrushes.Add(tabPage.ImageKey, textureBrushGray);
                 iconsSelectedBrushes.Add(tabPage.ImageKey, textureBrushColor);
+                iconsSize.Add(tabPage.ImageKey, new Rectangle(0, 0, iconRect.Width, iconRect.Height));
             }
         }
 
@@ -243,11 +278,13 @@
             _isOpen = true;
             ShowIconsWhenHidden = false;
             AutoHide = false;
+            HighlightWithAccent = true;
+            BackgroundWithAccent = false;
 
             _showHideAnimManager = new AnimationManager
             {
                 AnimationType = AnimationType.EaseInOut,
-                Increment = 0.08
+                Increment = 0.04
             };
             _showHideAnimManager.OnAnimationProgress += sender =>
             {
@@ -364,7 +401,7 @@
             // Ripple
             if (_clickAnimManager.IsAnimating())
             {
-                var rippleBrush = new SolidBrush(Color.FromArgb((int)(50 - (clickAnimProgress * 50)),
+                var rippleBrush = new SolidBrush(Color.FromArgb((int)(70 - (clickAnimProgress * 50)),
                     UseColors ? SkinManager.ColorScheme.AccentColor : // Using colors
                     SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : // light theme
                     SkinManager.ColorScheme.LightPrimaryColor)); // dark theme
@@ -381,22 +418,23 @@
                 var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
 
                 // Background
-                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(100, 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress),
-                    UseColors ? SkinManager.ColorScheme.LightPrimaryColor : // Using colors
-                    SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : // light theme
-                    SkinManager.ColorScheme.PrimaryColor)); // dark theme
+                Brush bgBrush = new SolidBrush(Color.FromArgb(CalculateAlpha(60, 0, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress),
+                    UseColors ? _backgroundWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.LightPrimaryColor : // using colors
+                    _backgroundWithAccent ? SkinManager.ColorScheme.AccentColor : // defaul accent
+                    SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : // default light
+                    SkinManager.ColorScheme.LightPrimaryColor)); // default dark
                 g.FillPath(bgBrush, _tabPaths[currentTabIndex]);
                 bgBrush.Dispose();
 
                 // Text
                 Brush textBrush = new SolidBrush(Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.ACTION_BAR_TEXT.A, UseColors ? SkinManager.ACTION_BAR_TEXT_SECONDARY.A : 255, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), // alpha
-                    UseColors ? (currentTabIndex == _baseTabControl.SelectedIndex ? SkinManager.ColorScheme.AccentColor : SkinManager.GetPrimaryTextColor()) :  // Use colors
-                    (currentTabIndex == _baseTabControl.SelectedIndex ? SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.DarkPrimaryColor : // selected on light theme
-                    SkinManager.ColorScheme.AccentColor : // selected on dark theme
+                    UseColors ? (currentTabIndex == _baseTabControl.SelectedIndex ? (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor) // Use colors - selected
+                    : SkinManager.ColorScheme.TextColor) :  // Use colors - not selected
+                    (currentTabIndex == _baseTabControl.SelectedIndex ? (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor) : // selected
                     SkinManager.GetPrimaryTextColor()))); // not selected
 
                 Rectangle textRect = _tabRects[currentTabIndex];
-                textRect.X += _baseTabControl.ImageList != null ? tabHeight : (int)(SkinManager.FORM_PADDING / 1.5);
+                textRect.X += _baseTabControl.ImageList != null ? tabHeight : (int)(SkinManager.FORM_PADDING * 0.75);
                 textRect.Width -= SkinManager.FORM_PADDING;
                 g.DrawString(tabPage.Text, SkinManager.ROBOTO_BOLD_10, textBrush, textRect, new StringFormat { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap, Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
                 textBrush.Dispose();
@@ -405,13 +443,15 @@
                 if (_baseTabControl.ImageList != null && !String.IsNullOrEmpty(tabPage.ImageKey))
                 {
                     Rectangle iconRect = new Rectangle(
-                        _tabRects[currentTabIndex].X + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Width / 2),
-                        _tabRects[currentTabIndex].Y + (tabHeight / 2) - (_baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2),
-                        _baseTabControl.ImageList.Images[tabPage.ImageKey].Width, _baseTabControl.ImageList.Images[tabPage.ImageKey].Height);
+                        _tabRects[currentTabIndex].X + (tabHeight >> 1) - (iconsSize[tabPage.ImageKey].Width >> 1),
+                        _tabRects[currentTabIndex].Y + (tabHeight >> 1) - (iconsSize[tabPage.ImageKey].Height >> 1),
+                        iconsSize[tabPage.ImageKey].Width , iconsSize[tabPage.ImageKey].Height);
 
                     if (ShowIconsWhenHidden)
+                    {
                         iconsBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
-                    iconsSelectedBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
+                        iconsSelectedBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
+                    }
 
                     g.FillRectangle(currentTabIndex == _baseTabControl.SelectedIndex ? iconsSelectedBrushes[tabPage.ImageKey] : iconsBrushes[tabPage.ImageKey], iconRect);
 
@@ -572,8 +612,9 @@
             //Calculate the bounds of each tab header specified in the base tab control
             for (int i = 0; i < _baseTabControl.TabPages.Count; i++)
             {
-                _tabRects[i] = (new Rectangle((int)(SkinManager.FORM_PADDING / 1.5) - (ShowIconsWhenHidden ? Location.X : 0),
-                    (TAB_HEADER_PADDING * 2) * i + SkinManager.FORM_PADDING / 2,
+                _tabRects[i] = (new Rectangle(
+                    (int)(SkinManager.FORM_PADDING * 0.75) - (ShowIconsWhenHidden ? Location.X : 0),
+                    (TAB_HEADER_PADDING * 2) * i + (int)(SkinManager.FORM_PADDING >> 1),
                     (Width + (ShowIconsWhenHidden ? Location.X : 0)) - (int)(SkinManager.FORM_PADDING * 1.5) - 1,
                     tabHeight));
 

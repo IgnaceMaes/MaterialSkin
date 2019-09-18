@@ -519,6 +519,8 @@
             DrawerShowIconsWhenHidden = false;
             DrawerAutoHide = true;
             DrawerIndicatorWidth = 0;
+            DrawerHighlightWithAccent = true;
+            DrawerBackgroundWithAccent = false;
 
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
@@ -548,12 +550,17 @@
         // Drawer overlay and speed improvements
         [Category("Drawer")]
         public bool DrawerShowIconsWhenHidden { get; set; }
+
         [Category("Drawer")]
         public int DrawerWidth { get; set; }
+
         [Category("Drawer")]
         public bool DrawerAutoHide { get; set; }
+
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
+
+
         private bool _isOpen;
         [Category("Drawer")]
         public bool DrawerIsOpen
@@ -574,8 +581,8 @@
                 }
             }
         }
-        private bool _drawerUseColors;
 
+        private bool _drawerUseColors;
         [Category("Drawer")]
         public bool DrawerUseColors
         {
@@ -587,8 +594,49 @@
             {
                 _drawerUseColors = value;
                 if (drawerControl != null)
+                {
                     drawerControl.UseColors = value;
                     drawerControl.Refresh();
+                }
+            }
+        }
+
+        private bool _highlightWithAccent;
+        [Category("Drawer")]
+        public bool DrawerHighlightWithAccent
+        {
+            get
+            {
+                return _highlightWithAccent;
+            }
+            set
+            {
+                _highlightWithAccent = value;
+                if (drawerControl != null)
+                {
+                    drawerControl.HighlightWithAccent = value;
+                    drawerControl.Refresh();
+                }
+            }
+        }
+
+        private bool _backgroundWithAccent;
+        [Category("Drawer")]
+        public bool DrawerBackgroundWithAccent
+        {
+            get
+            {
+                return _backgroundWithAccent;
+            }
+            set
+            {
+                _backgroundWithAccent = value;
+                if (drawerControl != null)
+                {
+                    drawerControl.BackgroundWithAccent = value;
+                    drawerControl.Refresh();
+                }
+
             }
         }
 
@@ -661,6 +709,8 @@
             drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
             drawerControl.AutoHide = DrawerAutoHide;
             drawerControl.IndicatorWidth = DrawerIndicatorWidth;
+            drawerControl.HighlightWithAccent = DrawerHighlightWithAccent;
+            drawerControl.BackgroundWithAccent = DrawerBackgroundWithAccent;
 
             // Changing colors or theme
             SkinManager.ThemeChanged += sender =>

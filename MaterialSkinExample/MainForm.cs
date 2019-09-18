@@ -118,5 +118,15 @@ namespace MaterialSkinExample
         {
             DrawerUseColors = materialSwitch4.Checked;
         }
+
+        private void MaterialSwitch5_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerHighlightWithAccent = materialSwitch5.Checked;
+        }
+
+        private void MaterialSwitch6_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerBackgroundWithAccent = materialSwitch6.Checked;
+        }
     }
 }
