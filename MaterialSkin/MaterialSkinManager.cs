@@ -261,12 +261,12 @@
 
         public Color GetApplicationBackgroundColor()
         {
-            return Theme == Themes.LIGHT ? BACKGROUND_LIGHT : BACKGROUND_DARK;
+            return Theme == Themes.LIGHT ? BACKGROUND_LIGHT.Darken((float)0.03) : BACKGROUND_DARK.Lighten((float)0.05);
         }
 
         public Color GetControlBackgroundColor()
         {
-            return Theme == Themes.LIGHT ? BACKGROUND_LIGHT.Darken((float)0.02) : BACKGROUND_DARK.Lighten((float)0.05);
+            return Theme == Themes.LIGHT ? BACKGROUND_LIGHT.Darken((float)0.07) : BACKGROUND_DARK.Lighten((float)0.15);
         }
 
         public Font ROBOTO_MEDIUM_12;
@@ -336,7 +336,7 @@
             foreach (var materialForm in _formsToManage)
             {
                 materialForm.BackColor = newBackColor;
-                UpdateControl(materialForm, newBackColor);
+                UpdateControlBackColor(materialForm, newBackColor);
             }
         }
 
@@ -360,12 +360,7 @@
             }
         }
 
-        public void UpdateControl(Control controlToUpdate)
-        {
-            UpdateControl(controlToUpdate, GetApplicationBackgroundColor());
-        }
-
-        private void UpdateControl(Control controlToUpdate, Color newBackColor)
+        private void UpdateControlBackColor(Control controlToUpdate, Color newBackColor)
         {
 
 
@@ -425,7 +420,7 @@
             //recursive call
             foreach (Control control in controlToUpdate.Controls)
             {
-                UpdateControl(control, newBackColor);
+                UpdateControlBackColor(control, newBackColor);
             }
 
             controlToUpdate.Invalidate();
