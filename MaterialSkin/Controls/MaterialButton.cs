@@ -106,11 +106,18 @@
                 _icon = value;
                 if (AutoSize)
                 {
-                    Size = GetPreferredSize();
+                    Refresh();
                 }
 
                 Invalidate();
             }
+        }
+
+        [DefaultValue(true)]
+        public override bool AutoSize
+        {
+            get => base.AutoSize;
+            set => base.AutoSize = value;
         }
 
         /// <summary>
@@ -155,7 +162,7 @@
                 _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
                 if (AutoSize)
                 {
-                    Size = GetPreferredSize();
+                    Refresh();
                 }
 
                 Invalidate();
@@ -333,7 +340,7 @@
         /// <returns>The <see cref="Size"/></returns>
         private Size GetPreferredSize()
         {
-            return GetPreferredSize(new Size(0, 0));
+            return GetPreferredSize(Size);
         }
 
         /// <summary>
@@ -343,6 +350,9 @@
         /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
+
+            Size s = base.GetPreferredSize(proposedSize);
+
             // Provides extra space for proper padding for content
             var extra = 16;
 
@@ -353,7 +363,21 @@
                 extra += 24 + 4;
             }
 
-            return new Size((int)Math.Ceiling(_textSize.Width) + extra, 36);
+            Console.WriteLine(s.Width);
+
+            if (AutoSize)
+            {
+                s.Width = (int)Math.Ceiling(_textSize.Width);
+                s.Width += extra;
+                s.Height = 36;
+            }
+            else
+            {
+                s.Width += extra;
+                s.Height = 36;
+            }
+
+            return s;
         }
 
         /// <summary>
