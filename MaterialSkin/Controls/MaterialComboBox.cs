@@ -12,8 +12,8 @@
     public class MaterialComboBox : ComboBox, IMaterialControl
     {
 
-        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always),Description("Auto adjust the width of the combobox to the longest item text"), Category("Data")]
-        public  override bool  AutoSize { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), Description("Auto adjust the width of the combobox to the longest item text"), Category("Data")]
+        public override bool AutoSize { get; set; }
         //Properties for managing the material design properties
         /// <summary>
         /// Gets or sets the Depth
@@ -65,7 +65,7 @@
         internal void ResetColors()
         {
             Brush br = new SolidBrush(SkinManager.GetControlBackgroundColor());
-            Font = SkinManager.ROBOTO_REGULAR_11;
+            Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
             BackColor = SkinManager.GetControlBackgroundColor();
             ForeColor = SkinManager.GetPrimaryTextColor();
 
@@ -117,15 +117,15 @@
             {
 
                 case 0xF:
-                    {
-                        DrawCombobox();
-                        break;
-                    }
+                {
+                    DrawCombobox();
+                    break;
+                }
 
                 default:
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
             }
         }
 
@@ -185,23 +185,31 @@
             // Draw the arrow
             g.FillPath(ArrowBrush, pth);
 
+            // Text
             if (DropDownStyle == ComboBoxStyle.DropDownList)
             {
-                g.DrawString(this.Text, this.Font, SkinManager.GetPrimaryTextBrush(), ClientRectangle.X + 2, ClientRectangle.Y + 3);
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                        SkinManager.GetPrimaryTextColor(),
+                        ClientRectangle.Location,
+                        ClientRectangle.Size,
+                        NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                }
             }
 
             ResumeLayout();
         }
 
-        
 
-        protected override void OnDropDown (EventArgs e)
+
+        protected override void OnDropDown(EventArgs e)
         {
             base.OnDropDown(e);
-;            
+            ;
             if (AutoSize == false) { return; }
 
-           
+
             int width = this.DropDownWidth;
             Graphics g = this.CreateGraphics();
             Font font = this.Font;

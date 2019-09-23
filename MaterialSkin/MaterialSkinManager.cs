@@ -20,7 +20,7 @@
         public delegate void SkinManagerEventHandler(object sender);
         public event SkinManagerEventHandler ColorSchemeChanged;
         public event SkinManagerEventHandler ThemeChanged;
-        
+
         private Themes _theme;
 
         public Themes Theme
@@ -254,6 +254,11 @@
             return Theme == Themes.LIGHT ? BUTTON_DISABLEDTEXT_LIGHT_BRUSH : BUTTON_DISABLEDTEXT_DARK_BRUSH;
         }
 
+        public Color GetButtonDisabledTextColor()
+        {
+            return Theme == Themes.LIGHT ? BUTTON_DISABLEDTEXT_LIGHT : BUTTON_DISABLEDTEXT_DARK;
+        }
+
         public Brush GetCmsSelectedItemBrush()
         {
             return Theme == Themes.LIGHT ? CMS_BACKGROUND_HOVER_LIGHT_BRUSH : CMS_BACKGROUND_HOVER_DARK_BRUSH;
@@ -269,40 +274,140 @@
             return Theme == Themes.LIGHT ? BACKGROUND_LIGHT.Darken((float)0.07) : BACKGROUND_DARK.Lighten((float)0.15);
         }
 
-        public Font ROBOTO_MEDIUM_12;
-
-        public Font ROBOTO_REGULAR_11;
-
-        public Font ROBOTO_MEDIUM_11;
-
-        public Font ROBOTO_BOLD_11;
-
-        public Font ROBOTO_MEDIUM_10;
-
-        public Font ROBOTO_REGULAR_10;
-
-        public Font ROBOTO_BOLD_10;
-
         public int FORM_PADDING = 14;
+        public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
 
-        [DllImport("gdi32.dll")]
-        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pvd, [In] ref uint pcFonts);
+        public enum fontType
+        {
+            H1,
+            H2,
+            H3,
+            H4,
+            H5,
+            H6,
+            Subtitle1,
+            Subtitle2,
+            Body1,
+            Body2,
+            Button,
+            Caption,
+            Overline
+        }
+
+        public Font getFontByType(fontType type)
+        {
+            switch (type)
+            {
+                case fontType.H1:
+                    return new Font(RobotoFontFamilys["Roboto_Light"], 96f, FontStyle.Regular, GraphicsUnit.Pixel);
+                case fontType.H2:
+                    return new Font(RobotoFontFamilys["Roboto_Light"], 60f, FontStyle.Regular, GraphicsUnit.Pixel);
+                case fontType.H3:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 48f, FontStyle.Bold, GraphicsUnit.Pixel);
+                case fontType.H4:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 34f, FontStyle.Bold, GraphicsUnit.Pixel);
+                case fontType.H5:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 24f, FontStyle.Bold, GraphicsUnit.Pixel);
+                case fontType.H6:
+                    return new Font(RobotoFontFamilys["Roboto_Medium"], 20f, FontStyle.Bold, GraphicsUnit.Pixel);
+                case fontType.Subtitle1:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+                case fontType.Subtitle2:
+                    return new Font(RobotoFontFamilys["Roboto_Medium"], 14f, FontStyle.Bold, GraphicsUnit.Pixel);
+                case fontType.Body1:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 14f, FontStyle.Regular, GraphicsUnit.Pixel);
+                case fontType.Body2:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 12f, FontStyle.Regular, GraphicsUnit.Pixel);
+                case fontType.Button:
+                    return new Font(RobotoFontFamilys["Roboto_Bold"], 14f, FontStyle.Bold, GraphicsUnit.Pixel);
+                case fontType.Caption:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 12f, FontStyle.Regular, GraphicsUnit.Pixel);
+                case fontType.Overline:
+                    return new Font(RobotoFontFamilys["Roboto_Regular"], 10f, FontStyle.Regular, GraphicsUnit.Pixel);
+            }
+            throw new System.ArgumentException("Parameter is invalid", "type");
+        }
+
+        public IntPtr getLogFontByType(fontType type)
+        {
+            return logicalFonts[Enum.GetName(typeof(fontType), type)];
+        }
+
+        // Font stuff
+        private Dictionary<string, IntPtr> logicalFonts;
+        private Dictionary<string, FontFamily> RobotoFontFamilys;
 
         private MaterialSkinManager()
         {
-            ROBOTO_REGULAR_10 = new Font(LoadFont(Resources.Roboto_Regular), 10f);
-            ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
-            ROBOTO_BOLD_10 = new Font(LoadFont(Resources.Roboto_Bold), 10f, FontStyle.Bold);
-            ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
-            ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
-            ROBOTO_BOLD_11 = new Font(LoadFont(Resources.Roboto_Bold), 11f, FontStyle.Bold);
-            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+            // Load Roboto fonts
+            // Thanks https://www.codeproject.com/Articles/42041/How-to-Use-a-Font-Without-Installing-it
+            // And https://www.codeproject.com/Articles/107376/Embedding-Font-To-Resources
 
-        Theme = Themes.LIGHT;
+            // Add font to system table in memory and save the font family
+            RobotoFontFamilys = new Dictionary<string, FontFamily>(6);
+            RobotoFontFamilys.Add("Roboto_Thin", addFont(Resources.Roboto_Thin));
+            RobotoFontFamilys.Add("Roboto_Light", addFont(Resources.Roboto_Light));
+            RobotoFontFamilys.Add("Roboto_Regular", addFont(Resources.Roboto_Regular));
+            RobotoFontFamilys.Add("Roboto_Medium", addFont(Resources.Roboto_Medium));
+            RobotoFontFamilys.Add("Roboto_Bold", addFont(Resources.Roboto_Bold));
+            RobotoFontFamilys.Add("Roboto_Black", addFont(Resources.Roboto_Black));
+
+            // create and save font handles for GDI
+            logicalFonts = new Dictionary<string, IntPtr>(13);
+            logicalFonts.Add("H1", createLogicalFont("Roboto", 96, NativeTextRenderer.logFontWeight.FW_LIGHT));
+            logicalFonts.Add("H2", createLogicalFont("Roboto", 60, NativeTextRenderer.logFontWeight.FW_LIGHT));
+            logicalFonts.Add("H3", createLogicalFont("Roboto", 48, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("H4", createLogicalFont("Roboto", 34, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("H5", createLogicalFont("Roboto", 24, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("H6", createLogicalFont("Roboto", 20, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+            logicalFonts.Add("Subtitle1", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("Subtitle2", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+            logicalFonts.Add("Body1", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("Body2", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("Button", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+            logicalFonts.Add("Caption", createLogicalFont("Roboto", 12, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("Overline", createLogicalFont("Roboto", 10, NativeTextRenderer.logFontWeight.FW_REGULAR));
+
+            Theme = Themes.LIGHT;
             ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 
-        public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
+
+        // Destructor
+        ~MaterialSkinManager()
+        {
+            // RemoveFontMemResourceEx
+            foreach(IntPtr handle in logicalFonts.Values)
+            {
+                NativeTextRenderer.DeleteObject(handle);
+            }
+        }
+
+        private PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+        
+        private FontFamily addFont(byte[] fontdata)
+        {
+            // Add font to system table in memory
+            int dataLength = fontdata.Length;
+            IntPtr ptrFont = Marshal.AllocCoTaskMem(dataLength);
+            Marshal.Copy(fontdata, 0, ptrFont, dataLength);
+            NativeTextRenderer.AddFontMemResourceEx(fontdata, dataLength, IntPtr.Zero, out _);
+
+            privateFontCollection.AddMemoryFont(ptrFont, dataLength);
+            Marshal.FreeCoTaskMem(ptrFont);
+
+            return privateFontCollection.Families.Last();
+        }
+
+        private IntPtr createLogicalFont(string fontName, int size, NativeTextRenderer.logFontWeight weight)
+        {
+            // Logical font:
+            NativeTextRenderer.LogFont lfont = new NativeTextRenderer.LogFont();
+            lfont.lfFaceName = fontName;
+            lfont.lfHeight = -size;
+            lfont.lfWeight = (int)weight;
+            return NativeTextRenderer.CreateFontIndirect(lfont);
+        }
 
         public void AddFormToManage(MaterialForm materialForm)
         {
@@ -313,21 +418,6 @@
         public void RemoveFormToManage(MaterialForm materialForm)
         {
             _formsToManage.Remove(materialForm);
-        }
-
-        private readonly PrivateFontCollection privateFontCollection = new PrivateFontCollection();
-
-        private FontFamily LoadFont(byte[] fontResource)
-        {
-            int dataLength = fontResource.Length;
-            IntPtr fontPtr = Marshal.AllocCoTaskMem(dataLength);
-            Marshal.Copy(fontResource, 0, fontPtr, dataLength);
-
-            uint cFonts = 0;
-            AddFontMemResourceEx(fontPtr, (uint)fontResource.Length, IntPtr.Zero, ref cFonts);
-            privateFontCollection.AddMemoryFont(fontPtr, dataLength);
-
-            return privateFontCollection.Families.Last();
         }
 
         private void UpdateBackgrounds()
@@ -404,7 +494,7 @@
 
                         if (controlToUpdate.Font == SystemFonts.DefaultFont) // if the control has not had the font changed from default, set a default
                         {
-                            controlToUpdate.Font = ROBOTO_REGULAR_11;
+                            controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
                         }
                     }
                 }
@@ -412,7 +502,7 @@
             }
             else if (controlToUpdate.IsMaterialControl())
             {
-               
+
                 controlToUpdate.BackColor = newBackColor;
                 controlToUpdate.ForeColor = GetPrimaryTextColor();
             }

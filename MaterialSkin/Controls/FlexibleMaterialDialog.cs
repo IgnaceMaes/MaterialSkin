@@ -22,7 +22,7 @@ namespace MaterialSkin.Controls
         /// 
         /// Default is: SystemFonts.MessageBoxFont
         /// </summary>
-        public static Font FONT = MaterialSkinManager.Instance.ROBOTO_MEDIUM_10;
+        public static Font FONT;
 
         /// <summary>
         /// Defines the maximum width for all FlexibleMessageBox instances in percent of the working area.
@@ -72,47 +72,53 @@ namespace MaterialSkin.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button1 = new MaterialSkin.Controls.MaterialButton();
+            this.leftButton = new MaterialSkin.Controls.MaterialButton();
             this.FlexibleMaterialFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.messageContainer = new System.Windows.Forms.Panel();
             this.pictureBoxForIcon = new System.Windows.Forms.PictureBox();
-            this.button2 = new MaterialSkin.Controls.MaterialButton();
-            this.button3 = new MaterialSkin.Controls.MaterialButton();
-            this.richTextBoxMessage = new MaterialMultiLineTextBox();
+            this.richTextBoxMessage = new MaterialSkin.Controls.MaterialMultiLineTextBox();
+            this.middleButton = new MaterialSkin.Controls.MaterialButton();
+            this.rightButton = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.FlexibleMaterialFormBindingSource)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.messageContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForIcon)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // leftButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.AutoSize = true;
-            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.Depth = 0;
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Icon = null;
-            this.button1.Location = new System.Drawing.Point(11, 146);
-            this.button1.MinimumSize = new System.Drawing.Size(0, 24);
-            this.button1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.button1.Name = "button1";
-            this.button1.HighEmphasis = true;
-            this.button1.Size = new System.Drawing.Size(39, 36);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
+            this.leftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.leftButton.AutoSize = false;
+            this.leftButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.leftButton.Depth = 0;
+            this.leftButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.leftButton.DrawShadows = true;
+            this.leftButton.HighEmphasis = false;
+            this.leftButton.Icon = null;
+            this.leftButton.Location = new System.Drawing.Point(44, 163);
+            this.leftButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.leftButton.MinimumSize = new System.Drawing.Size(0, 24);
+            this.leftButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.leftButton.Name = "leftButton";
+            this.leftButton.Size = new System.Drawing.Size(108, 36);
+            this.leftButton.TabIndex = 2;
+            this.leftButton.Text = "OK";
+            this.leftButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.leftButton.UseAccentColor = false;
+            this.leftButton.UseVisualStyleBackColor = true;
+            this.leftButton.Visible = false;
             // 
-            // panel1
+            // messageContainer
             // 
-            this.panel1.AutoSize = true;
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.pictureBoxForIcon);
-            this.panel1.Controls.Add(this.richTextBoxMessage);
-            this.panel1.Location = new System.Drawing.Point(-4, 65);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(268, 75);
-            this.panel1.TabIndex = 1;
+            this.messageContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.messageContainer.BackColor = System.Drawing.Color.White;
+            this.messageContainer.Controls.Add(this.pictureBoxForIcon);
+            this.messageContainer.Controls.Add(this.richTextBoxMessage);
+            this.messageContainer.Location = new System.Drawing.Point(0, 65);
+            this.messageContainer.Name = "messageContainer";
+            this.messageContainer.Size = new System.Drawing.Size(388, 81);
+            this.messageContainer.TabIndex = 1;
             // 
             // pictureBoxForIcon
             // 
@@ -123,73 +129,84 @@ namespace MaterialSkin.Controls
             this.pictureBoxForIcon.TabIndex = 8;
             this.pictureBoxForIcon.TabStop = false;
             // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.AutoSize = true;
-            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button2.Depth = 0;
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button2.Icon = null;
-            this.button2.Location = new System.Drawing.Point(92, 146);
-            this.button2.MinimumSize = new System.Drawing.Size(0, 24);
-            this.button2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.button2.Name = "button2";
-            this.button2.HighEmphasis = true;
-            this.button2.Size = new System.Drawing.Size(39, 36);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "OK";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.AutoSize = true;
-            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.Depth = 0;
-            this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button3.Icon = null;
-            this.button3.Location = new System.Drawing.Point(173, 146);
-            this.button3.MinimumSize = new System.Drawing.Size(0, 24);
-            this.button3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.button3.Name = "button3";
-            this.button3.HighEmphasis = true;
-            this.button3.Size = new System.Drawing.Size(39, 36);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "OK";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
-            // 
             // richTextBoxMessage
             // 
             this.richTextBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxMessage.BackColor = System.Drawing.Color.White;
+            this.richTextBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
             this.richTextBoxMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBoxMessage.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.FlexibleMaterialFormBindingSource, "MessageText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.richTextBoxMessage.Depth = 0;
             this.richTextBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxMessage.Location = new System.Drawing.Point(50, 26);
+            this.richTextBoxMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.richTextBoxMessage.Hint = "";
+            this.richTextBoxMessage.Location = new System.Drawing.Point(47, 2);
             this.richTextBoxMessage.Margin = new System.Windows.Forms.Padding(0);
+            this.richTextBoxMessage.MouseState = MaterialSkin.MouseState.HOVER;
             this.richTextBoxMessage.Name = "richTextBoxMessage";
             this.richTextBoxMessage.ReadOnly = true;
             this.richTextBoxMessage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBoxMessage.Size = new System.Drawing.Size(200, 36);
+            this.richTextBoxMessage.Size = new System.Drawing.Size(338, 78);
             this.richTextBoxMessage.TabIndex = 0;
             this.richTextBoxMessage.TabStop = false;
             this.richTextBoxMessage.Text = "<Message>";
             this.richTextBoxMessage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxMessage_LinkClicked);
             // 
+            // middleButton
+            // 
+            this.middleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.middleButton.AutoSize = false;
+            this.middleButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.middleButton.Depth = 0;
+            this.middleButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.middleButton.DrawShadows = true;
+            this.middleButton.HighEmphasis = true;
+            this.middleButton.Icon = null;
+            this.middleButton.Location = new System.Drawing.Point(160, 163);
+            this.middleButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.middleButton.MinimumSize = new System.Drawing.Size(0, 24);
+            this.middleButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.middleButton.Name = "middleButton";
+            this.middleButton.Size = new System.Drawing.Size(102, 36);
+            this.middleButton.TabIndex = 3;
+            this.middleButton.Text = "OK";
+            this.middleButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
+            this.middleButton.UseAccentColor = false;
+            this.middleButton.UseVisualStyleBackColor = true;
+            this.middleButton.Visible = false;
+            // 
+            // rightButton
+            // 
+            this.rightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.rightButton.AutoSize = false;
+            this.rightButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.rightButton.Depth = 0;
+            this.rightButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.rightButton.DrawShadows = true;
+            this.rightButton.HighEmphasis = true;
+            this.rightButton.Icon = null;
+            this.rightButton.Location = new System.Drawing.Point(270, 163);
+            this.rightButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.rightButton.MinimumSize = new System.Drawing.Size(0, 24);
+            this.rightButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rightButton.Name = "rightButton";
+            this.rightButton.Size = new System.Drawing.Size(106, 36);
+            this.rightButton.TabIndex = 0;
+            this.rightButton.Text = "OK";
+            this.rightButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.rightButton.UseAccentColor = false;
+            this.rightButton.UseVisualStyleBackColor = true;
+            this.rightButton.Visible = false;
+            // 
             // FlexibleMaterialForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(276, 191);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.button1);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(388, 208);
+            this.Controls.Add(this.rightButton);
+            this.Controls.Add(this.middleButton);
+            this.Controls.Add(this.messageContainer);
+            this.Controls.Add(this.leftButton);
             this.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.FlexibleMaterialFormBindingSource, "CaptionText", true));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -202,14 +219,13 @@ namespace MaterialSkin.Controls
             this.Load += new System.EventHandler(this.FlexibleMaterialForm_Load);
             this.Shown += new System.EventHandler(this.FlexibleMaterialForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.FlexibleMaterialFormBindingSource)).EndInit();
-            this.panel1.ResumeLayout(false);
+            this.messageContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForIcon)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
-        private MaterialButton button1;
+        private MaterialButton leftButton;
 
         /// <summary>
         /// Defines the FlexibleMaterialFormBindingSource
@@ -219,14 +235,14 @@ namespace MaterialSkin.Controls
         /// <summary>
         /// Defines the panel1
         /// </summary>
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel messageContainer;
 
         /// <summary>
         /// Defines the pictureBoxForIcon
         /// </summary>
         private System.Windows.Forms.PictureBox pictureBoxForIcon;
-        private MaterialButton button2;
-        private MaterialButton button3;
+        private MaterialButton middleButton;
+        private MaterialButton rightButton;
 
         //These separators are used for the "copy to clipboard" standard operation, triggered by Ctrl + C (behavior and clipboard format is like in a standard MessageBox)
         /// <summary>
@@ -342,6 +358,7 @@ namespace MaterialSkin.Controls
 
             materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
+            FONT = materialSkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
         }
 
         /// <summary>
@@ -445,7 +462,7 @@ namespace MaterialSkin.Controls
             }
 
             //Calculate whole text height
-            var textHeight = TextRenderer.MeasureText(text, FONT).Height;
+            var textHeight = Math.Min(TextRenderer.MeasureText(text, FONT).Height, 600);
 
             //Calculate width for longest text line
             const int SCROLLBAR_WIDTH_OFFSET = 15;
@@ -508,17 +525,17 @@ namespace MaterialSkin.Controls
                 case MessageBoxButtons.AbortRetryIgnore:
                     FlexibleMaterialForm.visibleButtonsCount = 3;
 
-                    FlexibleMaterialForm.button1.Visible = true;
-                    FlexibleMaterialForm.button1.Text = FlexibleMaterialForm.GetButtonText(ButtonID.ABORT);
-                    FlexibleMaterialForm.button1.DialogResult = DialogResult.Abort;
+                    FlexibleMaterialForm.leftButton.Visible = true;
+                    FlexibleMaterialForm.leftButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.ABORT);
+                    FlexibleMaterialForm.leftButton.DialogResult = DialogResult.Abort;
 
-                    FlexibleMaterialForm.button2.Visible = true;
-                    FlexibleMaterialForm.button2.Text = FlexibleMaterialForm.GetButtonText(ButtonID.RETRY);
-                    FlexibleMaterialForm.button2.DialogResult = DialogResult.Retry;
+                    FlexibleMaterialForm.middleButton.Visible = true;
+                    FlexibleMaterialForm.middleButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.RETRY);
+                    FlexibleMaterialForm.middleButton.DialogResult = DialogResult.Retry;
 
-                    FlexibleMaterialForm.button3.Visible = true;
-                    FlexibleMaterialForm.button3.Text = FlexibleMaterialForm.GetButtonText(ButtonID.IGNORE);
-                    FlexibleMaterialForm.button3.DialogResult = DialogResult.Ignore;
+                    FlexibleMaterialForm.rightButton.Visible = true;
+                    FlexibleMaterialForm.rightButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.IGNORE);
+                    FlexibleMaterialForm.rightButton.DialogResult = DialogResult.Ignore;
 
                     FlexibleMaterialForm.ControlBox = false;
                     break;
@@ -526,41 +543,41 @@ namespace MaterialSkin.Controls
                 case MessageBoxButtons.OKCancel:
                     FlexibleMaterialForm.visibleButtonsCount = 2;
 
-                    FlexibleMaterialForm.button2.Visible = true;
-                    FlexibleMaterialForm.button2.Text = FlexibleMaterialForm.GetButtonText(ButtonID.OK);
-                    FlexibleMaterialForm.button2.DialogResult = DialogResult.OK;
+                    FlexibleMaterialForm.middleButton.Visible = true;
+                    FlexibleMaterialForm.middleButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.CANCEL);
+                    FlexibleMaterialForm.middleButton.DialogResult = DialogResult.Cancel;
 
-                    FlexibleMaterialForm.button3.Visible = true;
-                    FlexibleMaterialForm.button3.Text = FlexibleMaterialForm.GetButtonText(ButtonID.CANCEL);
-                    FlexibleMaterialForm.button3.DialogResult = DialogResult.Cancel;
+                    FlexibleMaterialForm.rightButton.Visible = true;
+                    FlexibleMaterialForm.rightButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.OK);
+                    FlexibleMaterialForm.rightButton.DialogResult = DialogResult.OK;
 
-                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.button3;
+                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.middleButton;
                     break;
 
                 case MessageBoxButtons.RetryCancel:
                     FlexibleMaterialForm.visibleButtonsCount = 2;
 
-                    FlexibleMaterialForm.button2.Visible = true;
-                    FlexibleMaterialForm.button2.Text = FlexibleMaterialForm.GetButtonText(ButtonID.RETRY);
-                    FlexibleMaterialForm.button2.DialogResult = DialogResult.Retry;
+                    FlexibleMaterialForm.middleButton.Visible = true;
+                    FlexibleMaterialForm.middleButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.CANCEL);
+                    FlexibleMaterialForm.middleButton.DialogResult = DialogResult.Cancel;
 
-                    FlexibleMaterialForm.button3.Visible = true;
-                    FlexibleMaterialForm.button3.Text = FlexibleMaterialForm.GetButtonText(ButtonID.CANCEL);
-                    FlexibleMaterialForm.button3.DialogResult = DialogResult.Cancel;
+                    FlexibleMaterialForm.rightButton.Visible = true;
+                    FlexibleMaterialForm.rightButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.RETRY);
+                    FlexibleMaterialForm.rightButton.DialogResult = DialogResult.Retry;
 
-                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.button3;
+                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.middleButton;
                     break;
 
                 case MessageBoxButtons.YesNo:
                     FlexibleMaterialForm.visibleButtonsCount = 2;
 
-                    FlexibleMaterialForm.button2.Visible = true;
-                    FlexibleMaterialForm.button2.Text = FlexibleMaterialForm.GetButtonText(ButtonID.YES);
-                    FlexibleMaterialForm.button2.DialogResult = DialogResult.Yes;
+                    FlexibleMaterialForm.middleButton.Visible = true;
+                    FlexibleMaterialForm.middleButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.NO);
+                    FlexibleMaterialForm.middleButton.DialogResult = DialogResult.No;
 
-                    FlexibleMaterialForm.button3.Visible = true;
-                    FlexibleMaterialForm.button3.Text = FlexibleMaterialForm.GetButtonText(ButtonID.NO);
-                    FlexibleMaterialForm.button3.DialogResult = DialogResult.No;
+                    FlexibleMaterialForm.rightButton.Visible = true;
+                    FlexibleMaterialForm.rightButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.YES);
+                    FlexibleMaterialForm.rightButton.DialogResult = DialogResult.Yes;
 
                     FlexibleMaterialForm.ControlBox = false;
                     break;
@@ -568,29 +585,29 @@ namespace MaterialSkin.Controls
                 case MessageBoxButtons.YesNoCancel:
                     FlexibleMaterialForm.visibleButtonsCount = 3;
 
-                    FlexibleMaterialForm.button1.Visible = true;
-                    FlexibleMaterialForm.button1.Text = FlexibleMaterialForm.GetButtonText(ButtonID.YES);
-                    FlexibleMaterialForm.button1.DialogResult = DialogResult.Yes;
+                    FlexibleMaterialForm.rightButton.Visible = true;
+                    FlexibleMaterialForm.rightButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.YES);
+                    FlexibleMaterialForm.rightButton.DialogResult = DialogResult.Yes;
 
-                    FlexibleMaterialForm.button2.Visible = true;
-                    FlexibleMaterialForm.button2.Text = FlexibleMaterialForm.GetButtonText(ButtonID.NO);
-                    FlexibleMaterialForm.button2.DialogResult = DialogResult.No;
+                    FlexibleMaterialForm.middleButton.Visible = true;
+                    FlexibleMaterialForm.middleButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.NO);
+                    FlexibleMaterialForm.middleButton.DialogResult = DialogResult.No;
 
-                    FlexibleMaterialForm.button3.Visible = true;
-                    FlexibleMaterialForm.button3.Text = FlexibleMaterialForm.GetButtonText(ButtonID.CANCEL);
-                    FlexibleMaterialForm.button3.DialogResult = DialogResult.Cancel;
+                    FlexibleMaterialForm.leftButton.Visible = true;
+                    FlexibleMaterialForm.leftButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.CANCEL);
+                    FlexibleMaterialForm.leftButton.DialogResult = DialogResult.Cancel;
 
-                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.button3;
+                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.leftButton;
                     break;
 
                 case MessageBoxButtons.OK:
                 default:
                     FlexibleMaterialForm.visibleButtonsCount = 1;
-                    FlexibleMaterialForm.button3.Visible = true;
-                    FlexibleMaterialForm.button3.Text = FlexibleMaterialForm.GetButtonText(ButtonID.OK);
-                    FlexibleMaterialForm.button3.DialogResult = DialogResult.OK;
+                    FlexibleMaterialForm.rightButton.Visible = true;
+                    FlexibleMaterialForm.rightButton.Text = FlexibleMaterialForm.GetButtonText(ButtonID.OK);
+                    FlexibleMaterialForm.rightButton.DialogResult = DialogResult.OK;
 
-                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.button3;
+                    FlexibleMaterialForm.CancelButton = FlexibleMaterialForm.rightButton;
                     break;
             }
 
@@ -630,15 +647,15 @@ namespace MaterialSkin.Controls
 
             if (buttonIndexToFocus == 3)
             {
-                buttonToFocus = this.button3;
+                buttonToFocus = this.rightButton;
             }
             else if (buttonIndexToFocus == 2)
             {
-                buttonToFocus = this.button2;
+                buttonToFocus = this.middleButton;
             }
             else
             {
-                buttonToFocus = this.button1;
+                buttonToFocus = this.leftButton;
             }
 
             buttonToFocus.Focus();
@@ -677,9 +694,9 @@ namespace MaterialSkin.Controls
             //Handle standard key strikes for clipboard copy: "Ctrl + C" and "Ctrl + Insert"
             if (e.Control && (e.KeyCode == Keys.C || e.KeyCode == Keys.Insert))
             {
-                var buttonsTextLine = (this.button1.Visible ? this.button1.Text + STANDARD_MESSAGEBOX_SEPARATOR_SPACES : string.Empty)
-                                    + (this.button2.Visible ? this.button2.Text + STANDARD_MESSAGEBOX_SEPARATOR_SPACES : string.Empty)
-                                    + (this.button3.Visible ? this.button3.Text + STANDARD_MESSAGEBOX_SEPARATOR_SPACES : string.Empty);
+                var buttonsTextLine = (this.leftButton.Visible ? this.leftButton.Text + STANDARD_MESSAGEBOX_SEPARATOR_SPACES : string.Empty)
+                                    + (this.middleButton.Visible ? this.middleButton.Text + STANDARD_MESSAGEBOX_SEPARATOR_SPACES : string.Empty)
+                                    + (this.rightButton.Visible ? this.rightButton.Text + STANDARD_MESSAGEBOX_SEPARATOR_SPACES : string.Empty);
 
                 //Build same clipboard text like the standard .Net MessageBox
                 var textForClipboard = STANDARD_MESSAGEBOX_SEPARATOR_LINES
@@ -750,18 +767,8 @@ namespace MaterialSkin.Controls
 
         private void FlexibleMaterialForm_Load(object sender, EventArgs e)
         {
-            panel1.Top = UserArea.Top;
-            panel1.Width = UserArea.Width ;
-            panel1.Height = UserArea.Height - (int)(button1.Height * 1.77);
-
-          
-
         }
-
-      
-        }
-
-
     }
+}
 
 

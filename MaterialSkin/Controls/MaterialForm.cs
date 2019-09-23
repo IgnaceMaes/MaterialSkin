@@ -1286,9 +1286,15 @@
             }
 
             //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush,
-                new Rectangle(SkinManager.FORM_PADDING + (_drawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT),
-                new StringFormat { LineAlignment = StringAlignment.Center });
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            {
+                Rectangle textLocation = new Rectangle(SkinManager.FORM_PADDING + (_drawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+                NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.H6),
+                    SkinManager.ColorScheme.TextColor,
+                    textLocation.Location,
+                    textLocation.Size,
+                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+            }
         }
 
         /// <summary>

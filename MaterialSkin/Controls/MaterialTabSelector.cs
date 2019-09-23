@@ -112,6 +112,13 @@
             _animationManager.OnAnimationProgress += sender => Invalidate();
         }
 
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
+        }
+
         /// <summary>
         /// The OnPaint
         /// </summary>
@@ -146,10 +153,18 @@
             foreach (TabPage tabPage in _baseTabControl.TabPages)
             {
                 var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
-                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
 
-                g.DrawString(tabPage.Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, textBrush, _tabRects[currentTabIndex], new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-                textBrush.Dispose();
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    Rectangle textLocation = _tabRects[currentTabIndex];
+                    NativeText.DrawTransparentText(
+                        tabPage.Text.ToUpper(),
+                        SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
+                        Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor),
+                        textLocation.Location,
+                        textLocation.Size,
+                        NativeTextRenderer.TextAlignFlags.Center | NativeTextRenderer.TextAlignFlags.Middle);
+                }
             }
 
             //Animate tab indicator
@@ -226,10 +241,10 @@
             {
                 using (var g = Graphics.FromImage(b))
                 {
-                    _tabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(_baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                    _tabRects.Add(new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(_baseTabControl.TabPages[0].Text, Font).Width, Height));
                     for (int i = 1; i < _baseTabControl.TabPages.Count; i++)
                     {
-                        _tabRects.Add(new Rectangle(_tabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(_baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width, Height));
+                        _tabRects.Add(new Rectangle(_tabRects[i - 1].Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(_baseTabControl.TabPages[i].Text, Font).Width, Height));
                     }
                 }
             }

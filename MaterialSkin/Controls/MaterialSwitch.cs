@@ -150,7 +150,12 @@
         /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
-            var w = _trackOffsetY + THUMB_SIZE + TRACK_SIZE_WIDTH + 2 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            Size strSize;
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(CreateGraphics()))
+            {
+                strSize = NativeText.MeasureLogString(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1));
+            }
+            var w = TRACK_SIZE_WIDTH + THUMB_SIZE + strSize.Width;
             return Ripple ? new Size(w, THUMB_SIZE + RIPPLE_DIAMETER / 2) : new Size(w, THUMB_SIZE);
         }
 
@@ -240,13 +245,18 @@
                 g.FillEllipse(thumbBrush, thumbBounds);
             }
 
-            // draw switch text
-            SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(
-                Text,
-                SkinManager.ROBOTO_MEDIUM_10,
-                Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
-                _trackOffsetY + TEXT_OFFSET + TRACK_SIZE_WIDTH, Height / 2 - stringSize.Height / 2);
+            // draw text
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            {
+                Rectangle textLocation = new Rectangle(TEXT_OFFSET + TRACK_SIZE_WIDTH, 0, Width - (TEXT_OFFSET + TRACK_SIZE_WIDTH), Height);
+                NativeText.DrawTransparentText(
+                    Text,
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                    Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                    textLocation.Location,
+                    textLocation.Size,
+                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+            }
         }
 
         /// <summary>
@@ -292,7 +302,7 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = SkinManager.ROBOTO_MEDIUM_10;
+            Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
 
             if (DesignMode)
             {

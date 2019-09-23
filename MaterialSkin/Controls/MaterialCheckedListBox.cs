@@ -98,11 +98,6 @@
             }
 
             /// <summary>
-            /// Defines the SelectedIndexChanged
-            /// </summary>
-            public event SelectedIndexChangedEventHandler SelectedIndexChanged;
-
-            /// <summary>
             /// The SelectedIndexChangedEventHandler
             /// </summary>
             /// <param name="Index">The Index<see cref="int"/></param>

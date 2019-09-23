@@ -169,7 +169,7 @@
                     new float[] {   0,   0,   0,   0,  0}, // Red scale factor
                     new float[] {   0,   0,   0,   0,  0}, // Green scale factor
                     new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
-                    new float[] {   0,   0,   0, .5f,  0}, // alpha scale factor
+                    new float[] {   0,   0,   0, .7f,  0}, // alpha scale factor
                     new float[] {   l,   l,   l,   0,  1}};// offset
 
             float[][] matrixColor = {
@@ -375,7 +375,6 @@
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-
             // redraw stuff
             g.Clear(UseColors ? SkinManager.ColorScheme.PrimaryColor : SkinManager.GetApplicationBackgroundColor());
 
@@ -401,7 +400,7 @@
             // Ripple
             if (_clickAnimManager.IsAnimating())
             {
-                var rippleBrush = new SolidBrush(Color.FromArgb((int)(70 - (clickAnimProgress * 50)),
+                var rippleBrush = new SolidBrush(Color.FromArgb((int)(70 - (clickAnimProgress * 70)),
                     UseColors ? SkinManager.ColorScheme.AccentColor : // Using colors
                     SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryColor : // light theme
                     SkinManager.ColorScheme.LightPrimaryColor)); // dark theme
@@ -427,17 +426,22 @@
                 bgBrush.Dispose();
 
                 // Text
-                Brush textBrush = new SolidBrush(Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.ACTION_BAR_TEXT.A, UseColors ? SkinManager.ACTION_BAR_TEXT_SECONDARY.A : 255, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), // alpha
+                Color textColor = Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.ACTION_BAR_TEXT.A, UseColors ? SkinManager.ACTION_BAR_TEXT_SECONDARY.A : 255, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), // alpha
                     UseColors ? (currentTabIndex == _baseTabControl.SelectedIndex ? (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor) // Use colors - selected
                     : SkinManager.ColorScheme.TextColor) :  // Use colors - not selected
                     (currentTabIndex == _baseTabControl.SelectedIndex ? (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor) : // selected
-                    SkinManager.GetPrimaryTextColor()))); // not selected
+                    SkinManager.GetPrimaryTextColor()));
+
+                IntPtr textFont = SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle2);
 
                 Rectangle textRect = _tabRects[currentTabIndex];
                 textRect.X += _baseTabControl.ImageList != null ? tabHeight : (int)(SkinManager.FORM_PADDING * 0.75);
-                textRect.Width -= SkinManager.FORM_PADDING;
-                g.DrawString(tabPage.Text, SkinManager.ROBOTO_BOLD_10, textBrush, textRect, new StringFormat { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap, Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
-                textBrush.Dispose();
+                textRect.Width -= SkinManager.FORM_PADDING << 2;
+
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    NativeText.DrawTransparentText(tabPage.Text, textFont, textColor, textRect.Location, textRect.Size, NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                }
 
                 // Icons
                 if (_baseTabControl.ImageList != null && !String.IsNullOrEmpty(tabPage.ImageKey))

@@ -159,7 +159,7 @@
             set
             {
                 base.Text = value;
-                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.getFontByType(MaterialSkinManager.fontType.Button));
                 if (AutoSize)
                 {
                     Refresh();
@@ -266,7 +266,7 @@
 
             if (Type == MaterialButtonType.Outlined)
             {
-                using (Pen outlinePen = new Pen(Enabled? SkinManager.GetButtonOutlineColor() : SkinManager.GetButtonDisabledOutlineColor(), 1))
+                using (Pen outlinePen = new Pen(Enabled ? SkinManager.GetButtonOutlineColor() : SkinManager.GetButtonDisabledOutlineColor(), 1))
                 {
                     buttonRectF.X += 0.5f;
                     buttonRectF.Y += 0.5f;
@@ -320,18 +320,23 @@
                 textRect.X += 8 + 24 + 4; // left padding + icon width + space between Icon and Text
             }
 
-            g.DrawString(
-                Text.ToUpper(),
-                SkinManager.ROBOTO_MEDIUM_10, // Font
-                Enabled ? (HighEmphasis ? (Type == MaterialButtonType.Text || Type == MaterialButtonType.Outlined) ?
-                (UseAccentColor ? SkinManager.ColorScheme.AccentBrush : // Outline or Text and accent and emphasis
-                SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.ColorScheme.PrimaryBrush) : // Outline or Text and emphasis
-                SkinManager.ColorScheme.TextBrush : // Contained and Emphasis
-                SkinManager.GetPrimaryTextBrush()) : // Cointained and accent
-                SkinManager.GetButtonDisabledTextBrush(), // Disabled
-                textRect, // placement
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center } // options
-                );
+            Color textColor = Enabled ? (HighEmphasis ? (Type == MaterialButtonType.Text || Type == MaterialButtonType.Outlined) ?
+                (UseAccentColor ? SkinManager.ColorScheme.AccentColor : // Outline or Text and accent and emphasis
+                SkinManager.ColorScheme.PrimaryColor) : // Outline or Text and emphasis
+                SkinManager.ColorScheme.TextColor : // Contained and Emphasis
+                SkinManager.GetPrimaryTextColor()) : // Cointained and accent
+                SkinManager.GetButtonDisabledTextColor(); // Disabled
+
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            {
+                NativeText.DrawTransparentText(Text.ToUpper(), SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
+                    textColor,
+                    textRect.Location,
+                    textRect.Size,
+                    NativeTextRenderer.TextAlignFlags.Center | NativeTextRenderer.TextAlignFlags.Middle);
+            }
+
+
         }
 
         /// <summary>
@@ -362,8 +367,6 @@
                 // 4 is for the space between icon & text
                 extra += 24 + 4;
             }
-
-            Console.WriteLine(s.Width);
 
             if (AutoSize)
             {
