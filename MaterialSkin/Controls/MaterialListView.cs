@@ -102,9 +102,12 @@ namespace MaterialSkin.Controls
                                  getStringFormat());
             }
 
-            e.Graphics.DrawImage((Image)b.Clone(), new Point(0, e.Item.Bounds.Location.Y));
+            Image bitmap = (Image)b.Clone();
+
+            e.Graphics.DrawImage(bitmap, new Point(0, e.Item.Bounds.Location.Y));
             g.Dispose();
             b.Dispose();
+            bitmap.Dispose();
         }
 
         private StringFormat getStringFormat()
