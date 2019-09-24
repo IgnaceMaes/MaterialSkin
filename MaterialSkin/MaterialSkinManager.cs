@@ -328,6 +328,23 @@
             throw new System.ArgumentException("Parameter is invalid", "type");
         }
 
+
+        /// <summary>
+        /// Get the font by size - used for textbox label animation, try to not use this for anything else
+        /// </summary>
+        /// <param name="size">font size, ranges from 9 up to 14</param>
+        /// <returns></returns>
+        public IntPtr getTextBoxFontBySize(int size)
+        {
+            string name = "textBox" + Math.Min(16, Math.Max(12, size)).ToString();
+            return logicalFonts[name];
+        }
+
+        /// <summary>
+        /// Gets a Material Skin Logical Roboto Font given a standard material font type
+        /// </summary>
+        /// <param name="type">material design font type</param>
+        /// <returns></returns>
         public IntPtr getLogFontByType(fontType type)
         {
             return logicalFonts[Enum.GetName(typeof(fontType), type)];
@@ -339,7 +356,10 @@
 
         private MaterialSkinManager()
         {
-            // Load Roboto fonts
+            Theme = Themes.LIGHT;
+            ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
+
+            // Create and cache Roboto fonts
             // Thanks https://www.codeproject.com/Articles/42041/How-to-Use-a-Font-Without-Installing-it
             // And https://www.codeproject.com/Articles/107376/Embedding-Font-To-Resources
 
@@ -367,9 +387,23 @@
             logicalFonts.Add("Button", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
             logicalFonts.Add("Caption", createLogicalFont("Roboto", 12, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("Overline", createLogicalFont("Roboto", 10, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            // Logical fonts for textbox animation
+            logicalFonts.Add("textBox16", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("textBox15", createLogicalFont("Roboto", 15, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("textBox14", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("textBox13", createLogicalFont("Roboto", 13, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+            logicalFonts.Add("textBox12", createLogicalFont("Roboto", 12, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+        }
 
-            Theme = Themes.LIGHT;
-            ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+        /// <summary>
+        /// Creates a custom logical roboto font - Cache this result (save to a var) to get better performance.
+        /// </summary>
+        /// <param name="sizeInDp">font size in dp</param>
+        /// <param name="fontWeight">font weight</param>
+        /// <returns></returns>
+        public IntPtr createCustomRobotoLogFont(int sizeInDp, NativeTextRenderer.logFontWeight fontWeight)
+        {
+            return createLogicalFont("Roboto", sizeInDp, fontWeight);
         }
 
 
@@ -377,14 +411,14 @@
         ~MaterialSkinManager()
         {
             // RemoveFontMemResourceEx
-            foreach(IntPtr handle in logicalFonts.Values)
+            foreach (IntPtr handle in logicalFonts.Values)
             {
                 NativeTextRenderer.DeleteObject(handle);
             }
         }
 
         private PrivateFontCollection privateFontCollection = new PrivateFontCollection();
-        
+
         private FontFamily addFont(byte[] fontdata)
         {
             // Add font to system table in memory
@@ -514,6 +548,23 @@
             }
 
             controlToUpdate.Invalidate();
+        }
+    }
+
+
+    public static class StringExtension
+    {
+        public static string ToSecureString(this string plainString)
+        {
+            if (plainString == null)
+                return null;
+
+            string secureString = "";
+            foreach (char c in plainString.ToCharArray())
+            {
+                secureString += '\u25CF';
+            }
+            return secureString;
         }
     }
 }
