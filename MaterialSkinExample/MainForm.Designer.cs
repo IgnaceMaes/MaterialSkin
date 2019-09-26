@@ -152,7 +152,7 @@ namespace MaterialSkinExample
             this.materialRadioButton4.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton4.Depth = 0;
             this.materialRadioButton4.Enabled = false;
-            this.materialRadioButton4.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton4.Location = new System.Drawing.Point(19, 106);
             this.materialRadioButton4.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton4.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -170,7 +170,7 @@ namespace MaterialSkinExample
             this.materialRadioButton3.AutoSize = true;
             this.materialRadioButton3.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton3.Depth = 0;
-            this.materialRadioButton3.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton3.Location = new System.Drawing.Point(19, 76);
             this.materialRadioButton3.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton3.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -187,7 +187,7 @@ namespace MaterialSkinExample
             this.materialRadioButton2.AutoSize = true;
             this.materialRadioButton2.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton2.Depth = 0;
-            this.materialRadioButton2.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton2.Location = new System.Drawing.Point(19, 46);
             this.materialRadioButton2.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton2.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -274,7 +274,7 @@ namespace MaterialSkinExample
             this.materialRadioButton1.AutoSize = true;
             this.materialRadioButton1.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton1.Depth = 0;
-            this.materialRadioButton1.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton1.Location = new System.Drawing.Point(19, 16);
             this.materialRadioButton1.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton1.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -371,16 +371,18 @@ namespace MaterialSkinExample
             // materialTextBox2
             // 
             this.materialTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.materialTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox2.Depth = 0;
-            this.materialTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialTextBox2.Font = new System.Drawing.Font("Roboto", 12F);
             this.materialTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox2.Hint = "Password";
             this.materialTextBox2.Location = new System.Drawing.Point(10, 161);
-            this.materialTextBox2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTextBox2.MaxLength = 50;
+            this.materialTextBox2.MouseState = MaterialSkin.MouseState.OUT;
             this.materialTextBox2.Multiline = false;
             this.materialTextBox2.Name = "materialTextBox2";
             this.materialTextBox2.Password = true;
-            this.materialTextBox2.Size = new System.Drawing.Size(343, 60);
+            this.materialTextBox2.Size = new System.Drawing.Size(421, 60);
             this.materialTextBox2.TabIndex = 46;
             this.materialTextBox2.TabStop = false;
             this.materialTextBox2.Text = "";
@@ -388,16 +390,18 @@ namespace MaterialSkinExample
             // materialTextBox1
             // 
             this.materialTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.materialTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox1.Depth = 0;
-            this.materialTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialTextBox1.Font = new System.Drawing.Font("Roboto", 12F);
             this.materialTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox1.Hint = "Another example hint";
             this.materialTextBox1.Location = new System.Drawing.Point(10, 95);
-            this.materialTextBox1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTextBox1.MaxLength = 50;
+            this.materialTextBox1.MouseState = MaterialSkin.MouseState.OUT;
             this.materialTextBox1.Multiline = false;
             this.materialTextBox1.Name = "materialTextBox1";
             this.materialTextBox1.Password = false;
-            this.materialTextBox1.Size = new System.Drawing.Size(343, 60);
+            this.materialTextBox1.Size = new System.Drawing.Size(421, 60);
             this.materialTextBox1.TabIndex = 45;
             this.materialTextBox1.TabStop = false;
             this.materialTextBox1.Text = "";
@@ -406,12 +410,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel22.AutoSize = true;
             this.materialLabel22.Depth = 0;
-            this.materialLabel22.Font = new System.Drawing.Font("Roboto Thin", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel22.Font = new System.Drawing.Font("Roboto", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel22.FontType = MaterialSkin.MaterialSkinManager.fontType.Overline;
             this.materialLabel22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel22.HighEmphasis = false;
             this.materialLabel22.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel22.Location = new System.Drawing.Point(454, 442);
+            this.materialLabel22.Location = new System.Drawing.Point(463, 447);
             this.materialLabel22.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel22.Name = "materialLabel22";
             this.materialLabel22.Size = new System.Drawing.Size(46, 13);
@@ -424,12 +428,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel21.AutoSize = true;
             this.materialLabel21.Depth = 0;
-            this.materialLabel21.Font = new System.Drawing.Font("Roboto Thin", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel21.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel21.FontType = MaterialSkin.MaterialSkinManager.fontType.Caption;
             this.materialLabel21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel21.HighEmphasis = false;
             this.materialLabel21.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel21.Location = new System.Drawing.Point(454, 423);
+            this.materialLabel21.Location = new System.Drawing.Point(463, 428);
             this.materialLabel21.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel21.Name = "materialLabel21";
             this.materialLabel21.Size = new System.Drawing.Size(43, 14);
@@ -442,15 +446,15 @@ namespace MaterialSkinExample
             // 
             this.materialLabel20.AutoSize = true;
             this.materialLabel20.Depth = 0;
-            this.materialLabel20.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel20.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel20.FontType = MaterialSkin.MaterialSkinManager.fontType.Button;
             this.materialLabel20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel20.HighEmphasis = false;
             this.materialLabel20.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel20.Location = new System.Drawing.Point(454, 402);
+            this.materialLabel20.Location = new System.Drawing.Point(463, 407);
             this.materialLabel20.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel20.Name = "materialLabel20";
-            this.materialLabel20.Size = new System.Drawing.Size(54, 18);
+            this.materialLabel20.Size = new System.Drawing.Size(56, 17);
             this.materialLabel20.TabIndex = 42;
             this.materialLabel20.Text = "BUTTON";
             this.materialLabel20.UseAccent = false;
@@ -460,12 +464,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel19.AutoSize = true;
             this.materialLabel19.Depth = 0;
-            this.materialLabel19.Font = new System.Drawing.Font("Roboto Thin", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel19.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel19.FontType = MaterialSkin.MaterialSkinManager.fontType.Body2;
             this.materialLabel19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel19.HighEmphasis = false;
             this.materialLabel19.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel19.Location = new System.Drawing.Point(454, 382);
+            this.materialLabel19.Location = new System.Drawing.Point(463, 387);
             this.materialLabel19.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel19.Name = "materialLabel19";
             this.materialLabel19.Size = new System.Drawing.Size(43, 17);
@@ -478,11 +482,11 @@ namespace MaterialSkinExample
             // 
             this.materialLabel18.AutoSize = true;
             this.materialLabel18.Depth = 0;
-            this.materialLabel18.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel18.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel18.HighEmphasis = false;
             this.materialLabel18.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel18.Location = new System.Drawing.Point(454, 361);
+            this.materialLabel18.Location = new System.Drawing.Point(463, 366);
             this.materialLabel18.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel18.Name = "materialLabel18";
             this.materialLabel18.Size = new System.Drawing.Size(49, 19);
@@ -495,15 +499,15 @@ namespace MaterialSkinExample
             // 
             this.materialLabel17.AutoSize = true;
             this.materialLabel17.Depth = 0;
-            this.materialLabel17.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel17.Font = new System.Drawing.Font("Roboto Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel17.FontType = MaterialSkin.MaterialSkinManager.fontType.Subtitle2;
             this.materialLabel17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel17.HighEmphasis = false;
             this.materialLabel17.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel17.Location = new System.Drawing.Point(454, 341);
+            this.materialLabel17.Location = new System.Drawing.Point(463, 346);
             this.materialLabel17.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel17.Name = "materialLabel17";
-            this.materialLabel17.Size = new System.Drawing.Size(61, 18);
+            this.materialLabel17.Size = new System.Drawing.Size(61, 17);
             this.materialLabel17.TabIndex = 39;
             this.materialLabel17.Text = "Subtitle 2";
             this.materialLabel17.UseAccent = false;
@@ -513,12 +517,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel1.AutoSize = true;
             this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto Thin", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.Subtitle1;
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel1.HighEmphasis = false;
             this.materialLabel1.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel1.Location = new System.Drawing.Point(453, 320);
+            this.materialLabel1.Location = new System.Drawing.Point(462, 325);
             this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
             this.materialLabel1.Size = new System.Drawing.Size(67, 19);
@@ -531,15 +535,15 @@ namespace MaterialSkinExample
             // 
             this.materialLabel16.AutoSize = true;
             this.materialLabel16.Depth = 0;
-            this.materialLabel16.Font = new System.Drawing.Font("Roboto Thin", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel16.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel16.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
             this.materialLabel16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel16.HighEmphasis = false;
             this.materialLabel16.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel16.Location = new System.Drawing.Point(453, 290);
+            this.materialLabel16.Location = new System.Drawing.Point(462, 295);
             this.materialLabel16.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel16.Name = "materialLabel16";
-            this.materialLabel16.Size = new System.Drawing.Size(90, 25);
+            this.materialLabel16.Size = new System.Drawing.Size(90, 24);
             this.materialLabel16.TabIndex = 37;
             this.materialLabel16.Text = "Heading 6";
             this.materialLabel16.UseAccent = false;
@@ -549,12 +553,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel15.AutoSize = true;
             this.materialLabel15.Depth = 0;
-            this.materialLabel15.Font = new System.Drawing.Font("Roboto Thin", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel15.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel15.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
             this.materialLabel15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel15.HighEmphasis = false;
             this.materialLabel15.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel15.Location = new System.Drawing.Point(452, 260);
+            this.materialLabel15.Location = new System.Drawing.Point(461, 265);
             this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel15.Name = "materialLabel15";
             this.materialLabel15.Size = new System.Drawing.Size(108, 29);
@@ -567,12 +571,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel14.AutoSize = true;
             this.materialLabel14.Depth = 0;
-            this.materialLabel14.Font = new System.Drawing.Font("Roboto Thin", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel14.Font = new System.Drawing.Font("Roboto", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel14.FontType = MaterialSkin.MaterialSkinManager.fontType.H4;
             this.materialLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel14.HighEmphasis = false;
             this.materialLabel14.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel14.Location = new System.Drawing.Point(450, 219);
+            this.materialLabel14.Location = new System.Drawing.Point(459, 224);
             this.materialLabel14.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel14.Name = "materialLabel14";
             this.materialLabel14.Size = new System.Drawing.Size(153, 41);
@@ -585,12 +589,12 @@ namespace MaterialSkinExample
             // 
             this.materialLabel13.AutoSize = true;
             this.materialLabel13.Depth = 0;
-            this.materialLabel13.Font = new System.Drawing.Font("Roboto Thin", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel13.Font = new System.Drawing.Font("Roboto", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel13.FontType = MaterialSkin.MaterialSkinManager.fontType.H3;
             this.materialLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel13.HighEmphasis = false;
             this.materialLabel13.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel13.Location = new System.Drawing.Point(447, 161);
+            this.materialLabel13.Location = new System.Drawing.Point(456, 166);
             this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel13.Name = "materialLabel13";
             this.materialLabel13.Size = new System.Drawing.Size(216, 58);
@@ -603,15 +607,15 @@ namespace MaterialSkinExample
             // 
             this.materialLabel12.AutoSize = true;
             this.materialLabel12.Depth = 0;
-            this.materialLabel12.Font = new System.Drawing.Font("Roboto Thin", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel12.Font = new System.Drawing.Font("Roboto Light", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel12.FontType = MaterialSkin.MaterialSkinManager.fontType.H2;
             this.materialLabel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel12.HighEmphasis = false;
             this.materialLabel12.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel12.Location = new System.Drawing.Point(444, 89);
+            this.materialLabel12.Location = new System.Drawing.Point(453, 94);
             this.materialLabel12.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel12.Name = "materialLabel12";
-            this.materialLabel12.Size = new System.Drawing.Size(273, 72);
+            this.materialLabel12.Size = new System.Drawing.Size(265, 72);
             this.materialLabel12.TabIndex = 33;
             this.materialLabel12.Text = "Heading 2";
             this.materialLabel12.UseAccent = false;
@@ -621,15 +625,15 @@ namespace MaterialSkinExample
             // 
             this.materialLabel11.AutoSize = true;
             this.materialLabel11.Depth = 0;
-            this.materialLabel11.Font = new System.Drawing.Font("Roboto Thin", 96F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel11.Font = new System.Drawing.Font("Roboto Light", 96F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel11.FontType = MaterialSkin.MaterialSkinManager.fontType.H1;
             this.materialLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel11.HighEmphasis = false;
             this.materialLabel11.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel11.Location = new System.Drawing.Point(437, -5);
+            this.materialLabel11.Location = new System.Drawing.Point(446, 0);
             this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel11.Name = "materialLabel11";
-            this.materialLabel11.Size = new System.Drawing.Size(433, 115);
+            this.materialLabel11.Size = new System.Drawing.Size(426, 115);
             this.materialLabel11.TabIndex = 32;
             this.materialLabel11.Text = "Heading 1";
             this.materialLabel11.UseAccent = false;
@@ -639,7 +643,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch6.AutoSize = true;
             this.materialSwitch6.Depth = 0;
-            this.materialSwitch6.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch6.Location = new System.Drawing.Point(25, 352);
             this.materialSwitch6.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch6.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -658,7 +662,7 @@ namespace MaterialSkinExample
             this.materialSwitch5.Checked = true;
             this.materialSwitch5.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialSwitch5.Depth = 0;
-            this.materialSwitch5.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch5.Location = new System.Drawing.Point(25, 316);
             this.materialSwitch5.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch5.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -675,7 +679,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch4.AutoSize = true;
             this.materialSwitch4.Depth = 0;
-            this.materialSwitch4.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch4.Location = new System.Drawing.Point(25, 279);
             this.materialSwitch4.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch4.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -692,7 +696,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel9.AutoSize = true;
             this.materialLabel9.Depth = 0;
-            this.materialLabel9.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel9.HighEmphasis = false;
             this.materialLabel9.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -716,7 +720,7 @@ namespace MaterialSkinExample
             this.MaterialButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton4.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton4.Name = "MaterialButton4";
-            this.MaterialButton4.Size = new System.Drawing.Size(135, 36);
+            this.MaterialButton4.Size = new System.Drawing.Size(140, 36);
             this.MaterialButton4.TabIndex = 22;
             this.MaterialButton4.Text = "Change Colors";
             this.MaterialButton4.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -735,7 +739,7 @@ namespace MaterialSkinExample
             this.materialButton7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton7.Name = "materialButton7";
-            this.materialButton7.Size = new System.Drawing.Size(129, 36);
+            this.materialButton7.Size = new System.Drawing.Size(133, 36);
             this.materialButton7.TabIndex = 0;
             this.materialButton7.Text = "Change Theme";
             this.materialButton7.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
@@ -746,16 +750,18 @@ namespace MaterialSkinExample
             // materialSingleLineTextField2
             // 
             this.materialSingleLineTextField2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.materialSingleLineTextField2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialSingleLineTextField2.Depth = 0;
-            this.materialSingleLineTextField2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSingleLineTextField2.Font = new System.Drawing.Font("Roboto", 12F);
             this.materialSingleLineTextField2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialSingleLineTextField2.Hint = "Type here";
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(10, 29);
-            this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextField2.MaxLength = 50;
+            this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.OUT;
             this.materialSingleLineTextField2.Multiline = false;
             this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
             this.materialSingleLineTextField2.Password = false;
-            this.materialSingleLineTextField2.Size = new System.Drawing.Size(343, 60);
+            this.materialSingleLineTextField2.Size = new System.Drawing.Size(421, 60);
             this.materialSingleLineTextField2.TabIndex = 3;
             this.materialSingleLineTextField2.TabStop = false;
             this.materialSingleLineTextField2.Text = "";
@@ -775,7 +781,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel10.AutoSize = true;
             this.materialLabel10.Depth = 0;
-            this.materialLabel10.Font = new System.Drawing.Font("Roboto Thin", 96F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto Light", 96F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel10.FontType = MaterialSkin.MaterialSkinManager.fontType.H1;
             this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel10.HighEmphasis = false;
@@ -783,7 +789,7 @@ namespace MaterialSkinExample
             this.materialLabel10.Location = new System.Drawing.Point(6, 7);
             this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel10.Name = "materialLabel10";
-            this.materialLabel10.Size = new System.Drawing.Size(950, 115);
+            this.materialLabel10.Size = new System.Drawing.Size(932, 115);
             this.materialLabel10.TabIndex = 1;
             this.materialLabel10.Text = "Everything is possible!";
             this.materialLabel10.UseAccent = false;
@@ -795,7 +801,7 @@ namespace MaterialSkinExample
             | System.Windows.Forms.AnchorStyles.Right)));
             this.materialTabSelector1.BaseTabControl = this.materialTabControl2;
             this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialTabSelector1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialTabSelector1.Location = new System.Drawing.Point(-4, 0);
             this.materialTabSelector1.Margin = new System.Windows.Forms.Padding(0);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
@@ -894,7 +900,7 @@ namespace MaterialSkinExample
             // materialLabel8
             // 
             this.materialLabel8.Depth = 0;
-            this.materialLabel8.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel8.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel8.HighEmphasis = false;
             this.materialLabel8.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -1222,7 +1228,7 @@ namespace MaterialSkinExample
             this.materialSwitch3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialSwitch3.Depth = 0;
             this.materialSwitch3.Enabled = false;
-            this.materialSwitch3.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch3.Location = new System.Drawing.Point(257, 92);
             this.materialSwitch3.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch3.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1239,7 +1245,7 @@ namespace MaterialSkinExample
             this.materialSwitch2.AutoSize = true;
             this.materialSwitch2.Depth = 0;
             this.materialSwitch2.Enabled = false;
-            this.materialSwitch2.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch2.Location = new System.Drawing.Point(257, 55);
             this.materialSwitch2.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch2.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1255,7 +1261,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch1.AutoSize = true;
             this.materialSwitch1.Depth = 0;
-            this.materialSwitch1.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch1.Location = new System.Drawing.Point(257, 16);
             this.materialSwitch1.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch1.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1341,7 +1347,7 @@ namespace MaterialSkinExample
             this.columnHeader3,
             this.columnHeader4});
             this.materialListView1.Depth = 0;
-            this.materialListView1.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.materialListView1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.materialListView1.FullRowSelect = true;
             this.materialListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.materialListView1.HideSelection = false;
@@ -1401,7 +1407,7 @@ namespace MaterialSkinExample
             this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFlatButton2.Name = "materialFlatButton2";
-            this.materialFlatButton2.Size = new System.Drawing.Size(106, 36);
+            this.materialFlatButton2.Size = new System.Drawing.Size(108, 36);
             this.materialFlatButton2.TabIndex = 6;
             this.materialFlatButton2.Text = "Remove";
             this.materialFlatButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
@@ -1414,7 +1420,7 @@ namespace MaterialSkinExample
             this.materialLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel2.HighEmphasis = false;
             this.materialLabel2.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -1436,11 +1442,11 @@ namespace MaterialSkinExample
             this.MaterialButton2.DrawShadows = true;
             this.MaterialButton2.HighEmphasis = true;
             this.MaterialButton2.Icon = global::MaterialSkinExample.Properties.Resources.plus;
-            this.MaterialButton2.Location = new System.Drawing.Point(765, 95);
+            this.MaterialButton2.Location = new System.Drawing.Point(764, 95);
             this.MaterialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton2.Name = "MaterialButton2";
-            this.MaterialButton2.Size = new System.Drawing.Size(77, 36);
+            this.MaterialButton2.Size = new System.Drawing.Size(78, 36);
             this.MaterialButton2.TabIndex = 1;
             this.MaterialButton2.Text = "Add";
             this.MaterialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -1509,7 +1515,7 @@ namespace MaterialSkinExample
             this.MaterialButton6.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton6.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton6.Name = "MaterialButton6";
-            this.MaterialButton6.Size = new System.Drawing.Size(129, 36);
+            this.MaterialButton6.Size = new System.Drawing.Size(133, 36);
             this.MaterialButton6.TabIndex = 28;
             this.MaterialButton6.Text = "Change Theme";
             this.MaterialButton6.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -1521,7 +1527,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel7.AutoSize = true;
             this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel7.HighEmphasis = false;
             this.materialLabel7.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -1546,7 +1552,7 @@ namespace MaterialSkinExample
             this.MaterialButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton3.Name = "MaterialButton3";
-            this.MaterialButton3.Size = new System.Drawing.Size(156, 36);
+            this.MaterialButton3.Size = new System.Drawing.Size(163, 36);
             this.MaterialButton3.TabIndex = 25;
             this.MaterialButton3.Text = "Open Message box";
             this.MaterialButton3.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -1558,7 +1564,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel6.AutoSize = true;
             this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel6.HighEmphasis = false;
             this.materialLabel6.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -1576,7 +1582,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel5.AutoSize = true;
             this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel5.HighEmphasis = false;
             this.materialLabel5.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -1594,7 +1600,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel4.HighEmphasis = false;
             this.materialLabel4.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
@@ -1612,7 +1618,7 @@ namespace MaterialSkinExample
             // 
             this.materialLabel3.AutoSize = true;
             this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto Thin", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel3.HighEmphasis = false;
             this.materialLabel3.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
