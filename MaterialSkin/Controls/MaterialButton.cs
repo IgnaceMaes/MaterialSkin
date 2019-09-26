@@ -137,7 +137,7 @@
             };
             _hoverAnimationManager = new AnimationManager
             {
-                Increment = 0.07,
+                Increment = 0.12,
                 AnimationType = AnimationType.Linear
             };
 
