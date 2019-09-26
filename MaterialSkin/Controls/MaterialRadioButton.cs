@@ -23,7 +23,7 @@
         /// Gets the SkinManager
         /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the MouseState
@@ -153,7 +153,14 @@
         /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
-            var width = _boxOffset + 20 + (int)CreateGraphics().MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10).Width;
+            Size strSize;
+
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(CreateGraphics()))
+            {
+                strSize = NativeText.MeasureLogString(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1));
+            }
+
+            var width = _boxOffset + 22 + strSize.Width;
             return Ripple ? new Size(width, 30) : new Size(width, 20);
         }
 
@@ -165,7 +172,7 @@
         {
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             // clear the control
             g.Clear(Parent.BackColor);
@@ -229,11 +236,20 @@
                     g.FillPath(brush, path);
                 }
             }
-            SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(), _boxOffset + 22, Height / 2 - stringSize.Height / 2);
 
             brush.Dispose();
             pen.Dispose();
+
+            // Text
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            {
+                Rectangle textLocation = new Rectangle(_boxOffset + 22, 0, Width, Height);
+                NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                    Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                    textLocation.Location,
+                    textLocation.Size,
+                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+            }
         }
 
         /// <summary>
@@ -251,7 +267,7 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = SkinManager.ROBOTO_MEDIUM_10;
+            Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
 
             if (DesignMode) return;
 

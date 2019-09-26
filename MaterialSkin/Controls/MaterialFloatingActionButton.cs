@@ -5,7 +5,6 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Drawing.Drawing2D;
-    using System.Drawing.Text;
     using System.Windows.Forms;
 
     /// <summary>
@@ -23,7 +22,7 @@
         /// Gets the SkinManager
         /// </summary>
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         /// <summary>
         /// Gets or sets the MouseState
@@ -56,13 +55,20 @@
         /// </summary>
         private const int FAB_ICON_SIZE = 24;
 
+        public bool DrawShadows { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether Mini
         /// </summary>
         public bool Mini
         {
             get { return _mini; }
-            set { setSize(value); }
+            set
+            {
+                if (Parent != null)
+                    Parent.Invalidate();
+                setSize(value);
+            }
         }
 
         /// <summary>
@@ -118,8 +124,10 @@
         /// </summary>
         public MaterialFloatingActionButton()
         {
+            DrawShadows = true;
+            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
             Size = new Size(FAB_SIZE, FAB_SIZE);
-            DoubleBuffered = true;
             _animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
@@ -134,6 +142,14 @@
             };
             _showAnimationManager.OnAnimationProgress += sender => Invalidate();
             _showAnimationManager.OnAnimationFinished += _showAnimationManager_OnAnimationFinished;
+        }
+
+        protected override void InitLayout()
+        {
+            if (DrawShadows)
+            {
+                Parent.Paint += new PaintEventHandler(drawShadowOnParent);
+            }
         }
 
         /// <summary>
@@ -159,15 +175,29 @@
             }
         }
 
-        /// <summary>
-        /// The OnInvalidated
-        /// </summary>
-        /// <param name="e">The e<see cref="InvalidateEventArgs"/></param>
-        protected override void OnInvalidated(InvalidateEventArgs e)
+        private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
-            base.OnInvalidated(e);
-            // for some reason this is needed as Invalidate() does not trigger a repaint when animating.
-            InvokePaint(this, new PaintEventArgs(this.CreateGraphics(), this.ClientRectangle));
+            // paint shadow on parent
+            Graphics gp = e.Graphics;
+            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
+            gp.Transform = mx;
+            gp.SmoothingMode = SmoothingMode.AntiAlias;
+
+            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
+            fabBounds.Width -= 1;
+            fabBounds.Height -= 1;
+
+            drawShadow(gp, fabBounds);
+        }
+
+        void drawShadow(Graphics g, Rectangle bounds)
+        {
+            SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 2, bounds.Y - 1, bounds.Width + 4, bounds.Height + 6));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 1, bounds.Y - 1, bounds.Width + 2, bounds.Height + 4));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y - 0, bounds.Width + 0, bounds.Height + 2));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 2, bounds.Width + 0, bounds.Height + 0));
+            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 1, bounds.Width + 0, bounds.Height + 0));
         }
 
         /// <summary>
@@ -176,14 +206,34 @@
         /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            var g = pevent.Graphics;
-            Rectangle bounds = new Rectangle(new Point(0, 0), Size);
-            GraphicsPath regionPath = new GraphicsPath();
+            setSize(_mini);
 
-            g.FillEllipse(SkinManager.ColorScheme.AccentBrush, bounds);
+            var g = pevent.Graphics;
+
+            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
+            fabBounds.Width -= 1;
+            fabBounds.Height -= 1;
+
+            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+
+            // Paint shadow on element to blend with the parent shadow
+            drawShadow(g, fabBounds);
+
+            // draw fab
+            g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);
+
 
             if (_animationManager.IsAnimating())
             {
+                GraphicsPath regionPath = new GraphicsPath();
+                regionPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 3, fabBounds.Height + 2));
+                Region fabRegion = new Region(regionPath);
+
+                GraphicsContainer gcont = g.BeginContainer();
+                g.SetClip(fabRegion, CombineMode.Replace);
+
                 for (int i = 0; i < _animationManager.GetAnimationCount(); i++)
                 {
                     var animationValue = _animationManager.GetProgress(i);
@@ -192,33 +242,39 @@
                     var rippleSize = (int)(animationValue * Width * 2);
                     g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                 }
+
+                g.EndContainer(gcont);
             }
-            if (_showAnimationManager.IsAnimating())
-            {
-                int target = Convert.ToInt32((_mini ? FAB_MINI_SIZE : FAB_SIZE) * _showAnimationManager.GetProgress());
-                bounds.Width = target == 0 ? 1 : target;
-                bounds.Height = target == 0 ? 1 : target;
-                bounds.X = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
-                bounds.Y = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
-            }
+
 
             if (Icon != null)
             {
-                Point iconPos = _mini ? new Point(FAB_MINI_ICON_MARGIN, FAB_MINI_ICON_MARGIN) : new Point(FAB_ICON_MARGIN, FAB_ICON_MARGIN);
-                g.DrawImage(Icon, new Rectangle(iconPos, new Size(24, 24)));
+                g.DrawImage(Icon, new Rectangle(fabBounds.Width / 2 - 11, fabBounds.Height / 2 - 11, 24, 24));
             }
 
-            regionPath.AddEllipse(bounds);
-            Region = new Region(regionPath);
+
+            if (_showAnimationManager.IsAnimating())
+            {
+                int target = Convert.ToInt32((_mini ? FAB_MINI_SIZE : FAB_SIZE) * _showAnimationManager.GetProgress());
+                fabBounds.Width = target == 0 ? 1 : target;
+                fabBounds.Height = target == 0 ? 1 : target;
+                fabBounds.X = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
+                fabBounds.Y = Convert.ToInt32(((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) - (((_mini ? FAB_MINI_SIZE : FAB_SIZE) / 2) * _showAnimationManager.GetProgress()));
+            }
+
+            // Clip to a round shape with a 1px padding
+            GraphicsPath clipPath = new GraphicsPath();
+            clipPath.AddEllipse(new Rectangle(fabBounds.X - 1, fabBounds.Y - 1, fabBounds.Width + 3, fabBounds.Height + 3));
+            Region = new Region(clipPath);
         }
 
         /// <summary>
         /// The OnMouseUp
         /// </summary>
         /// <param name="mevent">The mevent<see cref="MouseEventArgs"/></param>
-        protected override void OnMouseUp(MouseEventArgs mevent)
+        protected override void OnMouseClick(MouseEventArgs mevent)
         {
-            base.OnMouseUp(mevent);
+            base.OnMouseClick(mevent);
             _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 

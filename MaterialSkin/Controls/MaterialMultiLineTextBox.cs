@@ -6,9 +6,9 @@
     using System.Windows.Forms;
 
     /// <summary>
-    /// Defines the <see cref="MaterialMultiLineTextField" />
+    /// Defines the <see cref="MaterialMultiLineTextBox" />
     /// </summary>
-    public class MaterialMultiLineTextField : RichTextBox , IMaterialControl
+    public class MaterialMultiLineTextBox : RichTextBox , IMaterialControl
     {
         //Properties for managing the material design properties
         /// <summary>
@@ -108,14 +108,14 @@
 
               
         /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialMultiLineTextField"/> class.
+        /// Initializes a new instance of the <see cref="MaterialMultiLineTextBox"/> class.
         /// </summary>
-        public MaterialMultiLineTextField()
+        public MaterialMultiLineTextBox()
         {
 
             base.OnCreateControl();
 
-            MaterialContextMenuStrip cms = new MaterialSingleLineTextField.TextBoxContextMenuStrip();
+            MaterialContextMenuStrip cms = new MaterialTextBox.TextBoxContextMenuStrip();
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
             this.Multiline = true;
@@ -166,7 +166,7 @@
         /// <param name="cancelEventArgs">The cancelEventArgs<see cref="CancelEventArgs"/></param>
         private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
         {
-            var strip = sender as MaterialSingleLineTextField.TextBoxContextMenuStrip;
+            var strip = sender as MaterialTextBox.TextBoxContextMenuStrip;
             if (strip != null)
             {
                 strip.Undo.Enabled = CanUndo;
