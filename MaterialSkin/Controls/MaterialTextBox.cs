@@ -28,23 +28,30 @@
             set
             {
                 _hint = value;
-                Refresh();
+                Invalidate();
             }
         }
 
-        private const int TEXT_SPACING = 10;
+        private const int TEXT_MARGIN = 10;
         private const int TEXT_SMALL_SIZE = 18;
         private const int TEXT_SMALL_Y = 8;
         private const int HEIGHT = 60;
+        private const int LINE_Y = HEIGHT - 3;
 
         private readonly AnimationManager _animationManager;
 
         public MaterialTextBox()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
+
+            Cursor = Cursors.IBeam;
+
+            // Properties
             base.AutoSize = false;
             Multiline = false;
+            BorderStyle = BorderStyle.None;
 
+            // Animations
             _animationManager = new AnimationManager
             {
                 Increment = 0.08,
@@ -52,24 +59,71 @@
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
-            BorderStyle = BorderStyle.None;
-            Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
-
-            GotFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.In);
-            LostFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.Out);
-
             MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
 
             ContextMenuStrip = cms;
+
+            MaxLength = 50;
+
         }
+
+        private const int EM_SETPASSWORDCHAR = 0x00cc;
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+
+            if(Password) SendMessage(Handle, EM_SETPASSWORDCHAR, 'T', 0);
+
+            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
+
+            // Size and padding
             Size = new Size(Size.Width, HEIGHT);
+
+            var rect = new Rectangle(TEXT_MARGIN, HEIGHT / 2, ClientSize.Width - (TEXT_MARGIN * 2), ClientSize.Height);
+            RECT rc = new RECT(rect);
+            SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
+
+            // events
+            MouseState = MouseState.OUT;
+            LostFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.Out);
+            GotFocus += (sender, args) =>
+            {
+                _animationManager.StartNewAnimation(AnimationDirection.In);
+            };
+            MouseEnter += (sender, args) =>
+            {
+                MouseState = MouseState.HOVER;
+                Invalidate();
+            };
+            MouseLeave += (sender, args) =>
+            {
+                MouseState = MouseState.OUT;
+                Invalidate();
+            };
+            HScroll += (sender, args) =>
+            {
+                SendMessage(this.Handle, EM_GETSCROLLPOS, 0, ref scrollPos);
+                Invalidate();
+            };
+            KeyDown += (sender, args) =>
+            {
+                SendMessage(this.Handle, EM_GETSCROLLPOS, 0, ref scrollPos);
+            };
         }
+
+        private Point scrollPos = Point.Empty;
+        private const int EM_GETSCROLLPOS = WM_USER + 221;
+        private const int WM_USER = 0x400;
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, Int32 wMsg, Int32 wParam, ref Point lParam);
+
 
         public override Size GetPreferredSize(Size proposedSize)
         {
@@ -81,10 +135,13 @@
             base.OnPaint(pevent);
 
             var g = pevent.Graphics;
-            var lineY = ClientRectangle.Height - 3;
 
             g.Clear(Parent.BackColor);
-            g.FillRectangle(Focused ? SkinManager.GetButtonPressedBackgroundBrush() : new SolidBrush(SkinManager.GetControlBackgroundColor()), ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, lineY);
+            g.FillRectangle(Focused ?
+                SkinManager.GetButtonPressedBackgroundBrush() :  // Focused
+                MouseState == MouseState.HOVER ? SkinManager.GetButtonHoverBackgroundBrush() : // Hover
+                new SolidBrush(SkinManager.GetControlBackgroundColor()), // Normal
+                ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
 
             // HintText
@@ -97,20 +154,20 @@
             int textSize = 16;
 
             // bottom line base
-            g.FillRectangle(SkinManager.GetDividersBrush(), 0, lineY, Width, 1);
-            g.FillRectangle(SkinManager.GetDividersBrush(), 0, lineY, Width, 1);
+            g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
+            g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
 
             if (!_animationManager.IsAnimating())
             {
                 // No animation
                 // hint text
-                hintRect = new Rectangle(TEXT_SPACING, Focused || userTextPresent ? TEXT_SMALL_Y : ClientRectangle.Y, Width, userTextPresent || Focused ? TEXT_SMALL_SIZE : lineY);
+                hintRect = new Rectangle(TEXT_MARGIN, Focused || userTextPresent ? TEXT_SMALL_Y : ClientRectangle.Y, Width, userTextPresent || Focused ? TEXT_SMALL_SIZE : LINE_Y);
                 textSize = userTextPresent || Focused ? 12 : 16;
 
                 // bottom line
                 if (Focused)
                 {
-                    g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, lineY, Width, 2);
+                    g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
                 }
             }
             else
@@ -120,43 +177,47 @@
 
                 // hint Animation
                 hintRect = new Rectangle(
-                    TEXT_SPACING,
+                    TEXT_MARGIN,
                     userTextPresent ? (TEXT_SMALL_Y) : ClientRectangle.Y + (int)((TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
                     Width,
-                    userTextPresent ? (TEXT_SMALL_SIZE) : (int)(lineY + (TEXT_SMALL_SIZE - lineY) * animationProgress));
+                    userTextPresent ? (TEXT_SMALL_SIZE) : (int)(LINE_Y + (TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
                 textSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
 
                 // Line Animation
                 int LineAnimationWidth = (int)(Width * animationProgress);
                 int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
-                g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, lineY, LineAnimationWidth, 2);
+                g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
             }
 
-            // Draw hint text
-            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
-            {
-                NativeText.DrawTransparentText(
-                    Hint,
-                    SkinManager.getTextBoxFontBySize(textSize),
-                    textColor,
-                    hintRect.Location,
-                    hintRect.Size,
-                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
-            }
+            // Text stuff:
+            string textToDisplay = Password ? Text.ToSecureString() : Text;
+            string textSelected;
+            Rectangle textSelectRect;
 
-
-
+            // Calc text Rect
             Rectangle textRect = new Rectangle(
-                hintRect.X,
+                TEXT_MARGIN,
                 (hintRect.Y + hintRect.Height) - 2,
-                hintRect.Width - hintRect.X * 2,
-                lineY - (hintRect.Y + hintRect.Height));
+                ClientRectangle.Width - TEXT_MARGIN * 2 + scrollPos.X,
+                LINE_Y - (hintRect.Y + hintRect.Height));
 
-            // Draw user text
+            g.Clip = new Region(textRect);
+            textRect.X -= scrollPos.X;
+
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
+                // Selection rects calc
+                string textBeforeSelection = textToDisplay.Substring(0, SelectionStart);
+                textSelected = textToDisplay.Substring(SelectionStart, SelectionLength);
+
+                int selectX = NativeText.MeasureLogString(textBeforeSelection, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
+                int selectWidth = NativeText.MeasureLogString(textSelected, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
+
+                textSelectRect = new Rectangle(textRect.X + selectX, textRect.Y + 3, selectWidth, textRect.Height - 6);
+
+                // Draw user text
                 NativeText.DrawTransparentText(
-                    Password ? Text.ToSecureString() : Text,
+                    textToDisplay,
                     SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
                     SkinManager.GetPrimaryTextColor(),
                     textRect.Location,
@@ -164,13 +225,46 @@
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
             }
 
+            // Draw Selection Rectangle
+            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, textSelectRect);
 
+            // Draw Selected Text
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            {
+                NativeText.DrawTransparentText(
+                    textSelected,
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                    SkinManager.ColorScheme.TextColor,
+                    textSelectRect.Location,
+                    textSelectRect.Size,
+                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+            }
+
+            g.Clip = new Region(ClientRectangle);
+
+            // Draw hint text
+            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            {
+                NativeText.DrawTransparentText(
+                Hint,
+                SkinManager.getTextBoxFontBySize(textSize),
+                textColor,
+                hintRect.Location,
+                hintRect.Size,
+                NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+            }
         }
 
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
-            Refresh();
+            Invalidate();
+        }
+
+        protected override void OnSelectionChanged(EventArgs e)
+        {
+            base.OnSelectionChanged(e);
+            Invalidate();
         }
 
         protected override void OnResize(EventArgs e)
@@ -179,13 +273,11 @@
             Size = new Size(Width, HEIGHT);
         }
 
+
         private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
         {
             switch (toolStripItemClickedEventArgs.ClickedItem.Text)
             {
-                case "Undo":
-                    Undo();
-                    break;
                 case "Cut":
                     Cut();
                     break;
@@ -209,7 +301,6 @@
             var strip = sender as TextBoxContextMenuStrip;
             if (strip != null)
             {
-                strip.Undo.Enabled = CanUndo;
                 strip.Cut.Enabled = !string.IsNullOrEmpty(SelectedText);
                 strip.Copy.Enabled = !string.IsNullOrEmpty(SelectedText);
                 strip.Paste.Enabled = Clipboard.ContainsText();
@@ -218,42 +309,63 @@
             }
         }
 
-
-        // Hide IBeam
-        [DllImport("user32.dll", EntryPoint = "HideCaret")]
-        public static extern long HideCaret(IntPtr hwnd);
-
+        // Cursor flickering fix
+        const int WM_SETCURSOR = 0x0020;
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);
-            HideCaret(this.Handle);
+            if (m.Msg == WM_SETCURSOR)
+                Cursor.Current = this.Cursor;
+            else
+                base.WndProc(ref m);
+        }
+
+        // Padding 
+        private const int EM_SETRECT = 0xB3;
+
+        [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
+        private static extern int SendMessageRefRect(IntPtr hWnd, uint msg, int wParam, ref RECT rect);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT
+        {
+            public readonly int Left;
+            public readonly int Top;
+            public readonly int Right;
+            public readonly int Bottom;
+
+            private RECT(int left, int top, int right, int bottom)
+            {
+                Left = left;
+                Top = top;
+                Right = right;
+                Bottom = bottom;
+            }
+
+            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) { }
         }
     }
 
-        public class TextBoxContextMenuStrip : MaterialContextMenuStrip
+    public class TextBoxContextMenuStrip : MaterialContextMenuStrip
     {
-        public readonly ToolStripItem Undo = new MaterialToolStripMenuItem { Text = "Undo" };
-        public readonly ToolStripItem Seperator1 = new ToolStripSeparator();
-        public readonly ToolStripItem Cut = new MaterialToolStripMenuItem { Text = "Cut" };
-        public readonly ToolStripItem Copy = new MaterialToolStripMenuItem { Text = "Copy" };
-        public readonly ToolStripItem Paste = new MaterialToolStripMenuItem { Text = "Paste" };
-        public readonly ToolStripItem Delete = new MaterialToolStripMenuItem { Text = "Delete" };
-        public readonly ToolStripItem Seperator2 = new ToolStripSeparator();
         public readonly ToolStripItem SelectAll = new MaterialToolStripMenuItem { Text = "Select All" };
+        public readonly ToolStripItem Separator2 = new ToolStripSeparator();
+        public readonly ToolStripItem Paste = new MaterialToolStripMenuItem { Text = "Paste" };
+        public readonly ToolStripItem Copy = new MaterialToolStripMenuItem { Text = "Copy" };
+        public readonly ToolStripItem Cut = new MaterialToolStripMenuItem { Text = "Cut" };
+        public readonly ToolStripItem Delete = new MaterialToolStripMenuItem { Text = "Delete" };
 
         public TextBoxContextMenuStrip()
         {
             Items.AddRange(new[]
-            {
-                    Undo,
-                    Seperator1,
+                {
                     Cut,
                     Copy,
                     Paste,
                     Delete,
-                    Seperator2,
+                    Separator2,
                     SelectAll
-                });
+                }
+            );
         }
     }
 }
