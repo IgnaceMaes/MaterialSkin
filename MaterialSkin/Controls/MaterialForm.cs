@@ -93,7 +93,7 @@ namespace MaterialSkin.Controls
         };
 
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
-        private const int STATUS_BAR_HEIGHT = 24;
+        private const int STATUS_BAR_HEIGHT = 36;
         private const int ACTION_BAR_HEIGHT = 40;
         private const int LOGO_SIZE = 32;
 

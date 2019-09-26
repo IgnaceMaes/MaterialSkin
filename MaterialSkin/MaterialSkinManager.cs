@@ -226,14 +226,22 @@ namespace MaterialSkin
         }
 
         //Roboto font
-        public Font ROBOTO_MEDIUM_12;
-        public Font ROBOTO_REGULAR_11;
         public Font ROBOTO_REGULAR_8;
+        public Font ROBOTO_MEDIUM_8;
+         
         public Font ROBOTO_REGULAR_10;
-        public Font ROBOTO_MEDIUM_11;
         public Font ROBOTO_MEDIUM_10;
+        
+        public Font ROBOTO_REGULAR_11;
+        public Font ROBOTO_MEDIUM_11;
+
+        public Font ROBOTO_REGULAR_12;
+        public Font ROBOTO_MEDIUM_12;
+
         public Font ROBOTO_TITLE;
         public Font ROBOTO_TITLE1;
+        public Font ROBOTO_REGULAR_HUGE;
+        public Font ROBOTO_BOLD_HUGE;
 
         //Other constants
         public int FORM_PADDING = 14;
@@ -243,18 +251,28 @@ namespace MaterialSkin
 
         private MaterialSkinManager()
         {
-            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
-            ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
             ROBOTO_REGULAR_8 = new Font(LoadFont(Resources.Roboto_Regular), 8f);
-            ROBOTO_REGULAR_10 = new Font(LoadFont(Resources.Roboto_Regular), 10f);
-            ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
-            ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
+            ROBOTO_MEDIUM_8 = new Font(LoadFont(Resources.Roboto_Medium), 8f);
 
-            ROBOTO_TITLE = new Font(LoadFont(Resources.Roboto_Medium), 24f, FontStyle.Bold);
-            ROBOTO_TITLE1 = new Font(LoadFont(Resources.Roboto_Medium), 18f, FontStyle.Bold);
+            ROBOTO_REGULAR_10 = new Font(LoadFont(Resources.Roboto_Regular), 10f);
+            ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            
+            ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
+            ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f, FontStyle.Bold);
+            
+            ROBOTO_REGULAR_12 = new Font(LoadFont(Resources.Roboto_Regular), 12f);
+            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+
+            ROBOTO_TITLE = new Font(LoadFont(Resources.Roboto_Medium), 20f, FontStyle.Bold);
+            
+            ROBOTO_TITLE1 = new Font(LoadFont(Resources.Roboto_Medium), 16f, FontStyle.Bold);
+            
+            ROBOTO_REGULAR_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 56f, FontStyle.Regular);
+            ROBOTO_BOLD_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 56f, FontStyle.Bold);
 
             Theme = Themes.LIGHT;
             ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
         }
 
         public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
