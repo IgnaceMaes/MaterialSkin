@@ -28,15 +28,19 @@
             set
             {
                 _hint = value;
+                hasHint = !String.IsNullOrEmpty(Hint);
                 Invalidate();
             }
         }
 
         private const int TEXT_MARGIN = 10;
         private const int TEXT_SMALL_SIZE = 18;
-        private const int TEXT_SMALL_Y = 8;
-        private const int HEIGHT = 60;
-        private const int LINE_Y = HEIGHT - 3;
+        private const int TEXT_SMALL_Y = 4;
+        private const int HEIGHT = 50;
+        private const int BOTTOM_PADDING = 3;
+        private const int LINE_Y = HEIGHT - BOTTOM_PADDING;
+
+        private bool hasHint;
 
         private readonly AnimationManager _animationManager;
 
@@ -79,14 +83,14 @@
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
-            if(Password) SendMessage(Handle, EM_SETPASSWORDCHAR, 'T', 0);
+            if (Password) SendMessage(Handle, EM_SETPASSWORDCHAR, 'T', 0);
 
             Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
 
             // Size and padding
             Size = new Size(Size.Width, HEIGHT);
 
-            var rect = new Rectangle(TEXT_MARGIN, HEIGHT / 2, ClientSize.Width - (TEXT_MARGIN * 2), ClientSize.Height);
+            var rect = new Rectangle(TEXT_MARGIN, hasHint ? (TEXT_SMALL_Y + TEXT_SMALL_SIZE) : LINE_Y / 3, ClientSize.Width - (TEXT_MARGIN * 2), LINE_Y);
             RECT rc = new RECT(rect);
             SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
 
@@ -151,7 +155,7 @@
                             SkinManager.GetPrimaryTextColor() : // Inactive
                             SkinManager.GetDisabledOrHintColor(); // Disabled
             Rectangle hintRect = ClientRectangle;
-            int textSize = 16;
+            int hintTextSize = 16;
 
             // bottom line base
             g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
@@ -160,9 +164,13 @@
             if (!_animationManager.IsAnimating())
             {
                 // No animation
-                // hint text
-                hintRect = new Rectangle(TEXT_MARGIN, Focused || userTextPresent ? TEXT_SMALL_Y : ClientRectangle.Y, Width, userTextPresent || Focused ? TEXT_SMALL_SIZE : LINE_Y);
-                textSize = userTextPresent || Focused ? 12 : 16;
+
+                if (hasHint)
+                {
+                    // hint text
+                    hintRect = new Rectangle(TEXT_MARGIN, Focused || userTextPresent ? TEXT_SMALL_Y : ClientRectangle.Y, Width, userTextPresent || Focused ? TEXT_SMALL_SIZE : LINE_Y);
+                    hintTextSize = userTextPresent || Focused ? 12 : 16;
+                }
 
                 // bottom line
                 if (Focused)
@@ -176,12 +184,15 @@
                 double animationProgress = _animationManager.GetProgress();
 
                 // hint Animation
-                hintRect = new Rectangle(
-                    TEXT_MARGIN,
-                    userTextPresent ? (TEXT_SMALL_Y) : ClientRectangle.Y + (int)((TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
-                    Width,
-                    userTextPresent ? (TEXT_SMALL_SIZE) : (int)(LINE_Y + (TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
-                textSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
+                if (hasHint)
+                {
+                    hintRect = new Rectangle(
+                        TEXT_MARGIN,
+                        userTextPresent ? (TEXT_SMALL_Y) : ClientRectangle.Y + (int)((TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
+                        Width,
+                        userTextPresent ? (TEXT_SMALL_SIZE) : (int)(LINE_Y + (TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
+                    hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
+                }
 
                 // Line Animation
                 int LineAnimationWidth = (int)(Width * animationProgress);
@@ -197,9 +208,9 @@
             // Calc text Rect
             Rectangle textRect = new Rectangle(
                 TEXT_MARGIN,
-                (hintRect.Y + hintRect.Height) - 2,
+                hasHint ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
                 ClientRectangle.Width - TEXT_MARGIN * 2 + scrollPos.X,
-                LINE_Y - (hintRect.Y + hintRect.Height));
+                hasHint ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
 
             g.Clip = new Region(textRect);
             textRect.X -= scrollPos.X;
@@ -213,7 +224,11 @@
                 int selectX = NativeText.MeasureLogString(textBeforeSelection, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
                 int selectWidth = NativeText.MeasureLogString(textSelected, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
 
-                textSelectRect = new Rectangle(textRect.X + selectX, textRect.Y + 3, selectWidth, textRect.Height - 6);
+                textSelectRect = new Rectangle(
+                    textRect.X + selectX,
+                    hasHint ? textRect.Y + BOTTOM_PADDING : LINE_Y / 3 - BOTTOM_PADDING,
+                    selectWidth,
+                    hasHint ? textRect.Height - BOTTOM_PADDING * 2 : LINE_Y / 2);
 
                 // Draw user text
                 NativeText.DrawTransparentText(
@@ -225,33 +240,39 @@
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
             }
 
-            // Draw Selection Rectangle
-            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, textSelectRect);
-
-            // Draw Selected Text
-            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            if (Focused)
             {
-                NativeText.DrawTransparentText(
-                    textSelected,
-                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
-                    SkinManager.ColorScheme.TextColor,
-                    textSelectRect.Location,
-                    textSelectRect.Size,
-                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                // Draw Selection Rectangle
+                g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, textSelectRect);
+
+                // Draw Selected Text
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    NativeText.DrawTransparentText(
+                        textSelected,
+                        SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                        SkinManager.ColorScheme.TextColor,
+                        textSelectRect.Location,
+                        textSelectRect.Size,
+                        NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                }
             }
 
             g.Clip = new Region(ClientRectangle);
 
             // Draw hint text
-            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            if (hasHint)
             {
-                NativeText.DrawTransparentText(
-                Hint,
-                SkinManager.getTextBoxFontBySize(textSize),
-                textColor,
-                hintRect.Location,
-                hintRect.Size,
-                NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    NativeText.DrawTransparentText(
+                    Hint,
+                    SkinManager.getTextBoxFontBySize(hintTextSize),
+                    textColor,
+                    hintRect.Location,
+                    hintRect.Size,
+                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                }
             }
         }
 

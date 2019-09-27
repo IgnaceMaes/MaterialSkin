@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="materialLabel8.Text" xml:space="preserve">
-    <value>Here is a list of every variant a button can be. Contained buttons shadows are only drawn at run-time.
-Click them and checkout those sweet animations.
-Oh yeah, the buttons follow the theme and colors, try changing those too.
-If any of the buttons looks weird while designing, change the tab background from transparent to white.</value>
-  </data>
   <metadata name="menuIconList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>219, 17</value>
   </metadata>
@@ -131,16 +125,16 @@ If any of the buttons looks weird while designing, change the tab background fro
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAi
-        EQAAAk1TRnQBSQFMAgEBCQEAAQgBAwEIAQMBGAEAARgBAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFg
+        EQAAAk1TRnQBSQFMAgEBCQEAASgBAwEoAQMBGAEAARgBAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFg
         AwABSAMAAQEBAAEgBgABbP8A/wD/AP8AzgADSgGKA0oBiv8AdQADSAGECP8DSAGE/wBtAANAAW8Q/wNA
         AW//AGUAAx4BKxj/AyABLv8AbQAI//8AeQAI//8AeQAI//8AYQADXQHSA10B0hAACP//AGEACP8QAAj/
         /wBhAAj/EAAI//8AYQAI/xAAA2AB1ANeAdX/AGEACP//AHkACP//AHkACP//AG0AAx8BLBT/A38B/gMf
         ASz/AGUAA0ABbxD/Az0BaP8AbQADSAGECP8DRwGB/wB1AANKAYoDSgGK/wD/AP8A/wD/AP8A/wCnAAMD
         AQQDIQEwAwcBCjgAA10B0gNdAdL/ADEAAy0BRQNhAeYE/wNZAfUDOgFhNAAI//8ALQADKwFCA2oB+Qz/
         A6gB/QMQARUkAAMlATcDVgG2A10B7Qj/A10B7QNYAbsDOwFkAwYBCIAAAxQBHANcAd9I/wNeAd0DEwEa
-        QAADKwFCA1wB+BT/Ax8BLBwAAxQBGwNUAawg/wNfAeMDLQFFfAADFgEeAzsB/Ej/A00B+gMUARw8AAMr
+        QAADKwFCA1wB+BT/Ax8BLBwAAxQBGwNUAawg/wNfAeMDLQFFfAADFgEeAzcB/Ej/A00B+gMUARw8AAMr
         AUIDXAH4FP8DYQHiAwMBBBgAAx8BLANkAecE/wNkAewDRAF5AywBRAMRARcDEAEWAy0BRQNEAXkDXQHt
-        BP8DOwH8AzUBVXwAA0wBkkj/A0oBizwAAysBQgNcAfgU/wNfAfMDJgE5GAADGwEmA10B7QT/A1QBrwMO
+        BP8DNwH8AzUBVXwAA0wBkkj/A0oBizwAAysBQgNcAfgU/wNfAfMDJgE5GAADGwEmA10B7QT/A1QBrwMO
         ARMYAAMOARMDVQGyBP8DXAH4Ax0BKXgAAw0BEQNhAe4c/wgAHP8DXAHqAwoBDTgAAysBQgNcAfgU/wNf
         AfMDJAE1HAADXAHMBP8DUwGlKAADUwGlBP8DXAHNfAADPQFpHP8IABz/AzsBYzgAAysBQgNcAfgU/wNk
         AfEDJAE1HAADLgFIBP8DZAHnAwYBCAgAAxIBGQNVAbUDXQHtA10B7QNVAbIDEgEZCAADBgEIA18B6AT/
@@ -156,12 +150,12 @@ If any of the buttons looks weird while designing, change the tab background fro
         ASwIAANRAaAY/wNSAaEIAAMeASsE/wNdAdcQAAT/A0cBgAQAA0cBgAT/BAADNQFWA1oBwAT/A0UBfQMS
         ARkDEgEZA0UBfQT/A1oBwAM1AVYEAAT/A1oBwANHAYADWgHAA18B+xwAAwcBCgNhAeYM/wMgAS8DIAEu
         DP8DYQHhAwUBBxwAA1ABnSz/A1IBqTQAA1ABngT/A0QBeggAAxABFQNhAeYQ/wNkAecDDQERCAADRAF5
-        BP8DUAGeEAADXgHQAzUBVwQAAzUBVwNeAdAEAANeAdAI/wM7AfwDMwFTAzMBUwM7AfwI/wNeAdAEAANg
+        BP8DUAGeEAADXgHQAzUBVwQAAzUBVwNeAdAEAANeAdAI/wM3AfwDMwFTAzMBUwM3AfwI/wNeAdAEAANg
         AdQM/wNJAYcgAAM3AVog/wM1AVUgAANfAeMM/wNVAbIDVgG2GP8DYQHmNAADLQFGBP8DZAHnAwYBCAgA
         AxIBGANWAbMDZAHsA2QB7ANWAbMDEgEYCAADBwEJA2QB5wT/Ay0BRYwAA1wByRj/A1gBwSQAA2EB7gj/
         A0YBfwgAA0gBgxT/A2IB7zcAAQEDXAHNBP8DUwGlKAADUwGlBP8DXAHNAwABAYwAAyEBMAN/Af4Q/wN/
         Af4DHQEqJAADXwHbBP8DQAFwEAADUwGlEP8DXAHfOAADHQEpA2IB9gT/A1QBrwMNARIYAAMNARIDVAGv
-        BP8DXQHtAxsBJpQAA1EBnBD/A04BmCgAA0wBkgM9AWkUAANUAaYQ/wNOAZk8AAM0AVQDOwH8BP8DZAHs
+        BP8DXQHtAxsBJpQAA1EBnBD/A04BmCgAA0wBkgM9AWkUAANUAaYQ/wNOAZk8AAM0AVQDNwH8BP8DZAHs
         A0MBeAMsAUQDDwEUAw8BFAMsAUQDQwF4A2QB7AT/A2QB5wMeASuYAAMQARUDZwHyCP8DZwHyAw0BESgA
         AwcBChQAA0cBgBD/A6gB/QMiATJAAAMsAUQDXwHjIP8DVAGsAxMBGqAAA0IBcwj/A0ABcEAAA0wBjxT/
         A0QBeUgAAwYBCAM8AWYDWAG7A2QB7Aj/A2QB7ANXAbcDJgE4qAADBAEFA2AB1ANdAdMDAgEDPAADTgGW
@@ -170,7 +164,7 @@ If any of the buttons looks weird while designing, change the tab background fro
         AQUgAAMEAQUDNwFbA1wBzyAAA2EB4kD/A2EB4hQAAwUBBwM+AWsDXgHdPP8DWAG8AzIBUTQADP8DQgF0
         OAAI/wNfAegDRwGAAxABFhAAAxEBFwNGAX8DYgHpCP8gAEj/EAADFAEbA14B1Uz/A0gBhBgAAxQBGwM+
         AWoDCwEPDAAI/wNqAfkE/wNCAXQ0ABD/A00B+gNSAaQDIwE0AyQBNgNSAaMDTQH6EP8gAEj/DAADAQEC
-        A1kBx1T/AzABSxQAA0MBdwT/A1wB0QMOARMIAAj/Ay8BSgM7AfwE/wNFAXwwADj/IAAQ/wMgAS8DIAEv
+        A1kBx1T/AzABSxQAA0MBdwT/A1wB0QMOARMIAAj/Ay8BSgM3AfwE/wNFAXwwADj/IAAQ/wMgAS8DIAEv
         CP8DIAEvAyABLwj/AyABLwMgAS8Q/wwAAzoBYiT/EAAk/wNZAcIUAAMHAQoDWwHIBP8DYQHaAxABFgQA
         CP8EAAM+AWsI/wMfAS0sADj/IAAQ/wgACP8IAAj/CAAQ/wwAA1sByCT/EAAk/wNlAfQYAAMJAQwDXgHO
         BP8DYAHeAxMBGgj/AxABFgNdAdcE/wNcAd8DCgENLAA4/yAAEP8IAAj/CAAI/wgAEP8MAANlAfQk/xAA
@@ -180,10 +174,10 @@ If any of the buttons looks weird while designing, change the tab background fro
         AXYc/wNAAXAYAANAAXAY/wNKAYkoAAMNARIDXQHXCP8DXgHYAw8BFDgAOP8gABD/AyABLwMgAS4I/wgA
         IP8MAAMIAQsDXQHXHP8DPQFpEAADPQFpEP8DZAHxA1QBrwMtAUYoAAMLAQ8DXQHSEP8DXgHYAxEBFzQA
         OP8gACD/CAAg/xAAAxABFgNeAdAc/wM9AWkIAAM9AWkU/wMkATYsAAMLAQ8DXgHOBP8DXAHfCP8DXwHj
-        BP8DXgHdAxQBGzAAOP8gACD/CAAg/xQAAwEBAgM4AV4DXQHKAzsB/BT/A0EBcgNBAXIU/wNeAd0sAAMJ
+        BP8DXgHdAxQBGzAAOP8gACD/CAAg/xQAAwEBAgM4AV4DXQHKAzcB/BT/A0EBcgNBAXIU/wNeAd0sAAMJ
         AQwDXgHOBP8DYAHeAxMBGgj/AxIBGQNdAdcE/wNcAd8DCgENLAA4/yAAIP8DIAEvAyABLiD/IAADLAFE
         A38B/iz/AzsBZCgAAwcBCgNbAcgE/wNeAdUDEAEWBAAI/wQAAz4Bawj/Ax8BLCwAOP8gAEj/JAADQgF1
-        KP8DUgGhLAADRAF5BP8DXAHRAwwBEAgACP8DMAFMAzsB/AT/A0IBdDAAOP8gAEj/KAADQAFwHP8DTQH6
+        KP8DUgGhLAADRAF5BP8DXAHRAwwBEAgACP8DMAFMAzcB/AT/A0IBdDAAOP8gAEj/KAADQAFwHP8DTQH6
         A0IBdDAAAxMBGgM+AWoDCwEPDAAI/wNcAfgE/wNCAXQ0ADj/IAADYQHkQP8DXwHjLAADHQEqA04BmANd
         AdIDZQH0BP8DYAHrA0kBiAMVAR1MAAz/A0IBdDgAA2EB5DD/A18B4yAAAzEBTwNgAdY4/wNgAdYDMQFP
         mAADbQH3BP8DPwFsPAADMQFPA2AB1ij/A2AB1gMxAU//AAEAAzEBTQMzAVL/AP8A/wCPAAFCAU0BPgcA
@@ -206,6 +200,12 @@ If any of the buttons looks weird while designing, change the tab background fro
         AeABAAEHAf4BAAF/AfgB4AH/AfgBAAEfAeABAAEHAf8BAAL/AeEB/wH4AQABHwHgAQABBwT/AeMB/wH4
         AQABHwf/Aecc/ws=
 </value>
+  </data>
+  <data name="materialLabel8.Text" xml:space="preserve">
+    <value>Here is a list of every variant a button can be. Contained buttons shadows are only drawn at run-time.
+Click them and checkout those sweet animations.
+Oh yeah, the buttons follow the theme and colors, try changing those too.
+If any of the buttons looks weird while designing, change the tab background from transparent to white.</value>
   </data>
   <metadata name="materialContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
