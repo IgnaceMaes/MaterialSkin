@@ -423,6 +423,23 @@
 
                 Invalidate();
             };
+
+            GotFocus += (sender, args) => {
+                _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
+                Invalidate();
+            };
+            LostFocus += (sender, args) => {
+                _hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
+                Invalidate();
+            };
+
+            KeyDown += (object sender, KeyEventArgs e) => {
+                if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
+                {
+                    _animationManager.StartNewAnimation(AnimationDirection.In, new Point(ClientRectangle.Width >> 1, ClientRectangle.Height >> 1));
+                    Invalidate();
+                }
+            };
         }
     }
 }
