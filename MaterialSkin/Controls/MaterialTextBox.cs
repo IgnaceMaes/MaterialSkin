@@ -47,8 +47,7 @@
         public MaterialTextBox()
         {
             Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
-
-            Cursor = Cursors.IBeam;
+            TabStop = true;
 
             // Properties
             base.AutoSize = false;

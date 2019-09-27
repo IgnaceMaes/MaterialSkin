@@ -112,70 +112,16 @@
         /// </summary>
         public MaterialMultiLineTextBox()
         {
-
             base.OnCreateControl();
-
-            MaterialContextMenuStrip cms = new MaterialTextBox.TextBoxContextMenuStrip();
-            cms.Opening += ContextMenuStripOnOpening;
-            cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
             this.Multiline = true;
 
-            ContextMenuStrip = cms;
             BorderStyle = BorderStyle.None;
-            Font = SkinManager.ROBOTO_REGULAR_11;
+            Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
             BackColor = SkinManager.GetControlBackgroundColor();
             ForeColor = SkinManager.GetPrimaryTextColor();
             BackColorChanged += (sender, args) => BackColor = SkinManager.GetControlBackgroundColor();
             ForeColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
         }
 
-        /// <summary>
-        /// The ContextMenuStripOnItemClickStart
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="toolStripItemClickedEventArgs">The toolStripItemClickedEventArgs<see cref="ToolStripItemClickedEventArgs"/></param>
-        private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
-        {
-            switch (toolStripItemClickedEventArgs.ClickedItem.Text)
-            {
-                case "Undo":
-                    Undo();
-                    break;
-                case "Cut":
-                    Cut();
-                    break;
-                case "Copy":
-                    Copy();
-                    break;
-                case "Paste":
-                    Paste();
-                    break;
-                case "Delete":
-                    SelectedText = string.Empty;
-                    break;
-                case "Select All":
-                    SelectAll();
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// The ContextMenuStripOnOpening
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="cancelEventArgs">The cancelEventArgs<see cref="CancelEventArgs"/></param>
-        private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
-        {
-            var strip = sender as MaterialTextBox.TextBoxContextMenuStrip;
-            if (strip != null)
-            {
-                strip.Undo.Enabled = CanUndo;
-                strip.Cut.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.Copy.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.Paste.Enabled = Clipboard.ContainsText();
-                strip.Delete.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.SelectAll.Enabled = !string.IsNullOrEmpty(Text);
-            }
-        }
     }
 }
