@@ -11,7 +11,7 @@ namespace MaterialSkinExample
         private readonly MaterialSkinManager materialSkinManager;
         public MainForm()
         {
-            
+
             InitializeComponent();
 
             // Initialize MaterialSkinManager
