@@ -8,43 +8,22 @@
     using System.Drawing.Text;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Defines the <see cref="MaterialSwitch" />
-    /// </summary>
     public class MaterialSwitch : CheckBox, IMaterialControl
     {
-        /// <summary>
-        /// Gets or sets the Depth
-        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
 
-        /// <summary>
-        /// Gets the SkinManager
-        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
-        /// <summary>
-        /// Gets or sets the MouseState
-        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        /// <summary>
-        /// Gets or sets the MouseLocation
-        /// </summary>
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
-        /// <summary>
-        /// Defines the _ripple
-        /// </summary>
         private bool _ripple;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether Ripple
-        /// </summary>
         [Category("Appearance")]
         public bool Ripple
         {
@@ -63,24 +42,12 @@
             }
         }
 
-        /// <summary>
-        /// Defines the _animationManager
-        /// </summary>
         private readonly AnimationManager _animationManager;
 
-        /// <summary>
-        /// Defines the _rippleAnimationManager
-        /// </summary>
         private readonly AnimationManager _rippleAnimationManager;
 
-        /// <summary>
-        /// Defines the THUMB_SIZE
-        /// </summary>
         private const int THUMB_SIZE = 22;
 
-        /// <summary>
-        /// Defines the THUMB_SIZE_HALF
-        /// </summary>
         private const int THUMB_SIZE_HALF = THUMB_SIZE / 2;
 
         private const int TRACK_SIZE_HEIGHT = (int)(14);
@@ -92,16 +59,11 @@
         private int TRACK_CENTER_X_END;
         private int TRACK_CENTER_X_DELTA;
 
-        private const int RIPPLE_DIAMETER = 30;
+        private const int RIPPLE_DIAMETER = 37;
 
-        /// <summary>
-        /// Defines the _trackOffsetY
-        /// </summary>
+        private bool justClicked;
         private int _trackOffsetY;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialSwitch"/> class.
-        /// </summary>
         public MaterialSwitch()
         {
             _animationManager = new AnimationManager
@@ -118,6 +80,8 @@
             _animationManager.OnAnimationProgress += sender => Invalidate();
             _rippleAnimationManager.OnAnimationProgress += sender => Invalidate();
 
+            LostFocus += (sender, args) => justClicked = false;
+
             CheckedChanged += (sender, args) =>
             {
                 _animationManager.StartNewAnimation(Checked ? AnimationDirection.In : AnimationDirection.Out);
@@ -127,10 +91,6 @@
             MouseLocation = new Point(-1, -1);
         }
 
-        /// <summary>
-        /// The OnSizeChanged
-        /// </summary>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -143,11 +103,6 @@
             TRACK_CENTER_X_DELTA = TRACK_CENTER_X_END - TRACK_CENTER_X_BEGIN;
         }
 
-        /// <summary>
-        /// The GetPreferredSize
-        /// </summary>
-        /// <param name="proposedSize">The proposedSize<see cref="Size"/></param>
-        /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
             Size strSize;
@@ -156,23 +111,13 @@
                 strSize = NativeText.MeasureLogString(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1));
             }
             var w = TRACK_SIZE_WIDTH + THUMB_SIZE + strSize.Width;
-            return Ripple ? new Size(w, THUMB_SIZE + RIPPLE_DIAMETER / 2) : new Size(w, THUMB_SIZE);
+            return Ripple ? new Size(w, RIPPLE_DIAMETER) : new Size(w, THUMB_SIZE);
         }
 
-        /// <summary>
-        /// Defines the CheckmarkLine
-        /// </summary>
         private static readonly Point[] CheckmarkLine = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
 
-        /// <summary>
-        /// Defines the TEXT_OFFSET
-        /// </summary>
         private const int TEXT_OFFSET = THUMB_SIZE;
 
-        /// <summary>
-        /// The OnPaint
-        /// </summary>
-        /// <param name="pevent">The pevent<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -207,18 +152,33 @@
             // Calculate animation movement X position
             int OffsetX = (int)(TRACK_CENTER_X_DELTA * animationProgress);
 
+            // Ripples
+            int rippleSize = (Height % 2 == 0) ? Height - 2 : Height - 3;
+
+            Color rippleColor = Color.FromArgb(MouseState == MouseState.DOWN ? 60 : 40, // color alpha
+                Checked ? SkinManager.ColorScheme.AccentColor : // On color
+                (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White)); // Off color
+
+            // draw ripple focus
+
+            // draw ripple focus
+            if (Ripple && !justClicked && !_rippleAnimationManager.IsAnimating() && (Focused || MouseState == MouseState.HOVER || MouseState == MouseState.DOWN))
+            {
+                using (SolidBrush rippleBrush = new SolidBrush(rippleColor))
+                {
+                    g.FillEllipse(rippleBrush, new Rectangle(TRACK_CENTER_X_BEGIN + OffsetX - rippleSize / 2, TRACK_CENTER_Y - rippleSize / 2, rippleSize, rippleSize));
+                }
+            }
+
             // draw ripple animation
             if (Ripple && _rippleAnimationManager.IsAnimating())
             {
-                for (var i = 0; i < _rippleAnimationManager.GetAnimationCount(); i++)
+                for (int i = 0; i < _rippleAnimationManager.GetAnimationCount(); i++)
                 {
-                    var rippleAnimProgress = _rippleAnimationManager.GetProgress(i);
-                    var rippleDiameter = (Height % 2 == 0) ? Height - 2 : Height - 3;
-                    var rippleAnimatedDiameter = (_rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleDiameter * (0.8d + (0.2d * rippleAnimProgress))) : rippleDiameter;
+                    double rippleAnimProgress = _rippleAnimationManager.GetProgress(i);
+                    int rippleAnimatedDiameter = (_rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleSize * (0.8d + (0.2d * rippleAnimProgress))) : rippleSize;
+                    rippleColor = Color.FromArgb((int)(40 * rippleAnimProgress), rippleColor.RemoveAlpha());
 
-                    Color rippleColor = Color.FromArgb((int)(40 * rippleAnimProgress), // color alpha
-                        (bool)_rippleAnimationManager.GetData(i)[0] ? SkinManager.ColorScheme.AccentColor : // On color
-                        (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White)); // Off color
 
                     using (SolidBrush rippleBrush = new SolidBrush(rippleColor))
                     {
@@ -259,10 +219,6 @@
             }
         }
 
-        /// <summary>
-        /// The DrawCheckMarkBitmap
-        /// </summary>
-        /// <returns>The <see cref="Bitmap"/></returns>
         private Bitmap DrawCheckMarkBitmap()
         {
             var checkMark = new Bitmap(THUMB_SIZE, THUMB_SIZE);
@@ -280,9 +236,6 @@
             return checkMark;
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether AutoSize
-        /// </summary>
         public override bool AutoSize
         {
             get { return base.AutoSize; }
@@ -296,9 +249,6 @@
             }
         }
 
-        /// <summary>
-        /// The OnCreateControl
-        /// </summary>
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
@@ -318,6 +268,11 @@
             {
                 MouseLocation = new Point(-1, -1);
                 MouseState = MouseState.OUT;
+                if (justClicked)
+                {
+                    justClicked = false;
+                    Parent.Focus();
+                }
             };
             MouseDown += (sender, args) =>
             {
@@ -326,8 +281,10 @@
                 if (Ripple && args.Button == MouseButtons.Left)
                 {
                     _rippleAnimationManager.SecondaryIncrement = 0;
-                    _rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, new object[] { Checked });
+                    _rippleAnimationManager.StartNewAnimation(AnimationDirection.InOutIn, new object[] { !Checked });
                 }
+
+                justClicked = true;
             };
             MouseUp += (sender, args) =>
             {
