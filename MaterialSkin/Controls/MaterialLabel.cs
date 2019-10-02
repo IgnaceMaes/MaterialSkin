@@ -4,26 +4,14 @@
     using System.Drawing;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Defines the <see cref="MaterialLabel" />
-    /// </summary>
     public class MaterialLabel : Label, IMaterialControl
     {
-        /// <summary>
-        /// Gets or sets the Depth
-        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
 
-        /// <summary>
-        /// Gets the SkinManager
-        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
-        /// <summary>
-        /// Gets or sets the MouseState
-        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
@@ -100,11 +88,6 @@
             FontType = MaterialSkinManager.fontType.Body1;
         }
 
-        /// <summary>
-        /// The GetPreferredSize
-        /// </summary>
-        /// <param name="proposedSize">The proposedSize<see cref="Size"/></param>
-        /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
             if (AutoSize)

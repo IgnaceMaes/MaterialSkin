@@ -6,44 +6,23 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Defines the <see cref="MaterialListView" />
-    /// </summary>
     public class MaterialListView : ListView, IMaterialControl
     {
-        /// <summary>
-        /// Gets or sets the Depth
-        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
 
-        /// <summary>
-        /// Gets the SkinManager
-        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
-        /// <summary>
-        /// Gets or sets the MouseState
-        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        /// <summary>
-        /// Gets or sets the MouseLocation
-        /// </summary>
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
-        /// <summary>
-        /// Gets or sets the HoveredItem
-        /// </summary>
         [Browsable(false)]
         private ListViewItem HoveredItem { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialListView"/> class.
-        /// </summary>
         public MaterialListView()
         {
             GridLines = false;
@@ -89,10 +68,6 @@
             };
         }
 
-        /// <summary>
-        /// The OnDrawColumnHeader
-        /// </summary>
-        /// <param name="e">The e<see cref="DrawListViewColumnHeaderEventArgs"/></param>
         protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
         {
             e.Graphics.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(e.Bounds.X, e.Bounds.Y, Width, e.Bounds.Height));
@@ -103,15 +78,8 @@
                 getStringFormat());
         }
 
-        /// <summary>
-        /// Defines the ITEM_PADDING
-        /// </summary>
         private const int ITEM_PADDING = 12;
 
-        /// <summary>
-        /// The OnDrawItem
-        /// </summary>
-        /// <param name="e">The e<see cref="DrawListViewItemEventArgs"/></param>
         protected override void OnDrawItem(DrawListViewItemEventArgs e)
         {
             //We draw the current line of items (= item with subitems) on a temp bitmap, then draw the bitmap at once. This is to reduce flickering.
@@ -149,10 +117,6 @@
             b.Dispose();
         }
 
-        /// <summary>
-        /// The getStringFormat
-        /// </summary>
-        /// <returns>The <see cref="StringFormat"/></returns>
         private StringFormat getStringFormat()
         {
             return new StringFormat
@@ -164,87 +128,25 @@
             };
         }
 
-        /// <summary>
-        /// Defines the <see cref="LogFont" />
-        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public class LogFont
         {
-            /// <summary>
-            /// Defines the lfHeight
-            /// </summary>
             public int lfHeight = 0;
-
-            /// <summary>
-            /// Defines the lfWidth
-            /// </summary>
             public int lfWidth = 0;
-
-            /// <summary>
-            /// Defines the lfEscapement
-            /// </summary>
             public int lfEscapement = 0;
-
-            /// <summary>
-            /// Defines the lfOrientation
-            /// </summary>
             public int lfOrientation = 0;
-
-            /// <summary>
-            /// Defines the lfWeight
-            /// </summary>
             public int lfWeight = 0;
-
-            /// <summary>
-            /// Defines the lfItalic
-            /// </summary>
             public byte lfItalic = 0;
-
-            /// <summary>
-            /// Defines the lfUnderline
-            /// </summary>
             public byte lfUnderline = 0;
-
-            /// <summary>
-            /// Defines the lfStrikeOut
-            /// </summary>
             public byte lfStrikeOut = 0;
-
-            /// <summary>
-            /// Defines the lfCharSet
-            /// </summary>
             public byte lfCharSet = 0;
-
-            /// <summary>
-            /// Defines the lfOutPrecision
-            /// </summary>
             public byte lfOutPrecision = 0;
-
-            /// <summary>
-            /// Defines the lfClipPrecision
-            /// </summary>
             public byte lfClipPrecision = 0;
-
-            /// <summary>
-            /// Defines the lfQuality
-            /// </summary>
             public byte lfQuality = 0;
-
-            /// <summary>
-            /// Defines the lfPitchAndFamily
-            /// </summary>
             public byte lfPitchAndFamily = 0;
-
-            /// <summary>
-            /// Defines the lfFaceName
-            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
             public string lfFaceName = string.Empty;
         }
-
-        /// <summary>
-        /// The OnCreateControl
-        /// </summary>
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
