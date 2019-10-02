@@ -33,13 +33,7 @@
             ForeColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
             
         }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ResumeLayout(false);
-        }
+        
 
         public CheckState GetItemCheckState(int Index)
         {
@@ -62,23 +56,22 @@
                 Add(text, false);
             }
 
-            public void Add(string text, bool @checked)
+            public void Add(string text, bool defaultValue)
             {
                 MaterialSkin.Controls.MaterialCheckbox cb = new MaterialSkin.Controls.MaterialCheckbox();
-                cb.Checked = @checked;
-                cb.Text = text;
-                // cb.Width = _parent.Width * 0.75
                 Add(cb);
+                cb.Checked = defaultValue;
+                cb.Text = text;
             }
 
              public new void Add(MaterialSkin.Controls.MaterialCheckbox value)
             {
-                value.Dock = DockStyle.Top;
                 base.Add(value);
                 _parent.Controls.Add(value);
+                value.Dock = DockStyle.Top;
             }
 
- public new void Remove(MaterialSkin.Controls.MaterialCheckbox value)
+            public new void Remove(MaterialSkin.Controls.MaterialCheckbox value)
             {
                 base.Remove(value);
                 _parent.Controls.Remove(value);

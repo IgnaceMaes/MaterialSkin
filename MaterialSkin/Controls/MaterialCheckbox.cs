@@ -82,6 +82,7 @@
             _rippleAM.OnAnimationProgress += sender => Invalidate();
 
             Ripple = true;
+            Height = HEIGHT_RIPPLE;
             MouseLocation = new Point(-1, -1);
         }
 
