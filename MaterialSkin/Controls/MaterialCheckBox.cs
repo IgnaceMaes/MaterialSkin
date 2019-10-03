@@ -7,8 +7,6 @@
     using System.Drawing.Drawing2D;
     using System.Drawing.Text;
     using System.Windows.Forms;
-    using System.Windows.Input;
-    using Cursors = System.Windows.Forms.Cursors;
 
     public class MaterialCheckbox : CheckBox, IMaterialControl
     {

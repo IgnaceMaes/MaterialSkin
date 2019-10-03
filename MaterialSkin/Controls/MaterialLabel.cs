@@ -66,7 +66,7 @@
         [Category("Material Skin")]
         public bool UseAccent { get; set; }
 
-        MaterialSkinManager.fontType _fontType;
+        MaterialSkinManager.fontType _fontType = MaterialSkinManager.fontType.Body1;
         [Category("Material Skin"),
         DefaultValue(typeof(MaterialSkinManager.fontType), "Body1")]
         public MaterialSkinManager.fontType FontType
@@ -96,6 +96,7 @@
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(CreateGraphics()))
                 {
                     strSize = NativeText.MeasureLogString(Text, SkinManager.getLogFontByType(_fontType));
+                    strSize.Width += 1; // necessary to avoid a bug when autosize = true
                 }
                 return strSize;
             }
@@ -139,9 +140,8 @@
             }
         }
 
-        protected override void OnCreateControl()
+        protected override void InitLayout()
         {
-            base.OnCreateControl();
             Font = SkinManager.getFontByType(_fontType);
             BackColorChanged += (sender, args) => Refresh();
         }

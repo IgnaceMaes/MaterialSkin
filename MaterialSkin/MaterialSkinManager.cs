@@ -214,6 +214,11 @@
             return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_LIGHT : BUTTON_BACKGROUND_DARK;
         }
 
+        public Brush GetButtonBackgroundBrush()
+        {
+            return Theme == Themes.LIGHT ? BUTTON_BACKGROUND_LIGHT_BRUSH : BUTTON_BACKGROUND_DARK_BRUSH;
+        }
+
         public Color GetButtonOutlineColor()
         {
             return Theme == Themes.LIGHT ? BUTTON_OUTLINE_LIGHT : BUTTON_OUTLINE_DARK;
@@ -325,7 +330,7 @@
                 case fontType.Overline:
                     return new Font(RobotoFontFamilies["Roboto"], 10f, FontStyle.Regular, GraphicsUnit.Pixel);
             }
-            throw new System.ArgumentException("Parameter is invalid", "type");
+            return new Font(RobotoFontFamilies["Roboto"], 14f, FontStyle.Regular, GraphicsUnit.Pixel);
         }
 
 

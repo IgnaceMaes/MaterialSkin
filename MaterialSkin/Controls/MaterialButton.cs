@@ -176,27 +176,9 @@
             Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
             gp.Transform = mx;
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-            drawShadow(gp, ClientRectangle);
+            DrawHelper.DrawSquareShadow(gp, ClientRectangle);
         }
 
-        void drawShadow(Graphics g, Rectangle bounds)
-        {
-            using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0)))
-            {
-                GraphicsPath path;
-                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 3.5f, bounds.Y - 1.5f, bounds.Width + 6, bounds.Height + 6), 8);
-                g.FillPath(shadowBrush, path);
-                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 2.5f, bounds.Y - 1.5f, bounds.Width + 4, bounds.Height + 4), 6);
-                g.FillPath(shadowBrush, path);
-                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 1.5f, bounds.Y - 0.5f, bounds.Width + 2, bounds.Height + 2), 4);
-                g.FillPath(shadowBrush, path);
-                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 0.5f, bounds.Y + 1.5f, bounds.Width + 0, bounds.Height + 0), 4);
-                g.FillPath(shadowBrush, path);
-                path = DrawHelper.CreateRoundRect(new RectangleF(bounds.X - 0.5f, bounds.Y + 2.5f, bounds.Width + 0, bounds.Height + 0), 4);
-                g.FillPath(shadowBrush, path);
-                path.Dispose();
-            }
-        }
 
         /// <summary>
         /// The OnPaint
@@ -206,8 +188,7 @@
         {
             var g = pevent.Graphics;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.Clear(Parent.BackColor);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             double hoverAnimProgress = _hoverAnimationManager.GetProgress();
 
@@ -219,7 +200,7 @@
             GraphicsPath buttonPath = DrawHelper.CreateRoundRect(buttonRectF, 4);
 
             // button shadow (blend with form shadow)
-            drawShadow(g, ClientRectangle);
+            DrawHelper.DrawSquareShadow(g, ClientRectangle);
 
             if (Type == MaterialButtonType.Contained)
             {
@@ -424,16 +405,19 @@
                 Invalidate();
             };
 
-            GotFocus += (sender, args) => {
+            GotFocus += (sender, args) =>
+            {
                 _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
                 Invalidate();
             };
-            LostFocus += (sender, args) => {
+            LostFocus += (sender, args) =>
+            {
                 _hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
                 Invalidate();
             };
 
-            KeyDown += (object sender, KeyEventArgs e) => {
+            KeyDown += (object sender, KeyEventArgs e) =>
+            {
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
                 {
                     _animationManager.StartNewAnimation(AnimationDirection.In, new Point(ClientRectangle.Width >> 1, ClientRectangle.Height >> 1));

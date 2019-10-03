@@ -118,18 +118,9 @@
             fabBounds.Width -= 1;
             fabBounds.Height -= 1;
 
-            drawShadow(gp, fabBounds);
+            DrawHelper.DrawRoundShadow(gp, fabBounds);
         }
 
-        void drawShadow(Graphics g, Rectangle bounds)
-        {
-            SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0));
-            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 2, bounds.Y - 1, bounds.Width + 4, bounds.Height + 6));
-            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 1, bounds.Y - 1, bounds.Width + 2, bounds.Height + 4));
-            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y - 0, bounds.Width + 0, bounds.Height + 2));
-            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 2, bounds.Width + 0, bounds.Height + 0));
-            g.FillEllipse(shadowBrush, new Rectangle(bounds.X - 0, bounds.Y + 1, bounds.Width + 0, bounds.Height + 0));
-        }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
@@ -146,7 +137,7 @@
 
 
             // Paint shadow on element to blend with the parent shadow
-            drawShadow(g, fabBounds);
+            DrawHelper.DrawRoundShadow(g, fabBounds);
 
             // draw fab
             g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);

@@ -87,7 +87,6 @@
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
             base.OnSelectedIndexChanged(e);
-            BorderBrush = SkinManager.GetDividersBrush();
             this.Invalidate();
         }
 
@@ -96,10 +95,7 @@
             SuspendLayout();
             Graphics g = this.CreateGraphics();
             Pen p = new Pen(SkinManager.GetPrimaryTextColor(), 1);
-            BorderBrush = new SolidBrush(SkinManager.GetApplicationBackgroundColor());
             g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(BorderBrush, this.ClientRectangle);
-            g.DrawRectangle(new Pen(SkinManager.GetApplicationBackgroundColor(), 1), this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width - 1, this.ClientRectangle.Height - 1);
 
             // Draw the background of the dropdown button
             Rectangle rect = new Rectangle(this.Width - 15, 3, 12, this.Height - 6);
@@ -113,7 +109,7 @@
             pth.AddLine(TopLeft, TopRight);
             pth.AddLine(TopRight, Bottom);
 
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             // Determine the arrow's color.
             if (this.DroppedDown)

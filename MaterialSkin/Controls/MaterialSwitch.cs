@@ -61,7 +61,6 @@
 
         private const int RIPPLE_DIAMETER = 37;
 
-        private bool justChanged;
         private int _trackOffsetY;
 
         public MaterialSwitch()

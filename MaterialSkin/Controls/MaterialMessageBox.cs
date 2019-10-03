@@ -1,10 +1,6 @@
 ﻿
-    using System;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Drawing;
-    using System.Globalization;
-    using System.Linq;
     using System.Windows.Forms;
 namespace MaterialSkin.Controls { 
     ///TODO: Break this out into a MaterialDialog then extend into the MaterialMsgBox

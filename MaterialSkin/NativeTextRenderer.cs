@@ -122,9 +122,6 @@ public sealed class NativeTextRenderer : IDisposable
             SelectObject(memoryHdc, fontHandle);
             SetTextColor(memoryHdc, (color.B & 0xFF) << 16 | (color.G & 0xFF) << 8 | color.R);
 
-            // Calculate the aligment
-            Size strSize = new Size();
-            GetTextExtentPoint32(memoryHdc, str, str.Length, ref strSize);
             Point pos = new Point();
 
             if (multilineSupport)
@@ -147,6 +144,10 @@ public sealed class NativeTextRenderer : IDisposable
             }
             else
             {
+                // Calculate the aligment
+                Size strSize = new Size();
+                GetTextExtentPoint32(memoryHdc, str, str.Length, ref strSize);
+
                 // Aligment
                 if (flags.HasFlag(TextAlignFlags.Center))
                     pos.X = ((size.Width) >> 1) - (strSize.Width >> 1);
