@@ -1,5 +1,7 @@
 # MaterialSkin for .NET WinForms
 
+This project is **ACTIVE**
+
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
 *A video of the old version is still available here:*
@@ -10,71 +12,59 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
 **Current version:**
 
-![Home](https://user-images.githubusercontent.com/8310271/64971649-609ea780-d87e-11e9-97eb-7a1e047fe8db.png)
+![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
 
 ---
 
-## Updates
-
-* [2019-09-13] New controls added, some bugfixes.
-* [2018-12-24] New controls added 
-* [2018-12-26] Added support to theme / color non Material controls on a Material form
-* [2018-12-27] Added Messagebox control
-
-## BugFixes
-
-* New controls now use this to define the background color they should use
-* Fixed rendering bug when Theme is changed
-* Updated MaterialMultiLineTextBox to use richtext for rendering
-* Updated the MaterialMessageBox control to now use MaterialMultiLineTextBox
-* Updated the MaterialMessageBox control to properly calculate the spacing for controls on the form .
-
-## New Controls
-
-* Combobox
-* Checkedlistbox 
-* Floating Action Button
-* Flexible Messagebox
-* Switch
-* Drawer
-
-## State of the project
-
-> This project is **ACTIVE**
-
 ## Current state of the MaterialSkin components
 
-| Component                    | Supported | Dark Theme | Disabled mode | Animated  |
-| ---------------------------- | :-------: | :--------: | :-----------: | :-------: |
-| Buttons                      |    Yes    |    Yes     |      Yes      |    Yes    |
-| Backdrop                     |  **No**   |     -      |       -       |     -     |
-| Cards                        |  **No**   |     -      |       -       |     -     |
-| Check Box                    |    Yes    |    Yes     |      Yes      |    Yes    |
-| Check Box List               |    Yes    |    Yes     |      Yes      |    Yes    |
-| Combobox                     |    Yes    |    Yes     |      Yes      |    Yes    |
-| Context Menu                 |    Yes    |    Yes     |      Yes      |    Yes    |
-| Dialog                       |  **No**   |     -      |       -       |     -     |
-| Divider                      |    Yes    |    Yes     |      N/A      |    N/A    |
-| Drawer                       |    Yes    |    Yes     |      N/A      |    Yes    |
-| Flexible Dialog (big)        |    Yes    |    Yes     |      Yes      |    N/A    |
-| FAB - Floating Action Button |    Yes    |    Yes     |    **No**     |    Yes    |
-| Label                        |    Yes    |    Yes     |      N/A      |    N/A    |
-| ListView                     |    Yes    |    Yes     |    **No**     |    N/A    |
-| Progress Bar                 | _Partial_ |    Yes     |    **No**     |  **No**   |
-| Radio Button                 |    Yes    |    Yes     |      Yes      |    Yes    |
-| Text field                   | _Partial_ |    Yes     |    **No**     | _Partial_ |
-| Sliders                      |  **No**   |     -      |       -       |     -     |
-| Switch                       |    Yes    |    Yes     |      Yes      |    Yes    |
-| Tabs                         |    Yes    |    N/A     |      N/A      |    Yes    |
+| Component                    | Supported | Disabled mode | Animated |
+| ---------------------------- | :-------: | :-----------: | :------: |
+| Buttons                      |    Yes    |      Yes      |   Yes    |
+| Backdrop                     |  **No**   |       -       |    -     |
+| Cards                        |    Yes    |      N/A      |   N/A    |
+| Check Box                    |    Yes    |      Yes      |   Yes    |
+| Check Box List               |    Yes    |      Yes      |   Yes    |
+| Combobox                     |    Yes    |      Yes      |   Yes    |
+| Context Menu                 |    Yes    |      Yes      |   Yes    |
+| Dialog                       |  **No**   |       -       |    -     |
+| Divider                      |    Yes    |      N/A      |   N/A    |
+| Drawer                       |    Yes    |      N/A      |   Yes    |
+| Flexible Dialog (big)        |    Yes    |      Yes      |   N/A    |
+| FAB - Floating Action Button |    Yes    |    **No**     |   Yes    |
+| Label                        |    Yes    |      Yes      |   N/A    |
+| ListView                     |    Yes    |    **No**     |   N/A    |
+| Progress Bar                 | _Partial_ |    **No**     |  **No**  |
+| Radio Button                 |    Yes    |      Yes      |   Yes    |
+| Text field                   |    Yes    |    **No**     |   Yes    |
+| Sliders                      |  **No**   |       -       |    -     |
+| Switch                       |    Yes    |      Yes      |   Yes    |
+| Tabs                         |    Yes    |      N/A      |   Yes    |
 
-## Planned components and improvements
+All supported components have a dark theme
 
-1. Improved text field
-2. Progress bar - Animation, circular and variants
-3. Sliders
-4. Dialog
-5. Cards
-6. Backdrop
+## TODO List
+
+- Progress bar - Animation and variants, maybe round loading thingy
+- Sliders
+- Dialog (!= message box)
+- Backdrop (maybe)
+- Better FAB
+- Better Listview
+- Disabled textfield
+- Some Color code improvements and refactoring
+
+---
+
+## Contributting
+
+If you have any issues please open an issue; have an improvement? open a pull request.
+
+>This project was heavily updated by @leocb [leocb/MaterialSkin](https://github.com/leocb/MaterialSkin)
+>
+>forked from [donaldsteele/MaterialSkin](https://github.com/donaldsteele/MaterialSkin)
+>
+>and he forked it from the original [IgnaceMaes/MaterialSkin](https://github.com/IgnaceMaes/MaterialSkin)
 
 ---
 
@@ -149,39 +139,36 @@ End Class
 
 If you love .NET and Material Design, you should definitely check out [Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) by ButchersBoy. It's a similar project but for WPF instead of WinForms.
 
-## Contact
-
-If you have any issues please open an issue or pull request. 
-
-This project was forked from [donaldsteele/MaterialSkin](https://github.com/donaldsteele/MaterialSkin) and he forked it from [IgnaceMaes/MaterialSkin](https://github.com/IgnaceMaes/MaterialSkin)
-
 ---
 
 ## Images
 
-![Home](https://user-images.githubusercontent.com/8310271/64971649-609ea780-d87e-11e9-97eb-7a1e047fe8db.png)
 *A simple demo interface with MaterialSkin components.*
+![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
 
-![Drawer](https://user-images.githubusercontent.com/8310271/64971650-609ea780-d87e-11e9-96c6-bc0630da366d.png)
 *The MaterialSkin Drawer (menu).*
+![drawer](https://user-images.githubusercontent.com/8310271/66237910-a0fa8400-e6cc-11e9-8f1d-0bc424f404c3.png)
 
-![Buttons](https://user-images.githubusercontent.com/8310271/64971652-609ea780-d87e-11e9-82ab-3359bd30f4e4.png)
 *Every MaterialSkin button variant - this is 1 control, 3 properties*
+![buttons](https://user-images.githubusercontent.com/8310271/66237911-a0fa8400-e6cc-11e9-8781-3e4c8cb0362b.png)
 
-![Checkbox and Swicthes](https://user-images.githubusercontent.com/8310271/64971656-609ea780-d87e-11e9-92f3-4c20390e8a3c.png)
-*The MaterialSkin checkboxes and Switch.*
+*The MaterialSkin checkboxes, radio and Switch.*
+![selection](https://user-images.githubusercontent.com/8310271/66237912-a0fa8400-e6cc-11e9-9fb8-2cb247d2eff1.png)
 
-![Radio buttons](https://user-images.githubusercontent.com/8310271/64971657-609ea780-d87e-11e9-9eb3-06b6622495eb.png)
-*The MaterialSkin radiobuttons*
+*Material skin textfield and labels*
+![text](https://user-images.githubusercontent.com/8310271/66237914-a0fa8400-e6cc-11e9-8afa-b9f6da2382fe.png)
 
-![Progress bar](https://user-images.githubusercontent.com/8310271/64971660-61373e00-d87e-11e9-9f1a-130b586488dc.png)
-*List view*
+*Table control*
+![table](https://user-images.githubusercontent.com/8310271/66237915-a1931a80-e6cc-11e9-8e68-bc919f533366.png)
 
-![8](https://user-images.githubusercontent.com/8310271/64971662-61cfd480-d87e-11e9-85a0-a9a215d171c4.png)
-*Additional controls*
+*Progress bar*
+![progress bar](https://user-images.githubusercontent.com/8310271/66237916-a1931a80-e6cc-11e9-836b-157596b4ed33.png)
 
-![9](https://user-images.githubusercontent.com/8310271/64971665-61cfd480-d87e-11e9-8aeb-44d2c096208c.png)
+*Cards*
+![cards](https://user-images.githubusercontent.com/8310271/66237917-a1931a80-e6cc-11e9-9b32-47374554bc07.png)
+
 *MaterialSkin using a custom color scheme.*
+![custom](https://user-images.githubusercontent.com/8310271/66237918-a1931a80-e6cc-11e9-820e-8c811629d937.png)
 
-![alt tag](https://i.imgur.com/i35Lfgn.png)
-*FlexibleMaterialMessagebox*
+*FlexibleMaterial Messagebox*
+![messagebox](https://user-images.githubusercontent.com/8310271/66238105-25e59d80-e6cd-11e9-88c9-5a21ceae1a5a.png)
