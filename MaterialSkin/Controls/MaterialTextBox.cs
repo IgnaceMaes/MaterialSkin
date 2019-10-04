@@ -20,6 +20,9 @@
         [Category("Material Skin")]
         public bool Password { get; set; }
 
+        [Category("Material Skin"), DefaultValue(true)]
+        public bool UseAccent { get; set; }
+
         private string _hint = string.Empty;
         [Category("Material Skin")]
         public string Hint
@@ -48,6 +51,7 @@
         {
             Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
             TabStop = true;
+            UseAccent = true;
 
             // Properties
             base.AutoSize = false;
@@ -150,7 +154,7 @@
             // HintText
             bool userTextPresent = !String.IsNullOrEmpty(Text);
             Color textColor = Enabled ? Focused ?
-                            SkinManager.ColorScheme.PrimaryColor : // Focused
+                            UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // Focused
                             SkinManager.GetPrimaryTextColor() : // Inactive
                             SkinManager.GetDisabledOrHintColor(); // Disabled
             Rectangle hintRect = ClientRectangle;
@@ -174,7 +178,7 @@
                 // bottom line
                 if (Focused)
                 {
-                    g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
+                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
                 }
             }
             else
@@ -196,7 +200,7 @@
                 // Line Animation
                 int LineAnimationWidth = (int)(Width * animationProgress);
                 int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
-                g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
+                g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
             }
 
             // Text stuff:
@@ -242,7 +246,7 @@
             if (Focused)
             {
                 // Draw Selection Rectangle
-                g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, textSelectRect);
+                g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.DarkPrimaryBrush, textSelectRect);
 
                 // Draw Selected Text
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
