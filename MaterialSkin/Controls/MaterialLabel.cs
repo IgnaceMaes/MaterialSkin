@@ -15,55 +15,28 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public enum EHorizontalAlign
-        {
-            Left,
-            Center,
-            Right
-        }
-
-        public enum EVerticalAlign
-        {
-            Top,
-            Middle,
-            Bottom
-        }
-
-
-        private EHorizontalAlign _hAlign;
-        [Category("Material Skin")]
-        public EHorizontalAlign HorizontalAlign
+        ContentAlignment _TextAlign = ContentAlignment.TopLeft;
+        [DefaultValue(typeof(ContentAlignment), "TopLeft")]
+        public override ContentAlignment TextAlign 
         {
             get
             {
-                return _hAlign;
+                return _TextAlign;
             }
             set
             {
-                _hAlign = value;
+                _TextAlign = value;
                 updateAligment();
+                Invalidate();
             }
         }
 
-        private EVerticalAlign _vAlign;
-        [Category("Material Skin")]
-        public EVerticalAlign VerticalAlign
-        {
-            get
-            {
-                return _vAlign;
-            }
-            set
-            {
-                _vAlign = value;
-                updateAligment();
-            }
-        }
-
-        [Category("Material Skin")]
+        [Category("Material Skin"),
+        DefaultValue(false)]
         public bool HighEmphasis { get; set; }
 
-        [Category("Material Skin")]
+        [Category("Material Skin"), 
+        DefaultValue(false)]
         public bool UseAccent { get; set; }
 
         MaterialSkinManager.fontType _fontType = MaterialSkinManager.fontType.Body1;
@@ -86,6 +59,7 @@
         public MaterialLabel()
         {
             FontType = MaterialSkinManager.fontType.Body1;
+            TextAlign = ContentAlignment.TopLeft;
         }
 
         public override Size GetPreferredSize(Size proposedSize)
@@ -109,15 +83,39 @@
         private NativeTextRenderer.TextAlignFlags Alignment;
         private void updateAligment()
         {
-            // Alignment
-            Alignment =
-                (_hAlign == EHorizontalAlign.Right ? NativeTextRenderer.TextAlignFlags.Right :
-                _hAlign == EHorizontalAlign.Center ? NativeTextRenderer.TextAlignFlags.Center :
-                NativeTextRenderer.TextAlignFlags.Left)
-                |
-                (_vAlign == EVerticalAlign.Bottom ? NativeTextRenderer.TextAlignFlags.Bottom :
-                _vAlign == EVerticalAlign.Middle ? NativeTextRenderer.TextAlignFlags.Middle :
-                NativeTextRenderer.TextAlignFlags.Top);
+            switch (_TextAlign)
+            {
+                case ContentAlignment.TopLeft:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Left;
+                    break;
+                case ContentAlignment.TopCenter:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Center;
+                    break;
+                case ContentAlignment.TopRight:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Right;
+                    break;
+                case ContentAlignment.MiddleLeft:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Middle | NativeTextRenderer.TextAlignFlags.Left;
+                    break;
+                case ContentAlignment.MiddleCenter:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Middle | NativeTextRenderer.TextAlignFlags.Center;
+                    break;
+                case ContentAlignment.MiddleRight:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Middle | NativeTextRenderer.TextAlignFlags.Right;
+                    break;
+                case ContentAlignment.BottomLeft:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Bottom | NativeTextRenderer.TextAlignFlags.Left;
+                    break;
+                case ContentAlignment.BottomCenter:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Bottom | NativeTextRenderer.TextAlignFlags.Center;
+                    break;
+                case ContentAlignment.BottomRight:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Bottom | NativeTextRenderer.TextAlignFlags.Right;
+                    break;
+                default:
+                    Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Left;
+                    break;
+            }
         }
 
 
@@ -133,7 +131,11 @@
                 NativeText.DrawMultilineTransparentText(
                     Text,
                     SkinManager.getLogFontByType(_fontType),
-                    Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                    Enabled ? HighEmphasis ? UseAccent ?
+                    SkinManager.ColorScheme.AccentColor : // High emphasis, accent
+                    SkinManager.ColorScheme.PrimaryColor : // High emphasis, primary
+                    SkinManager.GetPrimaryTextColor() : // Normal
+                    SkinManager.GetDisabledOrHintColor(), // Disabled
                     ClientRectangle.Location,
                     ClientRectangle.Size,
                     Alignment);
