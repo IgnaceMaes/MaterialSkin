@@ -123,6 +123,7 @@ namespace MaterialSkinExample
             this.materialLabel12 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.materialLabel39 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel28 = new MaterialSkin.Controls.MaterialLabel();
             this.materialListView1 = new MaterialSkin.Controls.MaterialListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -139,6 +140,7 @@ namespace MaterialSkinExample
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel38 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel30 = new MaterialSkin.Controls.MaterialLabel();
             this.menuIconList = new System.Windows.Forms.ImageList(this.components);
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
@@ -149,7 +151,6 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
-            this.materialLabel38 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.materialTabControl2.SuspendLayout();
@@ -1767,6 +1768,7 @@ namespace MaterialSkinExample
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.White;
+            this.tabPage4.Controls.Add(this.materialLabel39);
             this.tabPage4.Controls.Add(this.materialLabel28);
             this.tabPage4.Controls.Add(this.materialListView1);
             this.tabPage4.ImageKey = "round_backup_white_24dp.png";
@@ -1776,6 +1778,23 @@ namespace MaterialSkinExample
             this.tabPage4.Size = new System.Drawing.Size(955, 523);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Table Example";
+            // 
+            // materialLabel39
+            // 
+            this.materialLabel39.Depth = 0;
+            this.materialLabel39.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel39.HighEmphasis = false;
+            this.materialLabel39.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
+            this.materialLabel39.Location = new System.Drawing.Point(28, 76);
+            this.materialLabel39.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel39.Name = "materialLabel39";
+            this.materialLabel39.Size = new System.Drawing.Size(647, 70);
+            this.materialLabel39.TabIndex = 64;
+            this.materialLabel39.Text = "This control could be better, but it\'s good enough for now - PRs are welcome! :)\r" +
+    "\nRecommended: AutoSizeTable = true;\r\nand then configure with Maximum/Minimum Siz" +
+    "e\r\n";
+            this.materialLabel39.UseAccent = false;
+            this.materialLabel39.VerticalAlign = MaterialSkin.Controls.MaterialLabel.EVerticalAlign.Top;
             // 
             // materialLabel28
             // 
@@ -1788,14 +1807,17 @@ namespace MaterialSkinExample
             this.materialLabel28.Location = new System.Drawing.Point(28, 18);
             this.materialLabel28.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel28.Name = "materialLabel28";
-            this.materialLabel28.Size = new System.Drawing.Size(632, 58);
+            this.materialLabel28.Size = new System.Drawing.Size(120, 58);
             this.materialLabel28.TabIndex = 63;
-            this.materialLabel28.Text = "Table - Currently kinda broken";
+            this.materialLabel28.Text = "Table";
             this.materialLabel28.UseAccent = false;
             this.materialLabel28.VerticalAlign = MaterialSkin.Controls.MaterialLabel.EVerticalAlign.Top;
             // 
             // materialListView1
             // 
+            this.materialListView1.AllowColumnReorder = true;
+            this.materialListView1.AutoSizeTable = true;
+            this.materialListView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialListView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -1803,16 +1825,17 @@ namespace MaterialSkinExample
             this.columnHeader3,
             this.columnHeader4});
             this.materialListView1.Depth = 0;
-            this.materialListView1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.materialListView1.Font = new System.Drawing.Font("Roboto", 34F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialListView1.FullRowSelect = true;
-            this.materialListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.materialListView1.HideSelection = false;
-            this.materialListView1.Location = new System.Drawing.Point(16, 79);
+            this.materialListView1.Location = new System.Drawing.Point(31, 149);
+            this.materialListView1.MinimumSize = new System.Drawing.Size(200, 100);
             this.materialListView1.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialListView1.MouseState = MaterialSkin.MouseState.OUT;
             this.materialListView1.Name = "materialListView1";
             this.materialListView1.OwnerDraw = true;
-            this.materialListView1.Size = new System.Drawing.Size(610, 389);
+            this.materialListView1.Scrollable = false;
+            this.materialListView1.Size = new System.Drawing.Size(547, 100);
             this.materialListView1.TabIndex = 0;
             this.materialListView1.UseCompatibleStateImageBehavior = false;
             this.materialListView1.View = System.Windows.Forms.View.Details;
@@ -1991,18 +2014,33 @@ namespace MaterialSkinExample
             // 
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel4.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel4.HighEmphasis = false;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel4.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
+            this.materialLabel4.HighEmphasis = true;
             this.materialLabel4.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
             this.materialLabel4.Location = new System.Drawing.Point(17, 14);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(275, 29);
+            this.materialLabel4.Size = new System.Drawing.Size(229, 24);
             this.materialLabel4.TabIndex = 0;
             this.materialLabel4.Text = "Cards are also supported!";
             this.materialLabel4.UseAccent = false;
             this.materialLabel4.VerticalAlign = MaterialSkin.Controls.MaterialLabel.EVerticalAlign.Top;
+            // 
+            // materialLabel38
+            // 
+            this.materialLabel38.Depth = 0;
+            this.materialLabel38.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel38.HighEmphasis = false;
+            this.materialLabel38.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
+            this.materialLabel38.Location = new System.Drawing.Point(17, 52);
+            this.materialLabel38.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel38.Name = "materialLabel38";
+            this.materialLabel38.Size = new System.Drawing.Size(286, 49);
+            this.materialLabel38.TabIndex = 2;
+            this.materialLabel38.Text = "These are simple containers, but with a very nice shadow under them";
+            this.materialLabel38.UseAccent = false;
+            this.materialLabel38.VerticalAlign = MaterialSkin.Controls.MaterialLabel.EVerticalAlign.Top;
             // 
             // materialLabel30
             // 
@@ -2103,21 +2141,6 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem.Name = "item3ToolStripMenuItem";
             this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item3ToolStripMenuItem.Text = "Item 3";
-            // 
-            // materialLabel38
-            // 
-            this.materialLabel38.Depth = 0;
-            this.materialLabel38.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel38.HighEmphasis = false;
-            this.materialLabel38.HorizontalAlign = MaterialSkin.Controls.MaterialLabel.EHorizontalAlign.Left;
-            this.materialLabel38.Location = new System.Drawing.Point(17, 52);
-            this.materialLabel38.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel38.Name = "materialLabel38";
-            this.materialLabel38.Size = new System.Drawing.Size(286, 49);
-            this.materialLabel38.TabIndex = 2;
-            this.materialLabel38.Text = "These are simple containers, but with a very nice shadow under them";
-            this.materialLabel38.UseAccent = false;
-            this.materialLabel38.VerticalAlign = MaterialSkin.Controls.MaterialLabel.EVerticalAlign.Top;
             // 
             // MainForm
             // 
@@ -2274,5 +2297,6 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel4;
         private MaterialButton materialButton1;
         private MaterialLabel materialLabel38;
+        private MaterialLabel materialLabel39;
     }
 }

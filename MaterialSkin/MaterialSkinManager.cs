@@ -93,7 +93,7 @@
         private static readonly Color BUTTON_OUTLINE_DARK = Color.FromArgb(255, 200, 200, 200);
         private static readonly Color BUTTON_BACKGROUND_LIGHT = Color.FromArgb(255, 255, 255, 255);
         private static readonly Brush BUTTON_BACKGROUND_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_LIGHT);
-        private static readonly Color BUTTON_BACKGROUND_DARK = Color.FromArgb(40, 255, 255, 255);
+        private static readonly Color BUTTON_BACKGROUND_DARK = Color.FromArgb(255, 85, 85, 85);
         private static readonly Brush BUTTON_BACKGROUND_DARK_BRUSH = new SolidBrush(BUTTON_BACKGROUND_DARK);
         private static readonly Color BUTTON_BACKGROUND_HOVER_LIGHT = Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor());
         private static readonly Brush BUTTON_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(BUTTON_BACKGROUND_HOVER_LIGHT);
