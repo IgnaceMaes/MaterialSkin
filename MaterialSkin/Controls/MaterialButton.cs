@@ -187,11 +187,13 @@
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
+
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             double hoverAnimProgress = _hoverAnimationManager.GetProgress();
 
+            g.Clear(Parent.BackColor);
 
             // button rectand path
             RectangleF buttonRectF = new RectangleF(ClientRectangle.Location, ClientRectangle.Size);

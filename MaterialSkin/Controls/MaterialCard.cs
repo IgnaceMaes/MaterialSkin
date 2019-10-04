@@ -53,6 +53,8 @@
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
+            g.Clear(Parent.BackColor);
+
             // card rectangle path
             RectangleF cardRectF = new RectangleF(ClientRectangle.Location, ClientRectangle.Size);
             cardRectF.X -= 0.5f;
