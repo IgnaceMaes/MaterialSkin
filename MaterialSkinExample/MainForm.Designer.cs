@@ -306,6 +306,7 @@ namespace MaterialSkinExample
             this.MaterialButton3.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.MaterialButton3.UseAccentColor = false;
             this.MaterialButton3.UseVisualStyleBackColor = true;
+            this.MaterialButton3.Click += new System.EventHandler(this.MaterialButton3_Click);
             // 
             // materialLabel6
             // 
