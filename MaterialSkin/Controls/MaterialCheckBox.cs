@@ -8,7 +8,7 @@
     using System.Drawing.Text;
     using System.Windows.Forms;
 
-    public class MaterialRadioButton : RadioButton, IMaterialControl
+    public class MaterialCheckbox : CheckBox, IMaterialControl
     {
         [Browsable(false)]
         public int Depth { get; set; }
@@ -22,15 +22,15 @@
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
-        private bool ripple;
+        private bool _ripple;
 
-        [Category("Behavior")]
+        [Category("Appearance")]
         public bool Ripple
         {
-            get { return ripple; }
+            get { return _ripple; }
             set
             {
-                ripple = value;
+                _ripple = value;
                 AutoSize = AutoSize; //Make AutoSize directly set the bounds.
 
                 if (value)
@@ -42,32 +42,22 @@
             }
         }
 
-        // animation managers
         private readonly AnimationManager _checkAM;
         private readonly AnimationManager _rippleAM;
         private readonly AnimationManager _hoverAM;
-
-        // size related variables which should be recalculated onsizechanged
-        private Rectangle _radioButtonBounds;
-        private int _boxOffset;
-
-        // size constants
         private const int HEIGHT_RIPPLE = 37;
         private const int HEIGHT_NO_RIPPLE = 20;
-        private const int RADIOBUTTON_SIZE = 18;
-        private const int RADIOBUTTON_SIZE_HALF = RADIOBUTTON_SIZE / 2;
-        private const int RADIOBUTTON_OUTER_CIRCLE_WIDTH = 2;
-        private const int RADIOBUTTON_INNER_CIRCLE_SIZE = RADIOBUTTON_SIZE - (2 * RADIOBUTTON_OUTER_CIRCLE_WIDTH);
         private const int TEXT_OFFSET = 26;
+        private const int CHECKBOX_SIZE = 18;
+        private const int CHECKBOX_SIZE_HALF = CHECKBOX_SIZE / 2;
+        private int _boxOffset;
 
-        public MaterialRadioButton()
+        public MaterialCheckbox()
         {
-            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
-
             _checkAM = new AnimationManager
             {
                 AnimationType = AnimationType.EaseInOut,
-                Increment = 0.06
+                Increment = 0.05
             };
             _hoverAM = new AnimationManager(true)
             {
@@ -80,29 +70,25 @@
                 Increment = 0.10,
                 SecondaryIncrement = 0.08
             };
-
-            _checkAM.OnAnimationProgress += sender => Invalidate();
-            _hoverAM.OnAnimationProgress += sender => Invalidate();
-            _rippleAM.OnAnimationProgress += sender => Invalidate();
-
-            TabStopChanged += (sender, e) => TabStop = true;
-
             CheckedChanged += (sender, args) =>
             {
                 if (Ripple)
                     _checkAM.StartNewAnimation(Checked ? AnimationDirection.In : AnimationDirection.Out);
             };
-
-            SizeChanged += OnSizeChanged;
+            _checkAM.OnAnimationProgress += sender => Invalidate();
+            _hoverAM.OnAnimationProgress += sender => Invalidate();
+            _rippleAM.OnAnimationProgress += sender => Invalidate();
 
             Ripple = true;
+            Height = HEIGHT_RIPPLE;
             MouseLocation = new Point(-1, -1);
         }
 
-        private void OnSizeChanged(object sender, EventArgs eventArgs)
+        protected override void OnSizeChanged(EventArgs e)
         {
-            _boxOffset = Height / 2 - (int)(RADIOBUTTON_SIZE / 2);
-            _radioButtonBounds = new Rectangle(_boxOffset, _boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE);
+            base.OnSizeChanged(e);
+
+            _boxOffset = HEIGHT_RIPPLE / 2 - 9;
         }
 
         public override Size GetPreferredSize(Size proposedSize)
@@ -118,6 +104,9 @@
             return Ripple ? new Size(w, HEIGHT_RIPPLE) : new Size(w, HEIGHT_NO_RIPPLE);
         }
 
+        private static readonly Point[] CheckmarkLine = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
+
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             Graphics g = pevent.Graphics;
@@ -127,30 +116,27 @@
             // clear the control
             g.Clear(Parent.BackColor);
 
-            int RADIOBUTTON_CENTER = _boxOffset + RADIOBUTTON_SIZE_HALF;
-            Point animationSource = new Point(RADIOBUTTON_CENTER, RADIOBUTTON_CENTER);
-
-
+            int CHECKBOX_CENTER = _boxOffset + CHECKBOX_SIZE_HALF - 1;
+            Point animationSource = new Point(CHECKBOX_CENTER, CHECKBOX_CENTER);
             double animationProgress = _checkAM.GetProgress();
 
             int colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
             int backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
-            float animationSize = (float)(animationProgress * 9f);
-            float animationSizeHalf = animationSize / 2;
             int rippleHeight = (HEIGHT_RIPPLE % 2 == 0) ? HEIGHT_RIPPLE - 3 : HEIGHT_RIPPLE - 2;
 
-            Color RadioColor = Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor());
+            SolidBrush brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            Pen pen = new Pen(brush.Color, 2);
 
             // draw hover animation
             if (Ripple)
             {
-                double animationValue = _hoverAM.GetProgress();
+                double animationValue = _hoverAM.IsAnimating() ? _hoverAM.GetProgress() : hovered ? 1 : 0;
                 int rippleSize = (int)(rippleHeight * (0.7 + (0.3 * animationValue)));
 
                 using (SolidBrush rippleBrush = new SolidBrush(Color.FromArgb((int)(40 * animationValue),
-                    !Checked ? (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White) : RadioColor)))
+                    !Checked ? (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White) : brush.Color))) // no animation
                 {
-                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize - 1, rippleSize - 1));
+                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                 }
             }
 
@@ -162,44 +148,80 @@
                     double animationValue = _rippleAM.GetProgress(i);
                     int rippleSize = (_rippleAM.GetDirection(i) == AnimationDirection.InOutIn) ? (int)(rippleHeight * (0.7 + (0.3 * animationValue))) : rippleHeight;
 
-                    using (SolidBrush rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), !Checked ? (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White) : RadioColor)))
+                    using (SolidBrush rippleBrush = new SolidBrush(Color.FromArgb((int)((animationValue * 40)), !Checked ? (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ? Color.Black : Color.White) : brush.Color)))
                     {
-                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize - 1, rippleSize - 1));
+                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
                     }
                 }
             }
 
-            // draw radiobutton circle
-            using (Pen pen = new Pen(DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha), 2))
+            Rectangle checkMarkLineFill = new Rectangle(_boxOffset, _boxOffset, (int)(CHECKBOX_SIZE * animationProgress), CHECKBOX_SIZE);
+            using (GraphicsPath checkmarkPath = DrawHelper.CreateRoundRect(_boxOffset - 0.5f, _boxOffset - 0.5f, CHECKBOX_SIZE, CHECKBOX_SIZE, 1))
             {
-                g.DrawEllipse(pen, new Rectangle(_boxOffset, _boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE));
-            }
-
-            if (Enabled)
-            {
-                using (Pen pen = new Pen(RadioColor, 2))
+                if (Enabled)
                 {
-                    g.DrawEllipse(pen, new Rectangle(_boxOffset, _boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE));
-                }
-            }
+                    using (Pen pen2 = new Pen(DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha), 2))
+                    {
+                        g.DrawPath(pen2, checkmarkPath);
+                    }
 
-            if (Checked)
-            {
-                using (SolidBrush brush = new SolidBrush(RadioColor))
+                    g.DrawPath(pen, checkmarkPath);
+                    g.FillPath(brush, checkmarkPath);
+                }
+                else
                 {
-                    g.FillEllipse(brush, new RectangleF(RADIOBUTTON_CENTER - animationSizeHalf, RADIOBUTTON_CENTER - animationSizeHalf, animationSize, animationSize));
+                    if (Checked)
+                        g.FillPath(brush, checkmarkPath);
+                    else
+                        g.DrawPath(pen, checkmarkPath);
                 }
+
+                g.DrawImageUnscaledAndClipped(DrawCheckMarkBitmap(), checkMarkLineFill);
             }
 
-            // Text
+            // draw checkbox text
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
-                Rectangle textLocation = new Rectangle(_boxOffset + TEXT_OFFSET, 0, Width, Height);
+                Rectangle textLocation = new Rectangle(_boxOffset + TEXT_OFFSET, 0, Width - (_boxOffset + TEXT_OFFSET), HEIGHT_RIPPLE);
                 NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
                     Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
                     textLocation.Location,
                     textLocation.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+            }
+
+            // dispose used paint objects
+            pen.Dispose();
+            brush.Dispose();
+        }
+
+        private Bitmap DrawCheckMarkBitmap()
+        {
+            Bitmap checkMark = new Bitmap(CHECKBOX_SIZE, CHECKBOX_SIZE);
+            Graphics g = Graphics.FromImage(checkMark);
+
+            // clear everything, transparent
+            g.Clear(Color.Transparent);
+
+            // draw the checkmark lines
+            using (Pen pen = new Pen(Parent.BackColor, 2))
+            {
+                g.DrawLines(pen, CheckmarkLine);
+            }
+
+            return checkMark;
+        }
+
+        public override bool AutoSize
+        {
+            get { return base.AutoSize; }
+            set
+            {
+                base.AutoSize = value;
+                if (value)
+                {
+                    Size = new Size(10, 10);
+                }
             }
         }
 

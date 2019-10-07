@@ -11,7 +11,7 @@ namespace MaterialSkinExample
         private readonly MaterialSkinManager materialSkinManager;
         public MainForm()
         {
-            
+
             InitializeComponent();
 
             // Initialize MaterialSkinManager
@@ -89,8 +89,24 @@ namespace MaterialSkinExample
             materialProgressBar1.Value = Math.Max(materialProgressBar1.Value - 10, 0);
         }
 
-        private void materialFlatButton5_Click(object sender, EventArgs e)
+        private void materialSwitch4_CheckedChanged(object sender, EventArgs e)
         {
+            DrawerUseColors = materialSwitch4.Checked;
+        }
+
+        private void MaterialSwitch5_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerHighlightWithAccent = materialSwitch5.Checked;
+        }
+
+        private void MaterialSwitch6_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerBackgroundWithAccent = materialSwitch6.Checked;
+        }
+
+        private void MaterialButton3_Click(object sender, EventArgs e)
+        {
+
             var builder = new StringBuilder("Batch operation report:\n\n");
             var random = new Random();
             var result = 0;
@@ -112,22 +128,6 @@ namespace MaterialSkinExample
             var batchOperationResults = builder.ToString();
             var mresult = MaterialMessageBox.Show(batchOperationResults, "Batch Operation");
             materialComboBox1.Items.Add("this is a very long string");
-
-        }
-
-        private void materialSwitch4_CheckedChanged(object sender, EventArgs e)
-        {
-            DrawerUseColors = materialSwitch4.Checked;
-        }
-
-        private void MaterialSwitch5_CheckedChanged(object sender, EventArgs e)
-        {
-            DrawerHighlightWithAccent = materialSwitch5.Checked;
-        }
-
-        private void MaterialSwitch6_CheckedChanged(object sender, EventArgs e)
-        {
-            DrawerBackgroundWithAccent = materialSwitch6.Checked;
         }
     }
 }

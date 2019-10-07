@@ -7,37 +7,19 @@
     using System.Drawing.Text;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Defines the <see cref="MaterialTabSelector" />
-    /// </summary>
     public class MaterialTabSelector : Control, IMaterialControl
     {
-        /// <summary>
-        /// Gets or sets the Depth
-        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
 
-        /// <summary>
-        /// Gets the SkinManager
-        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
 
-        /// <summary>
-        /// Gets or sets the MouseState
-        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        /// <summary>
-        /// Defines the _baseTabControl
-        /// </summary>
         private MaterialTabControl _baseTabControl;
 
-        /// <summary>
-        /// Gets or sets the BaseTabControl
-        /// </summary>
         public MaterialTabControl BaseTabControl
         {
             get { return _baseTabControl; }
@@ -66,39 +48,18 @@
             }
         }
 
-        /// <summary>
-        /// Defines the _previousSelectedTabIndex
-        /// </summary>
         private int _previousSelectedTabIndex;
 
-        /// <summary>
-        /// Defines the _animationSource
-        /// </summary>
         private Point _animationSource;
 
-        /// <summary>
-        /// Defines the _animationManager
-        /// </summary>
         private readonly AnimationManager _animationManager;
 
-        /// <summary>
-        /// Defines the _tabRects
-        /// </summary>
         private List<Rectangle> _tabRects;
 
-        /// <summary>
-        /// Defines the TAB_HEADER_PADDING
-        /// </summary>
         private const int TAB_HEADER_PADDING = 24;
 
-        /// <summary>
-        /// Defines the TAB_INDICATOR_HEIGHT
-        /// </summary>
         private const int TAB_INDICATOR_HEIGHT = 2;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialTabSelector"/> class.
-        /// </summary>
         public MaterialTabSelector()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
@@ -119,10 +80,6 @@
             Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
         }
 
-        /// <summary>
-        /// The OnPaint
-        /// </summary>
-        /// <param name="e">The e<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -179,12 +136,6 @@
             g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
         }
 
-        /// <summary>
-        /// The CalculateTextAlpha
-        /// </summary>
-        /// <param name="tabIndex">The tabIndex<see cref="int"/></param>
-        /// <param name="animationProgress">The animationProgress<see cref="double"/></param>
-        /// <returns>The <see cref="int"/></returns>
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
         {
             int primaryA = SkinManager.ACTION_BAR_TEXT.A;
@@ -205,10 +156,6 @@
             return secondaryA + (int)((primaryA - secondaryA) * animationProgress);
         }
 
-        /// <summary>
-        /// The OnMouseUp
-        /// </summary>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
@@ -225,9 +172,6 @@
             _animationSource = e.Location;
         }
 
-        /// <summary>
-        /// The UpdateTabRects
-        /// </summary>
         private void UpdateTabRects()
         {
             _tabRects = new List<Rectangle>();

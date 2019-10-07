@@ -10,235 +10,73 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Defines the <see cref="MaterialForm" />
-    /// </summary>
     public class MaterialForm : Form, IMaterialControl
     {
-        /// <summary>
-        /// Gets or sets the Depth
-        /// </summary>
         [Browsable(false)]
         public int Depth { get; set; }
 
-        /// <summary>
-        /// Gets the SkinManager
-        /// </summary>
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
-        /// <summary>
-        /// Gets or sets the MouseState
-        /// </summary>
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        /// <summary>
-        /// Gets or sets the FormBorderStyle
-        /// </summary>
         public new FormBorderStyle FormBorderStyle
         {
             get { return base.FormBorderStyle; }
             set { base.FormBorderStyle = value; }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether Sizable
-        /// </summary>
         [Category("Layout")]
         public bool Sizable { get; set; }
 
-        /// <summary>
-        /// The SendMessage
-        /// </summary>
-        /// <param name="hWnd">The hWnd<see cref="IntPtr"/></param>
-        /// <param name="Msg">The Msg<see cref="int"/></param>
-        /// <param name="wParam">The wParam<see cref="int"/></param>
-        /// <param name="lParam">The lParam<see cref="int"/></param>
-        /// <returns>The <see cref="int"/></returns>
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        /// <summary>
-        /// The ReleaseCapture
-        /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        /// <summary>
-        /// The TrackPopupMenuEx
-        /// </summary>
-        /// <param name="hmenu">The hmenu<see cref="IntPtr"/></param>
-        /// <param name="fuFlags">The fuFlags<see cref="uint"/></param>
-        /// <param name="x">The x<see cref="int"/></param>
-        /// <param name="y">The y<see cref="int"/></param>
-        /// <param name="hwnd">The hwnd<see cref="IntPtr"/></param>
-        /// <param name="lptpm">The lptpm<see cref="IntPtr"/></param>
-        /// <returns>The <see cref="int"/></returns>
         [DllImport("user32.dll")]
         public static extern int TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
 
-        /// <summary>
-        /// The GetSystemMenu
-        /// </summary>
-        /// <param name="hWnd">The hWnd<see cref="IntPtr"/></param>
-        /// <param name="bRevert">The bRevert<see cref="bool"/></param>
-        /// <returns>The <see cref="IntPtr"/></returns>
         [DllImport("user32.dll")]
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
-        /// <summary>
-        /// The MonitorFromWindow
-        /// </summary>
-        /// <param name="hwnd">The hwnd<see cref="IntPtr"/></param>
-        /// <param name="dwFlags">The dwFlags<see cref="uint"/></param>
-        /// <returns>The <see cref="IntPtr"/></returns>
         [DllImport("user32.dll")]
         public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
 
-        /// <summary>
-        /// The GetMonitorInfo
-        /// </summary>
-        /// <param name="hmonitor">The hmonitor<see cref="HandleRef"/></param>
-        /// <param name="info">The info<see cref="MONITORINFOEX"/></param>
-        /// <returns>The <see cref="bool"/></returns>
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
 
-        /// <summary>
-        /// Defines the WM_NCLBUTTONDOWN
-        /// </summary>
         public const int WM_NCLBUTTONDOWN = 0xA1;
-
-        /// <summary>
-        /// Defines the HT_CAPTION
-        /// </summary>
         public const int HT_CAPTION = 0x2;
-
-        /// <summary>
-        /// Defines the WM_MOUSEMOVE
-        /// </summary>
         public const int WM_MOUSEMOVE = 0x0200;
-
-        /// <summary>
-        /// Defines the WM_LBUTTONDOWN
-        /// </summary>
         public const int WM_LBUTTONDOWN = 0x0201;
-
-        /// <summary>
-        /// Defines the WM_LBUTTONUP
-        /// </summary>
         public const int WM_LBUTTONUP = 0x0202;
-
-        /// <summary>
-        /// Defines the WM_LBUTTONDBLCLK
-        /// </summary>
         public const int WM_LBUTTONDBLCLK = 0x0203;
-
-        /// <summary>
-        /// Defines the WM_RBUTTONDOWN
-        /// </summary>
         public const int WM_RBUTTONDOWN = 0x0204;
-
-        /// <summary>
-        /// Defines the HTBOTTOMLEFT
-        /// </summary>
         private const int HTBOTTOMLEFT = 16;
-
-        /// <summary>
-        /// Defines the HTBOTTOMRIGHT
-        /// </summary>
         private const int HTBOTTOMRIGHT = 17;
-
-        /// <summary>
-        /// Defines the HTLEFT
-        /// </summary>
         private const int HTLEFT = 10;
-
-        /// <summary>
-        /// Defines the HTRIGHT
-        /// </summary>
         private const int HTRIGHT = 11;
-
-        /// <summary>
-        /// Defines the HTBOTTOM
-        /// </summary>
         private const int HTBOTTOM = 15;
-
-        /// <summary>
-        /// Defines the HTTOP
-        /// </summary>
         private const int HTTOP = 12;
-
-        /// <summary>
-        /// Defines the HTTOPLEFT
-        /// </summary>
         private const int HTTOPLEFT = 13;
-
-        /// <summary>
-        /// Defines the HTTOPRIGHT
-        /// </summary>
         private const int HTTOPRIGHT = 14;
-
-        /// <summary>
-        /// Defines the BORDER_WIDTH
-        /// </summary>
         private const int BORDER_WIDTH = 7;
 
-        /// <summary>
-        /// Defines the _resizeDir
-        /// </summary>
         private ResizeDirection _resizeDir;
-
-        /// <summary>
-        /// Defines the _buttonState
-        /// </summary>
         private ButtonState _buttonState = ButtonState.None;
 
-        /// <summary>
-        /// Defines the WMSZ_TOP
-        /// </summary>
         private const int WMSZ_TOP = 3;
-
-        /// <summary>
-        /// Defines the WMSZ_TOPLEFT
-        /// </summary>
         private const int WMSZ_TOPLEFT = 4;
-
-        /// <summary>
-        /// Defines the WMSZ_TOPRIGHT
-        /// </summary>
         private const int WMSZ_TOPRIGHT = 5;
-
-        /// <summary>
-        /// Defines the WMSZ_LEFT
-        /// </summary>
         private const int WMSZ_LEFT = 1;
-
-        /// <summary>
-        /// Defines the WMSZ_RIGHT
-        /// </summary>
         private const int WMSZ_RIGHT = 2;
-
-        /// <summary>
-        /// Defines the WMSZ_BOTTOM
-        /// </summary>
         private const int WMSZ_BOTTOM = 6;
-
-        /// <summary>
-        /// Defines the WMSZ_BOTTOMLEFT
-        /// </summary>
         private const int WMSZ_BOTTOMLEFT = 7;
-
-        /// <summary>
-        /// Defines the WMSZ_BOTTOMRIGHT
-        /// </summary>
         private const int WMSZ_BOTTOMRIGHT = 8;
 
-        /// <summary>
-        /// Defines the _resizingLocationsToCmd
-        /// </summary>
         private readonly Dictionary<int, int> _resizingLocationsToCmd = new Dictionary<int, int>
         {
             {HTTOP,         WMSZ_TOP},
@@ -251,229 +89,72 @@
             {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
         };
 
-        /// <summary>
-        /// Defines the STATUS_BAR_BUTTON_WIDTH
-        /// </summary>
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
-
-        /// <summary>
-        /// Defines the STATUS_BAR_HEIGHT
-        /// </summary>
         private const int STATUS_BAR_HEIGHT = 24;
-
-        /// <summary>
-        /// Defines the ACTION_BAR_HEIGHT
-        /// </summary>
         private const int ACTION_BAR_HEIGHT = 40;
-
-        /// <summary>
-        /// Defines the TPM_LEFTALIGN
-        /// </summary>
         private const uint TPM_LEFTALIGN = 0x0000;
-
-        /// <summary>
-        /// Defines the TPM_RETURNCMD
-        /// </summary>
         private const uint TPM_RETURNCMD = 0x0100;
-
-        /// <summary>
-        /// Defines the WM_SYSCOMMAND
-        /// </summary>
         private const int WM_SYSCOMMAND = 0x0112;
-
-        /// <summary>
-        /// Defines the WS_MINIMIZEBOX
-        /// </summary>
         private const int WS_MINIMIZEBOX = 0x20000;
-
-        /// <summary>
-        /// Defines the WS_SYSMENU
-        /// </summary>
         private const int WS_SYSMENU = 0x00080000;
-
-        /// <summary>
-        /// Defines the MONITOR_DEFAULTTONEAREST
-        /// </summary>
         private const int MONITOR_DEFAULTTONEAREST = 2;
 
-        /// <summary>
-        /// Defines the <see cref="MONITORINFOEX" />
-        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         public class MONITORINFOEX
         {
-            /// <summary>
-            /// Defines the cbSize
-            /// </summary>
             public int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
-
-            /// <summary>
-            /// Defines the rcMonitor
-            /// </summary>
             public RECT rcMonitor = new RECT();
-
-            /// <summary>
-            /// Defines the rcWork
-            /// </summary>
             public RECT rcWork = new RECT();
-
-            /// <summary>
-            /// Defines the dwFlags
-            /// </summary>
             public int dwFlags = 0;
-
-            /// <summary>
-            /// Defines the szDevice
-            /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public char[] szDevice = new char[32];
         }
 
-        /// <summary>
-        /// Defines the <see cref="RECT" />
-        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
-            /// <summary>
-            /// Defines the left
-            /// </summary>
             public int left;
-
-            /// <summary>
-            /// Defines the top
-            /// </summary>
             public int top;
-
-            /// <summary>
-            /// Defines the right
-            /// </summary>
             public int right;
-
-            /// <summary>
-            /// Defines the bottom
-            /// </summary>
             public int bottom;
 
-            /// <summary>
-            /// The Width
-            /// </summary>
-            /// <returns>The <see cref="int"/></returns>
             public int Width()
             {
                 return right - left;
             }
 
-            /// <summary>
-            /// The Height
-            /// </summary>
-            /// <returns>The <see cref="int"/></returns>
             public int Height()
             {
                 return bottom - top;
             }
         }
 
-        /// <summary>
-        /// Defines the ResizeDirection
-        /// </summary>
         private enum ResizeDirection
         {
-            /// <summary>
-            /// Defines the BottomLeft
-            /// </summary>
             BottomLeft,
-
-            /// <summary>
-            /// Defines the Left
-            /// </summary>
             Left,
-
-            /// <summary>
-            /// Defines the Right
-            /// </summary>
             Right,
-
-            /// <summary>
-            /// Defines the BottomRight
-            /// </summary>
             BottomRight,
-
-            /// <summary>
-            /// Defines the Bottom
-            /// </summary>
             Bottom,
-
-            /// <summary>
-            /// Defines the None
-            /// </summary>
             None
         }
 
-        /// <summary>
-        /// Defines the ButtonState
-        /// </summary>
         private enum ButtonState
         {
-            /// <summary>
-            /// Defines the XOver
-            /// </summary>
             XOver,
-
-            /// <summary>
-            /// Defines the MaxOver
-            /// </summary>
             MaxOver,
-
-            /// <summary>
-            /// Defines the MinOver
-            /// </summary>
             MinOver,
-
-            /// <summary>
-            /// Defines the XDown
-            /// </summary>
             XDown,
-
-            /// <summary>
-            /// Defines the MaxDown
-            /// </summary>
             MaxDown,
-
-            /// <summary>
-            /// Defines the MinDown
-            /// </summary>
             MinDown,
-
-            /// <summary>
-            /// Defines the None
-            /// </summary>
             None
         }
 
-        /// <summary>
-        /// Defines the _resizeCursors
-        /// </summary>
         private readonly Cursor[] _resizeCursors = { Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE, Cursors.SizeNS };
 
-        /// <summary>
-        /// Defines the _minButtonBounds
-        /// </summary>
         private Rectangle _minButtonBounds;
-
-        /// <summary>
-        /// Defines the _maxButtonBounds
-        /// </summary>
         private Rectangle _maxButtonBounds;
-
-        /// <summary>
-        /// Defines the _xButtonBounds
-        /// </summary>
         private Rectangle _xButtonBounds;
-
-        /// <summary>
-        /// Defines the _actionBarBounds
-        /// </summary>
         private Rectangle _actionBarBounds;
 
         public Rectangle UserArea
@@ -484,34 +165,12 @@
             }
         }
 
-        /// <summary>
-        /// Defines the _statusBarBounds
-        /// </summary>
         private Rectangle _statusBarBounds;
-
-        /// <summary>
-        /// Defines the _maximized
-        /// </summary>
         private bool _maximized;
-
-        /// <summary>
-        /// Defines the _previousSize
-        /// </summary>
         private Size _previousSize;
-
-        /// <summary>
-        /// Defines the _previousLocation
-        /// </summary>
         private Point _previousLocation;
-
-        /// <summary>
-        /// Defines the _headerMouseDown
-        /// </summary>
         private bool _headerMouseDown;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialForm"/> class.
-        /// </summary>
         public MaterialForm()
         {
             DrawerWidth = 200;
@@ -771,10 +430,6 @@
             };
         }
 
-        /// <summary>
-        /// The WndProc
-        /// </summary>
-        /// <param name="m">The m<see cref="Message"/></param>
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
@@ -871,9 +526,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets the CreateParams
-        /// </summary>
         protected override CreateParams CreateParams
         {
             get
@@ -886,10 +538,6 @@
             }
         }
 
-        /// <summary>
-        /// The OnMouseDown
-        /// </summary>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (DesignMode)
@@ -901,10 +549,6 @@
             base.OnMouseDown(e);
         }
 
-        /// <summary>
-        /// The OnMouseLeave
-        /// </summary>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
@@ -914,10 +558,6 @@
             Invalidate();
         }
 
-        /// <summary>
-        /// The OnMouseMove
-        /// </summary>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -970,11 +610,6 @@
             UpdateButtons(e);
         }
 
-        /// <summary>
-        /// The OnGlobalMouseMove
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected void OnGlobalMouseMove(object sender, MouseEventArgs e)
         {
             if (IsDisposed)
@@ -985,11 +620,6 @@
             OnMouseMove(newE);
         }
 
-        /// <summary>
-        /// The UpdateButtons
-        /// </summary>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
-        /// <param name="up">The up<see cref="bool"/></param>
         private void UpdateButtons(MouseEventArgs e, bool up = false)
         {
             if (DesignMode)
@@ -1050,10 +680,6 @@
                 Invalidate();
         }
 
-        /// <summary>
-        /// The MaximizeWindow
-        /// </summary>
-        /// <param name="maximize">The maximize<see cref="bool"/></param>
         private void MaximizeWindow(bool maximize)
         {
             if (!MaximizeBox || !ControlBox)
@@ -1078,10 +704,6 @@
             }
         }
 
-        /// <summary>
-        /// The OnMouseUp
-        /// </summary>
-        /// <param name="e">The e<see cref="MouseEventArgs"/></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (DesignMode)
@@ -1092,10 +714,6 @@
             ReleaseCapture();
         }
 
-        /// <summary>
-        /// The ResizeForm
-        /// </summary>
-        /// <param name="direction">The direction<see cref="ResizeDirection"/></param>
         private void ResizeForm(ResizeDirection direction)
         {
             if (DesignMode)
@@ -1127,10 +745,6 @@
             }
         }
 
-        /// <summary>
-        /// The OnResize
-        /// </summary>
-        /// <param name="e">The e<see cref="EventArgs"/></param>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -1142,10 +756,6 @@
             _actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
         }
 
-        /// <summary>
-        /// The OnPaint
-        /// </summary>
-        /// <param name="e">The e<see cref="PaintEventArgs"/></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -1297,24 +907,12 @@
             }
         }
 
-        /// <summary>
-        /// Defines the _clickAnimManager
-        /// </summary>
         private readonly AnimationManager _clickAnimManager;
 
-        /// <summary>
-        /// Defines the _drawerIconRect
-        /// </summary>
         private Rectangle _drawerIconRect;
 
-        /// <summary>
-        /// Defines the _animationSource
-        /// </summary>
         private Point _animationSource;
 
-        /// <summary>
-        /// Initializes the component
-        /// </summary>
         private void InitializeComponent()
         {
             SuspendLayout();
@@ -1328,36 +926,17 @@
 
         }
 
-        /// <summary>
-        /// Load
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void MaterialForm_Load(object sender, EventArgs e)
         {
         }
     }
 
-    /// <summary>
-    /// Defines the <see cref="MouseMessageFilter" />
-    /// </summary>
     public class MouseMessageFilter : IMessageFilter
     {
-        /// <summary>
-        /// Defines the WM_MOUSEMOVE
-        /// </summary>
         private const int WM_MOUSEMOVE = 0x0200;
 
-        /// <summary>
-        /// Defines the MouseMove
-        /// </summary>
         public static event MouseEventHandler MouseMove;
 
-        /// <summary>
-        /// The PreFilterMessage
-        /// </summary>
-        /// <param name="m">The m<see cref="Message"/></param>
-        /// <returns>The <see cref="bool"/></returns>
         public bool PreFilterMessage(ref Message m)
         {
 

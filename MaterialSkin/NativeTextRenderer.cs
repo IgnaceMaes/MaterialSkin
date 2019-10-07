@@ -122,9 +122,7 @@ public sealed class NativeTextRenderer : IDisposable
             SelectObject(memoryHdc, fontHandle);
             SetTextColor(memoryHdc, (color.B & 0xFF) << 16 | (color.G & 0xFF) << 8 | color.R);
 
-            // Calculate the aligment
             Size strSize = new Size();
-            GetTextExtentPoint32(memoryHdc, str, str.Length, ref strSize);
             Point pos = new Point();
 
             if (multilineSupport)
@@ -136,10 +134,14 @@ public sealed class NativeTextRenderer : IDisposable
                 if (flags.HasFlag(TextAlignFlags.Right))
                     fmtFlags |= TextFormatFlags.Right;
 
+                // Calculate the string size
+                Rect strRect = new Rect(new Rectangle(point, size));
+                DrawText(memoryHdc, str, str.Length, ref strRect, TextFormatFlags.CalcRect | fmtFlags);
+
                 if (flags.HasFlag(TextAlignFlags.Middle))
-                    fmtFlags |= TextFormatFlags.VCenter;
+                    pos.Y = ((size.Height) >> 1) - (strRect.Height >> 1);
                 if (flags.HasFlag(TextAlignFlags.Bottom))
-                    fmtFlags |= TextFormatFlags.Bottom;
+                    pos.Y = (size.Height) - (strRect.Height);
 
                 // Draw Text for multiline format
                 Rect region = new Rect(new Rectangle(pos, size));
@@ -147,6 +149,8 @@ public sealed class NativeTextRenderer : IDisposable
             }
             else
             {
+                // Calculate the string size
+                GetTextExtentPoint32(memoryHdc, str, str.Length, ref strSize);
                 // Aligment
                 if (flags.HasFlag(TextAlignFlags.Center))
                     pos.X = ((size.Width) >> 1) - (strSize.Width >> 1);
@@ -318,6 +322,14 @@ public sealed class NativeTextRenderer : IDisposable
             _top = r.Top;
             _bottom = r.Bottom;
             _right = r.Right;
+        }
+
+        public int Height
+        {
+            get
+            {
+                return _bottom - _top;
+            }
         }
     }
 
