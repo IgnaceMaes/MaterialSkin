@@ -11,7 +11,6 @@ namespace MaterialSkinExample
         private readonly MaterialSkinManager materialSkinManager;
         public MainForm()
         {
-
             InitializeComponent();
 
             // Initialize MaterialSkinManager
@@ -29,7 +28,6 @@ namespace MaterialSkinExample
             materialCheckedListBox1.Items.Add("Item5", true);
             materialCheckedListBox1.Items.Add("Item6", false);
             materialCheckedListBox1.Items.Add("Item7", false);
-
         }
 
         private void seedListView()
@@ -54,7 +52,8 @@ namespace MaterialSkinExample
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
+            updateColor();
         }
 
         private int colorSchemeIndex;
@@ -63,20 +62,41 @@ namespace MaterialSkinExample
             colorSchemeIndex++;
             if (colorSchemeIndex > 2)
                 colorSchemeIndex = 0;
+            updateColor();
+        }
+
+        private void updateColor()
+        {
 
             //These are just example color schemes
             switch (colorSchemeIndex)
             {
                 case 0:
-                    materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
+                    materialSkinManager.ColorScheme = new ColorScheme(
+                        materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? Primary.Teal500 : Primary.Indigo500,
+                        materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? Primary.Teal700 : Primary.Indigo700,
+                        materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? Primary.Teal200 : Primary.Indigo100,
+                        Accent.Pink200,
+                        TextShade.WHITE);
                     break;
                 case 1:
-                    materialSkinManager.ColorScheme = new ColorScheme(Primary.Green600, Primary.Green700, Primary.Green200, Accent.Red100, TextShade.WHITE);
+                    materialSkinManager.ColorScheme = new ColorScheme(
+                        Primary.Green600,
+                        Primary.Green700, 
+                        Primary.Green200, 
+                        Accent.Red100, 
+                        TextShade.WHITE);
                     break;
                 case 2:
-                    materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+                    materialSkinManager.ColorScheme = new ColorScheme(
+                        Primary.BlueGrey800, 
+                        Primary.BlueGrey900, 
+                        Primary.BlueGrey500, 
+                        Accent.LightBlue200, 
+                        TextShade.WHITE);
                     break;
             }
+            Invalidate();
         }
 
         private void MaterialButton2_Click(object sender, EventArgs e)

@@ -421,7 +421,7 @@ namespace MaterialSkinExample
             this.materialLabel9.Location = new System.Drawing.Point(23, 69);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
-            this.materialLabel9.Size = new System.Drawing.Size(455, 93);
+            this.materialLabel9.Size = new System.Drawing.Size(455, 60);
             this.materialLabel9.TabIndex = 0;
             this.materialLabel9.Text = "Welcome to the Material Skin Demo\r\nTo the left is the drawer, use it to see all t" +
     "he demos available\r\nTry clicking stuff, you won\'t break it ;)\r\n";
