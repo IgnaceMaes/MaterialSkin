@@ -55,6 +55,7 @@ namespace MaterialSkinExample
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.materialButton23 = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel37 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel36 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel35 = new MaterialSkin.Controls.MaterialLabel();
@@ -62,7 +63,6 @@ namespace MaterialSkinExample
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel25 = new MaterialSkin.Controls.MaterialLabel();
             this.materialButton24 = new MaterialSkin.Controls.MaterialButton();
-            this.materialButton23 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton22 = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
             this.materialButton19 = new MaterialSkin.Controls.MaterialButton();
@@ -421,7 +421,7 @@ namespace MaterialSkinExample
             this.materialLabel9.Location = new System.Drawing.Point(23, 69);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
-            this.materialLabel9.Size = new System.Drawing.Size(455, 93);
+            this.materialLabel9.Size = new System.Drawing.Size(455, 69);
             this.materialLabel9.TabIndex = 0;
             this.materialLabel9.Text = "Welcome to the Material Skin Demo\r\nTo the left is the drawer, use it to see all t" +
     "he demos available\r\nTry clicking stuff, you won\'t break it ;)\r\n";
@@ -483,6 +483,7 @@ namespace MaterialSkinExample
             // tabPage7
             // 
             this.tabPage7.BackColor = System.Drawing.Color.White;
+            this.tabPage7.Controls.Add(this.materialButton23);
             this.tabPage7.Controls.Add(this.materialLabel37);
             this.tabPage7.Controls.Add(this.materialLabel36);
             this.tabPage7.Controls.Add(this.materialLabel35);
@@ -490,7 +491,6 @@ namespace MaterialSkinExample
             this.tabPage7.Controls.Add(this.materialLabel3);
             this.tabPage7.Controls.Add(this.materialLabel25);
             this.tabPage7.Controls.Add(this.materialButton24);
-            this.tabPage7.Controls.Add(this.materialButton23);
             this.tabPage7.Controls.Add(this.materialButton22);
             this.tabPage7.Controls.Add(this.materialLabel8);
             this.tabPage7.Controls.Add(this.materialButton19);
@@ -515,6 +515,25 @@ namespace MaterialSkinExample
             this.tabPage7.Size = new System.Drawing.Size(955, 518);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Buttons Galore";
+            // 
+            // materialButton23
+            // 
+            this.materialButton23.AutoSize = false;
+            this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton23.Depth = 0;
+            this.materialButton23.DrawShadows = true;
+            this.materialButton23.HighEmphasis = false;
+            this.materialButton23.Icon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
+            this.materialButton23.Location = new System.Drawing.Point(280, 221);
+            this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton23.Name = "materialButton23";
+            this.materialButton23.Size = new System.Drawing.Size(168, 36);
+            this.materialButton23.TabIndex = 7;
+            this.materialButton23.Text = "CONT - ICON";
+            this.materialButton23.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton23.UseAccentColor = false;
+            this.materialButton23.UseVisualStyleBackColor = true;
             // 
             // materialLabel37
             // 
@@ -619,25 +638,6 @@ namespace MaterialSkinExample
             this.materialButton24.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
             this.materialButton24.UseAccentColor = false;
             this.materialButton24.UseVisualStyleBackColor = true;
-            // 
-            // materialButton23
-            // 
-            this.materialButton23.AutoSize = false;
-            this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton23.Depth = 0;
-            this.materialButton23.DrawShadows = true;
-            this.materialButton23.HighEmphasis = false;
-            this.materialButton23.Icon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
-            this.materialButton23.Location = new System.Drawing.Point(280, 221);
-            this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton23.Name = "materialButton23";
-            this.materialButton23.Size = new System.Drawing.Size(168, 36);
-            this.materialButton23.TabIndex = 7;
-            this.materialButton23.Text = "CONT - ICON";
-            this.materialButton23.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton23.UseAccentColor = false;
-            this.materialButton23.UseVisualStyleBackColor = true;
             // 
             // materialButton22
             // 
@@ -1457,7 +1457,7 @@ namespace MaterialSkinExample
             this.materialTextBox2.Name = "materialTextBox2";
             this.materialTextBox2.Password = true;
             this.materialTextBox2.Size = new System.Drawing.Size(406, 50);
-            this.materialTextBox2.TabIndex = 60;
+            this.materialTextBox2.TabIndex = 3;
             this.materialTextBox2.Text = "";
             // 
             // materialTextBox1
@@ -1475,7 +1475,7 @@ namespace MaterialSkinExample
             this.materialTextBox1.Name = "materialTextBox1";
             this.materialTextBox1.Password = false;
             this.materialTextBox1.Size = new System.Drawing.Size(406, 50);
-            this.materialTextBox1.TabIndex = 59;
+            this.materialTextBox1.TabIndex = 1;
             this.materialTextBox1.Text = "";
             // 
             // materialSingleLineTextField2
@@ -1493,7 +1493,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
             this.materialSingleLineTextField2.Password = false;
             this.materialSingleLineTextField2.Size = new System.Drawing.Size(406, 50);
-            this.materialSingleLineTextField2.TabIndex = 58;
+            this.materialSingleLineTextField2.TabIndex = 2;
             this.materialSingleLineTextField2.Text = "";
             // 
             // materialLabel22
@@ -1792,7 +1792,7 @@ namespace MaterialSkinExample
             this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFlatButton2.Name = "materialFlatButton2";
             this.materialFlatButton2.Size = new System.Drawing.Size(108, 36);
-            this.materialFlatButton2.TabIndex = 6;
+            this.materialFlatButton2.TabIndex = 1;
             this.materialFlatButton2.Text = "Remove";
             this.materialFlatButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
             this.materialFlatButton2.UseAccentColor = false;
@@ -1827,7 +1827,7 @@ namespace MaterialSkinExample
             this.MaterialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton2.Name = "MaterialButton2";
             this.MaterialButton2.Size = new System.Drawing.Size(78, 36);
-            this.MaterialButton2.TabIndex = 1;
+            this.MaterialButton2.TabIndex = 2;
             this.MaterialButton2.Text = "Add";
             this.MaterialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.MaterialButton2.UseAccentColor = false;
@@ -2115,7 +2115,6 @@ namespace MaterialSkinExample
         private MaterialButton materialButton11;
         private MaterialButton materialButton10;
         private MaterialButton materialButton24;
-        private MaterialButton materialButton23;
         private MaterialButton materialButton22;
         private MaterialTabSelector materialTabSelector1;
         private MaterialTabControl materialTabControl2;
@@ -2185,5 +2184,6 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel41;
         private MaterialLabel materialLabel40;
         private MaterialLabel materialLabel43;
+        private MaterialButton materialButton23;
     }
 }

@@ -93,8 +93,11 @@
 
         private void setSize(bool mini)
         {
-            Size = mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
             _mini = mini;
+            Size = _mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
+            fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
+            fabBounds.Width -= 1;
+            fabBounds.Height -= 1;
         }
 
         private void _showAnimationManager_OnAnimationFinished(object sender)
@@ -110,27 +113,16 @@
         {
             // paint shadow on parent
             Graphics gp = e.Graphics;
-            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
-            gp.Transform = mx;
+            Rectangle rect = new Rectangle(Location, fabBounds.Size);
+            Console.WriteLine(rect);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-
-            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
-            fabBounds.Width -= 1;
-            fabBounds.Height -= 1;
-
-            DrawHelper.DrawRoundShadow(gp, fabBounds);
+            DrawHelper.DrawRoundShadow(gp, rect);
         }
 
-
+        private Rectangle fabBounds;
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            setSize(_mini);
-
             var g = pevent.Graphics;
-
-            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
-            fabBounds.Width -= 1;
-            fabBounds.Height -= 1;
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.SmoothingMode = SmoothingMode.AntiAlias;

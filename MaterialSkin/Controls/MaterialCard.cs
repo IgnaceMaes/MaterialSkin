@@ -19,6 +19,7 @@
 
         public MaterialCard() {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            Paint += new PaintEventHandler(paintControl);
             BackColor = SkinManager.GetButtonBackgroundColor();
             ForeColor = SkinManager.GetPrimaryTextColor();
             Margin = new Padding(SkinManager.FORM_PADDING);
@@ -29,14 +30,15 @@
         {
             // paint shadow on parent
             Graphics gp = e.Graphics;
-            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
-            gp.Transform = mx;
+            Rectangle rect = new Rectangle(Location, ClientRectangle.Size);
+            Console.WriteLine(rect);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-            DrawHelper.DrawSquareShadow(gp, ClientRectangle);
+            DrawHelper.DrawSquareShadow(gp, rect);
         }
+
         protected override void InitLayout()
         {
-            Parent.Paint += new PaintEventHandler(drawShadowOnParent);
+            Parent.Paint += drawShadowOnParent;
             ForeColor = SkinManager.GetPrimaryTextColor();
         }
 
@@ -46,10 +48,8 @@
             BackColor = SkinManager.GetButtonBackgroundColor();
         }
 
-
-        protected override void OnPaint(PaintEventArgs e)
+        private void paintControl(Object sender, PaintEventArgs e)
         {
-            base.OnPaint(e);
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -63,6 +63,8 @@
 
             // button shadow (blend with form shadow)
             DrawHelper.DrawSquareShadow(g, ClientRectangle);
+
+            // Draw card
             using (SolidBrush normalBrush = new SolidBrush(BackColor))
             {
                 g.FillPath(normalBrush, cardPath);
