@@ -61,10 +61,6 @@
             set
             {
                 _type = value;
-                if (DrawShadows && Type == MaterialButtonType.Contained && Parent != null)
-                {
-                    Parent.Paint += new PaintEventHandler(drawShadowOnParent);
-                }
             }
         }
 
@@ -74,16 +70,14 @@
             Invalidate();
         }
 
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            Parent.Paint += drawShadowOnParent;
+        }
 
-        /// <summary>
-        /// Defines the _animationManager
-        /// </summary>
-        private readonly AnimationManager _animationManager;
-
-        /// <summary>
-        /// Defines the _hoverAnimationManager
-        /// </summary>
-        private readonly AnimationManager _hoverAnimationManager;
+        private readonly AnimationManager _hoverAnimationManager = null;
+        private readonly AnimationManager _animationManager = null;
 
         /// <summary>
         /// Defines the _textSize
@@ -119,6 +113,8 @@
             get => base.AutoSize;
             set => base.AutoSize = value;
         }
+
+        PaintEventHandler _drawShadowOnParent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MaterialButton"/> class.
@@ -171,12 +167,15 @@
 
         private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
+            if (!DrawShadows || Type != MaterialButtonType.Contained || Parent == null) return;
+
             // paint shadow on parent
             Graphics gp = e.Graphics;
-            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
-            gp.Transform = mx;
+            Rectangle rect = new Rectangle(Location, ClientRectangle.Size);
+            Console.WriteLine(rect);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-            DrawHelper.DrawSquareShadow(gp, ClientRectangle);
+            DrawHelper.DrawSquareShadow(gp, rect);
+
         }
 
 
