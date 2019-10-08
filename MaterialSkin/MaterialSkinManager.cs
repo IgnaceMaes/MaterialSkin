@@ -483,68 +483,47 @@
 
         private void UpdateControlBackColor(Control controlToUpdate, Color newBackColor)
         {
+            // No control
+            if (controlToUpdate == null) return;
 
+            // Control's Context menu
+            if (controlToUpdate.ContextMenuStrip != null) UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
 
-            if (controlToUpdate == null)
+            // Material Tabcontrol pages
+            if (controlToUpdate is TabPage)
             {
-                return;
+                ((TabPage)controlToUpdate).BackColor = newBackColor;
             }
 
-            if (controlToUpdate.Name == "TrackMe")
-            {
-                //Debugger.Break();
-            }
-
-            var tabControl = controlToUpdate as MaterialTabControl;
-            var CurrentTabPage = controlToUpdate as TabPage;
-
-
-            if (controlToUpdate.ContextMenuStrip != null)
-            {
-                UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
-            }
-            if (tabControl != null)
-            {
-                foreach (TabPage tabPage in tabControl.TabPages)
-                {
-                    tabPage.BackColor = newBackColor;
-                }
-            }
+            // Material Divider
             else if (controlToUpdate is MaterialDivider)
             {
                 controlToUpdate.BackColor = GetDividersColor();
             }
-            else if (controlToUpdate.HasProperty("BackColor") && CurrentTabPage == null && !controlToUpdate.IsMaterialControl())
-            {         // if the control has a backcolor property set the colors  
-                if (controlToUpdate.BackColor != GetControlBackgroundColor())
-                {
-                    controlToUpdate.BackColor = GetControlBackgroundColor();
-                    if (controlToUpdate.HasProperty("ForeColor") && controlToUpdate.ForeColor != GetPrimaryTextColor())
-                    {
-                        controlToUpdate.ForeColor = GetPrimaryTextColor();
 
-                        if (controlToUpdate.Font == SystemFonts.DefaultFont) // if the control has not had the font changed from default, set a default
-                        {
-                            controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
-                        }
-                    }
-                }
-
-            }
+            // Other Material Skin control
             else if (controlToUpdate.IsMaterialControl())
             {
-
                 controlToUpdate.BackColor = newBackColor;
                 controlToUpdate.ForeColor = GetPrimaryTextColor();
             }
 
-            //recursive call
+            // Other Generic control not part of material skin
+            else if (controlToUpdate.HasProperty("BackColor") && !controlToUpdate.IsMaterialControl() && controlToUpdate.Parent != null)
+            {
+                controlToUpdate.BackColor = controlToUpdate.Parent.BackColor;
+                if (controlToUpdate.HasProperty("ForeColor"))
+                {
+                    controlToUpdate.ForeColor = GetPrimaryTextColor();
+                    controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
+                }
+            }
+
+            // Recursive call to control's children
             foreach (Control control in controlToUpdate.Controls)
             {
                 UpdateControlBackColor(control, newBackColor);
             }
-
-            controlToUpdate.Invalidate();
         }
     }
 
