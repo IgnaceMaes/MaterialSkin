@@ -31,7 +31,6 @@
             // paint shadow on parent
             Graphics gp = e.Graphics;
             Rectangle rect = new Rectangle(Location, ClientRectangle.Size);
-            Console.WriteLine(rect);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
             DrawHelper.DrawSquareShadow(gp, rect);
         }

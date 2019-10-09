@@ -114,7 +114,6 @@
             // paint shadow on parent
             Graphics gp = e.Graphics;
             Rectangle rect = new Rectangle(Location, fabBounds.Size);
-            Console.WriteLine(rect);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
             DrawHelper.DrawRoundShadow(gp, rect);
         }
