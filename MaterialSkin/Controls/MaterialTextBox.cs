@@ -17,14 +17,28 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        [Category("Material Skin")]
+        [Category("Material Skin"), DefaultValue(false)]
         public bool Password { get; set; }
+
+        private bool _UseTallSize;
+        [Category("Material Skin"), DefaultValue(true), Description("Using a larger size enables the hint to always be visible")]
+        public bool UseTallSize
+        {
+            get { return _UseTallSize; }
+            set
+            {
+                _UseTallSize = value;
+                HEIGHT = UseTallSize ? 50 : 36;
+                Size = new Size(Size.Width, HEIGHT);
+                Invalidate();
+            }
+        }
 
         [Category("Material Skin"), DefaultValue(true)]
         public bool UseAccent { get; set; }
 
         private string _hint = string.Empty;
-        [Category("Material Skin")]
+        [Category("Material Skin"), DefaultValue("")]
         public string Hint
         {
             get { return _hint; }
@@ -39,9 +53,9 @@
         private const int TEXT_MARGIN = 10;
         private const int TEXT_SMALL_SIZE = 18;
         private const int TEXT_SMALL_Y = 4;
-        private const int HEIGHT = 50;
         private const int BOTTOM_PADDING = 3;
-        private const int LINE_Y = HEIGHT - BOTTOM_PADDING;
+        private int HEIGHT = 50;
+        private int LINE_Y;
 
         private bool hasHint;
 
@@ -49,12 +63,16 @@
 
         public MaterialTextBox()
         {
-            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
-            TabStop = true;
+            // Material Properties
+            Hint = "";
+            Password = false;
             UseAccent = true;
+            UseTallSize = true;
 
             // Properties
+            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
             base.AutoSize = false;
+            TabStop = true;
             Multiline = false;
             BorderStyle = BorderStyle.None;
 
@@ -91,9 +109,16 @@
             Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
 
             // Size and padding
+            HEIGHT = UseTallSize ? 50 : 36;
             Size = new Size(Size.Width, HEIGHT);
+            LINE_Y = HEIGHT - BOTTOM_PADDING;
 
-            var rect = new Rectangle(TEXT_MARGIN, hasHint ? (TEXT_SMALL_Y + TEXT_SMALL_SIZE) : LINE_Y / 3, ClientSize.Width - (TEXT_MARGIN * 2), LINE_Y);
+            // Position the "real" text field
+            var rect = new Rectangle(TEXT_MARGIN, UseTallSize ? hasHint ?
+                    (TEXT_SMALL_Y + TEXT_SMALL_SIZE) : // Has hint and it's tall
+                    (int)(LINE_Y / 3.5) : // No hint and tall
+                    Height / 5, // not tall
+                    ClientSize.Width - (TEXT_MARGIN * 2), LINE_Y);
             RECT rc = new RECT(rect);
             SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
 
@@ -157,10 +182,11 @@
                             UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // Focused
                             SkinManager.GetPrimaryTextColor() : // Inactive
                             SkinManager.GetDisabledOrHintColor(); // Disabled
-            Rectangle hintRect = ClientRectangle;
+            Rectangle hintRect = new Rectangle(TEXT_MARGIN, ClientRectangle.Y, Width, LINE_Y);
             int hintTextSize = 16;
 
-            // bottom line base
+            // bottom line base (draw twice for better visibility)
+            // TODO: Replace drawing twice with correct alpha
             g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
             g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
 
@@ -168,11 +194,11 @@
             {
                 // No animation
 
-                if (hasHint)
+                if (hasHint && UseTallSize && (Focused || userTextPresent))
                 {
                     // hint text
-                    hintRect = new Rectangle(TEXT_MARGIN, Focused || userTextPresent ? TEXT_SMALL_Y : ClientRectangle.Y, Width, userTextPresent || Focused ? TEXT_SMALL_SIZE : LINE_Y);
-                    hintTextSize = userTextPresent || Focused ? 12 : 16;
+                    hintRect = new Rectangle(TEXT_MARGIN, TEXT_SMALL_Y, Width, TEXT_SMALL_SIZE);
+                    hintTextSize = 12;
                 }
 
                 // bottom line
@@ -187,7 +213,7 @@
                 double animationProgress = _animationManager.GetProgress();
 
                 // hint Animation
-                if (hasHint)
+                if (hasHint && UseTallSize)
                 {
                     hintRect = new Rectangle(
                         TEXT_MARGIN,
@@ -211,9 +237,9 @@
             // Calc text Rect
             Rectangle textRect = new Rectangle(
                 TEXT_MARGIN,
-                hasHint ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
+                hasHint && UseTallSize ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
                 ClientRectangle.Width - TEXT_MARGIN * 2 + scrollPos.X,
-                hasHint ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
+                hasHint && UseTallSize ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
 
             g.Clip = new Region(textRect);
             textRect.X -= scrollPos.X;
@@ -228,10 +254,15 @@
                 int selectWidth = NativeText.MeasureLogString(textSelected, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
 
                 textSelectRect = new Rectangle(
-                    textRect.X + selectX,
-                    hasHint ? textRect.Y + BOTTOM_PADDING : LINE_Y / 3 - BOTTOM_PADDING,
+                    textRect.X + selectX, UseTallSize ? hasHint ?
+                     textRect.Y + BOTTOM_PADDING : // tall and hint
+                     LINE_Y / 3 - BOTTOM_PADDING : // tall and no hint
+                     BOTTOM_PADDING, // not tall
                     selectWidth,
-                    hasHint ? textRect.Height - BOTTOM_PADDING * 2 : LINE_Y / 2);
+                    UseTallSize ? hasHint ?
+                    textRect.Height - BOTTOM_PADDING * 2 : // tall and hint
+                    (int)(LINE_Y / 2) : // tall and no hint
+                    LINE_Y - BOTTOM_PADDING * 2); // not tall
 
                 // Draw user text
                 NativeText.DrawTransparentText(
@@ -264,14 +295,14 @@
             g.Clip = new Region(ClientRectangle);
 
             // Draw hint text
-            if (hasHint)
+            if (hasHint && (UseTallSize || String.IsNullOrEmpty(Text)))
             {
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
                 {
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getTextBoxFontBySize(hintTextSize),
-                    textColor,
+                    SkinManager.GetDisabledOrHintColor(),
                     hintRect.Location,
                     hintRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
