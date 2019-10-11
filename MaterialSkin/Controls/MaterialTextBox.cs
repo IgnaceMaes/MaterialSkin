@@ -50,9 +50,8 @@
             }
         }
 
-        private const int TEXT_MARGIN = 10;
-        private const int TEXT_SMALL_SIZE = 18;
-        private const int TEXT_SMALL_Y = 4;
+        private const int HINT_TEXT_SMALL_SIZE = 18;
+        private const int HINT_TEXT_SMALL_Y = 4;
         private const int BOTTOM_PADDING = 3;
         private int HEIGHT = 50;
         private int LINE_Y;
@@ -114,11 +113,11 @@
             LINE_Y = HEIGHT - BOTTOM_PADDING;
 
             // Position the "real" text field
-            var rect = new Rectangle(TEXT_MARGIN, UseTallSize ? hasHint ?
-                    (TEXT_SMALL_Y + TEXT_SMALL_SIZE) : // Has hint and it's tall
+            var rect = new Rectangle(SkinManager.FORM_PADDING, UseTallSize ? hasHint ?
+                    (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
                     (int)(LINE_Y / 3.5) : // No hint and tall
                     Height / 5, // not tall
-                    ClientSize.Width - (TEXT_MARGIN * 2), LINE_Y);
+                    ClientSize.Width - (SkinManager.FORM_PADDING * 2), LINE_Y);
             RECT rc = new RECT(rect);
             SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
 
@@ -172,8 +171,9 @@
 
             SolidBrush backBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A));
 
-            g.FillRectangle(Focused ?
-                SkinManager.BackgroundFocusBrush :  // Focused
+            g.FillRectangle(
+                !Enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
+                Focused ? SkinManager.BackgroundFocusBrush :  // Focused
                 MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
@@ -185,7 +185,7 @@
                             UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // Focused
                             SkinManager.TextHighEmphasisColor : // Inactive
                             SkinManager.TextDisabledOrHintColor; // Disabled
-            Rectangle hintRect = new Rectangle(TEXT_MARGIN, ClientRectangle.Y, Width, LINE_Y);
+            Rectangle hintRect = new Rectangle(SkinManager.FORM_PADDING, ClientRectangle.Y, Width, LINE_Y);
             int hintTextSize = 16;
 
             // bottom line base
@@ -197,7 +197,7 @@
                 if (hasHint && UseTallSize && (Focused || userTextPresent))
                 {
                     // hint text
-                    hintRect = new Rectangle(TEXT_MARGIN, TEXT_SMALL_Y, Width, TEXT_SMALL_SIZE);
+                    hintRect = new Rectangle(SkinManager.FORM_PADDING, HINT_TEXT_SMALL_Y, Width, HINT_TEXT_SMALL_SIZE);
                     hintTextSize = 12;
                 }
 
@@ -216,10 +216,10 @@
                 if (hasHint && UseTallSize)
                 {
                     hintRect = new Rectangle(
-                        TEXT_MARGIN,
-                        userTextPresent ? (TEXT_SMALL_Y) : ClientRectangle.Y + (int)((TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
+                        SkinManager.FORM_PADDING,
+                        userTextPresent ? (HINT_TEXT_SMALL_Y) : ClientRectangle.Y + (int)((HINT_TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
                         Width,
-                        userTextPresent ? (TEXT_SMALL_SIZE) : (int)(LINE_Y + (TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
+                        userTextPresent ? (HINT_TEXT_SMALL_SIZE) : (int)(LINE_Y + (HINT_TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
                     hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
                 }
 
@@ -236,9 +236,9 @@
 
             // Calc text Rect
             Rectangle textRect = new Rectangle(
-                TEXT_MARGIN,
+                SkinManager.FORM_PADDING,
                 hasHint && UseTallSize ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
-                ClientRectangle.Width - TEXT_MARGIN * 2 + scrollPos.X,
+                ClientRectangle.Width - SkinManager.FORM_PADDING * 2 + scrollPos.X,
                 hasHint && UseTallSize ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
 
             g.Clip = new Region(textRect);
@@ -268,7 +268,7 @@
                 NativeText.DrawTransparentText(
                     textToDisplay,
                     SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1),
-                    SkinManager.TextHighEmphasisColor,
+                    Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     textRect.Location,
                     textRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
@@ -302,7 +302,11 @@
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getTextBoxFontBySize(hintTextSize),
-                    Focused ? UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : SkinManager.TextDisabledOrHintColor,
+                    Enabled ? Focused ? UseAccent ?
+                    SkinManager.ColorScheme.AccentColor : // Focus Accent
+                    SkinManager.ColorScheme.PrimaryColor : // Focus Primary
+                    SkinManager.TextMediumEmphasisColor : // not focused
+                    SkinManager.TextDisabledOrHintColor, // Disabled
                     hintRect.Location,
                     hintRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
@@ -326,6 +330,7 @@
         {
             base.OnResize(e);
             Size = new Size(Width, HEIGHT);
+            LINE_Y = HEIGHT - BOTTOM_PADDING;
         }
 
 
