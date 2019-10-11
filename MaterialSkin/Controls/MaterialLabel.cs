@@ -134,8 +134,8 @@
                     Enabled ? HighEmphasis ? UseAccent ?
                     SkinManager.ColorScheme.AccentColor : // High emphasis, accent
                     SkinManager.ColorScheme.PrimaryColor : // High emphasis, primary
-                    SkinManager.GetPrimaryTextColor() : // Normal
-                    SkinManager.GetDisabledOrHintColor(), // Disabled
+                    SkinManager.TextHighEmphasisColor : // Normal
+                    SkinManager.TextDisabledOrHintColor, // Disabled
                     ClientRectangle.Location,
                     ClientRectangle.Size,
                     Alignment);

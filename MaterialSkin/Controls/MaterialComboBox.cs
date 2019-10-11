@@ -35,13 +35,13 @@
 
         internal void ResetColors()
         {
-            Brush br = new SolidBrush(SkinManager.GetControlBackgroundColor());
+            Brush br = new SolidBrush(SkinManager.BackgroundColor);
             Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
-            BackColor = SkinManager.GetControlBackgroundColor();
-            ForeColor = SkinManager.GetPrimaryTextColor();
+            BackColor = SkinManager.BackgroundColor;
+            ForeColor = SkinManager.TextHighEmphasisColor;
 
             DropButtonBrush = br;
-            ArrowBrush = SkinManager.GetPrimaryTextBrush();
+            ArrowBrush = SkinManager.TextHighEmphasisBrush;
             BorderBrush = br;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
@@ -94,8 +94,8 @@
         {
             SuspendLayout();
             Graphics g = this.CreateGraphics();
-            Pen p = new Pen(SkinManager.GetPrimaryTextColor(), 1);
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            Pen p = new Pen(SkinManager.TextHighEmphasisColor, 1);
+            g.Clear(SkinManager.BackdropColor);
 
             // Draw the background of the dropdown button
             Rectangle rect = new Rectangle(this.Width - 15, 3, 12, this.Height - 6);
@@ -118,7 +118,7 @@
             }
             else
             {
-                ArrowBrush = SkinManager.GetPrimaryTextBrush();
+                ArrowBrush = SkinManager.TextHighEmphasisBrush;
             }
 
             // Draw the arrow
@@ -130,7 +130,7 @@
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
                 {
                     NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
-                        SkinManager.GetPrimaryTextColor(),
+                        SkinManager.TextHighEmphasisColor,
                         ClientRectangle.Location,
                         ClientRectangle.Size,
                         NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);

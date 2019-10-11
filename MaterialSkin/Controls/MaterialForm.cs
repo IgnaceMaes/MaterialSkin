@@ -761,12 +761,12 @@
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(SkinManager.BackdropColor);
             g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);
             g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, _actionBarBounds);
 
             //Draw border
-            using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
+            using (var borderPen = new Pen(SkinManager.DividersColor, 1))
             {
                 g.DrawLine(borderPen, new Point(0, _actionBarBounds.Bottom), new Point(0, Height - 2));
                 g.DrawLine(borderPen, new Point(Width - 1, _actionBarBounds.Bottom), new Point(Width - 1, Height - 2));
@@ -776,8 +776,8 @@
             // Determine whether or not we even should be drawing the buttons.
             bool showMin = MinimizeBox && ControlBox;
             bool showMax = MaximizeBox && ControlBox;
-            var hoverBrush = SkinManager.GetButtonHoverBackgroundBrush();
-            var downBrush = SkinManager.GetButtonPressedBackgroundBrush();
+            var hoverBrush = SkinManager.BackgroundHoverBrush;
+            var downBrush = SkinManager.BackgroundFocusBrush;
 
             // When MaximizeButton == false, the minimize button will be painted in its place
             if (_buttonState == ButtonState.MinOver && showMin)
@@ -798,7 +798,7 @@
             if (_buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, _xButtonBounds);
 
-            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
+            using (var formButtonsPen = new Pen(SkinManager.ColorScheme.TextColor, 2))
             {
                 // Minimize button.
                 if (showMin)
@@ -866,7 +866,7 @@
                 }
 
 
-                using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2))
+                using (var formButtonsPen = new Pen(SkinManager.ColorScheme.TextColor, 2))
                 {
                     // Middle line
                     g.DrawLine(

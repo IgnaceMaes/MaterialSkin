@@ -138,8 +138,8 @@
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
         {
-            int primaryA = SkinManager.ACTION_BAR_TEXT.A;
-            int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY.A;
+            int primaryA = SkinManager.TextHighEmphasisColor.A;
+            int secondaryA = SkinManager.TextMediumEmphasisColor.A;
 
             if (tabIndex == _baseTabControl.SelectedIndex && !_animationManager.IsAnimating())
             {

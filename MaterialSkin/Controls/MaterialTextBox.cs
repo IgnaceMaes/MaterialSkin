@@ -70,7 +70,7 @@
             UseTallSize = true;
 
             // Properties
-            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
+            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
             base.AutoSize = false;
             TabStop = true;
             Multiline = false;
@@ -106,7 +106,7 @@
 
             if (Password) SendMessage(Handle, EM_SETPASSWORDCHAR, 'T', 0);
 
-            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Body2).FontFamily, 12f, FontStyle.Regular);
+            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
 
             // Size and padding
             HEIGHT = UseTallSize ? 50 : 36;
@@ -169,10 +169,13 @@
             var g = pevent.Graphics;
 
             g.Clear(Parent.BackColor);
+
+            SolidBrush backBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A));
+
             g.FillRectangle(Focused ?
-                SkinManager.GetButtonPressedBackgroundBrush() :  // Focused
-                MouseState == MouseState.HOVER ? SkinManager.GetButtonHoverBackgroundBrush() : // Hover
-                new SolidBrush(SkinManager.GetControlBackgroundColor()), // Normal
+                SkinManager.BackgroundFocusBrush :  // Focused
+                MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
+                backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
 
@@ -180,20 +183,17 @@
             bool userTextPresent = !String.IsNullOrEmpty(Text);
             Color textColor = Enabled ? Focused ?
                             UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // Focused
-                            SkinManager.GetPrimaryTextColor() : // Inactive
-                            SkinManager.GetDisabledOrHintColor(); // Disabled
+                            SkinManager.TextHighEmphasisColor : // Inactive
+                            SkinManager.TextDisabledOrHintColor; // Disabled
             Rectangle hintRect = new Rectangle(TEXT_MARGIN, ClientRectangle.Y, Width, LINE_Y);
             int hintTextSize = 16;
 
-            // bottom line base (draw twice for better visibility)
-            // TODO: Replace drawing twice with correct alpha
-            g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
-            g.FillRectangle(SkinManager.GetDividersBrush(), 0, LINE_Y, Width, 1);
+            // bottom line base
+            g.FillRectangle(SkinManager.DividersAlternativeBrush, 0, LINE_Y, Width, 1);
 
             if (!_animationManager.IsAnimating())
             {
                 // No animation
-
                 if (hasHint && UseTallSize && (Focused || userTextPresent))
                 {
                     // hint text
@@ -250,8 +250,8 @@
                 string textBeforeSelection = textToDisplay.Substring(0, SelectionStart);
                 textSelected = textToDisplay.Substring(SelectionStart, SelectionLength);
 
-                int selectX = NativeText.MeasureLogString(textBeforeSelection, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
-                int selectWidth = NativeText.MeasureLogString(textSelected, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)).Width;
+                int selectX = NativeText.MeasureLogString(textBeforeSelection, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width;
+                int selectWidth = NativeText.MeasureLogString(textSelected, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width;
 
                 textSelectRect = new Rectangle(
                     textRect.X + selectX, UseTallSize ? hasHint ?
@@ -267,8 +267,8 @@
                 // Draw user text
                 NativeText.DrawTransparentText(
                     textToDisplay,
-                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
-                    SkinManager.GetPrimaryTextColor(),
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1),
+                    SkinManager.TextHighEmphasisColor,
                     textRect.Location,
                     textRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
@@ -284,7 +284,7 @@
                 {
                     NativeText.DrawTransparentText(
                         textSelected,
-                        SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                        SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1),
                         SkinManager.ColorScheme.TextColor,
                         textSelectRect.Location,
                         textSelectRect.Size,
@@ -302,7 +302,7 @@
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getTextBoxFontBySize(hintTextSize),
-                    SkinManager.GetDisabledOrHintColor(),
+                    Focused ? UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : SkinManager.TextDisabledOrHintColor,
                     hintRect.Location,
                     hintRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);

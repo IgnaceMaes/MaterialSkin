@@ -18,7 +18,7 @@
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             Height = 1;
-            BackColor = SkinManager.GetDividersColor();
+            BackColor = SkinManager.DividersColor;
         }
     }
 }

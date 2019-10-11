@@ -134,16 +134,16 @@
 
             // Draw Track
             Color thumbColor = DrawHelper.BlendColor(
-                        (Enabled ? SkinManager.GetSwitchOffThumbColor() : SkinManager.GetSwitchOffDisabledThumbColor()), // Off color
-                        (Enabled ? SkinManager.ColorScheme.AccentColor : DrawHelper.BlendColor(SkinManager.ColorScheme.AccentColor, SkinManager.GetSwitchOffDisabledThumbColor(), 197)), // On color
+                        (Enabled ? SkinManager.SwitchOffThumbColor : SkinManager.SwitchOffDisabledThumbColor), // Off color
+                        (Enabled ? SkinManager.ColorScheme.AccentColor : DrawHelper.BlendColor(SkinManager.ColorScheme.AccentColor, SkinManager.SwitchOffDisabledThumbColor, 197)), // On color
                         animationProgress * 255); // Blend amount
 
             using (var path = DrawHelper.CreateRoundRect(new Rectangle(TRACK_CENTER_X_BEGIN - TRACK_RADIUS, TRACK_CENTER_Y - TRACK_SIZE_HEIGHT / 2, TRACK_SIZE_WIDTH, TRACK_SIZE_HEIGHT), TRACK_RADIUS))
             {
                 using (SolidBrush trackBrush = new SolidBrush(
-                    Color.FromArgb(Enabled ? SkinManager.GetSwitchOffTrackColor().A : SkinManager.GetSwitchOffDisabledTrackColor().A, // Track alpha
+                    Color.FromArgb(Enabled ? SkinManager.SwitchOffTrackColor.A : SkinManager.BackgroundDisabledColor.A, // Track alpha
                     DrawHelper.BlendColor( // animate color
-                        (Enabled ? SkinManager.GetSwitchOffTrackColor() : SkinManager.GetSwitchOffDisabledTrackColor()), // Off color
+                        (Enabled ? SkinManager.SwitchOffTrackColor : SkinManager.BackgroundDisabledColor), // Off color
                         SkinManager.ColorScheme.AccentColor, // On color
                         animationProgress * 255) // Blend amount
                         .RemoveAlpha())))
@@ -214,7 +214,7 @@
                 NativeText.DrawTransparentText(
                     Text,
                     SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
-                    Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                    Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     textLocation.Location,
                     textLocation.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
