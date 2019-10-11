@@ -28,6 +28,8 @@ namespace MaterialSkinExample
             materialCheckedListBox1.Items.Add("Item5", true);
             materialCheckedListBox1.Items.Add("Item6", false);
             materialCheckedListBox1.Items.Add("Item7", false);
+
+            materialComboBox6.SelectedIndex = 0;
         }
 
         private void seedListView()
