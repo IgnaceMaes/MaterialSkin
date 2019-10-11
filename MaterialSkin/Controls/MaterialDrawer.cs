@@ -376,7 +376,7 @@
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             // redraw stuff
-            g.Clear(UseColors ? SkinManager.ColorScheme.PrimaryColor : SkinManager.GetApplicationBackgroundColor());
+            g.Clear(UseColors ? SkinManager.ColorScheme.PrimaryColor : SkinManager.BackdropColor);
 
             if (_baseTabControl == null)
                 return;
@@ -426,11 +426,11 @@
                 bgBrush.Dispose();
 
                 // Text
-                Color textColor = Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.ACTION_BAR_TEXT.A, UseColors ? SkinManager.ACTION_BAR_TEXT_SECONDARY.A : 255, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), // alpha
+                Color textColor = Color.FromArgb(CalculateAlphaZeroWhenClosed(SkinManager.TextHighEmphasisColor.A, UseColors ? SkinManager.TextMediumEmphasisColor.A : 255, currentTabIndex, clickAnimProgress, 1 - showHideAnimProgress), // alpha
                     UseColors ? (currentTabIndex == _baseTabControl.SelectedIndex ? (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor) // Use colors - selected
                     : SkinManager.ColorScheme.TextColor) :  // Use colors - not selected
                     (currentTabIndex == _baseTabControl.SelectedIndex ? (_highlightWithAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor) : // selected
-                    SkinManager.GetPrimaryTextColor()));
+                    SkinManager.TextHighEmphasisColor));
 
                 IntPtr textFont = SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle2);
 
@@ -465,7 +465,7 @@
             // Draw divider if not using colors
             if (!UseColors)
             {
-                using (Pen dividerPen = new Pen(SkinManager.GetDividersColor(), 1))
+                using (Pen dividerPen = new Pen(SkinManager.DividersColor, 1))
                 {
                     g.DrawLine(dividerPen, Width - 1, 0, Width - 1, Height);
                 }

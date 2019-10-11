@@ -20,8 +20,8 @@
         public MaterialCard() {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             Paint += new PaintEventHandler(paintControl);
-            BackColor = SkinManager.GetButtonBackgroundColor();
-            ForeColor = SkinManager.GetPrimaryTextColor();
+            BackColor = SkinManager.BackgroundColor;
+            ForeColor = SkinManager.TextHighEmphasisColor;
             Margin = new Padding(SkinManager.FORM_PADDING);
             Padding = new Padding(SkinManager.FORM_PADDING);
         }
@@ -38,13 +38,13 @@
         protected override void InitLayout()
         {
             Parent.Paint += drawShadowOnParent;
-            ForeColor = SkinManager.GetPrimaryTextColor();
+            ForeColor = SkinManager.TextHighEmphasisColor;
         }
 
         protected override void OnBackColorChanged(EventArgs e)
         {
             base.OnBackColorChanged(e);
-            BackColor = SkinManager.GetButtonBackgroundColor();
+            BackColor = SkinManager.BackgroundColor;
         }
 
         private void paintControl(Object sender, PaintEventArgs e)

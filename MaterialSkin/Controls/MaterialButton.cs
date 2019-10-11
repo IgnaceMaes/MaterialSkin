@@ -114,8 +114,6 @@
             set => base.AutoSize = value;
         }
 
-        PaintEventHandler _drawShadowOnParent;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MaterialButton"/> class.
         /// </summary>
@@ -208,7 +206,7 @@
                 // Disabled
                 if (!Enabled)
                 {
-                    using (SolidBrush disabledBrush = new SolidBrush(DrawHelper.BlendColor(SkinManager.GetButtonHoverBackgroundColor(), Parent.BackColor, 220)))
+                    using (SolidBrush disabledBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundDisabledColor, SkinManager.BackgroundDisabledColor.A)))
                     {
                         g.FillPath(disabledBrush, buttonPath);
                     }
@@ -221,7 +219,7 @@
                 // Mormal
                 else
                 {
-                    using (SolidBrush normalBrush = new SolidBrush(SkinManager.GetButtonBackgroundColor()))
+                    using (SolidBrush normalBrush = new SolidBrush(SkinManager.BackgroundColor))
                     {
                         g.FillPath(normalBrush, buttonPath);
                     }
@@ -233,10 +231,8 @@
             }
 
             //Hover
-            Color c = SkinManager.GetButtonHoverBackgroundColor();
-
             using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(
-                (int)(hoverAnimProgress * c.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                (int)(hoverAnimProgress * SkinManager.BackgroundFocusColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
                 SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
                 SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
                 (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
@@ -247,7 +243,7 @@
 
             if (Type == MaterialButtonType.Outlined)
             {
-                using (Pen outlinePen = new Pen(Enabled ? SkinManager.GetButtonOutlineColor() : SkinManager.GetButtonDisabledOutlineColor(), 1))
+                using (Pen outlinePen = new Pen(Enabled ? SkinManager.DividersAlternativeColor : SkinManager.DividersColor, 1))
                 {
                     buttonRectF.X += 0.5f;
                     buttonRectF.Y += 0.5f;
@@ -305,8 +301,8 @@
                 (UseAccentColor ? SkinManager.ColorScheme.AccentColor : // Outline or Text and accent and emphasis
                 SkinManager.ColorScheme.PrimaryColor) : // Outline or Text and emphasis
                 SkinManager.ColorScheme.TextColor : // Contained and Emphasis
-                SkinManager.GetPrimaryTextColor()) : // Cointained and accent
-                SkinManager.GetButtonDisabledTextColor(); // Disabled
+                SkinManager.TextHighEmphasisColor) : // Cointained and accent
+                SkinManager.TextDisabledOrHintColor; // Disabled
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {

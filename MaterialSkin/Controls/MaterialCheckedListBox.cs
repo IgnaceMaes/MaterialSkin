@@ -15,7 +15,6 @@
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-       
 
         public bool Striped { get; set; }
 
@@ -28,10 +27,23 @@
             this.DoubleBuffered = true;
             this.Items = new ItemsList(this);
             this.AutoScroll = true;
-            BackColorChanged += (sender, args) => BackColor = SkinManager.GetControlBackgroundColor();
-            ForeColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
         }
-        
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            if (DesignMode)
+            {
+                BackColorChanged += (sender, args) => BackColor = Parent.BackColor;
+                BackColor = Parent.BackColor;
+            }
+            else
+            {
+                BackColorChanged += (sender, args) => BackColor = DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A);
+                BackColor = DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A);
+            }
+        }
+
 
         public CheckState GetItemCheckState(int Index)
         {
@@ -62,7 +74,7 @@
                 cb.Text = text;
             }
 
-             public new void Add(MaterialSkin.Controls.MaterialCheckbox value)
+            public new void Add(MaterialSkin.Controls.MaterialCheckbox value)
             {
                 base.Add(value);
                 _parent.Controls.Add(value);

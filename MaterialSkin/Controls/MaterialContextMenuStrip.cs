@@ -39,7 +39,7 @@
             AnimationManager.OnAnimationProgress += sender => Invalidate();
             AnimationManager.OnAnimationFinished += sender => OnItemClicked(_delayesArgs);
 
-            BackColor = SkinManager.GetApplicationBackgroundColor();
+            BackColor = SkinManager.BackdropColor;
         }
 
         protected override void OnMouseUp(MouseEventArgs mea)
@@ -115,7 +115,7 @@
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
                 NativeText.DrawTransparentText(e.Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body2),
-                    e.Item.Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                    e.Item.Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     textRect.Location,
                     textRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
@@ -125,11 +125,11 @@
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             var g = e.Graphics;
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(SkinManager.BackdropColor);
 
             //Draw background
             var itemRect = GetItemRect(e.Item);
-            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()), itemRect);
+            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.BackgroundFocusBrush : SkinManager.BackdropBrush, itemRect);
 
             //Ripple animation
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
@@ -158,9 +158,9 @@
         {
             var g = e.Graphics;
 
-            g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
+            g.FillRectangle(SkinManager.BackdropBrush, e.Item.Bounds);
             g.DrawLine(
-                new Pen(SkinManager.GetDividersColor()),
+                new Pen(SkinManager.DividersColor),
                 new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2),
                 new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
         }
@@ -170,7 +170,7 @@
             var g = e.Graphics;
 
             g.DrawRectangle(
-                new Pen(SkinManager.GetDividersColor()),
+                new Pen(SkinManager.DividersColor),
                 new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
         }
 
@@ -180,7 +180,7 @@
             const int ARROW_SIZE = 4;
 
             var arrowMiddle = new Point(e.ArrowRectangle.X + e.ArrowRectangle.Width / 2, e.ArrowRectangle.Y + e.ArrowRectangle.Height / 2);
-            var arrowBrush = e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush();
+            var arrowBrush = e.Item.Enabled ? SkinManager.TextHighEmphasisBrush : SkinManager.TextDisabledOrHintBrush;
             using (var arrowPath = new GraphicsPath())
             {
                 arrowPath.AddLines(

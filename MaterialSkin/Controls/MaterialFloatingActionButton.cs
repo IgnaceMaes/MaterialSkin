@@ -123,7 +123,7 @@
         {
             var g = pevent.Graphics;
 
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(Parent.BackColor);
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
 

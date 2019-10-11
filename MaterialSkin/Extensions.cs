@@ -6,6 +6,7 @@
 
     /// <summary>
     /// Defines the <see cref="Extensions" />
+    /// These add functions on default C# types and classes
     /// </summary>
     internal static class Extensions
     {
@@ -41,10 +42,48 @@
             if (obj is IMaterialControl)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Transforms every char on a string to this dot: ●
+        /// </summary>
+        /// <param name="plainString"></param>
+        /// <returns></returns>
+        public static string ToSecureString(this string plainString)
+        {
+            if (plainString == null)
+                return null;
+
+            string secureString = "";
+            for (uint i = 0; i < plainString.Length; i++)
+            {
+                secureString += '\u25CF';
+            }
+            return secureString;
+        }
+
+        // Color extensions
+        public static Color ToColor(this int argb)
+        {
+            return Color.FromArgb(
+                (argb & 0xFF0000) >> 16,
+                (argb & 0x00FF00) >> 8,
+                 argb & 0x0000FF);
+        }
+
+        public static Color RemoveAlpha(this Color color)
+        {
+            return Color.FromArgb(color.R, color.G, color.B);
+        }
+
+        public static int PercentageToColorComponent(this int percentage)
+        {
+            return (int)((percentage / 100d) * 255d);
         }
     }
 }
