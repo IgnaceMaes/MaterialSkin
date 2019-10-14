@@ -9,14 +9,15 @@
 
     public class MaterialComboBox : ComboBox, IMaterialControl
     {
-        [EditorBrowsable(EditorBrowsableState.Always), Description("Auto adjust the width of the combobox to the longest item text"), Category("Layout")]
-        bool _AutoSize;
-        public override bool AutoSize
+        // For some reason, even when overriding the AutoSize property, it doesn't appear on the properties panel, so we have to create a new one.
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), Category("Layout")]
+        bool _AutoResize;
+        public bool AutoResize
         {
-            get { return _AutoSize; }
+            get { return _AutoResize; }
             set
             {
-                _AutoSize = value;
+                _AutoResize = value;
                 recalculateAutoSize();
             }
         }
@@ -152,11 +153,7 @@
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
 
             // HintText
-            bool userTextPresent = SelectedIndex >= 0 && !_animationManager.IsAnimating();
-            Color textColor = Enabled ? DroppedDown || Focused ?
-                            UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // DroppedDown / Focus
-                            SkinManager.TextHighEmphasisColor : // Inactive
-                            SkinManager.TextDisabledOrHintColor; // Disabled
+            bool userTextPresent = SelectedIndex >= 0;
             Rectangle hintRect = new Rectangle(SkinManager.FORM_PADDING, ClientRectangle.Y, Width, LINE_Y);
             int hintTextSize = 16;
 
@@ -189,10 +186,10 @@
                 {
                     hintRect = new Rectangle(
                         SkinManager.FORM_PADDING,
-                        userTextPresent ? (TEXT_SMALL_Y) : ClientRectangle.Y + (int)((TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
+                        userTextPresent && !_animationManager.IsAnimating() ? (TEXT_SMALL_Y) : ClientRectangle.Y + (int)((TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
                         Width,
-                        userTextPresent ? (TEXT_SMALL_SIZE) : (int)(LINE_Y + (TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
-                    hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
+                        userTextPresent && !_animationManager.IsAnimating() ? (TEXT_SMALL_SIZE) : (int)(LINE_Y + (TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
+                    hintTextSize = userTextPresent && !_animationManager.IsAnimating() ? 12 : (int)(16 + (12 - 16) * animationProgress);
                 }
 
                 // Line Animation
@@ -200,11 +197,6 @@
                 int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
                 g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
             }
-
-            // Text stuff:
-            string textToDisplay = Text;
-            string textSelected;
-            Rectangle textSelectRect;
 
             // Calc text Rect
             Rectangle textRect = new Rectangle(
@@ -217,27 +209,9 @@
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
-                // Selection rects calc
-                string textBeforeSelection = textToDisplay.Substring(0, SelectionStart);
-                textSelected = textToDisplay.Substring(SelectionStart, SelectionLength);
-
-                int selectX = NativeText.MeasureLogString(textBeforeSelection, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width;
-                int selectWidth = NativeText.MeasureLogString(textSelected, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width;
-
-                textSelectRect = new Rectangle(
-                    textRect.X + selectX, UseTallSize ? hasHint ?
-                     textRect.Y + BOTTOM_PADDING : // tall and hint
-                     LINE_Y / 3 - BOTTOM_PADDING : // tall and no hint
-                     BOTTOM_PADDING, // not tall
-                    selectWidth,
-                    UseTallSize ? hasHint ?
-                    textRect.Height - BOTTOM_PADDING * 2 : // tall and hint
-                    (int)(LINE_Y / 2) : // tall and no hint
-                    LINE_Y - BOTTOM_PADDING * 2); // not tall
-
                 // Draw user text
                 NativeText.DrawTransparentText(
-                    textToDisplay,
+                    Text,
                     SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1),
                     Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     textRect.Location,
@@ -245,7 +219,7 @@
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
             }
 
-            g.Clip = new Region(ClientRectangle);
+            g.ResetClip();
 
             // Draw hint text
             if (hasHint && (UseTallSize || String.IsNullOrEmpty(Text)))
@@ -332,8 +306,7 @@
 
         public void recalculateAutoSize()
         {
-            Console.WriteLine(AutoSize);
-            if (!AutoSize) return;
+            if (!AutoResize) return;
 
             int w = DropDownWidth;
             int padding = SkinManager.FORM_PADDING * 3;
@@ -342,7 +315,6 @@
             Graphics g = CreateGraphics();
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
-
                 var itemsList = this.Items.Cast<object>().Select(item => item.ToString());
                 foreach (string s in itemsList)
                 {
@@ -351,12 +323,12 @@
                 }
             }
 
-            Console.WriteLine(w);
+            if (Width != w)
+            {
+                DropDownWidth = w;
+                Width = w;
+            }
 
-            DropDownWidth = w;
-            Width = w;
         }
-
-        // Remove dropdown border
     }
 }
