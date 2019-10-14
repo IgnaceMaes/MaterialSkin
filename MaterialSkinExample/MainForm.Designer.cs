@@ -985,6 +985,7 @@ namespace MaterialSkinExample
             // 
             // materialComboBox6
             // 
+            this.materialComboBox6.AutoResize = false;
             this.materialComboBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialComboBox6.Depth = 0;
             this.materialComboBox6.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
@@ -1010,16 +1011,17 @@ namespace MaterialSkinExample
             // 
             // materialComboBox2
             // 
+            this.materialComboBox2.AutoResize = true;
             this.materialComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialComboBox2.Depth = 0;
             this.materialComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.materialComboBox2.DropDownHeight = 174;
             this.materialComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.materialComboBox2.DropDownWidth = 397;
+            this.materialComboBox2.DropDownWidth = 435;
             this.materialComboBox2.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialComboBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox2.FormattingEnabled = true;
-            this.materialComboBox2.Hint = "AutoSize";
+            this.materialComboBox2.Hint = "AutoResize = true";
             this.materialComboBox2.IntegralHeight = false;
             this.materialComboBox2.ItemHeight = 43;
             this.materialComboBox2.Items.AddRange(new object[] {
@@ -1029,11 +1031,12 @@ namespace MaterialSkinExample
             this.materialComboBox2.MaxDropDownItems = 4;
             this.materialComboBox2.MouseState = MaterialSkin.MouseState.OUT;
             this.materialComboBox2.Name = "materialComboBox2";
-            this.materialComboBox2.Size = new System.Drawing.Size(397, 49);
+            this.materialComboBox2.Size = new System.Drawing.Size(435, 49);
             this.materialComboBox2.TabIndex = 73;
             // 
             // materialComboBox5
             // 
+            this.materialComboBox5.AutoResize = false;
             this.materialComboBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialComboBox5.Depth = 0;
             this.materialComboBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
@@ -1126,6 +1129,7 @@ namespace MaterialSkinExample
             // 
             // materialComboBox4
             // 
+            this.materialComboBox4.AutoResize = false;
             this.materialComboBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialComboBox4.Depth = 0;
             this.materialComboBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
@@ -1220,6 +1224,7 @@ namespace MaterialSkinExample
             // 
             // materialComboBox3
             // 
+            this.materialComboBox3.AutoResize = false;
             this.materialComboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialComboBox3.Depth = 0;
             this.materialComboBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
@@ -1279,6 +1284,7 @@ namespace MaterialSkinExample
             // 
             // materialComboBox1
             // 
+            this.materialComboBox1.AutoResize = false;
             this.materialComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
             this.materialComboBox1.Depth = 0;
             this.materialComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
