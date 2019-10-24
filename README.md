@@ -1,20 +1,13 @@
 # MaterialSkin for .NET WinForms
 
-This project is **ACTIVE**
-
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-*A video of the old version is still available here:*
-
-<a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank">![Material Skin Video - old](http://i.imgur.com/JAttoOo.png)</a>
-
-*High quality images can be found at the bottom of this page.*
-
-**Current version:**
+This project is **ACTIVE** _(With some long pauses in between, but I still read every issue and check every PR)_
 
 ![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
 
----
+## [Join us on Slack!](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ)
+Have a quick question? want to discuss some improvement or question some code? [come here](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ), let's talk about it
 
 ## Current state of the MaterialSkin components
 
