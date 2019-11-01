@@ -397,7 +397,13 @@
             drawerOverlay.Owner = this;
             drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 
-            // Resize and move events
+            // Visible, Resize and move events
+            VisibleChanged += (sender, e) =>
+            {
+                drawerForm.Visible = Visible;
+                drawerOverlay.Visible = Visible;
+            };
+
             Resize += (sender, e) =>
             {
                 H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
