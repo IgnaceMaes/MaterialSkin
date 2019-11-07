@@ -9,6 +9,10 @@ This project is **ACTIVE** _(With some long pauses in between, but I still read 
 ## [Join us on Slack!](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ)
 Have a quick question? want to discuss some improvement or question some code? [come here](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ), let's talk about it
 
+## WIKI Available!
+
+But there's not much in there for now, please contribute if you can. :)
+
 ## Current state of the MaterialSkin components
 
 | Component                    | Supported | Disabled mode | Animated |
