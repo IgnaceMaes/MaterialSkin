@@ -69,8 +69,6 @@
             UseTallSize = true;
 
             // Properties
-            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
-            base.AutoSize = false;
             TabStop = true;
             Multiline = false;
             BorderStyle = BorderStyle.None;
@@ -100,12 +98,12 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            base.Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
+            base.AutoSize = false;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
             if (Password) SendMessage(Handle, EM_SETPASSWORDCHAR, 'T', 0);
-
-            Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
 
             // Size and padding
             HEIGHT = UseTallSize ? 50 : 36;

@@ -22,7 +22,7 @@ namespace MaterialSkin.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MaterialSkin.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MaterialSkin.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace MaterialSkin.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace MaterialSkin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Roboto_Black {
+        public static byte[] Roboto_Black {
             get {
                 object obj = ResourceManager.GetObject("Roboto_Black", resourceCulture);
                 return ((byte[])(obj));
@@ -73,7 +73,7 @@ namespace MaterialSkin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Roboto_Bold {
+        public static byte[] Roboto_Bold {
             get {
                 object obj = ResourceManager.GetObject("Roboto_Bold", resourceCulture);
                 return ((byte[])(obj));
@@ -83,7 +83,7 @@ namespace MaterialSkin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Roboto_Light {
+        public static byte[] Roboto_Light {
             get {
                 object obj = ResourceManager.GetObject("Roboto_Light", resourceCulture);
                 return ((byte[])(obj));
@@ -93,7 +93,7 @@ namespace MaterialSkin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Roboto_Medium {
+        public static byte[] Roboto_Medium {
             get {
                 object obj = ResourceManager.GetObject("Roboto_Medium", resourceCulture);
                 return ((byte[])(obj));
@@ -103,7 +103,7 @@ namespace MaterialSkin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Roboto_Regular {
+        public static byte[] Roboto_Regular {
             get {
                 object obj = ResourceManager.GetObject("Roboto_Regular", resourceCulture);
                 return ((byte[])(obj));
@@ -113,7 +113,7 @@ namespace MaterialSkin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Roboto_Thin {
+        public static byte[] Roboto_Thin {
             get {
                 object obj = ResourceManager.GetObject("Roboto_Thin", resourceCulture);
                 return ((byte[])(obj));
