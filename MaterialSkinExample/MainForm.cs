@@ -18,6 +18,9 @@ namespace MaterialSkinExample
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
+            
+            // Set this to false to disable backcolor enforcing on non-materialSkin components
+            materialSkinManager.EnforceBackcolorOnAllComponents = true;
 
             // Add dummy data to the listview
             seedListView();
