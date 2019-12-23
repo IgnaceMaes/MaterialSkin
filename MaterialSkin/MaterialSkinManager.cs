@@ -21,6 +21,11 @@
         public event SkinManagerEventHandler ColorSchemeChanged;
         public event SkinManagerEventHandler ThemeChanged;
 
+        /// <summary>
+        /// Set this property to false to stop enforcing the backcolor on non-materialSkin components
+        /// </summary>
+        public bool EnforceBackcolorOnAllComponents = true;
+
         public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
 
         public int FORM_PADDING = 14;
@@ -385,14 +390,11 @@
             }
 
             // Other Generic control not part of material skin
-            else if (controlToUpdate.HasProperty("BackColor") && !controlToUpdate.IsMaterialControl() && controlToUpdate.Parent != null)
+            else if (EnforceBackcolorOnAllComponents && controlToUpdate.HasProperty("BackColor") && !controlToUpdate.IsMaterialControl() && controlToUpdate.Parent != null)
             {
                 controlToUpdate.BackColor = controlToUpdate.Parent.BackColor;
-                if (controlToUpdate.HasProperty("ForeColor"))
-                {
-                    controlToUpdate.ForeColor = TextHighEmphasisColor;
-                    controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
-                }
+                controlToUpdate.ForeColor = TextHighEmphasisColor;
+                controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
             }
 
             // Recursive call to control's children
