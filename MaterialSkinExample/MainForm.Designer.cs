@@ -315,7 +315,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch6.AutoSize = true;
             this.materialSwitch6.Depth = 0;
-            this.materialSwitch6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch6.Location = new System.Drawing.Point(26, 276);
             this.materialSwitch6.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch6.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -334,7 +334,7 @@ namespace MaterialSkinExample
             this.materialSwitch5.Checked = true;
             this.materialSwitch5.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialSwitch5.Depth = 0;
-            this.materialSwitch5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch5.Location = new System.Drawing.Point(26, 240);
             this.materialSwitch5.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch5.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -351,7 +351,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch4.AutoSize = true;
             this.materialSwitch4.Depth = 0;
-            this.materialSwitch4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch4.Location = new System.Drawing.Point(26, 203);
             this.materialSwitch4.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch4.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -993,7 +993,7 @@ namespace MaterialSkinExample
             this.materialComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.materialComboBox6.DropDownWidth = 121;
             this.materialComboBox6.Enabled = false;
-            this.materialComboBox6.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialComboBox6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox6.FormattingEnabled = true;
             this.materialComboBox6.Hint = "This is Disabled";
@@ -1018,7 +1018,7 @@ namespace MaterialSkinExample
             this.materialComboBox2.DropDownHeight = 174;
             this.materialComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.materialComboBox2.DropDownWidth = 435;
-            this.materialComboBox2.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialComboBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox2.FormattingEnabled = true;
             this.materialComboBox2.Hint = "AutoResize = true";
@@ -1044,7 +1044,7 @@ namespace MaterialSkinExample
             this.materialComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.materialComboBox5.DropDownWidth = 121;
             this.materialComboBox5.Enabled = false;
-            this.materialComboBox5.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialComboBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox5.FormattingEnabled = true;
             this.materialComboBox5.Hint = "This is Disabled";
@@ -1136,7 +1136,7 @@ namespace MaterialSkinExample
             this.materialComboBox4.DropDownHeight = 174;
             this.materialComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.materialComboBox4.DropDownWidth = 121;
-            this.materialComboBox4.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialComboBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox4.FormattingEnabled = true;
             this.materialComboBox4.Hint = "Primary color";
@@ -1231,7 +1231,7 @@ namespace MaterialSkinExample
             this.materialComboBox3.DropDownHeight = 118;
             this.materialComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.materialComboBox3.DropDownWidth = 121;
-            this.materialComboBox3.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialComboBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialComboBox3.FormattingEnabled = true;
             this.materialComboBox3.Hint = "small combo";
@@ -1371,7 +1371,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch7.AutoSize = true;
             this.materialSwitch7.Depth = 0;
-            this.materialSwitch7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch7.Location = new System.Drawing.Point(505, 168);
             this.materialSwitch7.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch7.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1388,7 +1388,7 @@ namespace MaterialSkinExample
             this.materialRadioButton5.AutoSize = true;
             this.materialRadioButton5.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton5.Depth = 0;
-            this.materialRadioButton5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton5.Location = new System.Drawing.Point(258, 251);
             this.materialRadioButton5.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton5.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1421,7 +1421,7 @@ namespace MaterialSkinExample
             this.materialRadioButton4.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton4.Depth = 0;
             this.materialRadioButton4.Enabled = false;
-            this.materialRadioButton4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton4.Location = new System.Drawing.Point(258, 209);
             this.materialRadioButton4.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton4.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1439,7 +1439,7 @@ namespace MaterialSkinExample
             this.materialRadioButton1.AutoSize = true;
             this.materialRadioButton1.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton1.Depth = 0;
-            this.materialRadioButton1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton1.Location = new System.Drawing.Point(258, 125);
             this.materialRadioButton1.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton1.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1457,7 +1457,7 @@ namespace MaterialSkinExample
             this.materialRadioButton2.AutoSize = true;
             this.materialRadioButton2.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialRadioButton2.Depth = 0;
-            this.materialRadioButton2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialRadioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialRadioButton2.Location = new System.Drawing.Point(258, 167);
             this.materialRadioButton2.Margin = new System.Windows.Forms.Padding(0);
             this.materialRadioButton2.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1477,7 +1477,7 @@ namespace MaterialSkinExample
             this.materialSwitch3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialSwitch3.Depth = 0;
             this.materialSwitch3.Enabled = false;
-            this.materialSwitch3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch3.Location = new System.Drawing.Point(505, 252);
             this.materialSwitch3.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch3.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1494,7 +1494,7 @@ namespace MaterialSkinExample
             this.materialSwitch2.AutoSize = true;
             this.materialSwitch2.Depth = 0;
             this.materialSwitch2.Enabled = false;
-            this.materialSwitch2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch2.Location = new System.Drawing.Point(505, 210);
             this.materialSwitch2.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch2.MouseLocation = new System.Drawing.Point(-1, -1);
@@ -1510,7 +1510,7 @@ namespace MaterialSkinExample
             // 
             this.materialSwitch1.AutoSize = true;
             this.materialSwitch1.Depth = 0;
-            this.materialSwitch1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialSwitch1.Location = new System.Drawing.Point(505, 126);
             this.materialSwitch1.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch1.MouseLocation = new System.Drawing.Point(-1, -1);

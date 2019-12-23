@@ -318,8 +318,10 @@
             IntPtr ptrFont = Marshal.AllocCoTaskMem(dataLength);
             Marshal.Copy(fontdata, 0, ptrFont, dataLength);
 
+            // GDI Font
             NativeTextRenderer.AddFontMemResourceEx(fontdata, dataLength, IntPtr.Zero, out _);
 
+            // GDI+ Font
             privateFontCollection.AddMemoryFont(ptrFont, dataLength);
         }
 
