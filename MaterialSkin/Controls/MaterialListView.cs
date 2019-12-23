@@ -190,7 +190,6 @@
             base.InitLayout();
 
             // enforce settings
-            Font = (SkinManager.getFontByType(MaterialSkinManager.fontType.H4));
             GridLines = false;
             FullRowSelect = true;
             View = View.Details;
@@ -202,7 +201,6 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = (SkinManager.getFontByType(MaterialSkinManager.fontType.H4));
         }
 
         protected override void OnBackColorChanged(EventArgs e)
