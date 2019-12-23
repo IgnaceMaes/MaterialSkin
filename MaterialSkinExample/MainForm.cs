@@ -11,16 +11,18 @@ namespace MaterialSkinExample
         private readonly MaterialSkinManager materialSkinManager;
         public MainForm()
         {
+
             InitializeComponent();
+
+            // Set this to false to disable backcolor enforcing on non-materialSkin components
+            // This HAS to be set before the AddFormToManage()
+            materialSkinManager.EnforceBackcolorOnAllComponents = true;
 
             // Initialize MaterialSkinManager
             materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
-            
-            // Set this to false to disable backcolor enforcing on non-materialSkin components
-            materialSkinManager.EnforceBackcolorOnAllComponents = true;
 
             // Add dummy data to the listview
             seedListView();
