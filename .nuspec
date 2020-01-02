@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>materialskin2</id>
+    <id>MaterialSkin.2</id>
     <version>2.1.0</version>
     <title>MaterialSkin 2</title>
     <authors>leocb, IgnaceMaes</authors>
