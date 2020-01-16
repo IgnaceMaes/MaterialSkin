@@ -85,10 +85,13 @@
 
         protected override void InitLayout()
         {
-            if (DrawShadows)
-            {
-                Parent.Paint += new PaintEventHandler(drawShadowOnParent);
-            }
+            LocationChanged += (sender, e) => { if (DrawShadows) Parent?.Invalidate(); };
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            if (DrawShadows && Parent != null) Parent.Paint += drawShadowOnParent;
         }
 
         private void setSize(bool mini)
@@ -111,6 +114,13 @@
 
         private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
+            if (Parent == null)
+            {
+                ((Control)sender).Paint -= drawShadowOnParent;
+                ((Control)sender).Invalidate();
+                return;
+            }
+
             // paint shadow on parent
             Graphics gp = e.Graphics;
             Rectangle rect = new Rectangle(Location, fabBounds.Size);

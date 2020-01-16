@@ -28,6 +28,13 @@
 
         private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
+            if (Parent == null)
+            {
+                ((Control)sender).Paint -= drawShadowOnParent;
+                ((Control)sender).Invalidate();
+                return;
+            }
+
             // paint shadow on parent
             Graphics gp = e.Graphics;
             Rectangle rect = new Rectangle(Location, ClientRectangle.Size);
@@ -37,8 +44,14 @@
 
         protected override void InitLayout()
         {
-            Parent.Paint += drawShadowOnParent;
+            LocationChanged += (sender, e) => { Parent?.Invalidate(); };
             ForeColor = SkinManager.TextHighEmphasisColor;
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            if (Parent != null) Parent.Paint += drawShadowOnParent;
         }
 
         protected override void OnBackColorChanged(EventArgs e)
