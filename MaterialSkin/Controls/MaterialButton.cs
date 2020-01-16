@@ -38,42 +38,48 @@
             Contained
         }
 
-        public bool UseAccentColor { get; set; }
+        public bool UseAccentColor
+        {
+            get { return useAccentColor; }
+            set { useAccentColor = value; Invalidate(); }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
-        public bool HighEmphasis { get; set; }
+        public bool HighEmphasis
+        {
+            get { return highEmphasis; }
+            set { highEmphasis = value; Invalidate(); }
+        }
 
-        public bool DrawShadows { get; set; }
 
-        private MaterialButtonType _type;
+        public bool DrawShadows
+        {
+            get { return drawShadows; }
+            set { drawShadows = value; Invalidate(); }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
         public MaterialButtonType Type
         {
-            get
-            {
-                return _type;
-            }
-            set
-            {
-                _type = value;
-            }
+            get { return type; }
+            set { type = value; Invalidate(); }
         }
 
         protected override void InitLayout()
         {
             base.InitLayout();
             Invalidate();
+            LocationChanged += (sender, e) => { if (DrawShadows) Parent?.Invalidate(); };
         }
 
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
-            Parent.Paint += drawShadowOnParent;
+            if (drawShadows && Parent != null) Parent.Paint += drawShadowOnParent;
         }
 
         private readonly AnimationManager _hoverAnimationManager = null;
@@ -88,6 +94,10 @@
         /// Defines the _icon
         /// </summary>
         private Image _icon;
+        private bool drawShadows;
+        private bool highEmphasis;
+        private bool useAccentColor;
+        private MaterialButtonType type;
 
         /// <summary>
         /// Gets or sets the Icon
@@ -165,6 +175,13 @@
 
         private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
+            if (Parent == null)
+            {
+                ((Control)sender).Paint -= drawShadowOnParent;
+                ((Control)sender).Invalidate();
+                return;
+            }
+
             if (!DrawShadows || Type != MaterialButtonType.Contained || Parent == null) return;
 
             // paint shadow on parent
