@@ -267,8 +267,8 @@ namespace MaterialSkin
             
             ROBOTO_TITLE1 = new Font(LoadFont(Resources.Roboto_Medium), 16f, FontStyle.Bold);
             
-            ROBOTO_REGULAR_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 56f, FontStyle.Regular);
-            ROBOTO_BOLD_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 56f, FontStyle.Bold);
+            ROBOTO_REGULAR_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 42f, FontStyle.Regular);
+            ROBOTO_BOLD_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 42f, FontStyle.Bold);
 
             Theme = Themes.LIGHT;
             ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
