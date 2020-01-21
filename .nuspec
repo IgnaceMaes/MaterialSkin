@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>MaterialSkin.2</id>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <title>MaterialSkin 2</title>
     <authors>leocb, IgnaceMaes</authors>
     <owners>leocb</owners>
