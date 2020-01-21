@@ -133,6 +133,11 @@ namespace MaterialSkinExample
             DrawerBackgroundWithAccent = materialSwitch6.Checked;
         }
 
+        private void materialSwitch8_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerShowIconsWhenHidden = materialSwitch8.Checked;
+        }
+
         private void MaterialButton3_Click(object sender, EventArgs e)
         {
 
