@@ -17,7 +17,8 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public MaterialCard() {
+        public MaterialCard()
+        {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             Paint += new PaintEventHandler(paintControl);
             BackColor = SkinManager.BackgroundColor;
@@ -30,8 +31,7 @@
         {
             if (Parent == null)
             {
-                ((Control)sender).Paint -= drawShadowOnParent;
-                ((Control)sender).Invalidate();
+                RemoveShadowPaintEvent((Control)sender, drawShadowOnParent);
                 return;
             }
 
@@ -51,7 +51,36 @@
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
-            if (Parent != null) Parent.Paint += drawShadowOnParent;
+            if (Parent != null) AddShadowPaintEvent(Parent, drawShadowOnParent);
+            if (_oldParent != null) RemoveShadowPaintEvent(_oldParent, drawShadowOnParent);
+            _oldParent = Parent;
+        }
+        Control _oldParent;
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (Parent == null) return;
+            if (Visible)
+                AddShadowPaintEvent(Parent,drawShadowOnParent);
+            else
+                RemoveShadowPaintEvent(Parent,drawShadowOnParent);
+        }
+
+        bool _shadowDrawEventSubscribed = false;
+        private void AddShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
+        {
+            if (_shadowDrawEventSubscribed) return;
+            control.Paint += shadowPaintEvent;
+            control.Invalidate();
+            _shadowDrawEventSubscribed = true;
+        }
+        private void RemoveShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
+        {
+            if (!_shadowDrawEventSubscribed) return;
+            control.Paint -= shadowPaintEvent;
+            control.Invalidate();
+            _shadowDrawEventSubscribed = false;
         }
 
         protected override void OnBackColorChanged(EventArgs e)
