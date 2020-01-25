@@ -5,7 +5,7 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
-    public class MaterialMultiLineTextBox : RichTextBox , IMaterialControl
+    public class MaterialMultiLineTextBox : RichTextBox, IMaterialControl
     {
         //Properties for managing the material design properties
         [Browsable(false)]
@@ -56,7 +56,7 @@
                 base.Focus();
             });
         }
-              
+
         public MaterialMultiLineTextBox()
         {
             base.OnCreateControl();
@@ -69,6 +69,5 @@
             BackColorChanged += (sender, args) => BackColor = SkinManager.BackgroundColor;
             ForeColorChanged += (sender, args) => ForeColor = SkinManager.TextHighEmphasisColor;
         }
-
     }
 }

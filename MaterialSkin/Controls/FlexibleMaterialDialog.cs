@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -15,36 +13,37 @@ namespace MaterialSkin.Controls
     /// </summary>
     public class FlexibleMaterialForm : MaterialForm, IMaterialControl
     {
-
         private readonly MaterialSkinManager materialSkinManager;
+
         /// <summary>
         /// Defines the font for all FlexibleMessageBox instances.
-        /// 
+        ///
         /// Default is: SystemFonts.MessageBoxFont
         /// </summary>
         public static Font FONT;
 
         /// <summary>
         /// Defines the maximum width for all FlexibleMessageBox instances in percent of the working area.
-        /// 
-        /// Allowed values are 0.2 - 1.0 where: 
+        ///
+        /// Allowed values are 0.2 - 1.0 where:
         /// 0.2 means:  The FlexibleMessageBox can be at most half as wide as the working area.
         /// 1.0 means:  The FlexibleMessageBox can be as wide as the working area.
-        /// 
+        ///
         /// Default is: 70% of the working area width.
         /// </summary>
         public static double MAX_WIDTH_FACTOR = 0.7;
 
         /// <summary>
         /// Defines the maximum height for all FlexibleMessageBox instances in percent of the working area.
-        /// 
-        /// Allowed values are 0.2 - 1.0 where: 
+        ///
+        /// Allowed values are 0.2 - 1.0 where:
         /// 0.2 means:  The FlexibleMessageBox can be at most half as high as the working area.
         /// 1.0 means:  The FlexibleMessageBox can be as high as the working area.
-        /// 
+        ///
         /// Default is: 90% of the working area height.
         /// </summary>
         public static double MAX_HEIGHT_FACTOR = 0.9;
+
         private MaterialMultiLineTextBox richTextBoxMessage;
 
         /// <summary>
@@ -83,9 +82,9 @@ namespace MaterialSkin.Controls
             this.messageContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForIcon)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // leftButton
-            // 
+            //
             this.leftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.leftButton.AutoSize = false;
             this.leftButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -106,11 +105,11 @@ namespace MaterialSkin.Controls
             this.leftButton.UseAccentColor = false;
             this.leftButton.UseVisualStyleBackColor = true;
             this.leftButton.Visible = false;
-            // 
+            //
             // messageContainer
-            // 
-            this.messageContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.messageContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.messageContainer.BackColor = System.Drawing.Color.White;
             this.messageContainer.Controls.Add(this.pictureBoxForIcon);
@@ -119,20 +118,20 @@ namespace MaterialSkin.Controls
             this.messageContainer.Name = "messageContainer";
             this.messageContainer.Size = new System.Drawing.Size(388, 81);
             this.messageContainer.TabIndex = 1;
-            // 
+            //
             // pictureBoxForIcon
-            // 
+            //
             this.pictureBoxForIcon.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxForIcon.Location = new System.Drawing.Point(15, 19);
             this.pictureBoxForIcon.Name = "pictureBoxForIcon";
             this.pictureBoxForIcon.Size = new System.Drawing.Size(32, 32);
             this.pictureBoxForIcon.TabIndex = 8;
             this.pictureBoxForIcon.TabStop = false;
-            // 
+            //
             // richTextBoxMessage
-            // 
-            this.richTextBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.richTextBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
             this.richTextBoxMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -152,9 +151,9 @@ namespace MaterialSkin.Controls
             this.richTextBoxMessage.TabStop = false;
             this.richTextBoxMessage.Text = "<Message>";
             this.richTextBoxMessage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxMessage_LinkClicked);
-            // 
+            //
             // middleButton
-            // 
+            //
             this.middleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.middleButton.AutoSize = false;
             this.middleButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -175,9 +174,9 @@ namespace MaterialSkin.Controls
             this.middleButton.UseAccentColor = false;
             this.middleButton.UseVisualStyleBackColor = true;
             this.middleButton.Visible = false;
-            // 
+            //
             // rightButton
-            // 
+            //
             this.rightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rightButton.AutoSize = false;
             this.rightButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -198,9 +197,9 @@ namespace MaterialSkin.Controls
             this.rightButton.UseAccentColor = false;
             this.rightButton.UseVisualStyleBackColor = true;
             this.rightButton.Visible = false;
-            // 
+            //
             // FlexibleMaterialForm
-            // 
+            //
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(388, 208);
             this.Controls.Add(this.rightButton);
@@ -222,7 +221,6 @@ namespace MaterialSkin.Controls
             this.messageContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxForIcon)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         private MaterialButton leftButton;
@@ -241,6 +239,7 @@ namespace MaterialSkin.Controls
         /// Defines the pictureBoxForIcon
         /// </summary>
         private System.Windows.Forms.PictureBox pictureBoxForIcon;
+
         private MaterialButton middleButton;
         private MaterialButton rightButton;
 
@@ -261,47 +260,56 @@ namespace MaterialSkin.Controls
           /// Defines the OK
           /// </summary>
             OK = 0,
+
             /// <summary>
             /// Defines the CANCEL
             /// </summary>
             CANCEL,
+
             /// <summary>
             /// Defines the YES
             /// </summary>
             YES,
+
             /// <summary>
             /// Defines the NO
             /// </summary>
             NO,
+
             /// <summary>
             /// Defines the ABORT
             /// </summary>
             ABORT,
+
             /// <summary>
             /// Defines the RETRY
             /// </summary>
             RETRY,
+
             /// <summary>
             /// Defines the IGNORE
             /// </summary>
             IGNORE
         };
 
-        //These are the buttons texts for different languages. 
+        //These are the buttons texts for different languages.
         //If you want to add a new language, add it here and in the GetButtonText-Function
         private enum TwoLetterISOLanguageID
         { /// <summary>
           /// Defines the en
           /// </summary>
             en,
+
             /// <summary>
             /// Defines the de
             /// </summary>
             de,
+
             /// <summary>
             /// Defines the es
             /// </summary>
             es,
+
             /// <summary>
             /// Defines the it
             /// </summary>
@@ -398,8 +406,8 @@ namespace MaterialSkin.Controls
         }
 
         /// <summary>
-        /// Ensure the given working area factor in the range of  0.2 - 1.0 where: 
-        /// 
+        /// Ensure the given working area factor in the range of  0.2 - 1.0 where:
+        ///
         /// 0.2 means:  20 percent of the working area height or width.
         /// 1.0 means:  100 percent of the working area height or width.
         /// </summary>
@@ -424,7 +432,7 @@ namespace MaterialSkin.Controls
         }
 
         /// <summary>
-        /// Set the dialogs start position when given. 
+        /// Set the dialogs start position when given.
         /// Otherwise center the dialog on the current screen.
         /// </summary>
         /// <param name="FlexibleMaterialForm">The FlexibleMessageBox dialog.</param>
@@ -480,7 +488,7 @@ namespace MaterialSkin.Controls
         }
 
         /// <summary>
-        /// Set the dialogs icon. 
+        /// Set the dialogs icon.
         /// When no icon is used: Correct placement and width of rich text box.
         /// </summary>
         /// <param name="FlexibleMaterialForm">The FlexibleMessageBox dialog.</param>
@@ -492,15 +500,19 @@ namespace MaterialSkin.Controls
                 case MessageBoxIcon.Information:
                     FlexibleMaterialForm.pictureBoxForIcon.Image = SystemIcons.Information.ToBitmap();
                     break;
+
                 case MessageBoxIcon.Warning:
                     FlexibleMaterialForm.pictureBoxForIcon.Image = SystemIcons.Warning.ToBitmap();
                     break;
+
                 case MessageBoxIcon.Error:
                     FlexibleMaterialForm.pictureBoxForIcon.Image = SystemIcons.Error.ToBitmap();
                     break;
+
                 case MessageBoxIcon.Question:
                     FlexibleMaterialForm.pictureBoxForIcon.Image = SystemIcons.Question.ToBitmap();
                     break;
+
                 default:
                     //When no icon is used: Correct placement and width of rich text box.
                     FlexibleMaterialForm.pictureBoxForIcon.Visible = false;
@@ -511,7 +523,7 @@ namespace MaterialSkin.Controls
         }
 
         /// <summary>
-        /// Set dialog buttons visibilities and texts. 
+        /// Set dialog buttons visibilities and texts.
         /// Also set a default button.
         /// </summary>
         /// <param name="FlexibleMaterialForm">The FlexibleMessageBox dialog.</param>
@@ -632,9 +644,11 @@ namespace MaterialSkin.Controls
                 default:
                     buttonIndexToFocus = 1;
                     break;
+
                 case MessageBoxDefaultButton.Button2:
                     buttonIndexToFocus = 2;
                     break;
+
                 case MessageBoxDefaultButton.Button3:
                     buttonIndexToFocus = 3;
                     break;
@@ -755,7 +769,7 @@ namespace MaterialSkin.Controls
             FlexibleMaterialForm.Font = FONT;
             FlexibleMaterialForm.richTextBoxMessage.Font = FONT;
 
-            //Calculate the dialogs start size (Try to auto-size width to show longest text row). Also set the maximum dialog size. 
+            //Calculate the dialogs start size (Try to auto-size width to show longest text row). Also set the maximum dialog size.
             SetDialogSizes(FlexibleMaterialForm, text, caption);
 
             //Set the dialogs start position when given. Otherwise center the dialog on the current screen.
@@ -770,5 +784,3 @@ namespace MaterialSkin.Controls
         }
     }
 }
-
-

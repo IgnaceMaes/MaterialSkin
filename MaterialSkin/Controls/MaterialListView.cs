@@ -3,7 +3,6 @@
     using System;
     using System.ComponentModel;
     using System.Drawing;
-    using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
     public class MaterialListView : ListView, IMaterialControl
@@ -21,12 +20,16 @@
         public Point MouseLocation { get; set; }
 
         private bool _autoSizeTable;
+
         [Category("Appearance"), Browsable(true)]
-        public bool AutoSizeTable {
-            get {
+        public bool AutoSizeTable
+        {
+            get
+            {
                 return _autoSizeTable;
             }
-            set {
+            set
+            {
                 _autoSizeTable = value;
                 Scrollable = !value;
             }
@@ -47,7 +50,6 @@
             ResizeRedraw = true;
             BorderStyle = BorderStyle.None;
             MinimumSize = new Size(200, 100);
-
 
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             BackColor = SkinManager.BackgroundColor;
@@ -157,6 +159,7 @@
             base.OnColumnWidthChanged(e);
             AutoResize();
         }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -196,8 +199,8 @@
             OwnerDraw = true;
             ResizeRedraw = true;
             BorderStyle = BorderStyle.None;
-
         }
+
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
@@ -208,6 +211,5 @@
             base.OnBackColorChanged(e);
             BackColor = SkinManager.BackgroundColor;
         }
-
     }
 }

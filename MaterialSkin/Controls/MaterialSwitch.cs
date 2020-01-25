@@ -150,7 +150,6 @@
                 {
                     g.FillPath(trackBrush, path);
                 }
-
             }
 
             // Calculate animation movement X position
@@ -188,7 +187,6 @@
                     g.FillEllipse(rippleBrush, new Rectangle(TRACK_CENTER_X_BEGIN + OffsetX - rippleAnimatedDiameter / 2, TRACK_CENTER_Y - rippleAnimatedDiameter / 2, rippleAnimatedDiameter, rippleAnimatedDiameter));
                 }
             }
-
 
             // draw Thumb Shadow
             RectangleF thumbBounds = new RectangleF(TRACK_CENTER_X_BEGIN + OffsetX - THUMB_SIZE_HALF, TRACK_CENTER_Y - THUMB_SIZE_HALF, THUMB_SIZE, THUMB_SIZE);
@@ -250,6 +248,7 @@
                 }
             }
         }
+
         private bool IsMouseInCheckArea()
         {
             return ClientRectangle.Contains(MouseLocation);
