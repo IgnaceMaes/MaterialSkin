@@ -262,11 +262,21 @@
             {
                 g.FillRectangle(SkinManager.BackgroundHoverBrush, e.Bounds);
             }
+            
+            string Text = "";
+            if (!string.IsNullOrWhiteSpace(DisplayMember))
+            {
+                Text = Items[e.Index].GetType().GetProperty(DisplayMember).GetValue(Items[e.Index], null).ToString();
+            }
+            else
+            {
+                Text = Items[e.Index].ToString();
+            }
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
                 NativeText.DrawTransparentText(
-                Items[e.Index].ToString(),
+                Text,
                 SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
                 SkinManager.TextHighEmphasisColor,
                 new Point(e.Bounds.Location.X + SkinManager.FORM_PADDING, e.Bounds.Location.Y),
