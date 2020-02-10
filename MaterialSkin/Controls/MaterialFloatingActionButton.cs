@@ -95,7 +95,8 @@
             if (_oldParent != null) RemoveShadowPaintEvent(_oldParent, drawShadowOnParent);
             _oldParent = Parent;
         }
-        Control _oldParent;
+
+        private Control _oldParent;
 
         protected override void OnVisibleChanged(EventArgs e)
         {
@@ -107,7 +108,8 @@
                 RemoveShadowPaintEvent(Parent, drawShadowOnParent);
         }
 
-        bool _shadowDrawEventSubscribed = false;
+        private bool _shadowDrawEventSubscribed = false;
+
         private void AddShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
         {
             if (_shadowDrawEventSubscribed) return;
@@ -115,6 +117,7 @@
             control.Invalidate();
             _shadowDrawEventSubscribed = true;
         }
+
         private void RemoveShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
         {
             if (!_shadowDrawEventSubscribed) return;
@@ -157,6 +160,7 @@
         }
 
         private Rectangle fabBounds;
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -164,13 +168,11 @@
             g.Clear(Parent.BackColor);
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-
             // Paint shadow on element to blend with the parent shadow
             DrawHelper.DrawRoundShadow(g, fabBounds);
 
             // draw fab
             g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);
-
 
             if (_animationManager.IsAnimating())
             {
@@ -193,12 +195,10 @@
                 g.EndContainer(gcont);
             }
 
-
             if (Icon != null)
             {
                 g.DrawImage(Icon, new Rectangle(fabBounds.Width / 2 - 11, fabBounds.Height / 2 - 11, 24, 24));
             }
-
 
             if (_showAnimationManager.IsAnimating())
             {

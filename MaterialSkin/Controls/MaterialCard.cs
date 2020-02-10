@@ -55,19 +55,21 @@
             if (_oldParent != null) RemoveShadowPaintEvent(_oldParent, drawShadowOnParent);
             _oldParent = Parent;
         }
-        Control _oldParent;
+
+        private Control _oldParent;
 
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
             if (Parent == null) return;
             if (Visible)
-                AddShadowPaintEvent(Parent,drawShadowOnParent);
+                AddShadowPaintEvent(Parent, drawShadowOnParent);
             else
-                RemoveShadowPaintEvent(Parent,drawShadowOnParent);
+                RemoveShadowPaintEvent(Parent, drawShadowOnParent);
         }
 
-        bool _shadowDrawEventSubscribed = false;
+        private bool _shadowDrawEventSubscribed = false;
+
         private void AddShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
         {
             if (_shadowDrawEventSubscribed) return;
@@ -75,6 +77,7 @@
             control.Invalidate();
             _shadowDrawEventSubscribed = true;
         }
+
         private void RemoveShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
         {
             if (!_shadowDrawEventSubscribed) return;

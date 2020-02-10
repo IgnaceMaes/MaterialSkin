@@ -9,9 +9,9 @@ namespace MaterialSkinExample
     public partial class MainForm : MaterialForm
     {
         private readonly MaterialSkinManager materialSkinManager;
+
         public MainForm()
         {
-
             InitializeComponent();
 
             // Initialize MaterialSkinManager
@@ -61,11 +61,12 @@ namespace MaterialSkinExample
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = materialSkinManager.Theme == MaterialSkinManager.Themes.DARK ? MaterialSkinManager.Themes.LIGHT : MaterialSkinManager.Themes.DARK;
             updateColor();
         }
 
         private int colorSchemeIndex;
+
         private void MaterialButton1_Click(object sender, EventArgs e)
         {
             colorSchemeIndex++;
@@ -76,7 +77,6 @@ namespace MaterialSkinExample
 
         private void updateColor()
         {
-
             //These are just example color schemes
             switch (colorSchemeIndex)
             {
@@ -88,20 +88,22 @@ namespace MaterialSkinExample
                         Accent.Pink200,
                         TextShade.WHITE);
                     break;
+
                 case 1:
                     materialSkinManager.ColorScheme = new ColorScheme(
                         Primary.Green600,
-                        Primary.Green700, 
-                        Primary.Green200, 
-                        Accent.Red100, 
+                        Primary.Green700,
+                        Primary.Green200,
+                        Accent.Red100,
                         TextShade.WHITE);
                     break;
+
                 case 2:
                     materialSkinManager.ColorScheme = new ColorScheme(
-                        Primary.BlueGrey800, 
-                        Primary.BlueGrey900, 
-                        Primary.BlueGrey500, 
-                        Accent.LightBlue200, 
+                        Primary.BlueGrey800,
+                        Primary.BlueGrey900,
+                        Primary.BlueGrey500,
+                        Accent.LightBlue200,
                         TextShade.WHITE);
                     break;
             }
@@ -140,7 +142,6 @@ namespace MaterialSkinExample
 
         private void MaterialButton3_Click(object sender, EventArgs e)
         {
-
             var builder = new StringBuilder("Batch operation report:\n\n");
             var random = new Random();
             var result = 0;

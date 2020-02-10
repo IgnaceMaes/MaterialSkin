@@ -1,12 +1,13 @@
-﻿
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Windows.Forms;
-namespace MaterialSkin.Controls { 
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace MaterialSkin.Controls
+{
     ///TODO: Break this out into a MaterialDialog then extend into the MaterialMsgBox
 
-///Adapted from http://www.codeproject.com/Articles/601900/FlexibleMessageBox     
-public class MaterialMessageBox : IMaterialControl
+    ///Adapted from http://www.codeproject.com/Articles/601900/FlexibleMessageBox
+    public class MaterialMessageBox : IMaterialControl
     {
         [Browsable(false)]
         public int Depth { get; set; }
@@ -19,10 +20,6 @@ public class MaterialMessageBox : IMaterialControl
 
         [Browsable(false)]
         public Point MouseLocation { get; set; }
-
-       
-
-       
 
         public static DialogResult Show(string text)
         {
@@ -73,6 +70,5 @@ public class MaterialMessageBox : IMaterialControl
         {
             return FlexibleMaterialForm.Show(owner, text, caption, buttons, icon, defaultButton);
         }
-
-         }
+    }
 }

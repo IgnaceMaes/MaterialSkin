@@ -12,8 +12,10 @@
         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
+
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
@@ -21,6 +23,7 @@
         public bool Password { get; set; }
 
         private bool _UseTallSize;
+
         [Category("Material Skin"), DefaultValue(true), Description("Using a larger size enables the hint to always be visible")]
         public bool UseTallSize
         {
@@ -38,6 +41,7 @@
         public bool UseAccent { get; set; }
 
         private string _hint = string.Empty;
+
         [Category("Material Skin"), DefaultValue("")]
         public string Hint
         {
@@ -88,10 +92,10 @@
             ContextMenuStrip = cms;
 
             MaxLength = 50;
-
         }
 
         private const int EM_SETPASSWORDCHAR = 0x00cc;
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
@@ -150,9 +154,9 @@
         private Point scrollPos = Point.Empty;
         private const int EM_GETSCROLLPOS = WM_USER + 221;
         private const int WM_USER = 0x400;
+
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, Int32 wMsg, Int32 wParam, ref Point lParam);
-
 
         public override Size GetPreferredSize(Size proposedSize)
         {
@@ -175,7 +179,6 @@
                 MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
-
 
             // HintText
             bool userTextPresent = !String.IsNullOrEmpty(Text);
@@ -331,7 +334,6 @@
             LINE_Y = HEIGHT - BOTTOM_PADDING;
         }
 
-
         private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
         {
             switch (toolStripItemClickedEventArgs.ClickedItem.Text)
@@ -339,15 +341,19 @@
                 case "Cut":
                     Cut();
                     break;
+
                 case "Copy":
                     Copy();
                     break;
+
                 case "Paste":
                     Paste();
                     break;
+
                 case "Delete":
                     SelectedText = string.Empty;
                     break;
+
                 case "Select All":
                     SelectAll();
                     break;
@@ -368,7 +374,8 @@
         }
 
         // Cursor flickering fix
-        const int WM_SETCURSOR = 0x0020;
+        private const int WM_SETCURSOR = 0x0020;
+
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == WM_SETCURSOR)
@@ -377,7 +384,7 @@
                 base.WndProc(ref m);
         }
 
-        // Padding 
+        // Padding
         private const int EM_SETRECT = 0xB3;
 
         [DllImport(@"User32.dll", EntryPoint = @"SendMessage", CharSet = CharSet.Auto)]
@@ -399,7 +406,9 @@
                 Bottom = bottom;
             }
 
-            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) { }
+            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom)
+            {
+            }
         }
     }
 

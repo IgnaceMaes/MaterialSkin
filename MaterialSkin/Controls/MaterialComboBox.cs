@@ -11,7 +11,8 @@
     {
         // For some reason, even when overriding the AutoSize property, it doesn't appear on the properties panel, so we have to create a new one.
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), Category("Layout")]
-        bool _AutoResize;
+        private bool _AutoResize;
+
         public bool AutoResize
         {
             get { return _AutoResize; }
@@ -33,6 +34,7 @@
         public MouseState MouseState { get; set; }
 
         private bool _UseTallSize;
+
         [Category("Material Skin"), DefaultValue(true), Description("Using a larger size enables the hint to always be visible")]
         public bool UseTallSize
         {
@@ -49,6 +51,7 @@
         public bool UseAccent { get; set; }
 
         private string _hint = string.Empty;
+
         [Category("Material Skin"), DefaultValue("")]
         public string Hint
         {
@@ -70,7 +73,6 @@
         private bool hasHint;
 
         private readonly AnimationManager _animationManager;
-
 
         public MaterialComboBox()
         {
@@ -241,7 +243,6 @@
             }
         }
 
-
         private void CustomMeasureItem(object sender, System.Windows.Forms.MeasureItemEventArgs e)
         {
             e.ItemHeight = HEIGHT - 7;
@@ -272,7 +273,6 @@
                 new Size(e.Bounds.Size.Width - SkinManager.FORM_PADDING * 2, e.Bounds.Size.Height),
                 NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle); ;
             }
-
         }
 
         protected override void OnCreateControl()
@@ -286,7 +286,6 @@
             recalculateAutoSize();
             setHeightVars();
         }
-
 
         protected override void OnResize(EventArgs e)
         {
@@ -328,7 +327,6 @@
                 DropDownWidth = w;
                 Width = w;
             }
-
         }
     }
 }

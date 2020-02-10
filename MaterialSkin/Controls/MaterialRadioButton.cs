@@ -44,15 +44,18 @@
 
         // animation managers
         private readonly AnimationManager _checkAM;
+
         private readonly AnimationManager _rippleAM;
         private readonly AnimationManager _hoverAM;
 
         // size related variables which should be recalculated onsizechanged
         private Rectangle _radioButtonBounds;
+
         private int _boxOffset;
 
         // size constants
         private const int HEIGHT_RIPPLE = 37;
+
         private const int HEIGHT_NO_RIPPLE = 20;
         private const int RADIOBUTTON_SIZE = 18;
         private const int RADIOBUTTON_SIZE_HALF = RADIOBUTTON_SIZE / 2;
@@ -129,7 +132,6 @@
 
             int RADIOBUTTON_CENTER = _boxOffset + RADIOBUTTON_SIZE_HALF;
             Point animationSource = new Point(RADIOBUTTON_CENTER, RADIOBUTTON_CENTER);
-
 
             double animationProgress = _checkAM.GetProgress();
 

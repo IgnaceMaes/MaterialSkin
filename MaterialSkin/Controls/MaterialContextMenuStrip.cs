@@ -14,7 +14,7 @@
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
@@ -100,7 +100,7 @@
         //Properties for managing the material design properties
         public int Depth { get; set; }
 
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         public MouseState MouseState { get; set; }
 

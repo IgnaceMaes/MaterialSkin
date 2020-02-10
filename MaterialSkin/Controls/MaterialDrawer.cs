@@ -17,7 +17,6 @@
         private bool _showIconsWhenHidden;
 
         [Category("Drawer")]
-
         public bool ShowIconsWhenHidden
         {
             get
@@ -62,6 +61,7 @@
 
         [Category("Drawer")]
         private bool _useColors;
+
         public bool UseColors
         {
             get
@@ -78,6 +78,7 @@
 
         [Category("Drawer")]
         private bool _highlightWithAccent;
+
         public bool HighlightWithAccent
         {
             get
@@ -94,6 +95,7 @@
 
         [Category("Drawer")]
         private bool _backgroundWithAccent;
+
         public bool BackgroundWithAccent
         {
             get
@@ -120,15 +122,22 @@
         public MouseState MouseState { get; set; }
 
         public delegate void DrawerStateHandler(object sender);
+
         public event DrawerStateHandler DrawerStateChanged;
+
         public event DrawerStateHandler DrawerBeginOpen;
+
         public event DrawerStateHandler DrawerEndOpen;
+
         public event DrawerStateHandler DrawerBeginClose;
+
         public event DrawerStateHandler DrawerEndClose;
+
         public event DrawerStateHandler DrawerShowIconsWhenHiddenChanged;
 
         // icons
         private Dictionary<string, TextureBrush> iconsBrushes;
+
         private Dictionary<string, TextureBrush> iconsSelectedBrushes;
         private Dictionary<string, Rectangle> iconsSize;
         private int prevLocation;
@@ -170,7 +179,6 @@
                 {
                     Invalidate();
                 };
-
             }
         }
 
@@ -294,6 +302,7 @@
         private int drawerItemHeight;
 
         public int MinWidth;
+
         public MaterialDrawer()
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -351,7 +360,6 @@
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected override void InitLayout()
         {
-
             drawerItemHeight = TAB_HEADER_PADDING * 2 - SkinManager.FORM_PADDING / 2;
             MinWidth = (int)(SkinManager.FORM_PADDING * 1.5 + drawerItemHeight);
             _showHideAnimManager.SetProgress(_isOpen ? 0 : 1);
@@ -500,7 +508,6 @@
                 }
             }
 
-
             // Animate tab indicator
             var previousSelectedTabIndexIfHasOne = _previousSelectedTabIndex == -1 ? _baseTabControl.SelectedIndex : _previousSelectedTabIndex;
             var previousActiveTabRect = _drawerItemRects[previousSelectedTabIndexIfHasOne];
@@ -641,7 +648,7 @@
                     _drawerItemPaths.Add(new GraphicsPath());
                 }
             }
-            
+
             //Calculate the bounds of each tab header specified in the base tab control
             for (int i = 0; i < _baseTabControl.TabPages.Count; i++)
             {

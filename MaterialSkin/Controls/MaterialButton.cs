@@ -53,7 +53,6 @@
             set { highEmphasis = value; Invalidate(); }
         }
 
-
         public bool DrawShadows
         {
             get { return drawShadows; }
@@ -83,7 +82,8 @@
             if (_oldParent != null) RemoveShadowPaintEvent(_oldParent, drawShadowOnParent);
             _oldParent = Parent;
         }
-        Control _oldParent;
+
+        private Control _oldParent;
 
         protected override void OnVisibleChanged(EventArgs e)
         {
@@ -95,7 +95,8 @@
                 RemoveShadowPaintEvent(Parent, drawShadowOnParent);
         }
 
-        bool _shadowDrawEventSubscribed = false;
+        private bool _shadowDrawEventSubscribed = false;
+
         private void AddShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
         {
             if (_shadowDrawEventSubscribed) return;
@@ -103,6 +104,7 @@
             control.Invalidate();
             _shadowDrawEventSubscribed = true;
         }
+
         private void RemoveShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
         {
             if (!_shadowDrawEventSubscribed) return;
@@ -123,6 +125,7 @@
         /// Defines the _icon
         /// </summary>
         private Image _icon;
+
         private bool drawShadows;
         private bool highEmphasis;
         private bool useAccentColor;
@@ -217,9 +220,7 @@
             Rectangle rect = new Rectangle(Location, ClientRectangle.Size);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
             DrawHelper.DrawSquareShadow(gp, rect);
-
         }
-
 
         /// <summary>
         /// The OnPaint
@@ -357,8 +358,6 @@
                     textRect.Size,
                     NativeTextRenderer.TextAlignFlags.Center | NativeTextRenderer.TextAlignFlags.Middle);
             }
-
-
         }
 
         /// <summary>
@@ -377,7 +376,6 @@
         /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
-
             Size s = base.GetPreferredSize(proposedSize);
 
             // Provides extra space for proper padding for content

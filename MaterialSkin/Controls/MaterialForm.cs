@@ -106,6 +106,7 @@
             public RECT rcMonitor = new RECT();
             public RECT rcWork = new RECT();
             public int dwFlags = 0;
+
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public char[] szDevice = new char[32];
         }
@@ -210,8 +211,8 @@
 
         // Drawer overlay and speed improvements
         private bool _drawerShowIconsWhenHidden;
-        [Category("Drawer")]
 
+        [Category("Drawer")]
         public bool DrawerShowIconsWhenHidden
         {
             get { return _drawerShowIconsWhenHidden; }
@@ -235,8 +236,8 @@
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
 
-
         private bool _drawerIsOpen;
+
         [Category("Drawer")]
         public bool DrawerIsOpen
         {
@@ -258,6 +259,7 @@
         }
 
         private bool _drawerUseColors;
+
         [Category("Drawer")]
         public bool DrawerUseColors
         {
@@ -277,6 +279,7 @@
         }
 
         private bool _drawerHighlightWithAccent;
+
         [Category("Drawer")]
         public bool DrawerHighlightWithAccent
         {
@@ -296,6 +299,7 @@
         }
 
         private bool _backgroundWithAccent;
+
         [Category("Drawer")]
         public bool DrawerBackgroundWithAccent
         {
@@ -311,11 +315,10 @@
                     drawerControl.BackgroundWithAccent = value;
                     drawerControl.Refresh();
                 }
-
             }
         }
 
-        MaterialDrawer drawerControl = new MaterialDrawer();
+        private MaterialDrawer drawerControl = new MaterialDrawer();
 
         [Category("Drawer")]
         public MaterialTabControl DrawerTabControl { get; set; }
@@ -341,7 +344,6 @@
             {
                 drawerOverlay.Opacity = (float)(_drawerShowHideAnimManager.GetProgress() * 0.55f);
             };
-
 
             int H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
             int Y = Location.Y + _statusBarBounds.Height + _actionBarBounds.Height;
@@ -440,7 +442,6 @@
             {
                 _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.Out);
             };
-
 
             // Form Padding corrections
 
@@ -694,7 +695,6 @@
 
                     if (oldState == ButtonState.MaxDown && up)
                         MaximizeWindow(!_maximized);
-
                 }
                 else if (ControlBox && _xButtonBounds.Contains(e.Location))
                 {
@@ -755,15 +755,19 @@
                 case ResizeDirection.BottomLeft:
                     dir = HTBOTTOMLEFT;
                     break;
+
                 case ResizeDirection.Left:
                     dir = HTLEFT;
                     break;
+
                 case ResizeDirection.Right:
                     dir = HTRIGHT;
                     break;
+
                 case ResizeDirection.BottomRight:
                     dir = HTBOTTOMRIGHT;
                     break;
+
                 case ResizeDirection.Bottom:
                     dir = HTBOTTOM;
                     break;
@@ -896,7 +900,6 @@
                     rippleBrush.Dispose();
                 }
 
-
                 using (var formButtonsPen = new Pen(SkinManager.ColorScheme.TextColor, 2))
                 {
                     // Middle line
@@ -923,7 +926,6 @@
                        _drawerIconRect.X + (int)(SkinManager.FORM_PADDING) + 18,
                        _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2) + 6);
                 }
-
             }
 
             //Form title
@@ -947,16 +949,15 @@
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
+            //
             // MaterialForm
-            // 
+            //
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "MaterialForm";
             this.Padding = new System.Windows.Forms.Padding(3, 64, 3, 3);
             this.Load += new System.EventHandler(this.MaterialForm_Load);
             this.ResumeLayout(false);
-
         }
 
         private void MaterialForm_Load(object sender, EventArgs e)
@@ -972,7 +973,6 @@
 
         public bool PreFilterMessage(ref Message m)
         {
-
             if (m.Msg == WM_MOUSEMOVE)
             {
                 if (MouseMove != null)

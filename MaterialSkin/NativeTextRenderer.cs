@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
+
 public sealed class NativeTextRenderer : IDisposable
 {
     #region Fields and Consts
@@ -16,8 +17,7 @@ public sealed class NativeTextRenderer : IDisposable
 
     private IntPtr _hdc;
 
-    #endregion
-
+    #endregion Fields and Consts
 
     public NativeTextRenderer(Graphics g)
     {
@@ -41,9 +41,9 @@ public sealed class NativeTextRenderer : IDisposable
         GetTextExtentPoint32(_hdc, str, str.Length, ref size);
         return size;
     }
+
     public Size MeasureLogString(string str, IntPtr LogFont)
     {
-
         SelectObject(_hdc, LogFont);
 
         var size = new Size();
@@ -78,18 +78,22 @@ public sealed class NativeTextRenderer : IDisposable
         var rect2 = new Rect(rect);
         DrawText(_hdc, str, str.Length, ref rect2, (uint)flags);
     }
+
     public void DrawTransparentText(string str, Font font, Color color, Point point, Size size, TextAlignFlags flags)
     {
         DrawTransparentText(GetCachedHFont(font), str, color, point, size, flags, false);
     }
+
     public void DrawTransparentText(string str, IntPtr LogFont, Color color, Point point, Size size, TextAlignFlags flags)
     {
         DrawTransparentText(LogFont, str, color, point, size, flags, false);
     }
+
     public void DrawMultilineTransparentText(string str, Font font, Color color, Point point, Size size, TextAlignFlags flags)
     {
         DrawTransparentText(GetCachedHFont(font), str, color, point, size, flags, true);
     }
+
     public void DrawMultilineTransparentText(string str, IntPtr LogFont, Color color, Point point, Size size, TextAlignFlags flags)
     {
         DrawTransparentText(LogFont, str, color, point, size, flags, true);
@@ -186,7 +190,6 @@ public sealed class NativeTextRenderer : IDisposable
         }
     }
 
-
     #region Private methods
 
     private void SetFont(Font font)
@@ -231,7 +234,7 @@ public sealed class NativeTextRenderer : IDisposable
     }
 
     [DllImport("user32.dll")]
-    static extern int DrawText(IntPtr hdc, string lpchText, int cchText, ref Rect lprc, TextFormatFlags dwDTFormat);
+    private static extern int DrawText(IntPtr hdc, string lpchText, int cchText, ref Rect lprc, TextFormatFlags dwDTFormat);
 
     [DllImport("gdi32.dll")]
     private static extern int SetBkMode(IntPtr hdc, int mode);
@@ -285,7 +288,6 @@ public sealed class NativeTextRenderer : IDisposable
     [DllImport("gdi32.dll")]
     private static extern IntPtr CreateDIBSection(IntPtr hdc, [In] ref BitMapInfo pbmi, uint iUsage, out IntPtr ppvBits, IntPtr hSection, uint dwOffset);
 
-
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public class LogFont
     {
@@ -302,6 +304,7 @@ public sealed class NativeTextRenderer : IDisposable
         public byte lfClipPrecision = 0;
         public byte lfQuality = 0;
         public byte lfPitchAndFamily = 0;
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string lfFaceName = string.Empty;
     }
@@ -332,7 +335,6 @@ public sealed class NativeTextRenderer : IDisposable
             }
         }
     }
-
 
     [StructLayout(LayoutKind.Sequential)]
     private struct BlendFunction
@@ -478,5 +480,5 @@ public sealed class NativeTextRenderer : IDisposable
         FW_BLACK = 900,
     }
 
-    #endregion
+    #endregion Private methods
 }

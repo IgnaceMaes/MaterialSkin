@@ -15,7 +15,7 @@
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
@@ -29,7 +29,7 @@
         {
             var doneProgress = (int)(Width * ((double)Value / Maximum));
             e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, 0, doneProgress, Height);
-            e.Graphics.FillRectangle(SkinManager.BackgroundFocusBrush, doneProgress, 0, Width-doneProgress, Height);
+            e.Graphics.FillRectangle(SkinManager.BackgroundFocusBrush, doneProgress, 0, Width - doneProgress, Height);
         }
     }
 }

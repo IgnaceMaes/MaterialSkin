@@ -44,7 +44,6 @@
             }
         }
 
-
         public CheckState GetItemCheckState(int Index)
         {
             return Items[Index].CheckState;
