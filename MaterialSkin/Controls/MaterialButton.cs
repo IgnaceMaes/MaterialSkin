@@ -38,52 +38,83 @@
             Contained
         }
 
-        public bool UseAccentColor { get; set; }
+        public bool UseAccentColor
+        {
+            get { return useAccentColor; }
+            set { useAccentColor = value; Invalidate(); }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
-        public bool HighEmphasis { get; set; }
+        public bool HighEmphasis
+        {
+            get { return highEmphasis; }
+            set { highEmphasis = value; Invalidate(); }
+        }
 
-        public bool DrawShadows { get; set; }
-
-        private MaterialButtonType _type;
+        public bool DrawShadows
+        {
+            get { return drawShadows; }
+            set { drawShadows = value; Invalidate(); }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
         public MaterialButtonType Type
         {
-            get
-            {
-                return _type;
-            }
-            set
-            {
-                _type = value;
-                if (DrawShadows && Type == MaterialButtonType.Contained && Parent != null)
-                {
-                    Parent.Paint += new PaintEventHandler(drawShadowOnParent);
-                }
-            }
+            get { return type; }
+            set { type = value; Invalidate(); }
         }
 
         protected override void InitLayout()
         {
             base.InitLayout();
             Invalidate();
+            LocationChanged += (sender, e) => { if (DrawShadows) Parent?.Invalidate(); };
         }
 
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            if (drawShadows && Parent != null) AddShadowPaintEvent(Parent, drawShadowOnParent);
+            if (_oldParent != null) RemoveShadowPaintEvent(_oldParent, drawShadowOnParent);
+            _oldParent = Parent;
+        }
 
-        /// <summary>
-        /// Defines the _animationManager
-        /// </summary>
-        private readonly AnimationManager _animationManager;
+        private Control _oldParent;
 
-        /// <summary>
-        /// Defines the _hoverAnimationManager
-        /// </summary>
-        private readonly AnimationManager _hoverAnimationManager;
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (Parent == null) return;
+            if (Visible)
+                AddShadowPaintEvent(Parent, drawShadowOnParent);
+            else
+                RemoveShadowPaintEvent(Parent, drawShadowOnParent);
+        }
+
+        private bool _shadowDrawEventSubscribed = false;
+
+        private void AddShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
+        {
+            if (_shadowDrawEventSubscribed) return;
+            control.Paint += shadowPaintEvent;
+            control.Invalidate();
+            _shadowDrawEventSubscribed = true;
+        }
+
+        private void RemoveShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
+        {
+            if (!_shadowDrawEventSubscribed) return;
+            control.Paint -= shadowPaintEvent;
+            control.Invalidate();
+            _shadowDrawEventSubscribed = false;
+        }
+
+        private readonly AnimationManager _hoverAnimationManager = null;
+        private readonly AnimationManager _animationManager = null;
 
         /// <summary>
         /// Defines the _textSize
@@ -94,6 +125,11 @@
         /// Defines the _icon
         /// </summary>
         private Image _icon;
+
+        private bool drawShadows;
+        private bool highEmphasis;
+        private bool useAccentColor;
+        private MaterialButtonType type;
 
         /// <summary>
         /// Gets or sets the Icon
@@ -171,14 +207,20 @@
 
         private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
+            if (Parent == null)
+            {
+                RemoveShadowPaintEvent((Control)sender, drawShadowOnParent);
+                return;
+            }
+
+            if (!DrawShadows || Type != MaterialButtonType.Contained || Parent == null) return;
+
             // paint shadow on parent
             Graphics gp = e.Graphics;
-            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
-            gp.Transform = mx;
+            Rectangle rect = new Rectangle(Location, ClientRectangle.Size);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-            DrawHelper.DrawSquareShadow(gp, ClientRectangle);
+            DrawHelper.DrawSquareShadow(gp, rect);
         }
-
 
         /// <summary>
         /// The OnPaint
@@ -210,7 +252,7 @@
                 // Disabled
                 if (!Enabled)
                 {
-                    using (SolidBrush disabledBrush = new SolidBrush(DrawHelper.BlendColor(SkinManager.GetButtonHoverBackgroundColor(), Parent.BackColor, 220)))
+                    using (SolidBrush disabledBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundDisabledColor, SkinManager.BackgroundDisabledColor.A)))
                     {
                         g.FillPath(disabledBrush, buttonPath);
                     }
@@ -223,7 +265,7 @@
                 // Mormal
                 else
                 {
-                    using (SolidBrush normalBrush = new SolidBrush(SkinManager.GetButtonBackgroundColor()))
+                    using (SolidBrush normalBrush = new SolidBrush(SkinManager.BackgroundColor))
                     {
                         g.FillPath(normalBrush, buttonPath);
                     }
@@ -235,10 +277,8 @@
             }
 
             //Hover
-            Color c = SkinManager.GetButtonHoverBackgroundColor();
-
             using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(
-                (int)(hoverAnimProgress * c.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                (int)(hoverAnimProgress * SkinManager.BackgroundFocusColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
                 SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
                 SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
                 (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
@@ -249,7 +289,7 @@
 
             if (Type == MaterialButtonType.Outlined)
             {
-                using (Pen outlinePen = new Pen(Enabled ? SkinManager.GetButtonOutlineColor() : SkinManager.GetButtonDisabledOutlineColor(), 1))
+                using (Pen outlinePen = new Pen(Enabled ? SkinManager.DividersAlternativeColor : SkinManager.DividersColor, 1))
                 {
                     buttonRectF.X += 0.5f;
                     buttonRectF.Y += 0.5f;
@@ -307,8 +347,8 @@
                 (UseAccentColor ? SkinManager.ColorScheme.AccentColor : // Outline or Text and accent and emphasis
                 SkinManager.ColorScheme.PrimaryColor) : // Outline or Text and emphasis
                 SkinManager.ColorScheme.TextColor : // Contained and Emphasis
-                SkinManager.GetPrimaryTextColor()) : // Cointained and accent
-                SkinManager.GetButtonDisabledTextColor(); // Disabled
+                SkinManager.TextHighEmphasisColor) : // Cointained and accent
+                SkinManager.TextDisabledOrHintColor; // Disabled
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
@@ -318,8 +358,6 @@
                     textRect.Size,
                     NativeTextRenderer.TextAlignFlags.Center | NativeTextRenderer.TextAlignFlags.Middle);
             }
-
-
         }
 
         /// <summary>
@@ -338,7 +376,6 @@
         /// <returns>The <see cref="Size"/></returns>
         public override Size GetPreferredSize(Size proposedSize)
         {
-
             Size s = base.GetPreferredSize(proposedSize);
 
             // Provides extra space for proper padding for content

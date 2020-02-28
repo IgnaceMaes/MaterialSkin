@@ -85,16 +85,54 @@
 
         protected override void InitLayout()
         {
-            if (DrawShadows)
-            {
-                Parent.Paint += new PaintEventHandler(drawShadowOnParent);
-            }
+            LocationChanged += (sender, e) => { if (DrawShadows) Parent?.Invalidate(); };
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            if (DrawShadows && Parent != null) AddShadowPaintEvent(Parent, drawShadowOnParent);
+            if (_oldParent != null) RemoveShadowPaintEvent(_oldParent, drawShadowOnParent);
+            _oldParent = Parent;
+        }
+
+        private Control _oldParent;
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (Parent == null) return;
+            if (Visible)
+                AddShadowPaintEvent(Parent, drawShadowOnParent);
+            else
+                RemoveShadowPaintEvent(Parent, drawShadowOnParent);
+        }
+
+        private bool _shadowDrawEventSubscribed = false;
+
+        private void AddShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
+        {
+            if (_shadowDrawEventSubscribed) return;
+            control.Paint += shadowPaintEvent;
+            control.Invalidate();
+            _shadowDrawEventSubscribed = true;
+        }
+
+        private void RemoveShadowPaintEvent(Control control, PaintEventHandler shadowPaintEvent)
+        {
+            if (!_shadowDrawEventSubscribed) return;
+            control.Paint -= shadowPaintEvent;
+            control.Invalidate();
+            _shadowDrawEventSubscribed = false;
         }
 
         private void setSize(bool mini)
         {
-            Size = mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
             _mini = mini;
+            Size = _mini ? new Size(FAB_MINI_SIZE, FAB_MINI_SIZE) : new Size(FAB_SIZE, FAB_SIZE);
+            fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
+            fabBounds.Width -= 1;
+            fabBounds.Height -= 1;
         }
 
         private void _showAnimationManager_OnAnimationFinished(object sender)
@@ -108,40 +146,33 @@
 
         private void drawShadowOnParent(object sender, PaintEventArgs e)
         {
+            if (Parent == null)
+            {
+                RemoveShadowPaintEvent((Control)sender, drawShadowOnParent);
+                return;
+            }
+
             // paint shadow on parent
             Graphics gp = e.Graphics;
-            Matrix mx = new Matrix(1F, 0, 0, 1F, Location.X, Location.Y);
-            gp.Transform = mx;
+            Rectangle rect = new Rectangle(Location, fabBounds.Size);
             gp.SmoothingMode = SmoothingMode.AntiAlias;
-
-            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
-            fabBounds.Width -= 1;
-            fabBounds.Height -= 1;
-
-            DrawHelper.DrawRoundShadow(gp, fabBounds);
+            DrawHelper.DrawRoundShadow(gp, rect);
         }
 
+        private Rectangle fabBounds;
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            setSize(_mini);
-
             var g = pevent.Graphics;
 
-            Rectangle fabBounds = _mini ? new Rectangle(0, 0, FAB_MINI_SIZE, FAB_MINI_SIZE) : new Rectangle(0, 0, FAB_SIZE, FAB_SIZE);
-            fabBounds.Width -= 1;
-            fabBounds.Height -= 1;
-
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(Parent.BackColor);
             g.SmoothingMode = SmoothingMode.AntiAlias;
-
 
             // Paint shadow on element to blend with the parent shadow
             DrawHelper.DrawRoundShadow(g, fabBounds);
 
             // draw fab
             g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);
-
 
             if (_animationManager.IsAnimating())
             {
@@ -164,12 +195,10 @@
                 g.EndContainer(gcont);
             }
 
-
             if (Icon != null)
             {
                 g.DrawImage(Icon, new Rectangle(fabBounds.Width / 2 - 11, fabBounds.Height / 2 - 11, 24, 24));
             }
-
 
             if (_showAnimationManager.IsAnimating())
             {

@@ -9,7 +9,7 @@
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
@@ -18,7 +18,7 @@
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             Height = 1;
-            BackColor = SkinManager.GetDividersColor();
+            BackColor = SkinManager.DividersColor;
         }
     }
 }

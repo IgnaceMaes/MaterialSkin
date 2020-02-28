@@ -33,6 +33,6 @@
         /// <summary>
         /// Defines the InOutRepeatingOut
         /// </summary>
-        InOutRepeatingOut// Same as Out, but changes to InOutRepeatingIn if finished.   
+        InOutRepeatingOut// Same as Out, but changes to InOutRepeatingIn if finished.
     }
 }

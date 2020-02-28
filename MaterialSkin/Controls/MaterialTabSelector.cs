@@ -13,7 +13,7 @@
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager=> MaterialSkinManager.Instance;
+        public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
@@ -72,7 +72,6 @@
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
         }
-
 
         protected override void OnCreateControl()
         {
@@ -138,8 +137,8 @@
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
         {
-            int primaryA = SkinManager.ACTION_BAR_TEXT.A;
-            int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY.A;
+            int primaryA = SkinManager.TextHighEmphasisColor.A;
+            int secondaryA = SkinManager.TextMediumEmphasisColor.A;
 
             if (tabIndex == _baseTabControl.SelectedIndex && !_animationManager.IsAnimating())
             {

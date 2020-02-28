@@ -77,6 +77,7 @@
         {
             return BlendColor(backgroundColor, frontColor, frontColor.A);
         }
+
         public static void DrawSquareShadow(Graphics g, Rectangle bounds)
         {
             using (SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(12, 0, 0, 0)))

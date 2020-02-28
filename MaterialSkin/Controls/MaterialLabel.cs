@@ -15,9 +15,10 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        ContentAlignment _TextAlign = ContentAlignment.TopLeft;
+        private ContentAlignment _TextAlign = ContentAlignment.TopLeft;
+
         [DefaultValue(typeof(ContentAlignment), "TopLeft")]
-        public override ContentAlignment TextAlign 
+        public override ContentAlignment TextAlign
         {
             get
             {
@@ -35,11 +36,12 @@
         DefaultValue(false)]
         public bool HighEmphasis { get; set; }
 
-        [Category("Material Skin"), 
+        [Category("Material Skin"),
         DefaultValue(false)]
         public bool UseAccent { get; set; }
 
-        MaterialSkinManager.fontType _fontType = MaterialSkinManager.fontType.Body1;
+        private MaterialSkinManager.fontType _fontType = MaterialSkinManager.fontType.Body1;
+
         [Category("Material Skin"),
         DefaultValue(typeof(MaterialSkinManager.fontType), "Body1")]
         public MaterialSkinManager.fontType FontType
@@ -81,6 +83,7 @@
         }
 
         private NativeTextRenderer.TextAlignFlags Alignment;
+
         private void updateAligment()
         {
             switch (_TextAlign)
@@ -88,42 +91,49 @@
                 case ContentAlignment.TopLeft:
                     Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Left;
                     break;
+
                 case ContentAlignment.TopCenter:
                     Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Center;
                     break;
+
                 case ContentAlignment.TopRight:
                     Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Right;
                     break;
+
                 case ContentAlignment.MiddleLeft:
                     Alignment = NativeTextRenderer.TextAlignFlags.Middle | NativeTextRenderer.TextAlignFlags.Left;
                     break;
+
                 case ContentAlignment.MiddleCenter:
                     Alignment = NativeTextRenderer.TextAlignFlags.Middle | NativeTextRenderer.TextAlignFlags.Center;
                     break;
+
                 case ContentAlignment.MiddleRight:
                     Alignment = NativeTextRenderer.TextAlignFlags.Middle | NativeTextRenderer.TextAlignFlags.Right;
                     break;
+
                 case ContentAlignment.BottomLeft:
                     Alignment = NativeTextRenderer.TextAlignFlags.Bottom | NativeTextRenderer.TextAlignFlags.Left;
                     break;
+
                 case ContentAlignment.BottomCenter:
                     Alignment = NativeTextRenderer.TextAlignFlags.Bottom | NativeTextRenderer.TextAlignFlags.Center;
                     break;
+
                 case ContentAlignment.BottomRight:
                     Alignment = NativeTextRenderer.TextAlignFlags.Bottom | NativeTextRenderer.TextAlignFlags.Right;
                     break;
+
                 default:
                     Alignment = NativeTextRenderer.TextAlignFlags.Top | NativeTextRenderer.TextAlignFlags.Left;
                     break;
             }
         }
 
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.Clear(Parent.BackColor);
-
 
             // Draw Text
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
@@ -134,8 +144,8 @@
                     Enabled ? HighEmphasis ? UseAccent ?
                     SkinManager.ColorScheme.AccentColor : // High emphasis, accent
                     SkinManager.ColorScheme.PrimaryColor : // High emphasis, primary
-                    SkinManager.GetPrimaryTextColor() : // Normal
-                    SkinManager.GetDisabledOrHintColor(), // Disabled
+                    SkinManager.TextHighEmphasisColor : // Normal
+                    SkinManager.TextDisabledOrHintColor, // Disabled
                     ClientRectangle.Location,
                     ClientRectangle.Size,
                     Alignment);

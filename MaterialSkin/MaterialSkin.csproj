@@ -85,7 +85,9 @@
     <Compile Include="Controls\MaterialMultiLineTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialCard.cs" />
+    <Compile Include="Controls\MaterialCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -126,7 +128,7 @@
       <DependentUpon>MaterialForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

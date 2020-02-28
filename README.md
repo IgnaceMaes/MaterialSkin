@@ -1,20 +1,25 @@
 # MaterialSkin for .NET WinForms
 
-This project is **ACTIVE**
-
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-*A video of the old version is still available here:*
-
-<a href="https://www.youtube.com/watch?v=A8osVM_SXlg" target="_blank">![Material Skin Video - old](http://i.imgur.com/JAttoOo.png)</a>
-
-*High quality images can be found at the bottom of this page.*
-
-**Current version:**
+This project is **ACTIVE** _(With some long pauses in between, but I still read every issue and check every PR)_
 
 ![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
 
----
+## [Join us on Slack!](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ)
+Have a quick question? want to discuss some improvement or question some code? [come here](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ), let's talk about it
+
+## Nuget Package
+
+A nuget package version is available [here](https://www.nuget.org/packages/MaterialSkin.2/)
+
+Or simply search for MaterialSkin.2 on the **Nuget Package Manager** inside Visual Studio
+
+## WIKI Available!
+
+But there's not much in there for now, please contribute if you can. :smile:
+
+You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 
 ## Current state of the MaterialSkin components
 
@@ -72,11 +77,19 @@ If you have any issues please open an issue; have an improvement? open a pull re
 
 ### 1. Add the library to your project
 
-> This will be available as a updated nuget package, but I'm still working on this part
+There are a few methods to add this lib:
 
-A way of doing this step is by cloning the project from GitHub, compiling the library yourself and adding it as a reference.
+#### The Easy way
 
-Precompiled DLL is available at the releases section
+Search for MaterialSkin.2 on the Nuget Package manager inside VisualStudio and add it to your project.
+
+#### Manual way
+
+Download the precompiled DLL available on the releases section and add it as a external reference on your project.
+
+#### Compile from the latest master
+
+Clone the project from GitHub, then add the MaterialSkin.csproj to your own solution, then add it as a project reference on your project.
   
 ### 2. Add the MaterialSkin components to your ToolBox
 

@@ -231,11 +231,13 @@
                         case AnimationDirection.In:
                             _animationProgresses.Add(MIN_VALUE);
                             break;
+
                         case AnimationDirection.InOutRepeatingOut:
                         case AnimationDirection.InOutOut:
                         case AnimationDirection.Out:
                             _animationProgresses.Add(MAX_VALUE);
                             break;
+
                         default:
                             throw new Exception("Invalid AnimationDirection");
                     }
@@ -249,7 +251,6 @@
                 {
                     _animationDatas.Add(data ?? new object[] { });
                 }
-
             }
 
             _animationTimer.Start();
@@ -268,11 +269,13 @@
                 case AnimationDirection.In:
                     IncrementProgress(index);
                     break;
+
                 case AnimationDirection.InOutRepeatingOut:
                 case AnimationDirection.InOutOut:
                 case AnimationDirection.Out:
                     DecrementProgress(index);
                     break;
+
                 default:
                     throw new Exception("No AnimationDirection has been set");
             }
@@ -401,12 +404,16 @@
             {
                 case AnimationType.Linear:
                     return AnimationLinear.CalculateProgress(_animationProgresses[index]);
+
                 case AnimationType.EaseInOut:
                     return AnimationEaseInOut.CalculateProgress(_animationProgresses[index]);
+
                 case AnimationType.EaseOut:
                     return AnimationEaseOut.CalculateProgress(_animationProgresses[index]);
+
                 case AnimationType.CustomQuadratic:
                     return AnimationCustomQuadratic.CalculateProgress(_animationProgresses[index]);
+
                 default:
                     throw new NotImplementedException("The given AnimationType is not implemented");
             }

@@ -106,6 +106,7 @@
             public RECT rcMonitor = new RECT();
             public RECT rcWork = new RECT();
             public int dwFlags = 0;
+
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public char[] szDevice = new char[32];
         }
@@ -171,6 +172,8 @@
         private Point _previousLocation;
         private bool _headerMouseDown;
 
+        private Padding originalPadding;
+
         public MaterialForm()
         {
             DrawerWidth = 200;
@@ -207,8 +210,22 @@
         }
 
         // Drawer overlay and speed improvements
+        private bool _drawerShowIconsWhenHidden;
+
         [Category("Drawer")]
-        public bool DrawerShowIconsWhenHidden { get; set; }
+        public bool DrawerShowIconsWhenHidden
+        {
+            get { return _drawerShowIconsWhenHidden; }
+            set
+            {
+                _drawerShowIconsWhenHidden = value;
+                if (drawerControl != null)
+                {
+                    drawerControl.ShowIconsWhenHidden = _drawerShowIconsWhenHidden;
+                    drawerControl.Refresh();
+                }
+            }
+        }
 
         [Category("Drawer")]
         public int DrawerWidth { get; set; }
@@ -219,18 +236,18 @@
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
 
+        private bool _drawerIsOpen;
 
-        private bool _isOpen;
         [Category("Drawer")]
         public bool DrawerIsOpen
         {
             get
             {
-                return _isOpen;
+                return _drawerIsOpen;
             }
             set
             {
-                _isOpen = value;
+                _drawerIsOpen = value;
                 if (drawerControl != null)
                 {
                     if (value)
@@ -242,6 +259,7 @@
         }
 
         private bool _drawerUseColors;
+
         [Category("Drawer")]
         public bool DrawerUseColors
         {
@@ -260,17 +278,18 @@
             }
         }
 
-        private bool _highlightWithAccent;
+        private bool _drawerHighlightWithAccent;
+
         [Category("Drawer")]
         public bool DrawerHighlightWithAccent
         {
             get
             {
-                return _highlightWithAccent;
+                return _drawerHighlightWithAccent;
             }
             set
             {
-                _highlightWithAccent = value;
+                _drawerHighlightWithAccent = value;
                 if (drawerControl != null)
                 {
                     drawerControl.HighlightWithAccent = value;
@@ -280,6 +299,7 @@
         }
 
         private bool _backgroundWithAccent;
+
         [Category("Drawer")]
         public bool DrawerBackgroundWithAccent
         {
@@ -295,26 +315,15 @@
                     drawerControl.BackgroundWithAccent = value;
                     drawerControl.Refresh();
                 }
-
             }
         }
 
-        MaterialDrawer drawerControl = new MaterialDrawer();
-        private MaterialTabControl _drawerTabControl;
+        private MaterialDrawer drawerControl = new MaterialDrawer();
+
         [Category("Drawer")]
-        public MaterialTabControl DrawerTabControl
-        {
-            get
-            {
-                return _drawerTabControl;
-            }
-            set
-            {
-                _drawerTabControl = value;
-            }
-        }
+        public MaterialTabControl DrawerTabControl { get; set; }
 
-        private AnimationManager _showHideAnimManager;
+        private AnimationManager _drawerShowHideAnimManager;
 
         protected void AddDrawerOverlayForm()
         {
@@ -325,17 +334,16 @@
                 return;
 
             // Form opacity fade animation;
-            _showHideAnimManager = new AnimationManager
+            _drawerShowHideAnimManager = new AnimationManager
             {
                 AnimationType = AnimationType.EaseInOut,
                 Increment = 0.04
             };
 
-            _showHideAnimManager.OnAnimationProgress += (sender) =>
+            _drawerShowHideAnimManager.OnAnimationProgress += (sender) =>
             {
-                drawerOverlay.Opacity = (float)(_showHideAnimManager.GetProgress() * 0.55f);
+                drawerOverlay.Opacity = (float)(_drawerShowHideAnimManager.GetProgress() * 0.55f);
             };
-
 
             int H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
             int Y = Location.Y + _statusBarBounds.Height + _actionBarBounds.Height;
@@ -397,7 +405,13 @@
             drawerOverlay.Owner = this;
             drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 
-            // Resize and move events
+            // Visible, Resize and move events
+            VisibleChanged += (sender, e) =>
+            {
+                drawerForm.Visible = Visible;
+                drawerOverlay.Visible = Visible;
+            };
+
             Resize += (sender, e) =>
             {
                 H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
@@ -421,13 +435,31 @@
             // Animation and visibility
             drawerControl.DrawerBeginOpen += (sender) =>
             {
-                _showHideAnimManager.StartNewAnimation(AnimationDirection.In);
+                _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.In);
             };
 
             drawerControl.DrawerBeginClose += (sender) =>
             {
-                _showHideAnimManager.StartNewAnimation(AnimationDirection.Out);
+                _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.Out);
             };
+
+            // Form Padding corrections
+
+            if (Padding.Top < (_statusBarBounds.Height + _actionBarBounds.Height))
+                Padding = new Padding(Padding.Left, (_statusBarBounds.Height + _actionBarBounds.Height), Padding.Right, Padding.Bottom);
+
+            originalPadding = Padding;
+
+            drawerControl.DrawerShowIconsWhenHiddenChanged += FixFormPadding;
+            FixFormPadding(this);
+        }
+
+        private void FixFormPadding(object sender)
+        {
+            if (drawerControl.ShowIconsWhenHidden &&
+                Padding.Left < drawerControl.MinWidth) Padding = new Padding(drawerControl.MinWidth, originalPadding.Top, originalPadding.Right, originalPadding.Bottom);
+            else
+                Padding = originalPadding;
         }
 
         protected override void WndProc(ref Message m)
@@ -437,7 +469,7 @@
                 return;
 
             // Drawer
-            if (_drawerTabControl != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
+            if (DrawerTabControl != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
             {
                 drawerControl.Toggle();
                 _clickAnimManager.SetProgress(0);
@@ -663,7 +695,6 @@
 
                     if (oldState == ButtonState.MaxDown && up)
                         MaximizeWindow(!_maximized);
-
                 }
                 else if (ControlBox && _xButtonBounds.Contains(e.Location))
                 {
@@ -724,15 +755,19 @@
                 case ResizeDirection.BottomLeft:
                     dir = HTBOTTOMLEFT;
                     break;
+
                 case ResizeDirection.Left:
                     dir = HTLEFT;
                     break;
+
                 case ResizeDirection.Right:
                     dir = HTRIGHT;
                     break;
+
                 case ResizeDirection.BottomRight:
                     dir = HTBOTTOMRIGHT;
                     break;
+
                 case ResizeDirection.Bottom:
                     dir = HTBOTTOM;
                     break;
@@ -761,12 +796,12 @@
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(SkinManager.BackdropColor);
             g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);
             g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, _actionBarBounds);
 
             //Draw border
-            using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
+            using (var borderPen = new Pen(SkinManager.DividersColor, 1))
             {
                 g.DrawLine(borderPen, new Point(0, _actionBarBounds.Bottom), new Point(0, Height - 2));
                 g.DrawLine(borderPen, new Point(Width - 1, _actionBarBounds.Bottom), new Point(Width - 1, Height - 2));
@@ -776,8 +811,8 @@
             // Determine whether or not we even should be drawing the buttons.
             bool showMin = MinimizeBox && ControlBox;
             bool showMax = MaximizeBox && ControlBox;
-            var hoverBrush = SkinManager.GetButtonHoverBackgroundBrush();
-            var downBrush = SkinManager.GetButtonPressedBackgroundBrush();
+            var hoverBrush = SkinManager.BackgroundHoverBrush;
+            var downBrush = SkinManager.BackgroundFocusBrush;
 
             // When MaximizeButton == false, the minimize button will be painted in its place
             if (_buttonState == ButtonState.MinOver && showMin)
@@ -798,7 +833,7 @@
             if (_buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, _xButtonBounds);
 
-            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
+            using (var formButtonsPen = new Pen(SkinManager.ColorScheme.TextColor, 2))
             {
                 // Minimize button.
                 if (showMin)
@@ -848,7 +883,7 @@
             }
 
             // Drawer Icon
-            if (_drawerTabControl != null)
+            if (DrawerTabControl != null)
             {
                 _drawerIconRect = new Rectangle(SkinManager.FORM_PADDING / 2, STATUS_BAR_HEIGHT, 24 + SkinManager.FORM_PADDING + SkinManager.FORM_PADDING / 2, ACTION_BAR_HEIGHT);
                 // Ripple
@@ -865,8 +900,7 @@
                     rippleBrush.Dispose();
                 }
 
-
-                using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2))
+                using (var formButtonsPen = new Pen(SkinManager.ColorScheme.TextColor, 2))
                 {
                     // Middle line
                     g.DrawLine(
@@ -892,13 +926,12 @@
                        _drawerIconRect.X + (int)(SkinManager.FORM_PADDING) + 18,
                        _drawerIconRect.Y + (int)(ACTION_BAR_HEIGHT / 2) + 6);
                 }
-
             }
 
             //Form title
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
-                Rectangle textLocation = new Rectangle(SkinManager.FORM_PADDING + (_drawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+                Rectangle textLocation = new Rectangle(SkinManager.FORM_PADDING + (DrawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
                 NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.H6),
                     SkinManager.ColorScheme.TextColor,
                     textLocation.Location,
@@ -915,15 +948,16 @@
 
         private void InitializeComponent()
         {
-            SuspendLayout();
-            // 
+            this.SuspendLayout();
+            //
             // MaterialForm
-            // 
-            ClientSize = new System.Drawing.Size(284, 261);
-            Name = "MaterialForm";
-            Load += new System.EventHandler(MaterialForm_Load);
-            ResumeLayout(false);
-
+            //
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.MinimumSize = new System.Drawing.Size(300, 200);
+            this.Name = "MaterialForm";
+            this.Padding = new System.Windows.Forms.Padding(3, 64, 3, 3);
+            this.Load += new System.EventHandler(this.MaterialForm_Load);
+            this.ResumeLayout(false);
         }
 
         private void MaterialForm_Load(object sender, EventArgs e)
@@ -939,7 +973,6 @@
 
         public bool PreFilterMessage(ref Message m)
         {
-
             if (m.Msg == WM_MOUSEMOVE)
             {
                 if (MouseMove != null)

@@ -3,7 +3,6 @@
     using System;
     using System.ComponentModel;
     using System.Drawing;
-    using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
     public class MaterialListView : ListView, IMaterialControl
@@ -21,12 +20,16 @@
         public Point MouseLocation { get; set; }
 
         private bool _autoSizeTable;
+
         [Category("Appearance"), Browsable(true)]
-        public bool AutoSizeTable {
-            get {
+        public bool AutoSizeTable
+        {
+            get
+            {
                 return _autoSizeTable;
             }
-            set {
+            set
+            {
                 _autoSizeTable = value;
                 Scrollable = !value;
             }
@@ -48,9 +51,8 @@
             BorderStyle = BorderStyle.None;
             MinimumSize = new Size(200, 100);
 
-
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
-            BackColor = SkinManager.GetButtonBackgroundColor();
+            BackColor = SkinManager.BackgroundColor;
 
             // Fix for hovers, by default it doesn't redraw
             MouseLocation = new Point(-1, -1);
@@ -99,7 +101,7 @@
                 NativeText.DrawTransparentText(
                     e.Header.Text,
                     SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle2),
-                    Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                    Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     new Point(e.Bounds.Location.X + PAD, e.Bounds.Location.Y),
                     new Size(e.Bounds.Size.Width - PAD * 2, e.Bounds.Size.Height),
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
@@ -113,21 +115,21 @@
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             // Always draw default background
-            g.FillRectangle(SkinManager.GetButtonBackgroundBrush(), e.Bounds);
+            g.FillRectangle(SkinManager.BackgroundBrush, e.Bounds);
 
             if (e.Item.Selected)
             {
                 // Selected background
-                g.FillRectangle(SkinManager.GetButtonPressedBackgroundBrush(), e.Bounds);
+                g.FillRectangle(SkinManager.BackgroundFocusBrush, e.Bounds);
             }
             else if (e.Bounds.Contains(MouseLocation) && MouseState == MouseState.HOVER)
             {
                 // Hover background
-                g.FillRectangle(SkinManager.GetButtonHoverBackgroundBrush(), e.Bounds);
+                g.FillRectangle(SkinManager.BackgroundHoverBrush, e.Bounds);
             }
 
             // Draw separator line
-            g.DrawLine(new Pen(SkinManager.GetDividersColor()), e.Bounds.Left, e.Bounds.Y, e.Bounds.Right, e.Bounds.Y);
+            g.DrawLine(new Pen(SkinManager.DividersColor), e.Bounds.Left, e.Bounds.Y, e.Bounds.Right, e.Bounds.Y);
 
             foreach (ListViewItem.ListViewSubItem subItem in e.Item.SubItems)
             {
@@ -137,7 +139,7 @@
                     NativeText.DrawTransparentText(
                         subItem.Text,
                         SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body2),
-                        Enabled ? SkinManager.GetPrimaryTextColor() : SkinManager.GetDisabledOrHintColor(),
+                        Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                         new Point(subItem.Bounds.X + PAD, subItem.Bounds.Y),
                         new Size(subItem.Bounds.Width - PAD * 2, subItem.Bounds.Height),
                         NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
@@ -157,6 +159,7 @@
             base.OnColumnWidthChanged(e);
             AutoResize();
         }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -190,26 +193,23 @@
             base.InitLayout();
 
             // enforce settings
-            Font = (SkinManager.getFontByType(MaterialSkinManager.fontType.H4));
             GridLines = false;
             FullRowSelect = true;
             View = View.Details;
             OwnerDraw = true;
             ResizeRedraw = true;
             BorderStyle = BorderStyle.None;
-
         }
+
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = (SkinManager.getFontByType(MaterialSkinManager.fontType.H4));
         }
 
         protected override void OnBackColorChanged(EventArgs e)
         {
             base.OnBackColorChanged(e);
-            BackColor = SkinManager.GetButtonBackgroundColor();
+            BackColor = SkinManager.BackgroundColor;
         }
-
     }
 }
