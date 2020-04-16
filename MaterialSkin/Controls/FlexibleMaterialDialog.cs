@@ -343,7 +343,7 @@ namespace MaterialSkin.Controls
         private static readonly String[] BUTTON_TEXTS_ITALIAN_IT = { "OK", "Annulla", "&Sì", "&No", "&Interrompi", "&Riprova", "&Ignora" };
 
         /// <summary>
-        /// Defines the BUTTON_TEXTS_ITALIAN_IT
+        /// Defines the BUTTON_TEXTS_CHINA_ZH
         /// </summary>
         private static readonly String[] BUTTON_TEXTS_CHINA_ZH = { "确定", "取消", "是", "否", "终止", "重试", "忽略" };
 
