@@ -2,7 +2,7 @@
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-This project is **ACTIVE** _(With some long pauses in between, but I still read every issue and check every PR)_
+This project is **temporarily paused** _(While I don't updated it very often, I still plan to in the future; that said, I still read every issue and check every PR)_
 
 ![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
 
