@@ -370,6 +370,12 @@
         {
             _formsToManage.Add(materialForm);
             UpdateBackgrounds();
+
+            // Set background on newly added controls
+            materialForm.ControlAdded += (sender, e) =>
+            {
+                UpdateControlBackColor(e.Control, BackdropColor);
+            };
         }
 
         public void RemoveFormToManage(MaterialForm materialForm)
