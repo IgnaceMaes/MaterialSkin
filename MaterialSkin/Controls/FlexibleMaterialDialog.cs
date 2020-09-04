@@ -295,9 +295,10 @@ namespace MaterialSkin.Controls
         //These are the buttons texts for different languages.
         //If you want to add a new language, add it here and in the GetButtonText-Function
         private enum TwoLetterISOLanguageID
-        { /// <summary>
-          /// Defines the en
-          /// </summary>
+        { 
+            /// <summary>
+            /// Defines the en
+            /// </summary>
             en,
 
             /// <summary>
@@ -313,7 +314,12 @@ namespace MaterialSkin.Controls
             /// <summary>
             /// Defines the it
             /// </summary>
-            it
+            it,
+
+            /// <summary>
+            /// Defines the zh
+            /// </summary>
+            zh
         };
 
         /// <summary>
@@ -335,6 +341,11 @@ namespace MaterialSkin.Controls
         /// Defines the BUTTON_TEXTS_ITALIAN_IT
         /// </summary>
         private static readonly String[] BUTTON_TEXTS_ITALIAN_IT = { "OK", "Annulla", "&Sì", "&No", "&Interrompi", "&Riprova", "&Ignora" };
+
+        /// <summary>
+        /// Defines the BUTTON_TEXTS_CHINA_ZH
+        /// </summary>
+        private static readonly String[] BUTTON_TEXTS_CHINA_ZH = { "确定", "取消", "是", "否", "终止", "重试", "忽略" };
 
         /// <summary>
         /// Defines the defaultButton
@@ -400,6 +411,7 @@ namespace MaterialSkin.Controls
                 case TwoLetterISOLanguageID.de: return BUTTON_TEXTS_GERMAN_DE[buttonTextArrayIndex];
                 case TwoLetterISOLanguageID.es: return BUTTON_TEXTS_SPANISH_ES[buttonTextArrayIndex];
                 case TwoLetterISOLanguageID.it: return BUTTON_TEXTS_ITALIAN_IT[buttonTextArrayIndex];
+                case TwoLetterISOLanguageID.zh: return BUTTON_TEXTS_CHINA_ZH[buttonTextArrayIndex];
 
                 default: return BUTTON_TEXTS_ENGLISH_EN[buttonTextArrayIndex];
             }
