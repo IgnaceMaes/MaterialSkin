@@ -149,7 +149,7 @@ public sealed class NativeTextRenderer : IDisposable
 
                 // Draw Text for multiline format
                 Rect region = new Rect(new Rectangle(pos, size));
-                DrawText(memoryHdc, str, str.Length, ref region, fmtFlags);
+                DrawText(memoryHdc, str, -1, ref region, fmtFlags);
             }
             else
             {
