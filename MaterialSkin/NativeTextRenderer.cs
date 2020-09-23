@@ -233,7 +233,7 @@ public sealed class NativeTextRenderer : IDisposable
         SetTextColor(_hdc, rgb);
     }
 
-    [DllImport("user32.dll")]
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
     private static extern int DrawText(IntPtr hdc, string lpchText, int cchText, ref Rect lprc, TextFormatFlags dwDTFormat);
 
     [DllImport("gdi32.dll")]
