@@ -8,6 +8,7 @@
     using System.Drawing.Text;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Runtime.Remoting.Channels;
     using System.Windows.Forms;
 
     public class MaterialForm : Form, IMaterialControl
@@ -452,6 +453,15 @@
 
             drawerControl.DrawerShowIconsWhenHiddenChanged += FixFormPadding;
             FixFormPadding(this);
+
+            // Fix Closing the Drawer or Overlay form with Alt+F4 not exiting the app
+            drawerOverlay.FormClosed += TerminateOnClose;
+            drawerForm.FormClosed += TerminateOnClose;
+        }
+
+        private void TerminateOnClose(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void FixFormPadding(object sender)
