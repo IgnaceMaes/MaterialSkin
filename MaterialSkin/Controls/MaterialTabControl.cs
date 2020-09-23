@@ -6,6 +6,11 @@
 
     public class MaterialTabControl : TabControl, IMaterialControl
     {
+        public MaterialTabControl()
+        {
+            Multiline = true;
+        }
+
         [Browsable(false)]
         public int Depth { get; set; }
 
