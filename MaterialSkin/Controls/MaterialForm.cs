@@ -184,6 +184,7 @@
             DrawerIsOpen = false;
             DrawerShowIconsWhenHidden = false;
             DrawerAutoHide = true;
+            DrawerAutoShow = false;
             DrawerIndicatorWidth = 0;
             DrawerHighlightWithAccent = true;
             DrawerBackgroundWithAccent = false;
@@ -236,6 +237,9 @@
 
         [Category("Drawer")]
         public bool DrawerAutoHide { get; set; }
+
+        [Category("Drawer")]
+        public bool DrawerAutoShow { get; set; }
 
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
@@ -379,6 +383,7 @@
             drawerControl.IsOpen = DrawerIsOpen;
             drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
             drawerControl.AutoHide = DrawerAutoHide;
+            drawerControl.AutoShow = DrawerAutoShow;
             drawerControl.IndicatorWidth = DrawerIndicatorWidth;
             drawerControl.HighlightWithAccent = DrawerHighlightWithAccent;
             drawerControl.BackgroundWithAccent = DrawerBackgroundWithAccent;
