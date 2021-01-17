@@ -60,6 +60,9 @@
         public bool AutoHide { get; set; }
 
         [Category("Drawer")]
+        public bool AutoShow { get; set; }
+
+        [Category("Drawer")]
         private bool _useColors;
 
         public bool UseColors
@@ -312,6 +315,7 @@
             _isOpen = true;
             ShowIconsWhenHidden = false;
             AutoHide = false;
+            AutoShow = false;
             HighlightWithAccent = true;
             BackgroundWithAccent = false;
 
@@ -624,6 +628,28 @@
                 }
             }
             Cursor = Cursors.Arrow;
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            if (AutoShow && _isOpen==false)
+            {
+                Show();
+            }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (AutoShow)
+            {
+                Point p = Control.MousePosition;
+                if (DisplayRectangle.Contains(p) == false)
+                {
+                    Hide();
+                }
+            }
         }
 
         private void UpdateTabRects()
