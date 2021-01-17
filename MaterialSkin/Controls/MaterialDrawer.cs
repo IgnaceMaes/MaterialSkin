@@ -644,8 +644,7 @@
             base.OnMouseLeave(e);
             if (AutoShow)
             {
-                Point p = Control.MousePosition;
-                if (DisplayRectangle.Contains(p) == false)
+                if (DisplayRectangle.Contains(Control.MousePosition) == false)
                 {
                     Hide();
                 }
