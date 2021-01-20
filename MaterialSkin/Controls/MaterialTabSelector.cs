@@ -59,10 +59,10 @@
 
         private const int TAB_HEADER_PADDING = 24;
 
-        private byte _tab_indicator_height;
+        private int _tab_indicator_height;
 
         [Category("Material Skin"), Browsable(true), DisplayName("Tab Indicator Height"), DefaultValue(2)]
-        public byte TabIndicatorHeight 
+        public int TabIndicatorHeight 
         {
             get { return _tab_indicator_height; }
             set
