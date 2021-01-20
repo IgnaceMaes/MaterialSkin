@@ -20,6 +20,7 @@
 
         private MaterialTabControl _baseTabControl;
 
+        [Category("Material Skin"), Browsable(true)]
         public MaterialTabControl BaseTabControl
         {
             get { return _baseTabControl; }
@@ -58,7 +59,17 @@
 
         private const int TAB_HEADER_PADDING = 24;
 
-        private const int TAB_INDICATOR_HEIGHT = 2;
+        private int _tab_indicator_height;
+
+        [Category("Material Skin"), Browsable(true), DisplayName("Tab Indicator Height"), DefaultValue(2)]
+        public int TabIndicatorHeight 
+        {
+            get { return _tab_indicator_height; }
+            set
+            {
+                _tab_indicator_height = value;
+            }
+        }
 
         public MaterialTabSelector()
         {
@@ -128,11 +139,11 @@
             var previousActiveTabRect = _tabRects[previousSelectedTabIndexIfHasOne];
             var activeTabPageRect = _tabRects[_baseTabControl.SelectedIndex];
 
-            var y = activeTabPageRect.Bottom - 2;
+            var y = activeTabPageRect.Bottom - _tab_indicator_height;
             var x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress);
             var width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
 
-            g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
+            g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, _tab_indicator_height);
         }
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
