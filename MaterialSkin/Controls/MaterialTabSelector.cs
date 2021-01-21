@@ -59,6 +59,8 @@
 
         private const int TAB_HEADER_PADDING = 24;
 
+        private int _tab_over_index = -1;
+
         private int _tab_indicator_height;
 
         [Category("Material Skin"), Browsable(true), DisplayName("Tab Indicator Height"), DefaultValue(2)]
@@ -75,6 +77,7 @@
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             Height = 48;
+            TabIndicatorHeight = 2;
 
             _animationManager = new AnimationManager
             {
@@ -117,6 +120,12 @@
             }
 
             //Draw tab headers
+            if (_tab_over_index >= 0)
+            { 
+                //Change mouse over tab background color
+                g.FillRectangle(SkinManager.BackgroundHoverBrush , _tabRects[_tab_over_index].X, _tabRects[_tab_over_index].Y , _tabRects[_tab_over_index].Width, _tabRects[_tab_over_index].Height - _tab_indicator_height);
+            }
+
             foreach (TabPage tabPage in _baseTabControl.TabPages)
             {
                 var currentTabIndex = _baseTabControl.TabPages.IndexOf(tabPage);
@@ -180,6 +189,33 @@
             }
 
             _animationSource = e.Location;
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (DesignMode)
+                return;
+
+            if (_tabRects == null)
+                UpdateTabRects();
+
+            int old_tab_over_index = _tab_over_index;
+            _tab_over_index = -1;
+            for (var i = 0; i < _tabRects.Count; i++)
+            {
+                if (_tabRects[i].Contains(e.Location))
+                {
+                    Cursor = Cursors.Hand;
+                    _tab_over_index = i;
+                    break;
+                }
+            }
+            if (_tab_over_index == -1)
+                Cursor = Cursors.Arrow;
+            if (old_tab_over_index != _tab_over_index)
+                Invalidate();
         }
 
         private void UpdateTabRects()
