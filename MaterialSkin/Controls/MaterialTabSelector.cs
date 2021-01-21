@@ -123,7 +123,7 @@
             if (_tab_over_index >= 0)
             { 
                 //Change mouse over tab background color
-                g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush , _tabRects[_tab_over_index].X, _tabRects[_tab_over_index].Y , _tabRects[_tab_over_index].Width, _tabRects[_tab_over_index].Height - _tab_indicator_height);
+                g.FillRectangle(SkinManager.BackgroundHoverBrush , _tabRects[_tab_over_index].X, _tabRects[_tab_over_index].Y , _tabRects[_tab_over_index].Width, _tabRects[_tab_over_index].Height - _tab_indicator_height);
             }
 
             foreach (TabPage tabPage in _baseTabControl.TabPages)
