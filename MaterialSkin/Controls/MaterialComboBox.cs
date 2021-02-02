@@ -64,6 +64,24 @@
             }
         }
 
+        private int _startIndex;
+        public int StartIndex
+        {
+            get => _startIndex;
+            set
+            {
+                _startIndex = value;
+                try
+                {
+                    base.SelectedIndex = value;
+                }
+                catch
+                {
+                }
+                Invalidate();
+            }
+        }
+
         private const int TEXT_SMALL_SIZE = 18;
         private const int TEXT_SMALL_Y = 4;
         private const int BOTTOM_PADDING = 3;
