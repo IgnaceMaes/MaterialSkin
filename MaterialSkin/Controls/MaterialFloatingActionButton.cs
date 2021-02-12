@@ -24,8 +24,14 @@
         private const int FAB_MINI_ICON_MARGIN = 8;
         private const int FAB_ICON_SIZE = 24;
 
+        [DefaultValue(true)]
+        [Category("Material Skin"), DisplayName("Draw Shadows")]
+        [Description("Draw Shadows around control")]
         public bool DrawShadows { get; set; }
 
+        [DefaultValue(false)]
+        [Category("Material Skin"), DisplayName("Size Mini")]
+        [Description("Set control size to default or mini")]
         public bool Mini
         {
             get { return _mini; }
@@ -37,12 +43,14 @@
             }
         }
 
-        private bool _mini = false;
+        private bool _mini ;
 
+        [DefaultValue(false)]
+        [Category("Material Skin"), DisplayName("Animate Show HideButton")]
         public bool AnimateShowHideButton
         {
             get { return _animateShowButton; }
-            set { _animateShowButton = value; }
+            set { _animateShowButton = value; Refresh(); }
         }
 
         private bool _animateShowButton;
@@ -63,6 +71,8 @@
 
         public MaterialFloatingActionButton()
         {
+            AnimateShowHideButton = false;
+            Mini = false;
             DrawShadows = true;
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
@@ -220,6 +230,18 @@
             base.OnMouseClick(mevent);
             _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
+
+        protected override void OnResize(EventArgs e)
+        {
+             base.OnResize(e);
+
+            if (DrawShadows && Parent != null)
+            {
+                RemoveShadowPaintEvent(Parent, drawShadowOnParent);
+                AddShadowPaintEvent(Parent, drawShadowOnParent);
+            }
+        }
+
 
         private Point origin;
 
