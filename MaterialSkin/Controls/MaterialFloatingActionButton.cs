@@ -24,6 +24,8 @@
         private const int FAB_MINI_ICON_MARGIN = 8;
         private const int FAB_ICON_SIZE = 24;
 
+        private Boolean _mouseHover = false;
+
         [DefaultValue(true)]
         [Category("Material Skin"), DisplayName("Draw Shadows")]
         [Description("Draw Shadows around control")]
@@ -55,10 +57,13 @@
 
         private bool _animateShowButton;
 
+        [DefaultValue(false)]
+        [Category("Material Skin")]
+        [Description("Define icon to display")]
         public Image Icon
         {
             get { return _icon; }
-            set { _icon = value; }
+            set { _icon = value; Refresh(); }
         }
 
         private Image _icon;
@@ -182,7 +187,7 @@
             DrawHelper.DrawRoundShadow(g, fabBounds);
 
             // draw fab
-            g.FillEllipse(SkinManager.ColorScheme.AccentBrush, fabBounds);
+            g.FillEllipse(_mouseHover ? new SolidBrush(SkinManager.ColorScheme.AccentColor.Lighten(0.25f)) : SkinManager.ColorScheme.AccentBrush, fabBounds);
 
             if (_animationManager.IsAnimating())
             {
@@ -229,6 +234,27 @@
         {
             base.OnMouseClick(mevent);
             _animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (DesignMode)
+                return;
+
+            _mouseHover = ClientRectangle.Contains(e.Location);
+            Invalidate();
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (DesignMode)
+                return;
+
+            _mouseHover = false;
+            Invalidate();
         }
 
         protected override void OnResize(EventArgs e)
