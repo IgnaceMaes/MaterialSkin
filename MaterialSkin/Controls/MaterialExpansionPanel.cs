@@ -89,16 +89,6 @@ namespace MaterialSkin.Controls
             get { return _collapse; }
             set
             {
-																											
-											  
-								   
-				   
-															 
-												 
-					   
-								 
-					   
-				   
                 _collapse = value;
                 CollapseOrExpand();
                 Refresh();
@@ -130,16 +120,6 @@ namespace MaterialSkin.Controls
                 Refresh();
             }
         }
-
-
-							   
-										
-																								
-								  
-		   
-										  
-										   
-		   
 
         [DefaultValue(true)]
         [Category("Material Skin"), DisplayName("Draw Shadows")]
@@ -250,8 +230,7 @@ namespace MaterialSkin.Controls
             Padding = new Padding(24, 64, 24, 16);
             Margin = new Padding(16, 1, 16, 0);
             Size = new Size(480, ExpandHeight);
-            
-								 
+            							 
         }
 
 
@@ -355,11 +334,6 @@ namespace MaterialSkin.Controls
                 _cancelbuttonBounds = new Rectangle(_savebuttonBounds.Left - _buttonPadding - _buttonWidth, Height - _expansionPanelDefaultPadding - _footerButtonHeight, _buttonWidth, _footerButtonHeight);
             }
 				  
-			   
-														
-														  
-			   
-
             if (Parent != null)
             { 
                 RemoveShadowPaintEvent(Parent, drawShadowOnParent);
@@ -402,7 +376,6 @@ namespace MaterialSkin.Controls
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-
             if (_buttonState == ButtonState.SaveOver)
             {
                 // Is the event registered?
@@ -484,7 +457,6 @@ namespace MaterialSkin.Controls
                     GraphicsPath expansionPanelBoarderPath = DrawHelper.CreateRoundRect(expansionPanelBorderRectF, 2);
 																					   
                     g.FillPath(SkinManager.ExpansionPanelFocusBrush, expansionPanelBoarderPath);
-
                 }
                 else
                 {
