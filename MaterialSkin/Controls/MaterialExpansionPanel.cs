@@ -21,7 +21,6 @@ namespace MaterialSkin.Controls
         private const int _buttonPadding = 8;
         private const int _expandcollapsbuttonsize = 24;
         private const int _textHeaderHeight = 24;
-        private const int _textFooterHeight = 24;
         private const int _headerHeightCollapse = 48;
         private const int _headerHeightExpand = 64;
         private const int _footerHeight = 68;
@@ -32,10 +31,15 @@ namespace MaterialSkin.Controls
         private bool _collapse ;
         private bool _useAccentColor;
         private int _expandHeight;
+									
+									  
         private string _titleHeader;
         private string _descriptionHeader;
         private string _validationButtonText;
         private string _cancelButtonText;
+										
+																 
+										  
         private bool _showValidationButtons;
         private bool _showCollapseExpand;
         private bool _drawShadows;
@@ -44,6 +48,7 @@ namespace MaterialSkin.Controls
         private Rectangle _expandcollapseBounds;
         private Rectangle _savebuttonBounds;
         private Rectangle _cancelbuttonBounds;
+        private bool _savebuttonEnable;
 
         private enum ButtonState
         {
@@ -84,6 +89,16 @@ namespace MaterialSkin.Controls
             get { return _collapse; }
             set
             {
+																											
+											  
+								   
+				   
+															 
+												 
+					   
+								 
+					   
+				   
                 _collapse = value;
                 CollapseOrExpand();
                 Refresh();
@@ -115,6 +130,16 @@ namespace MaterialSkin.Controls
                 Refresh();
             }
         }
+
+
+							   
+										
+																								
+								  
+		   
+										  
+										   
+		   
 
         [DefaultValue(true)]
         [Category("Material Skin"), DisplayName("Draw Shadows")]
@@ -170,6 +195,15 @@ namespace MaterialSkin.Controls
             set { _cancelButtonText = value; Invalidate(); }
         }
 
+        [DefaultValue(true)]
+        [Category("Material Skin"), DisplayName("Validation button enable")]
+        [Description("Enable validation button")]
+        public bool ValidationButtonEnable
+        {
+            get { return _savebuttonEnable; }
+            set { _savebuttonEnable = value; Invalidate(); }
+        }
+
 
         #endregion
 
@@ -198,6 +232,7 @@ namespace MaterialSkin.Controls
         public MaterialExpansionPanel()
         {
             ShowValidationButtons = true;
+            ValidationButtonEnable = false;
             ValidationButtonText = "SAVE";
             CancelButtonText = "CANCEL";
             ShowCollapseExpand = true;
@@ -212,10 +247,11 @@ namespace MaterialSkin.Controls
             BackColor = SkinManager.BackgroundColor;
             ForeColor = SkinManager.TextHighEmphasisColor;
 
-            Padding = new Padding(24, 16, 24, 16);
+            Padding = new Padding(24, 64, 24, 16);
             Margin = new Padding(16, 1, 16, 0);
             Size = new Size(480, ExpandHeight);
             
+								 
         }
 
 
@@ -295,6 +331,10 @@ namespace MaterialSkin.Controls
         {
             if (!_collapse)
             {
+                if (DesignMode)
+                {
+                    _expandHeight = Height;
+                }
                 if (Height < _minHeight) Height = _minHeight;
             }
             else
@@ -314,6 +354,11 @@ namespace MaterialSkin.Controls
                 _buttonWidth = ((TextRenderer.MeasureText(CancelButtonText, Font)).Width + 16);
                 _cancelbuttonBounds = new Rectangle(_savebuttonBounds.Left - _buttonPadding - _buttonWidth, Height - _expansionPanelDefaultPadding - _footerButtonHeight, _buttonWidth, _footerButtonHeight);
             }
+				  
+			   
+														
+														  
+			   
 
             if (Parent != null)
             { 
@@ -364,6 +409,8 @@ namespace MaterialSkin.Controls
                 if (SaveClick != null)
                     // Raise the event
                     this.SaveClick( this, new EventArgs());
+                Collapse = true;
+                CollapseOrExpand();
             }
             else if (_buttonState == ButtonState.CancelOver)
             {
@@ -371,7 +418,10 @@ namespace MaterialSkin.Controls
                 if (CancelClick != null)
                     // Raise the event
                     this.CancelClick(this, new EventArgs());
+                Collapse = true;
+                CollapseOrExpand();
             }
+															  
             else if (_buttonState == ButtonState.HeaderOver | _buttonState == ButtonState.ColapseExpandOver)
             {
                 Collapse = !Collapse;
@@ -432,7 +482,9 @@ namespace MaterialSkin.Controls
                     expansionPanelBorderRectF.X -= 0.5f;
                     expansionPanelBorderRectF.Y -= 0.5f;
                     GraphicsPath expansionPanelBoarderPath = DrawHelper.CreateRoundRect(expansionPanelBorderRectF, 2);
+																					   
                     g.FillPath(SkinManager.ExpansionPanelFocusBrush, expansionPanelBoarderPath);
+
                 }
                 else
                 {
@@ -466,10 +518,11 @@ namespace MaterialSkin.Controls
             if (String.IsNullOrEmpty(_descriptionHeader) == false)
             {
                 //Draw description header text 
+
                 Rectangle headerDescriptionRect = new Rectangle(
                     headerRect.Right + _expansionPanelDefaultPadding,
                     (_headerHeight - _textHeaderHeight) / 2,
-                    TextRenderer.MeasureText(_descriptionHeader, Font).Width + _expansionPanelDefaultPadding,
+                    _expandcollapseBounds.Left - (headerRect.Right + _expansionPanelDefaultPadding ) - _expansionPanelDefaultPadding,
                     _textHeaderHeight);
 
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
@@ -519,6 +572,7 @@ namespace MaterialSkin.Controls
                 //Draw divider
                 g.DrawLine(new Pen(SkinManager.DividersColor, 1), new Point(0, Height - _footerHeight), new Point(Width, Height - _footerHeight));
 
+                //Validation Button
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
                 {
                     Point _textLocation = new Point(_savebuttonBounds.X + 8, _savebuttonBounds.Y);
@@ -526,13 +580,13 @@ namespace MaterialSkin.Controls
                     NativeText.DrawTransparentText(
                     ValidationButtonText,
                     SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
-                    Enabled ? (_buttonState == ButtonState.SaveOver) ? SkinManager.ColorScheme.AccentColor : SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
+                    Enabled && _savebuttonEnable ? (_buttonState == ButtonState.SaveOver) ? SkinManager.ColorScheme.AccentColor : SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     _textLocation,
                     _savebuttonBounds.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
                 }
 
-
+                //Cancel Button
                 using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
                 {
                     Point _textLocation = new Point(_cancelbuttonBounds.X + 8, _cancelbuttonBounds.Y);
