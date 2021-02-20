@@ -228,7 +228,7 @@ namespace MaterialSkin.Controls
             ForeColor = SkinManager.TextHighEmphasisColor;
 
             Padding = new Padding(24, 64, 24, 16);
-            Margin = new Padding(16, 1, 16, 0);
+            Margin = new Padding(16, 16, 16, 16);
             Size = new Size(480, ExpandHeight);
             							 
         }
