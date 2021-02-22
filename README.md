@@ -2,12 +2,9 @@
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-This project is **temporarily paused** _(While I don't updated it very often, I still plan to in the future; that said, I still read every issue and check every PR)_
+This project is **temporarily paused** _(I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up)_
 
 ![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
-
-## [Join us on Slack!](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ)
-Have a quick question? want to discuss some improvement or question some code? [come here](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ), let's talk about it
 
 ## Nuget Package
 
@@ -41,7 +38,7 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | ListView                     |    Yes    |    **No**     |   N/A    |
 | Progress Bar                 | _Partial_ |    **No**     |  **No**  |
 | Radio Button                 |    Yes    |      Yes      |   Yes    |
-| Text field                   |    Yes    |    **No**     |   Yes    |
+| Text field                   |    Yes    |      Yes      |   Yes    |
 | Sliders                      |  **No**   |       -       |    -     |
 | Switch                       |    Yes    |      Yes      |   Yes    |
 | Tabs                         |    Yes    |      N/A      |   Yes    |
@@ -56,7 +53,6 @@ All supported components have a dark theme
 - Backdrop (maybe)
 - Better FAB
 - Better Listview
-- Disabled textfield
 - Some Color code improvements and refactoring
 
 ---
