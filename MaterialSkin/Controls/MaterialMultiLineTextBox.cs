@@ -30,6 +30,7 @@
 
         private string hint = string.Empty;
 
+        [Category("Material Skin"), DefaultValue(""), Localizable(true)]
         public string Hint
         {
             get { return hint; }
