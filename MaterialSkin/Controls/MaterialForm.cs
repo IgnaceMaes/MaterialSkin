@@ -729,11 +729,9 @@
                 else if (_drawerButtonBounds.Contains(e.Location))
                 {
                     _buttonState = ButtonState.DrawerOver;
-                    Cursor = Cursors.Hand;
                 }
                 else
                 {
-                    if (_resizeDir == ResizeDirection.None) Cursor = Cursors.Default;
                     _buttonState = ButtonState.None;
                 }
             }
