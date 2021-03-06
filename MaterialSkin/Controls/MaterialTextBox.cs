@@ -54,6 +54,63 @@
             }
         }
 
+        private Image _leadingIcon;
+
+        [Category("Material Skin"), Browsable(true), Localizable(false)]
+        /// <summary>
+        /// Gets or sets the leading Icon
+        /// </summary>
+        public Image LeadingIcon
+        {
+            get { return _leadingIcon; }
+            set
+            {
+                _leadingIcon = value;
+                UpdateRects();
+                //if (_leadingIcon != null) 
+                //    _left_padding = SkinManager.FORM_PADDING+ ICON_SIZE;
+                //else
+                //    _left_padding = SkinManager.FORM_PADDING;
+                if (AutoSize)
+                {
+                    Refresh();
+                }
+                else
+                {
+                    Invalidate();
+                }
+            }
+        }
+
+        private Image _trailingIcon;
+
+        [Category("Material Skin"), Browsable(true), Localizable(false)]
+        /// <summary>
+        /// Gets or sets the trailing Icon
+        /// </summary>
+        public Image TrailingIcon
+        {
+            get { return _trailingIcon; }
+            set
+            {
+                _trailingIcon = value;
+                UpdateRects();
+                //if (_trailingIcon != null)
+                //    _right_padding = SkinManager.FORM_PADDING + ICON_SIZE;
+                //else
+                //    _right_padding = SkinManager.FORM_PADDING;
+                if (AutoSize)
+                {
+                    Refresh();
+                }
+                else
+                {
+                    Invalidate();
+                }
+            }
+        }
+
+        private const int ICON_SIZE = 24;
         private const int HINT_TEXT_SMALL_SIZE = 18;
         private const int HINT_TEXT_SMALL_Y = 4;
         private const int BOTTOM_PADDING = 3;
@@ -61,8 +118,25 @@
         private int LINE_Y;
 
         private bool hasHint;
+        private int _left_padding ;
+        private int _right_padding ;
+        private Rectangle _leadingIconBounds;
+        private Rectangle _trailingIconBounds;
+        private Rectangle _textfieldBounds;
 
         private readonly AnimationManager _animationManager;
+
+        #region "Events"
+
+        [Category("Action")]
+        [Description("Fires when Leading Icon is clicked")]
+        public event EventHandler LeadingIconClick;
+
+        [Category("Action")]
+        [Description("Fires when Trailing Icon is clicked")]
+        public event EventHandler TrailingIconClick;
+
+        #endregion
 
         public MaterialTextBox()
         {
@@ -113,15 +187,7 @@
             HEIGHT = UseTallSize ? 50 : 36;
             Size = new Size(Size.Width, HEIGHT);
             LINE_Y = HEIGHT - BOTTOM_PADDING;
-
-            // Position the "real" text field
-            var rect = new Rectangle(SkinManager.FORM_PADDING, UseTallSize ? hasHint ?
-                    (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
-                    (int)(LINE_Y / 3.5) : // No hint and tall
-                    Height / 5, // not tall
-                    ClientSize.Width - (SkinManager.FORM_PADDING * 2), LINE_Y);
-            RECT rc = new RECT(rect);
-            SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
+            UpdateRects();
 
             // events
             MouseState = MouseState.OUT;
@@ -163,6 +229,32 @@
             return new Size(proposedSize.Width, HEIGHT);
         }
 
+        private void UpdateRects()
+        {
+            if (LeadingIcon != null)
+                _left_padding = SkinManager.FORM_PADDING + ICON_SIZE;
+            else
+                _left_padding = SkinManager.FORM_PADDING;
+
+            if (_trailingIcon != null)
+                _right_padding = SkinManager.FORM_PADDING + ICON_SIZE;
+            else
+                _right_padding = SkinManager.FORM_PADDING;
+
+            _leadingIconBounds = new Rectangle(8, (Height / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
+            _trailingIconBounds = new Rectangle(Width - (ICON_SIZE + 8), (Height / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
+            _textfieldBounds = new Rectangle(_left_padding, ClientRectangle.Y, Width - _left_padding - _right_padding, LINE_Y);
+
+            var rect = new Rectangle(_left_padding, UseTallSize ? hasHint ?
+        (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
+        (int)(LINE_Y / 3.5) : // No hint and tall
+        Height / 5, // not tall
+        ClientSize.Width - _left_padding - _right_padding, LINE_Y);
+            RECT rc = new RECT(rect);
+            SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
+
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             base.OnPaint(pevent);
@@ -180,13 +272,25 @@
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
+            //Leading Icon
+            if (LeadingIcon != null)
+            {
+                g.DrawImage(LeadingIcon, _leadingIconBounds);
+            }
+
+            //Trailing Icon
+            if (TrailingIcon != null)
+            {
+                g.DrawImage(TrailingIcon, _trailingIconBounds);
+            }
+
             // HintText
             bool userTextPresent = !String.IsNullOrEmpty(Text);
             Color textColor = Enabled ? Focused ?
                             UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // Focused
                             SkinManager.TextHighEmphasisColor : // Inactive
                             SkinManager.TextDisabledOrHintColor; // Disabled
-            Rectangle hintRect = new Rectangle(SkinManager.FORM_PADDING, ClientRectangle.Y, Width, LINE_Y);
+            Rectangle hintRect = new Rectangle(_left_padding, ClientRectangle.Y, Width - _left_padding - _right_padding, LINE_Y);
             int hintTextSize = 16;
 
             // bottom line base
@@ -198,7 +302,7 @@
                 if (hasHint && UseTallSize && (Focused || userTextPresent))
                 {
                     // hint text
-                    hintRect = new Rectangle(SkinManager.FORM_PADDING, HINT_TEXT_SMALL_Y, Width, HINT_TEXT_SMALL_SIZE);
+                    hintRect = new Rectangle(_left_padding, HINT_TEXT_SMALL_Y, Width - _left_padding - _right_padding, HINT_TEXT_SMALL_SIZE);
                     hintTextSize = 12;
                 }
 
@@ -217,9 +321,9 @@
                 if (hasHint && UseTallSize)
                 {
                     hintRect = new Rectangle(
-                        SkinManager.FORM_PADDING,
+                        _left_padding,
                         userTextPresent ? (HINT_TEXT_SMALL_Y) : ClientRectangle.Y + (int)((HINT_TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
-                        Width,
+                        Width - _left_padding - _right_padding,
                         userTextPresent ? (HINT_TEXT_SMALL_SIZE) : (int)(LINE_Y + (HINT_TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
                     hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
                 }
@@ -237,9 +341,9 @@
 
             // Calc text Rect
             Rectangle textRect = new Rectangle(
-                SkinManager.FORM_PADDING,
+                hintRect.X,
                 hasHint && UseTallSize ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
-                ClientRectangle.Width - SkinManager.FORM_PADDING * 2 + scrollPos.X,
+                ClientRectangle.Width - _left_padding - _right_padding + scrollPos.X,
                 hasHint && UseTallSize ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
 
             g.Clip = new Region(textRect);
@@ -319,6 +423,50 @@
         {
             base.OnTextChanged(e);
             Invalidate();
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (DesignMode)
+                return;
+
+            if (_textfieldBounds.Contains(e.Location))
+            {
+                Cursor = Cursors.IBeam;
+            }
+            else if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location) && LeadingIconClick != null)
+            {
+                Cursor = Cursors.Hand;
+            }
+            else if (TrailingIcon != null && _trailingIconBounds.Contains(e.Location) && TrailingIconClick != null)
+            {
+                Cursor = Cursors.Hand;
+            }
+            else
+            {
+                Cursor = Cursors.Default;
+            }
+
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
+            {
+                LeadingIconClick?.Invoke(this, new EventArgs());
+            }
+            else if (TrailingIcon != null && _trailingIconBounds.Contains(e.Location))
+            {
+                TrailingIconClick?.Invoke(this, new EventArgs());
+            }
+            else
+            {
+                if (DesignMode)
+                    return;
+            }
+            base.OnMouseDown(e);
         }
 
         protected override void OnSelectionChanged(EventArgs e)
