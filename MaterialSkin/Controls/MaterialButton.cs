@@ -13,6 +13,9 @@
     /// </summary>
     public class MaterialButton : Button, IMaterialControl
     {
+        private const int MINIMUMWIDTH = 88; 
+        private const int MINIMUMWIDTHICONONLY = 36; 
+
         /// <summary>
         /// Gets or sets the Depth
         /// </summary>
@@ -38,12 +41,14 @@
             Contained
         }
 
+        [Category("Material Skin")]
         public bool UseAccentColor
         {
             get { return useAccentColor; }
             set { useAccentColor = value; Invalidate(); }
         }
 
+        [Category("Material Skin")]
         /// <summary>
         /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
@@ -53,12 +58,16 @@
             set { highEmphasis = value; Invalidate(); }
         }
 
+        [DefaultValue(true)]
+        [Category("Material Skin")]
+        [Description("Draw Shadows around control")]
         public bool DrawShadows
         {
             get { return drawShadows; }
             set { drawShadows = value; Invalidate(); }
         }
 
+        [Category("Material Skin")]
         /// <summary>
         /// Gets or sets a value indicating whether HighEmphasis
         /// </summary>
@@ -131,6 +140,7 @@
         private bool useAccentColor;
         private MaterialButtonType type;
 
+        [Category("Material Skin")]
         /// <summary>
         /// Gets or sets the Icon
         /// </summary>
@@ -278,7 +288,7 @@
 
             //Hover
             using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(
-                (int)(hoverAnimProgress * SkinManager.BackgroundFocusColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                (int)(HighEmphasis && Type == MaterialButtonType.Contained ? hoverAnimProgress * 80 : hoverAnimProgress * SkinManager.BackgroundFocusColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
                 SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
                 SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
                 (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
@@ -352,7 +362,7 @@
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
-                NativeText.DrawTransparentText(Text.ToUpper(), SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
+                NativeText.DrawMultilineTransparentText(Text.ToUpper(), SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
                     textColor,
                     textRect.Location,
                     textRect.Size,
@@ -399,6 +409,8 @@
                 s.Width += extra;
                 s.Height = 36;
             }
+            if (Icon != null && Text.Length==0 && s.Width < MINIMUMWIDTHICONONLY) s.Width = MINIMUMWIDTHICONONLY;
+            else if (s.Width < MINIMUMWIDTH) s.Width = MINIMUMWIDTH;
 
             return s;
         }
