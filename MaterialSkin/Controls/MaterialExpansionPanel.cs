@@ -16,6 +16,9 @@ namespace MaterialSkin.Controls
 
         #region "Private members"
 
+        private MaterialButton _validationButton;
+        private MaterialButton _cancelButton;
+
         private const int _expansionPanelDefaultPadding = 16;
         private const int _leftrightPadding = 24;
         private const int _buttonPadding = 8;
@@ -78,7 +81,7 @@ namespace MaterialSkin.Controls
         public bool UseAccentColor
         {
             get { return _useAccentColor; }
-            set { _useAccentColor = value; Invalidate(); }
+            set { _useAccentColor = value; UpdateRects(); Invalidate(); }
         }
 
         [DefaultValue(false)]
@@ -154,7 +157,7 @@ namespace MaterialSkin.Controls
         public bool ShowValidationButtons
         {
             get { return _showValidationButtons; }
-            set { _showValidationButtons = value; Invalidate(); }
+            set { _showValidationButtons = value; UpdateRects(); Invalidate(); }
         }
 
         [DefaultValue("SAVE")]
@@ -181,7 +184,7 @@ namespace MaterialSkin.Controls
         public bool ValidationButtonEnable
         {
             get { return _savebuttonEnable; }
-            set { _savebuttonEnable = value; Invalidate(); }
+            set { _savebuttonEnable = value; UpdateRects(); Invalidate(); }
         }
 
 
@@ -231,6 +234,55 @@ namespace MaterialSkin.Controls
             Margin = new Padding( 3, 16,  3, 16);
             Size = new Size(480, ExpandHeight);
             							 
+            //CollapseOrExpand();
+
+            _validationButton = new MaterialButton
+            {
+                DrawShadows = false,
+                Type = MaterialButton.MaterialButtonType.Text,
+                UseAccentColor = _useAccentColor,
+                Enabled = _savebuttonEnable,
+                Visible = _showValidationButtons,
+                Text = "SAVE"
+            };
+            _cancelButton = new MaterialButton
+            {
+                DrawShadows = false,
+                Type = MaterialButton.MaterialButtonType.Text,
+                UseAccentColor = _useAccentColor,
+                Visible = _showValidationButtons,
+                Text = "CANCEL"
+            };
+
+            if (!Controls.Contains(_validationButton) )
+            {
+                Controls.Add(_validationButton);
+            }
+           if (!Controls.Contains(_cancelButton) )
+            {
+                Controls.Add(_cancelButton);
+            }
+
+            _validationButton.Click += _validationButton_Click;
+            _cancelButton.Click += _cancelButton_Click;
+        }
+
+        private void _cancelButton_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            CancelClick?.Invoke(this, new EventArgs());
+            Collapse = true;
+            CollapseOrExpand();
+
+        }
+
+        private void _validationButton_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            SaveClick?.Invoke(this, new EventArgs());
+            Collapse = true;
+            CollapseOrExpand();
+
         }
 
 
@@ -370,22 +422,7 @@ namespace MaterialSkin.Controls
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (Enabled && _buttonState == ButtonState.SaveOver && _savebuttonEnable)
-            {
-                // Raise the event
-                SaveClick?.Invoke(this, new EventArgs());
-                Collapse = true;
-                CollapseOrExpand();
-            }
-            else if (Enabled && _buttonState == ButtonState.CancelOver)
-            {
-                // Raise the event
-                CancelClick?.Invoke(this, new EventArgs());		
-                Collapse = true;
-                CollapseOrExpand();
-            }
-															  
-            else if (Enabled && (_buttonState == ButtonState.HeaderOver | _buttonState == ButtonState.ColapseExpandOver))
+            if (Enabled && (_buttonState == ButtonState.HeaderOver | _buttonState == ButtonState.ColapseExpandOver))
             {
                 Collapse = !Collapse;
                 CollapseOrExpand();
@@ -492,7 +529,7 @@ namespace MaterialSkin.Controls
                     // Draw description header text 
                     NativeText.DrawTransparentText(
                     _descriptionHeader,
-                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body2),
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
                      SkinManager.TextDisabledOrHintColor,
                     headerDescriptionRect.Location,
                     headerDescriptionRect.Size,
@@ -533,34 +570,6 @@ namespace MaterialSkin.Controls
             {
                 //Draw divider
                 g.DrawLine(new Pen(SkinManager.DividersColor, 1), new Point(0, Height - _footerHeight), new Point(Width, Height - _footerHeight));
-
-                //Validation Button
-                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
-                {
-                    Point _textLocation = new Point(_savebuttonBounds.X + 8, _savebuttonBounds.Y);
-
-                    NativeText.DrawTransparentText(
-                    ValidationButtonText,
-                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
-                    Enabled && _savebuttonEnable ? (_buttonState == ButtonState.SaveOver) ? SkinManager.ColorScheme.AccentColor : SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
-                    _textLocation,
-                    _savebuttonBounds.Size,
-                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
-                }
-
-                //Cancel Button
-                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
-                {
-                    Point _textLocation = new Point(_cancelbuttonBounds.X + 8, _cancelbuttonBounds.Y);
-
-                    NativeText.DrawTransparentText(
-                    CancelButtonText,
-                    SkinManager.getLogFontByType( MaterialSkinManager.fontType.Button),
-                    Enabled ? (_buttonState == ButtonState.CancelOver) ? SkinManager.ColorScheme.AccentColor : SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
-                    _textLocation,
-                    _cancelbuttonBounds.Size,
-                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
-                }
             }
         }
 
@@ -602,6 +611,26 @@ namespace MaterialSkin.Controls
                 _savebuttonBounds = new Rectangle((Width) - _buttonPadding - _buttonWidth, Height - _expansionPanelDefaultPadding - _footerButtonHeight, _buttonWidth, _footerButtonHeight);
                 _buttonWidth = ((TextRenderer.MeasureText(CancelButtonText, SkinManager.getFontByType(MaterialSkinManager.fontType.Button))).Width + 16);
                 _cancelbuttonBounds = new Rectangle(_savebuttonBounds.Left - _buttonPadding - _buttonWidth, Height - _expansionPanelDefaultPadding - _footerButtonHeight, _buttonWidth, _footerButtonHeight);
+
+                if (_validationButton != null)
+                {
+                    _validationButton.Left = _savebuttonBounds.Left;
+                    _validationButton.Top = _savebuttonBounds.Top;
+                    _validationButton.Width = _savebuttonBounds.Width;
+                    _validationButton.Height = _savebuttonBounds.Height;
+                    _validationButton.Text = _validationButtonText;
+                    _validationButton.Enabled = _savebuttonEnable;
+                    _validationButton.UseAccentColor = _useAccentColor;
+                }
+                if (_cancelButton != null)
+                {
+                    _cancelButton.Left = _cancelbuttonBounds.Left;
+                    _cancelButton.Top = _cancelbuttonBounds.Top;
+                    _cancelButton.Width = _cancelbuttonBounds.Width;
+                    _cancelButton.Height = _cancelbuttonBounds.Height;
+                    _cancelButton.Text = _cancelButtonText;
+                    _cancelButton.UseAccentColor = _useAccentColor;
+                }
             }
         }
 
