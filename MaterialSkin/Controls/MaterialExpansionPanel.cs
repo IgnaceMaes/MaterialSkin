@@ -178,7 +178,7 @@ namespace MaterialSkin.Controls
             set { _cancelButtonText = value; UpdateRects(); Invalidate(); }
         }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [Category("Material Skin"), DisplayName("Validation button enable")]
         [Description("Enable validation button")]
         public bool ValidationButtonEnable
@@ -241,7 +241,7 @@ namespace MaterialSkin.Controls
                 DrawShadows = false,
                 Type = MaterialButton.MaterialButtonType.Text,
                 UseAccentColor = _useAccentColor,
-                Enabled = _savebuttonEnable,
+                Enabled = ValidationButtonEnable,
                 Visible = _showValidationButtons,
                 Text = "SAVE"
             };
@@ -607,16 +607,16 @@ namespace MaterialSkin.Controls
         {
             if (!_collapse && _showValidationButtons)
             {
-                int _buttonWidth = ((TextRenderer.MeasureText(ValidationButtonText, SkinManager.getFontByType(MaterialSkinManager.fontType.Button))).Width + 16);
+                int _buttonWidth = ((TextRenderer.MeasureText(ValidationButtonText, SkinManager.getFontByType(MaterialSkinManager.fontType.Button))).Width + 32);
                 _savebuttonBounds = new Rectangle((Width) - _buttonPadding - _buttonWidth, Height - _expansionPanelDefaultPadding - _footerButtonHeight, _buttonWidth, _footerButtonHeight);
-                _buttonWidth = ((TextRenderer.MeasureText(CancelButtonText, SkinManager.getFontByType(MaterialSkinManager.fontType.Button))).Width + 16);
+                _buttonWidth = ((TextRenderer.MeasureText(CancelButtonText, SkinManager.getFontByType(MaterialSkinManager.fontType.Button))).Width + 32);
                 _cancelbuttonBounds = new Rectangle(_savebuttonBounds.Left - _buttonPadding - _buttonWidth, Height - _expansionPanelDefaultPadding - _footerButtonHeight, _buttonWidth, _footerButtonHeight);
 
                 if (_validationButton != null)
                 {
-                    _validationButton.Left = _savebuttonBounds.Left;
-                    _validationButton.Top = _savebuttonBounds.Top;
                     _validationButton.Width = _savebuttonBounds.Width;
+                    _validationButton.Left = Width - _buttonPadding - _validationButton.Width;  //Button minimum width management
+                    _validationButton.Top = _savebuttonBounds.Top;
                     _validationButton.Height = _savebuttonBounds.Height;
                     _validationButton.Text = _validationButtonText;
                     _validationButton.Enabled = _savebuttonEnable;
@@ -624,9 +624,9 @@ namespace MaterialSkin.Controls
                 }
                 if (_cancelButton != null)
                 {
-                    _cancelButton.Left = _cancelbuttonBounds.Left;
-                    _cancelButton.Top = _cancelbuttonBounds.Top;
                     _cancelButton.Width = _cancelbuttonBounds.Width;
+                    _cancelButton.Left = _validationButton.Left - _buttonPadding - _cancelbuttonBounds.Width;  //Button minimum width management
+                    _cancelButton.Top = _cancelbuttonBounds.Top;
                     _cancelButton.Height = _cancelbuttonBounds.Height;
                     _cancelButton.Text = _cancelButtonText;
                     _cancelButton.UseAccentColor = _useAccentColor;
