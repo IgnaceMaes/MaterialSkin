@@ -539,7 +539,7 @@ namespace MaterialSkin.Controls
 
             if (_showCollapseExpand==true)
             {
-                using (var formButtonsPen = new Pen(_useAccentColor ? SkinManager.ColorScheme.AccentColor : SkinManager.TextDisabledOrHintColor, 2))
+                using (var formButtonsPen = new Pen(_useAccentColor && Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.TextDisabledOrHintColor, 2))
                 {
                     if (_collapse)
                     {
