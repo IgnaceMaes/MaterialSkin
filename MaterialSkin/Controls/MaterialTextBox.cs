@@ -2,8 +2,10 @@
 {
     using MaterialSkin.Animations;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
+    using System.Drawing.Imaging;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
@@ -67,10 +69,7 @@
             {
                 _leadingIcon = value;
                 UpdateRects();
-                //if (_leadingIcon != null) 
-                //    _left_padding = SkinManager.FORM_PADDING+ ICON_SIZE;
-                //else
-                //    _left_padding = SkinManager.FORM_PADDING;
+                preProcessIcons();
                 if (AutoSize)
                 {
                     Refresh();
@@ -95,10 +94,7 @@
             {
                 _trailingIcon = value;
                 UpdateRects();
-                //if (_trailingIcon != null)
-                //    _right_padding = SkinManager.FORM_PADDING + ICON_SIZE;
-                //else
-                //    _right_padding = SkinManager.FORM_PADDING;
+                preProcessIcons();
                 if (AutoSize)
                 {
                     Refresh();
@@ -118,6 +114,7 @@
         private int LINE_Y;
 
         private bool hasHint;
+        private bool _errorState = false;
         private int _left_padding ;
         private int _right_padding ;
         private Rectangle _leadingIconBounds;
@@ -125,6 +122,8 @@
         private Rectangle _textfieldBounds;
 
         private readonly AnimationManager _animationManager;
+        private Dictionary<string, TextureBrush> iconsBrushes;
+        private Dictionary<string, TextureBrush> iconsErrorBrushes;
 
         #region "Events"
 
@@ -159,6 +158,16 @@
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
+            SkinManager.ColorSchemeChanged += sender =>
+            {
+                preProcessIcons();
+            };
+
+            SkinManager.ThemeChanged += sender =>
+            {
+                preProcessIcons();
+            };
+
             MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
@@ -176,7 +185,7 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            base.Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
+            base.Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1);
             base.AutoSize = false;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
@@ -229,6 +238,132 @@
             return new Size(proposedSize.Width, HEIGHT);
         }
 
+        private void preProcessIcons()
+        {
+            if (_trailingIcon == null && _leadingIcon == null) return;
+
+            // Calculate lightness and color
+            float l = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ) ? 0f : 1f;
+
+            // Create matrices
+            float[][] matrixGray = {
+                    new float[] {   0,   0,   0,   0,  0}, // Red scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Green scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
+                    new float[] {   0,   0,   0, Enabled ? .7f : .3f,  0}, // alpha scale factor
+                    new float[] {   l,   l,   l,   0,  1}};// offset
+
+            float[][] matrixRed = {
+                    new float[] {   0,   0,   0,   0,  0}, // Red scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Green scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
+                    new float[] {   0,   0,   0,   1,  0}, // alpha scale factor
+                    new float[] {   1,   0,   0,   0,  1}};// offset
+
+            ColorMatrix colorMatrixGray = new ColorMatrix(matrixGray);
+            ColorMatrix colorMatrixRed = new ColorMatrix(matrixRed);
+
+            ImageAttributes grayImageAttributes = new ImageAttributes();
+            ImageAttributes redImageAttributes = new ImageAttributes();
+
+            // Set color matrices
+            grayImageAttributes.SetColorMatrix(colorMatrixGray, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+            redImageAttributes.SetColorMatrix(colorMatrixRed, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            // Create brushes
+            iconsBrushes = new Dictionary<string, TextureBrush>(2);
+            iconsErrorBrushes = new Dictionary<string, TextureBrush>(2);
+
+            // Image Rect
+            Rectangle destRect = new Rectangle(0, 0, ICON_SIZE, ICON_SIZE);
+
+            if (_leadingIcon != null)
+            {
+                // ********************
+                // *** _leadingIcon ***
+                // ********************
+
+                // Create a pre-processed copy of the image (GRAY)
+                Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gGray = Graphics.FromImage(bgray))
+                {
+                    gGray.DrawImage(_leadingIcon,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, grayImageAttributes);
+                }
+
+                // added processed image to brush for drawing
+                TextureBrush textureBrushGray = new TextureBrush(bgray);
+
+                textureBrushGray.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+
+                var iconRect = _leadingIconBounds;
+
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
+                                                    iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+
+                // add to dictionary
+                iconsBrushes.Add("_leadingIcon", textureBrushGray);
+            }
+
+            if (_trailingIcon != null)
+            {
+                // *********************
+                // *** _trailingIcon ***
+                // *********************
+
+                // Create a pre-processed copy of the image (GRAY)
+                Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gGray = Graphics.FromImage(bgray))
+                {
+                    gGray.DrawImage(_trailingIcon,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, grayImageAttributes);
+                }
+
+                //Create a pre - processed copy of the image(PRIMARY COLOR)
+                Bitmap bred = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gred = Graphics.FromImage(bred))
+                {
+                    gred.DrawImage(_trailingIcon,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, redImageAttributes);
+                }
+
+
+                // added processed image to brush for drawing
+                TextureBrush textureBrushGray = new TextureBrush(bgray);
+                TextureBrush textureBrushRed = new TextureBrush(bred);
+
+                textureBrushGray.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+                textureBrushRed.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+
+                var iconRect = _trailingIconBounds;
+
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
+                                                    iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+                textureBrushRed.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
+                                                     iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+
+                // add to dictionary
+                iconsBrushes.Add("_trailingIcon", textureBrushGray);
+                //iconsSelectedBrushes.Add(0, textureBrushColor);
+                iconsErrorBrushes.Add("_trailingIcon", textureBrushRed);
+            }
+        }
+
         private void UpdateRects()
         {
             if (LeadingIcon != null)
@@ -248,11 +383,22 @@
             var rect = new Rectangle(_left_padding, UseTallSize ? hasHint ?
         (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
         (int)(LINE_Y / 3.5) : // No hint and tall
-        HEIGHT / 5, // not tall
+        Height / 5, // not tall
         ClientSize.Width - _left_padding - _right_padding, LINE_Y);
             RECT rc = new RECT(rect);
             SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
 
+        }
+
+        public void SetErrorState(bool ErrorState)
+        {
+            _errorState = ErrorState;
+            Invalidate();
+        }
+
+        public bool GetErrorState()
+        {
+            return _errorState;
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -275,13 +421,16 @@
             //Leading Icon
             if (LeadingIcon != null)
             {
-                g.DrawImage(LeadingIcon, _leadingIconBounds);
+                g.FillRectangle(iconsBrushes["_leadingIcon"], _leadingIconBounds);
             }
 
             //Trailing Icon
             if (TrailingIcon != null)
             {
-                g.DrawImage(TrailingIcon, _trailingIconBounds);
+                if(_errorState)
+                    g.FillRectangle(iconsErrorBrushes["_trailingIcon"], _trailingIconBounds);
+                else
+                    g.FillRectangle(iconsBrushes["_trailingIcon"], _trailingIconBounds);
             }
 
             // HintText
@@ -309,7 +458,7 @@
                 // bottom line
                 if (Focused)
                 {
-                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
+                    g.FillRectangle(_errorState ? SkinManager.BackgroundHoverRedBrush : UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
                 }
             }
             else
@@ -407,10 +556,11 @@
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getTextBoxFontBySize(hintTextSize),
-                    Enabled ? Focused ? UseAccent ?
+                    Enabled ? !_errorState || (!userTextPresent && !Focused) ? Focused ? UseAccent ?
                     SkinManager.ColorScheme.AccentColor : // Focus Accent
                     SkinManager.ColorScheme.PrimaryColor : // Focus Primary
                     SkinManager.TextMediumEmphasisColor : // not focused
+                    SkinManager.BackgroundHoverRedColor : // error state
                     SkinManager.TextDisabledOrHintColor, // Disabled
                     hintRect.Location,
                     hintRect.Size,
@@ -480,6 +630,8 @@
             base.OnResize(e);
             Size = new Size(Width, HEIGHT);
             LINE_Y = HEIGHT - BOTTOM_PADDING;
+            UpdateRects();
+            preProcessIcons();
 
             if (DesignMode)
             {
@@ -488,6 +640,9 @@
                 _tmpimage = LeadingIcon;
                 LeadingIcon = null;
                 LeadingIcon = _tmpimage;
+                _tmpimage = TrailingIcon;
+                TrailingIcon = null;
+                TrailingIcon = _tmpimage;
             }
         }
 
