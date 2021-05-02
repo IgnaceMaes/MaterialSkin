@@ -35,6 +35,24 @@ namespace MaterialSkinExample
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            MaterialSkin.MaterialListBoxItem materialListBoxItem1 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem2 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem3 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem4 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem5 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem6 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem7 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem8 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem9 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem10 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem11 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem12 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem13 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem14 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem15 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem16 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem17 = new MaterialSkin.MaterialListBoxItem();
+            MaterialSkin.MaterialListBoxItem materialListBoxItem18 = new MaterialSkin.MaterialListBoxItem();
             this.materialCheckbox3 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialCheckbox1 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
@@ -156,6 +174,13 @@ namespace MaterialSkinExample
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialLabel30 = new MaterialSkin.Controls.MaterialLabel();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.materialLabel48 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel47 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel46 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialListBox3 = new MaterialSkin.Controls.MaterialListBox();
+            this.materialListBox2 = new MaterialSkin.Controls.MaterialListBox();
+            this.materialListBox1 = new MaterialSkin.Controls.MaterialListBox();
             this.menuIconList = new System.Windows.Forms.ImageList(this.components);
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
@@ -177,6 +202,7 @@ namespace MaterialSkinExample
             this.materialTabControl2.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            this.tabPage10.SuspendLayout();
             this.materialContextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -225,11 +251,13 @@ namespace MaterialSkinExample
             this.materialTabControl1.Controls.Add(this.tabPage4);
             this.materialTabControl1.Controls.Add(this.tabPage5);
             this.materialTabControl1.Controls.Add(this.tabPage6);
+            this.materialTabControl1.Controls.Add(this.tabPage10);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialTabControl1.ImageList = this.menuIconList;
             this.materialTabControl1.Location = new System.Drawing.Point(3, 64);
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabControl1.Multiline = true;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.SelectedIndex = 0;
             this.materialTabControl1.Size = new System.Drawing.Size(1023, 555);
@@ -266,7 +294,7 @@ namespace MaterialSkinExample
             this.MaterialButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton3.Name = "MaterialButton3";
-            this.MaterialButton3.Size = new System.Drawing.Size(163, 36);
+            this.MaterialButton3.Size = new System.Drawing.Size(156, 36);
             this.MaterialButton3.TabIndex = 36;
             this.MaterialButton3.Text = "Open Message box";
             this.MaterialButton3.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -380,7 +408,7 @@ namespace MaterialSkinExample
             this.materialButton7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton7.Name = "materialButton7";
-            this.materialButton7.Size = new System.Drawing.Size(133, 36);
+            this.materialButton7.Size = new System.Drawing.Size(129, 36);
             this.materialButton7.TabIndex = 0;
             this.materialButton7.Text = "Change Theme";
             this.materialButton7.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
@@ -416,7 +444,7 @@ namespace MaterialSkinExample
             this.MaterialButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton4.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton4.Name = "MaterialButton4";
-            this.MaterialButton4.Size = new System.Drawing.Size(140, 36);
+            this.MaterialButton4.Size = new System.Drawing.Size(135, 36);
             this.MaterialButton4.TabIndex = 22;
             this.MaterialButton4.Text = "Change Colors";
             this.MaterialButton4.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -525,11 +553,9 @@ namespace MaterialSkinExample
             // 
             this.materialFloatingActionButton1.AnimateShowHideButton = true;
             this.materialFloatingActionButton1.Depth = 0;
-            this.materialFloatingActionButton1.DrawShadows = true;
             this.materialFloatingActionButton1.Icon = global::MaterialSkinExample.Properties.Resources.plus;
             this.materialFloatingActionButton1.Location = new System.Drawing.Point(761, 221);
             this.materialFloatingActionButton1.Margin = new System.Windows.Forms.Padding(2);
-            this.materialFloatingActionButton1.Mini = false;
             this.materialFloatingActionButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
             this.materialFloatingActionButton1.Size = new System.Drawing.Size(56, 56);
@@ -962,6 +988,7 @@ namespace MaterialSkinExample
             this.materialComboBox6.MouseState = MaterialSkin.MouseState.OUT;
             this.materialComboBox6.Name = "materialComboBox6";
             this.materialComboBox6.Size = new System.Drawing.Size(190, 49);
+            this.materialComboBox6.StartIndex = 0;
             this.materialComboBox6.TabIndex = 74;
             // 
             // materialComboBox2
@@ -987,6 +1014,7 @@ namespace MaterialSkinExample
             this.materialComboBox2.MouseState = MaterialSkin.MouseState.OUT;
             this.materialComboBox2.Name = "materialComboBox2";
             this.materialComboBox2.Size = new System.Drawing.Size(435, 49);
+            this.materialComboBox2.StartIndex = 0;
             this.materialComboBox2.TabIndex = 73;
             // 
             // materialComboBox5
@@ -1080,6 +1108,7 @@ namespace MaterialSkinExample
             this.materialComboBox5.MouseState = MaterialSkin.MouseState.OUT;
             this.materialComboBox5.Name = "materialComboBox5";
             this.materialComboBox5.Size = new System.Drawing.Size(190, 49);
+            this.materialComboBox5.StartIndex = 0;
             this.materialComboBox5.TabIndex = 72;
             // 
             // materialComboBox4
@@ -1175,6 +1204,7 @@ namespace MaterialSkinExample
             this.materialComboBox4.Name = "materialComboBox4";
             this.materialComboBox4.Size = new System.Drawing.Size(190, 49);
             this.materialComboBox4.TabIndex = 71;
+            this.materialComboBox4.StartIndex = 0;
             this.materialComboBox4.UseAccent = false;
             // 
             // materialComboBox3
@@ -1205,6 +1235,7 @@ namespace MaterialSkinExample
             this.materialComboBox3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialComboBox3.Name = "materialComboBox3";
             this.materialComboBox3.Size = new System.Drawing.Size(190, 35);
+            this.materialComboBox3.StartIndex = 0;
             this.materialComboBox3.TabIndex = 70;
             this.materialComboBox3.UseTallSize = false;
             // 
@@ -1264,6 +1295,7 @@ namespace MaterialSkinExample
             this.materialComboBox1.MouseState = MaterialSkin.MouseState.OUT;
             this.materialComboBox1.Name = "materialComboBox1";
             this.materialComboBox1.Size = new System.Drawing.Size(190, 49);
+            this.materialComboBox1.StartIndex = 0;
             this.materialComboBox1.TabIndex = 17;
             // 
             // materialLabel34
@@ -2037,7 +2069,7 @@ namespace MaterialSkinExample
             this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFlatButton2.Name = "materialFlatButton2";
-            this.materialFlatButton2.Size = new System.Drawing.Size(108, 36);
+            this.materialFlatButton2.Size = new System.Drawing.Size(106, 36);
             this.materialFlatButton2.TabIndex = 1;
             this.materialFlatButton2.Text = "Remove";
             this.materialFlatButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
@@ -2068,11 +2100,11 @@ namespace MaterialSkinExample
             this.MaterialButton2.DrawShadows = true;
             this.MaterialButton2.HighEmphasis = true;
             this.MaterialButton2.Icon = global::MaterialSkinExample.Properties.Resources.plus;
-            this.MaterialButton2.Location = new System.Drawing.Point(755, 156);
+            this.MaterialButton2.Location = new System.Drawing.Point(756, 156);
             this.MaterialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton2.Name = "MaterialButton2";
-            this.MaterialButton2.Size = new System.Drawing.Size(78, 36);
+            this.MaterialButton2.Size = new System.Drawing.Size(77, 36);
             this.MaterialButton2.TabIndex = 2;
             this.MaterialButton2.Text = "Add";
             this.MaterialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -2194,11 +2226,11 @@ namespace MaterialSkinExample
             this.materialButton1.DrawShadows = true;
             this.materialButton1.HighEmphasis = true;
             this.materialButton1.Icon = null;
-            this.materialButton1.Location = new System.Drawing.Point(226, 131);
+            this.materialButton1.Location = new System.Drawing.Point(229, 131);
             this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
-            this.materialButton1.Size = new System.Drawing.Size(58, 36);
+            this.materialButton1.Size = new System.Drawing.Size(55, 36);
             this.materialButton1.TabIndex = 1;
             this.materialButton1.Text = "Nice!";
             this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
@@ -2241,6 +2273,7 @@ namespace MaterialSkinExample
             this.materialTabControl2.Location = new System.Drawing.Point(40, 128);
             this.materialTabControl2.Margin = new System.Windows.Forms.Padding(0);
             this.materialTabControl2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabControl2.Multiline = true;
             this.materialTabControl2.Name = "materialTabControl2";
             this.materialTabControl2.SelectedIndex = 0;
             this.materialTabControl2.Size = new System.Drawing.Size(491, 278);
@@ -2339,6 +2372,178 @@ namespace MaterialSkinExample
             this.materialLabel30.Size = new System.Drawing.Size(126, 58);
             this.materialLabel30.TabIndex = 65;
             this.materialLabel30.Text = "Cards";
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.BackColor = System.Drawing.Color.White;
+            this.tabPage10.Controls.Add(this.materialLabel48);
+            this.tabPage10.Controls.Add(this.materialLabel47);
+            this.tabPage10.Controls.Add(this.materialLabel46);
+            this.tabPage10.Controls.Add(this.materialListBox3);
+            this.tabPage10.Controls.Add(this.materialListBox2);
+            this.tabPage10.Controls.Add(this.materialListBox1);
+            this.tabPage10.ImageKey = "round_bookmark_white_24dp.png";
+            this.tabPage10.Location = new System.Drawing.Point(4, 31);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(1015, 520);
+            this.tabPage10.TabIndex = 7;
+            this.tabPage10.Text = "ListBox";
+            // 
+            // materialLabel48
+            // 
+            this.materialLabel48.AutoSize = true;
+            this.materialLabel48.Depth = 0;
+            this.materialLabel48.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel48.Location = new System.Drawing.Point(579, 29);
+            this.materialLabel48.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel48.Name = "materialLabel48";
+            this.materialLabel48.Size = new System.Drawing.Size(130, 19);
+            this.materialLabel48.TabIndex = 3;
+            this.materialLabel48.Text = "ListBox three lines";
+            // 
+            // materialLabel47
+            // 
+            this.materialLabel47.AutoSize = true;
+            this.materialLabel47.Depth = 0;
+            this.materialLabel47.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel47.Location = new System.Drawing.Point(306, 29);
+            this.materialLabel47.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel47.Name = "materialLabel47";
+            this.materialLabel47.Size = new System.Drawing.Size(121, 19);
+            this.materialLabel47.TabIndex = 3;
+            this.materialLabel47.Text = "ListBox two lines";
+            // 
+            // materialLabel46
+            // 
+            this.materialLabel46.AutoSize = true;
+            this.materialLabel46.Depth = 0;
+            this.materialLabel46.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel46.Location = new System.Drawing.Point(41, 29);
+            this.materialLabel46.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel46.Name = "materialLabel46";
+            this.materialLabel46.Size = new System.Drawing.Size(129, 19);
+            this.materialLabel46.TabIndex = 3;
+            this.materialLabel46.Text = "ListBox single line";
+            // 
+            // materialListBox3
+            // 
+            this.materialListBox3.BackColor = System.Drawing.Color.White;
+            this.materialListBox3.BorderColor = System.Drawing.Color.LightGray;
+            this.materialListBox3.Depth = 0;
+            this.materialListBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            materialListBoxItem1.SecondaryText = "A very very long secondary text to display 1 ";
+            materialListBoxItem1.Tag = null;
+            materialListBoxItem1.Text = "ListBoxItem1";
+            materialListBoxItem2.SecondaryText = "A very very long secondary text to display 2";
+            materialListBoxItem2.Tag = null;
+            materialListBoxItem2.Text = "ListBoxItem2";
+            materialListBoxItem3.SecondaryText = "A very very long secondary text to display 3";
+            materialListBoxItem3.Tag = null;
+            materialListBoxItem3.Text = "ListBoxItem3";
+            materialListBoxItem4.SecondaryText = "A very very long secondary text to display 4";
+            materialListBoxItem4.Tag = null;
+            materialListBoxItem4.Text = "ListBoxItem4";
+            materialListBoxItem5.SecondaryText = "A very very long secondary text to display 5";
+            materialListBoxItem5.Tag = null;
+            materialListBoxItem5.Text = "ListBoxItem5";
+            materialListBoxItem6.SecondaryText = "A very very long secondary text to display 6";
+            materialListBoxItem6.Tag = null;
+            materialListBoxItem6.Text = "ListBoxItem6";
+            this.materialListBox3.Items.Add(materialListBoxItem1);
+            this.materialListBox3.Items.Add(materialListBoxItem2);
+            this.materialListBox3.Items.Add(materialListBoxItem3);
+            this.materialListBox3.Items.Add(materialListBoxItem4);
+            this.materialListBox3.Items.Add(materialListBoxItem5);
+            this.materialListBox3.Items.Add(materialListBoxItem6);
+            this.materialListBox3.Location = new System.Drawing.Point(571, 63);
+            this.materialListBox3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialListBox3.Name = "materialListBox3";
+            this.materialListBox3.SelectedIndex = -1;
+            this.materialListBox3.SelectedItem = null;
+            this.materialListBox3.SelectedValue = null;
+            this.materialListBox3.Size = new System.Drawing.Size(200, 160);
+            this.materialListBox3.Style = MaterialSkin.Controls.MaterialListBox.ListBoxStyle.ThreeLine;
+            this.materialListBox3.TabIndex = 2;
+            // 
+            // materialListBox2
+            // 
+            this.materialListBox2.BackColor = System.Drawing.Color.White;
+            this.materialListBox2.BorderColor = System.Drawing.Color.LightGray;
+            this.materialListBox2.Depth = 0;
+            this.materialListBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            materialListBoxItem7.SecondaryText = "Secondary text1";
+            materialListBoxItem7.Tag = null;
+            materialListBoxItem7.Text = "ListBoxItem1";
+            materialListBoxItem8.SecondaryText = "Secondary text2";
+            materialListBoxItem8.Tag = null;
+            materialListBoxItem8.Text = "ListBoxItem2";
+            materialListBoxItem9.SecondaryText = "Secondary text3";
+            materialListBoxItem9.Tag = null;
+            materialListBoxItem9.Text = "ListBoxItem3";
+            materialListBoxItem10.SecondaryText = "Secondary text4";
+            materialListBoxItem10.Tag = null;
+            materialListBoxItem10.Text = "ListBoxItem4";
+            materialListBoxItem11.SecondaryText = "Secondary text5";
+            materialListBoxItem11.Tag = null;
+            materialListBoxItem11.Text = "ListBoxItem5";
+            materialListBoxItem12.SecondaryText = "Secondary text6";
+            materialListBoxItem12.Tag = null;
+            materialListBoxItem12.Text = "ListBoxItem6";
+            this.materialListBox2.Items.Add(materialListBoxItem7);
+            this.materialListBox2.Items.Add(materialListBoxItem8);
+            this.materialListBox2.Items.Add(materialListBoxItem9);
+            this.materialListBox2.Items.Add(materialListBoxItem10);
+            this.materialListBox2.Items.Add(materialListBoxItem11);
+            this.materialListBox2.Items.Add(materialListBoxItem12);
+            this.materialListBox2.Location = new System.Drawing.Point(298, 63);
+            this.materialListBox2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialListBox2.Name = "materialListBox2";
+            this.materialListBox2.SelectedIndex = -1;
+            this.materialListBox2.SelectedItem = null;
+            this.materialListBox2.SelectedValue = null;
+            this.materialListBox2.Size = new System.Drawing.Size(200, 160);
+            this.materialListBox2.Style = MaterialSkin.Controls.MaterialListBox.ListBoxStyle.TwoLine;
+            this.materialListBox2.TabIndex = 1;
+            this.materialListBox2.UseAccentColor = true;
+            // 
+            // materialListBox1
+            // 
+            this.materialListBox1.BackColor = System.Drawing.Color.White;
+            this.materialListBox1.BorderColor = System.Drawing.Color.LightGray;
+            this.materialListBox1.Depth = 0;
+            this.materialListBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            materialListBoxItem13.SecondaryText = "";
+            materialListBoxItem13.Tag = null;
+            materialListBoxItem13.Text = "ListBoxItem1";
+            materialListBoxItem14.SecondaryText = "";
+            materialListBoxItem14.Tag = null;
+            materialListBoxItem14.Text = "ListBoxItem2";
+            materialListBoxItem15.SecondaryText = "";
+            materialListBoxItem15.Tag = null;
+            materialListBoxItem15.Text = "ListBoxItem3";
+            materialListBoxItem16.SecondaryText = "";
+            materialListBoxItem16.Tag = null;
+            materialListBoxItem16.Text = "ListBoxItem4";
+            materialListBoxItem17.SecondaryText = "";
+            materialListBoxItem17.Tag = null;
+            materialListBoxItem17.Text = "ListBoxItem5";
+            materialListBoxItem18.SecondaryText = "";
+            materialListBoxItem18.Tag = null;
+            materialListBoxItem18.Text = "ListBoxItem6";
+            this.materialListBox1.Items.Add(materialListBoxItem13);
+            this.materialListBox1.Items.Add(materialListBoxItem14);
+            this.materialListBox1.Items.Add(materialListBoxItem15);
+            this.materialListBox1.Items.Add(materialListBoxItem16);
+            this.materialListBox1.Items.Add(materialListBoxItem17);
+            this.materialListBox1.Items.Add(materialListBoxItem18);
+            this.materialListBox1.Location = new System.Drawing.Point(30, 63);
+            this.materialListBox1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialListBox1.Name = "materialListBox1";
+            this.materialListBox1.SelectedIndex = -1;
+            this.materialListBox1.SelectedItem = null;
+            this.materialListBox1.SelectedValue = null;
+            this.materialListBox1.Size = new System.Drawing.Size(200, 160);
+            this.materialListBox1.TabIndex = 0;
             // 
             // menuIconList
             // 
@@ -2459,6 +2664,8 @@ namespace MaterialSkinExample
             this.tabPage8.PerformLayout();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
             this.materialContextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -2595,5 +2802,12 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel38;
         private MaterialDivider materialDivider3;
         private MaterialDivider materialDivider2;
+        private TabPage tabPage10;
+        private MaterialLabel materialLabel47;
+        private MaterialLabel materialLabel46;
+        private MaterialListBox materialListBox3;
+        private MaterialListBox materialListBox2;
+        private MaterialListBox materialListBox1;
+        private MaterialLabel materialLabel48;
     }
 }
