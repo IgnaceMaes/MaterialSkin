@@ -737,7 +737,7 @@ namespace MaterialSkin.Controls
         protected override void OnMouseDown(MouseEventArgs e)
         {
             Focus();
-            if (e.Button == MouseButtons.Left &&  _scrollBar.Maximum < _scrollBar.Value)
+            if (e.Button == MouseButtons.Left)
             {
                 int index = _scrollBar.Value / _itemHeight + e.Location.Y / _itemHeight;
                 if (index >= 0 && index < _items.Count)
