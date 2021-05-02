@@ -1,4 +1,4 @@
-﻿
+
 namespace MaterialSkin.Controls
 {
 
@@ -9,8 +9,7 @@ namespace MaterialSkin.Controls
     using System.Security;
     using System.Windows.Forms;
     using System.Runtime.InteropServices;
-    // TODO: Implement Selectable
-    // TODO: Get rid of this, use ScrollOrientation
+    
     public enum MaterialScrollOrientation
     {
         Horizontal,
@@ -28,6 +27,15 @@ namespace MaterialSkin.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
+        private bool useAccentColor;
+
+        [Category("Material Skin"), DefaultValue(false), DisplayName("Use Accent Color")]
+        public bool UseAccentColor
+        {
+            get { return useAccentColor; }
+            set { useAccentColor = value; Invalidate(); }
+        }
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -368,6 +376,8 @@ namespace MaterialSkin.Controls
             Width = SCROLLBAR_DEFAULT_SIZE;
             Height = 200;
 
+            UseAccentColor = false;
+
             SetupScrollBar();
 
             progressTimer.Interval = 20;
@@ -429,7 +439,7 @@ namespace MaterialSkin.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            DrawScrollBar(e.Graphics, MaterialSkinManager.Instance.CardsColor, MaterialSkinManager.Instance.ColorScheme.PrimaryColor, MaterialSkinManager.Instance.ColorScheme.AccentColor);
+            DrawScrollBar(e.Graphics, MaterialSkinManager.Instance.CardsColor, SkinManager.SwitchOffTrackColor, useAccentColor ? MaterialSkinManager.Instance.ColorScheme.AccentColor : MaterialSkinManager.Instance.ColorScheme.PrimaryColor);
         }
 
         private void DrawScrollBar(Graphics g, Color backColor, Color thumbColor, Color barColor)
