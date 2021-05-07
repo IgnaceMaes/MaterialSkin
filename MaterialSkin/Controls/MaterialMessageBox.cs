@@ -21,54 +21,54 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
-        public static DialogResult Show(string text)
+        public static DialogResult Show(string text, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(null, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(null, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(IWin32Window owner, string text)
+        public static DialogResult Show(IWin32Window owner, string text, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(owner, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(owner, text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(string text, string caption)
+        public static DialogResult Show(string text, string caption, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(null, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(null, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(IWin32Window owner, string text, string caption)
+        public static DialogResult Show(IWin32Window owner, string text, string caption, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(owner, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(owner, text, caption, MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons)
+        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(null, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(null, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons)
+        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(owner, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(owner, text, caption, buttons, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(null, text, caption, buttons, icon, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(null, text, caption, buttons, icon, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(owner, text, caption, buttons, icon, MessageBoxDefaultButton.Button1);
+            return FlexibleMaterialForm.Show(owner, text, caption, buttons, icon, MessageBoxDefaultButton.Button1, UseRichTextBox);
         }
 
-        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+        public static DialogResult Show(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(null, text, caption, buttons, icon, defaultButton);
+            return FlexibleMaterialForm.Show(null, text, caption, buttons, icon, defaultButton, UseRichTextBox);
         }
 
-        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+        public static DialogResult Show(IWin32Window owner, string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, bool UseRichTextBox = true)
         {
-            return FlexibleMaterialForm.Show(owner, text, caption, buttons, icon, defaultButton);
+            return FlexibleMaterialForm.Show(owner, text, caption, buttons, icon, defaultButton, UseRichTextBox);
         }
     }
 }
