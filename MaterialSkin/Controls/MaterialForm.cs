@@ -364,6 +364,22 @@
             int H = Size.Height - _statusBarBounds.Height - _actionBarBounds.Height;
             int Y = Location.Y + _statusBarBounds.Height + _actionBarBounds.Height;
 
+            // Overlay Form definitions
+            drawerOverlay.BackColor = Color.Black;
+            drawerOverlay.Opacity = 0;
+            drawerOverlay.MinimizeBox = false;
+            drawerOverlay.MaximizeBox = false;
+            drawerOverlay.Text = "";
+            drawerOverlay.ShowIcon = false;
+            drawerOverlay.ControlBox = false;
+            drawerOverlay.FormBorderStyle = FormBorderStyle.None;
+            drawerOverlay.Visible = true;
+            drawerOverlay.Size = new Size(Size.Width, H);
+            drawerOverlay.Location = new Point(Location.X, Y);
+            drawerOverlay.ShowInTaskbar = false;
+            drawerOverlay.Owner = this;
+            drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+
             // Drawer Form definitions
             drawerForm.BackColor = Color.LimeGreen;
             drawerForm.TransparencyKey = Color.LimeGreen;
@@ -387,6 +403,7 @@
             drawerControl.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
             drawerControl.BaseTabControl = DrawerTabControl;
             drawerControl.ShowIconsWhenHidden = true;
+
             // Init Options
             drawerControl.IsOpen = DrawerIsOpen;
             drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
@@ -405,22 +422,6 @@
             {
                 drawerForm.Refresh();
             };
-
-            // Overlay Form definitions
-            drawerOverlay.BackColor = Color.Black;
-            drawerOverlay.Opacity = 0;
-            drawerOverlay.MinimizeBox = false;
-            drawerOverlay.MaximizeBox = false;
-            drawerOverlay.Text = "";
-            drawerOverlay.ShowIcon = false;
-            drawerOverlay.ControlBox = false;
-            drawerOverlay.FormBorderStyle = FormBorderStyle.None;
-            drawerOverlay.Visible = true;
-            drawerOverlay.Size = new Size(Size.Width, H);
-            drawerOverlay.Location = new Point(Location.X, Y);
-            drawerOverlay.ShowInTaskbar = false;
-            drawerOverlay.Owner = this;
-            drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 
             // Visible, Resize and move events
             VisibleChanged += (sender, e) =>
