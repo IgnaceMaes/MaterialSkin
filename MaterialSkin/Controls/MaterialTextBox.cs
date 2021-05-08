@@ -364,7 +364,7 @@
             }
         }
 
-        private void UpdateRects()
+        private void UpdateRects(bool RedefineTextField = true)
         {
             if (LeadingIcon != null)
                 _left_padding = SkinManager.FORM_PADDING + ICON_SIZE;
@@ -380,6 +380,8 @@
             _trailingIconBounds = new Rectangle(Width - (ICON_SIZE + 8), (HEIGHT / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
             _textfieldBounds = new Rectangle(_left_padding, ClientRectangle.Y, Width - _left_padding - _right_padding, LINE_Y);
 
+            if (RedefineTextField)
+            {
             var rect = new Rectangle(_left_padding, UseTallSize ? hasHint ?
         (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
         (int)(LINE_Y / 3.5) : // No hint and tall
@@ -387,6 +389,7 @@
         ClientSize.Width - _left_padding - _right_padding, LINE_Y);
             RECT rc = new RECT(rect);
             SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
+            }
 
         }
 
@@ -630,7 +633,7 @@
             base.OnResize(e);
             Size = new Size(Width, HEIGHT);
             LINE_Y = HEIGHT - BOTTOM_PADDING;
-            UpdateRects();
+            UpdateRects(false);
             preProcessIcons();
 
             if (DesignMode)
