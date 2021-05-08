@@ -22,6 +22,12 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        public override string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; Invalidate(); }
+        }
+
         public new FormBorderStyle FormBorderStyle
         {
             get { return base.FormBorderStyle; }
@@ -184,6 +190,7 @@
             DrawerIsOpen = false;
             DrawerShowIconsWhenHidden = false;
             DrawerAutoHide = true;
+            DrawerAutoShow = false;
             DrawerIndicatorWidth = 0;
             DrawerHighlightWithAccent = true;
             DrawerBackgroundWithAccent = false;
@@ -193,7 +200,9 @@
             DoubleBuffered = true;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-            // This enables the form to trigger the MouseMove event even when mouse is over another control
+            Padding = new Padding(3, 3, 3, 3);      //Keep space for resize by mouse
+
+           // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
             MouseMessageFilter.MouseMove += OnGlobalMouseMove;
 
@@ -236,6 +245,9 @@
 
         [Category("Drawer")]
         public bool DrawerAutoHide { get; set; }
+
+        [Category("Drawer")]
+        public bool DrawerAutoShow { get; set; }
 
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
@@ -379,6 +391,7 @@
             drawerControl.IsOpen = DrawerIsOpen;
             drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
             drawerControl.AutoHide = DrawerAutoHide;
+            drawerControl.AutoShow = DrawerAutoShow;
             drawerControl.IndicatorWidth = DrawerIndicatorWidth;
             drawerControl.HighlightWithAccent = DrawerHighlightWithAccent;
             drawerControl.BackgroundWithAccent = DrawerBackgroundWithAccent;
@@ -721,11 +734,9 @@
                 else if (_drawerButtonBounds.Contains(e.Location))
                 {
                     _buttonState = ButtonState.DrawerOver;
-                    Cursor = Cursors.Hand;
                 }
                 else
                 {
-                    Cursor = Cursors.Default;
                     _buttonState = ButtonState.None;
                 }
             }
@@ -821,8 +832,11 @@
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             g.Clear(SkinManager.BackdropColor);
-            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);
-            g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, _actionBarBounds);
+            if (ControlBox == true)
+            {
+                g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);
+                g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, _actionBarBounds);
+            }
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.DividersColor, 1))
@@ -958,15 +972,18 @@
                 }
             }
 
-            //Form title
-            using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+            if (ControlBox==true)
             {
-                Rectangle textLocation = new Rectangle(SkinManager.FORM_PADDING + (DrawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
-                NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.H6),
-                    SkinManager.ColorScheme.TextColor,
-                    textLocation.Location,
-                    textLocation.Size,
-                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                //Form title
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    Rectangle textLocation = new Rectangle(SkinManager.FORM_PADDING + (DrawerTabControl != null ? 24 + (int)(SkinManager.FORM_PADDING * 1.5) : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+                    NativeText.DrawTransparentText(Text, SkinManager.getLogFontByType(MaterialSkinManager.fontType.H6),
+                        SkinManager.ColorScheme.TextColor,
+                        textLocation.Location,
+                        textLocation.Size,
+                        NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                }
             }
         }
 

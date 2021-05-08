@@ -52,7 +52,7 @@
 
         private string _hint = string.Empty;
 
-        [Category("Material Skin"), DefaultValue("")]
+        [Category("Material Skin"), DefaultValue(""), Localizable(true)]
         public string Hint
         {
             get { return _hint; }
@@ -296,7 +296,7 @@
                 NativeText.DrawTransparentText(
                 Text,
                 SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-                SkinManager.TextHighEmphasisColor,
+                SkinManager.TextHighEmphasisNoAlphaColor,
                 new Point(e.Bounds.Location.X + SkinManager.FORM_PADDING, e.Bounds.Location.Y),
                 new Size(e.Bounds.Size.Width - SkinManager.FORM_PADDING * 2, e.Bounds.Size.Height),
                 NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle); ;

@@ -1,13 +1,12 @@
-# MaterialSkin for .NET WinForms
+# MaterialSkin 2 for .NET WinForms
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-This project is **temporarily paused** _(While I don't updated it very often, I still plan to in the future; that said, I still read every issue and check every PR)_
+> This project state is: **somewhat active**
+>
+> This means I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up, also [@orapps44](https://github.com/orapps44) has been doing excelent work and is keeping this project alive and updated, Thank you! ❤️
 
 ![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
-
-## [Join us on Slack!](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ)
-Have a quick question? want to discuss some improvement or question some code? [come here](https://join.slack.com/t/cmaterialskin/shared_invite/enQtNzk1NjM5NTEyNTE0LTI0ZDY0ODlkNGRmMGRmMTc4NTdjNmMwZjY2YTU5NTg4ODNiZmY5ZTUxNTE0YTZmOTlhMGFlYmZiNzQ3ZmViOWQ), let's talk about it
 
 ## Nuget Package
 
@@ -39,10 +38,10 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | FAB - Floating Action Button |    Yes    |    **No**     |   Yes    |
 | Label                        |    Yes    |      Yes      |   N/A    |
 | ListView                     |    Yes    |    **No**     |   N/A    |
-| Progress Bar                 | _Partial_ |    **No**     |  **No**  |
+| Progress Bar                 |  _Partial_  |    **No**     |  **No**  |
 | Radio Button                 |    Yes    |      Yes      |   Yes    |
-| Text field                   |    Yes    |    **No**     |   Yes    |
-| Sliders                      |  **No**   |       -       |    -     |
+| Text field                   |    Yes    |      Yes      |   Yes    |
+| Sliders                      |    Yes    |       -       |    -     |
 | Switch                       |    Yes    |      Yes      |   Yes    |
 | Tabs                         |    Yes    |      N/A      |   Yes    |
 
@@ -51,12 +50,8 @@ All supported components have a dark theme
 ## TODO List
 
 - Progress bar - Animation and variants, maybe round loading thingy
-- Sliders
 - Dialog (!= message box)
 - Backdrop (maybe)
-- Better FAB
-- Better Listview
-- Disabled textfield
 - Some Color code improvements and refactoring
 
 ---
@@ -65,15 +60,14 @@ All supported components have a dark theme
 
 If you have any issues please open an issue; have an improvement? open a pull request.
 
->This project was heavily updated by @leocb [leocb/MaterialSkin](https://github.com/leocb/MaterialSkin)
->
->forked from [donaldsteele/MaterialSkin](https://github.com/donaldsteele/MaterialSkin)
->
->and he forked it from the original [IgnaceMaes/MaterialSkin](https://github.com/IgnaceMaes/MaterialSkin)
+> - This project was heavily updated by [@leocb](https://github.com/leocb/MaterialSkin)
+> - Currently it's kept alive by [@orapps44](https://github.com/orapps44/MaterialSkin)
+> - forked from [@donaldsteele](https://github.com/donaldsteele/MaterialSkin)
+> - and he forked it from the original [@IgnaceMaes](https://github.com/IgnaceMaes/MaterialSkin)
 
 ---
 
-## Implementing MaterialSkin in your application
+## Implementing MaterialSkin 2 in your application
 
 ### 1. Add the library to your project
 

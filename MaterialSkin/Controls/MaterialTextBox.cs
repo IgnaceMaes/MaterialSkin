@@ -2,8 +2,10 @@
 {
     using MaterialSkin.Animations;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
+    using System.Drawing.Imaging;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
@@ -42,7 +44,7 @@
 
         private string _hint = string.Empty;
 
-        [Category("Material Skin"), DefaultValue("")]
+        [Category("Material Skin"), DefaultValue(""), Localizable(true)]
         public string Hint
         {
             get { return _hint; }
@@ -54,6 +56,57 @@
             }
         }
 
+        private Image _leadingIcon;
+
+        [Category("Material Skin"), Browsable(true), Localizable(false)]
+        /// <summary>
+        /// Gets or sets the leading Icon
+        /// </summary>
+        public Image LeadingIcon
+        {
+            get { return _leadingIcon; }
+            set
+            {
+                _leadingIcon = value;
+                UpdateRects();
+                preProcessIcons();
+                if (AutoSize)
+                {
+                    Refresh();
+                }
+                else
+                {
+                    Invalidate();
+                }
+            }
+        }
+
+        private Image _trailingIcon;
+
+        [Category("Material Skin"), Browsable(true), Localizable(false)]
+        /// <summary>
+        /// Gets or sets the trailing Icon
+        /// </summary>
+        public Image TrailingIcon
+        {
+            get { return _trailingIcon; }
+            set
+            {
+                _trailingIcon = value;
+                UpdateRects();
+                preProcessIcons();
+                if (AutoSize)
+                {
+                    Refresh();
+                }
+                else
+                {
+                    Invalidate();
+                }
+            }
+        }
+
+        private const int ICON_SIZE = 24;
         private const int HINT_TEXT_SMALL_SIZE = 18;
         private const int HINT_TEXT_SMALL_Y = 4;
         private const int BOTTOM_PADDING = 3;
@@ -61,8 +114,28 @@
         private int LINE_Y;
 
         private bool hasHint;
+        private bool _errorState = false;
+        private int _left_padding ;
+        private int _right_padding ;
+        private Rectangle _leadingIconBounds;
+        private Rectangle _trailingIconBounds;
+        private Rectangle _textfieldBounds;
 
         private readonly AnimationManager _animationManager;
+        private Dictionary<string, TextureBrush> iconsBrushes;
+        private Dictionary<string, TextureBrush> iconsErrorBrushes;
+
+        #region "Events"
+
+        [Category("Action")]
+        [Description("Fires when Leading Icon is clicked")]
+        public event EventHandler LeadingIconClick;
+
+        [Category("Action")]
+        [Description("Fires when Trailing Icon is clicked")]
+        public event EventHandler TrailingIconClick;
+
+        #endregion
 
         public MaterialTextBox()
         {
@@ -85,6 +158,16 @@
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
+            SkinManager.ColorSchemeChanged += sender =>
+            {
+                preProcessIcons();
+            };
+
+            SkinManager.ThemeChanged += sender =>
+            {
+                preProcessIcons();
+            };
+
             MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
@@ -102,7 +185,7 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            base.Font = new Font(SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1).FontFamily, 12f, FontStyle.Regular);
+            base.Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1);
             base.AutoSize = false;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
@@ -113,15 +196,7 @@
             HEIGHT = UseTallSize ? 50 : 36;
             Size = new Size(Size.Width, HEIGHT);
             LINE_Y = HEIGHT - BOTTOM_PADDING;
-
-            // Position the "real" text field
-            var rect = new Rectangle(SkinManager.FORM_PADDING, UseTallSize ? hasHint ?
-                    (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
-                    (int)(LINE_Y / 3.5) : // No hint and tall
-                    Height / 5, // not tall
-                    ClientSize.Width - (SkinManager.FORM_PADDING * 2), LINE_Y);
-            RECT rc = new RECT(rect);
-            SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
+            UpdateRects();
 
             // events
             MouseState = MouseState.OUT;
@@ -163,6 +238,169 @@
             return new Size(proposedSize.Width, HEIGHT);
         }
 
+        private void preProcessIcons()
+        {
+            if (_trailingIcon == null && _leadingIcon == null) return;
+
+            // Calculate lightness and color
+            float l = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT ) ? 0f : 1f;
+
+            // Create matrices
+            float[][] matrixGray = {
+                    new float[] {   0,   0,   0,   0,  0}, // Red scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Green scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
+                    new float[] {   0,   0,   0, Enabled ? .7f : .3f,  0}, // alpha scale factor
+                    new float[] {   l,   l,   l,   0,  1}};// offset
+
+            float[][] matrixRed = {
+                    new float[] {   0,   0,   0,   0,  0}, // Red scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Green scale factor
+                    new float[] {   0,   0,   0,   0,  0}, // Blue scale factor
+                    new float[] {   0,   0,   0,   1,  0}, // alpha scale factor
+                    new float[] {   1,   0,   0,   0,  1}};// offset
+
+            ColorMatrix colorMatrixGray = new ColorMatrix(matrixGray);
+            ColorMatrix colorMatrixRed = new ColorMatrix(matrixRed);
+
+            ImageAttributes grayImageAttributes = new ImageAttributes();
+            ImageAttributes redImageAttributes = new ImageAttributes();
+
+            // Set color matrices
+            grayImageAttributes.SetColorMatrix(colorMatrixGray, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+            redImageAttributes.SetColorMatrix(colorMatrixRed, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            // Create brushes
+            iconsBrushes = new Dictionary<string, TextureBrush>(2);
+            iconsErrorBrushes = new Dictionary<string, TextureBrush>(2);
+
+            // Image Rect
+            Rectangle destRect = new Rectangle(0, 0, ICON_SIZE, ICON_SIZE);
+
+            if (_leadingIcon != null)
+            {
+                // ********************
+                // *** _leadingIcon ***
+                // ********************
+
+                // Create a pre-processed copy of the image (GRAY)
+                Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gGray = Graphics.FromImage(bgray))
+                {
+                    gGray.DrawImage(_leadingIcon,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, grayImageAttributes);
+                }
+
+                // added processed image to brush for drawing
+                TextureBrush textureBrushGray = new TextureBrush(bgray);
+
+                textureBrushGray.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+
+                var iconRect = _leadingIconBounds;
+
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
+                                                    iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+
+                // add to dictionary
+                iconsBrushes.Add("_leadingIcon", textureBrushGray);
+            }
+
+            if (_trailingIcon != null)
+            {
+                // *********************
+                // *** _trailingIcon ***
+                // *********************
+
+                // Create a pre-processed copy of the image (GRAY)
+                Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gGray = Graphics.FromImage(bgray))
+                {
+                    gGray.DrawImage(_trailingIcon,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, grayImageAttributes);
+                }
+
+                //Create a pre - processed copy of the image(PRIMARY COLOR)
+                Bitmap bred = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gred = Graphics.FromImage(bred))
+                {
+                    gred.DrawImage(_trailingIcon,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, redImageAttributes);
+                }
+
+
+                // added processed image to brush for drawing
+                TextureBrush textureBrushGray = new TextureBrush(bgray);
+                TextureBrush textureBrushRed = new TextureBrush(bred);
+
+                textureBrushGray.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+                textureBrushRed.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
+
+                var iconRect = _trailingIconBounds;
+
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
+                                                    iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+                textureBrushRed.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
+                                                     iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+
+                // add to dictionary
+                iconsBrushes.Add("_trailingIcon", textureBrushGray);
+                //iconsSelectedBrushes.Add(0, textureBrushColor);
+                iconsErrorBrushes.Add("_trailingIcon", textureBrushRed);
+            }
+        }
+
+        private void UpdateRects()
+        {
+            if (LeadingIcon != null)
+                _left_padding = SkinManager.FORM_PADDING + ICON_SIZE;
+            else
+                _left_padding = SkinManager.FORM_PADDING;
+
+            if (_trailingIcon != null)
+                _right_padding = SkinManager.FORM_PADDING + ICON_SIZE;
+            else
+                _right_padding = SkinManager.FORM_PADDING;
+
+            _leadingIconBounds = new Rectangle(8, (HEIGHT / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
+            _trailingIconBounds = new Rectangle(Width - (ICON_SIZE + 8), (HEIGHT / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
+            _textfieldBounds = new Rectangle(_left_padding, ClientRectangle.Y, Width - _left_padding - _right_padding, LINE_Y);
+
+            var rect = new Rectangle(_left_padding, UseTallSize ? hasHint ?
+        (HINT_TEXT_SMALL_Y + HINT_TEXT_SMALL_SIZE) : // Has hint and it's tall
+        (int)(LINE_Y / 3.5) : // No hint and tall
+        Height / 5, // not tall
+        ClientSize.Width - _left_padding - _right_padding, LINE_Y);
+            RECT rc = new RECT(rect);
+            SendMessageRefRect(Handle, EM_SETRECT, 0, ref rc);
+
+        }
+
+        public void SetErrorState(bool ErrorState)
+        {
+            _errorState = ErrorState;
+            Invalidate();
+        }
+
+        public bool GetErrorState()
+        {
+            return _errorState;
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             base.OnPaint(pevent);
@@ -180,13 +418,28 @@
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
+            //Leading Icon
+            if (LeadingIcon != null)
+            {
+                g.FillRectangle(iconsBrushes["_leadingIcon"], _leadingIconBounds);
+            }
+
+            //Trailing Icon
+            if (TrailingIcon != null)
+            {
+                if(_errorState)
+                    g.FillRectangle(iconsErrorBrushes["_trailingIcon"], _trailingIconBounds);
+                else
+                    g.FillRectangle(iconsBrushes["_trailingIcon"], _trailingIconBounds);
+            }
+
             // HintText
             bool userTextPresent = !String.IsNullOrEmpty(Text);
             Color textColor = Enabled ? Focused ?
                             UseAccent ? SkinManager.ColorScheme.AccentColor : SkinManager.ColorScheme.PrimaryColor : // Focused
                             SkinManager.TextHighEmphasisColor : // Inactive
                             SkinManager.TextDisabledOrHintColor; // Disabled
-            Rectangle hintRect = new Rectangle(SkinManager.FORM_PADDING, ClientRectangle.Y, Width, LINE_Y);
+            Rectangle hintRect = new Rectangle(_left_padding, ClientRectangle.Y, Width - _left_padding - _right_padding, LINE_Y);
             int hintTextSize = 16;
 
             // bottom line base
@@ -198,14 +451,14 @@
                 if (hasHint && UseTallSize && (Focused || userTextPresent))
                 {
                     // hint text
-                    hintRect = new Rectangle(SkinManager.FORM_PADDING, HINT_TEXT_SMALL_Y, Width, HINT_TEXT_SMALL_SIZE);
+                    hintRect = new Rectangle(_left_padding, HINT_TEXT_SMALL_Y, Width - _left_padding - _right_padding, HINT_TEXT_SMALL_SIZE);
                     hintTextSize = 12;
                 }
 
                 // bottom line
                 if (Focused)
                 {
-                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
+                    g.FillRectangle(_errorState ? SkinManager.BackgroundHoverRedBrush : UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
                 }
             }
             else
@@ -217,9 +470,9 @@
                 if (hasHint && UseTallSize)
                 {
                     hintRect = new Rectangle(
-                        SkinManager.FORM_PADDING,
+                        _left_padding,
                         userTextPresent ? (HINT_TEXT_SMALL_Y) : ClientRectangle.Y + (int)((HINT_TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
-                        Width,
+                        Width - _left_padding - _right_padding,
                         userTextPresent ? (HINT_TEXT_SMALL_SIZE) : (int)(LINE_Y + (HINT_TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
                     hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
                 }
@@ -237,9 +490,9 @@
 
             // Calc text Rect
             Rectangle textRect = new Rectangle(
-                SkinManager.FORM_PADDING,
+                hintRect.X,
                 hasHint && UseTallSize ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
-                ClientRectangle.Width - SkinManager.FORM_PADDING * 2 + scrollPos.X,
+                ClientRectangle.Width - _left_padding - _right_padding + scrollPos.X,
                 hasHint && UseTallSize ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
 
             g.Clip = new Region(textRect);
@@ -303,10 +556,11 @@
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getTextBoxFontBySize(hintTextSize),
-                    Enabled ? Focused ? UseAccent ?
+                    Enabled ? !_errorState || (!userTextPresent && !Focused) ? Focused ? UseAccent ?
                     SkinManager.ColorScheme.AccentColor : // Focus Accent
                     SkinManager.ColorScheme.PrimaryColor : // Focus Primary
                     SkinManager.TextMediumEmphasisColor : // not focused
+                    SkinManager.BackgroundHoverRedColor : // error state
                     SkinManager.TextDisabledOrHintColor, // Disabled
                     hintRect.Location,
                     hintRect.Size,
@@ -321,6 +575,50 @@
             Invalidate();
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (DesignMode)
+                return;
+
+            if (_textfieldBounds.Contains(e.Location))
+            {
+                Cursor = Cursors.IBeam;
+            }
+            else if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location) && LeadingIconClick != null)
+            {
+                Cursor = Cursors.Hand;
+            }
+            else if (TrailingIcon != null && _trailingIconBounds.Contains(e.Location) && TrailingIconClick != null)
+            {
+                Cursor = Cursors.Hand;
+            }
+            else
+            {
+                Cursor = Cursors.Default;
+            }
+
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
+            {
+                LeadingIconClick?.Invoke(this, new EventArgs());
+            }
+            else if (TrailingIcon != null && _trailingIconBounds.Contains(e.Location))
+            {
+                TrailingIconClick?.Invoke(this, new EventArgs());
+            }
+            else
+            {
+                if (DesignMode)
+                    return;
+            }
+            base.OnMouseDown(e);
+        }
+
         protected override void OnSelectionChanged(EventArgs e)
         {
             base.OnSelectionChanged(e);
@@ -332,6 +630,20 @@
             base.OnResize(e);
             Size = new Size(Width, HEIGHT);
             LINE_Y = HEIGHT - BOTTOM_PADDING;
+            UpdateRects();
+            preProcessIcons();
+
+            if (DesignMode)
+            {
+                //Below code helps to redraw images in design mode only
+                Image _tmpimage;
+                _tmpimage = LeadingIcon;
+                LeadingIcon = null;
+                LeadingIcon = _tmpimage;
+                _tmpimage = TrailingIcon;
+                TrailingIcon = null;
+                TrailingIcon = _tmpimage;
+            }
         }
 
         private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
