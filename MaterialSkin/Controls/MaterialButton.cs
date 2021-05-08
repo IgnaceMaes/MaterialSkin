@@ -14,8 +14,9 @@
     /// </summary>
     public class MaterialButton : Button, IMaterialControl
     {
+
         private const int ICON_SIZE = 24;
-        private const int MINIMUMWIDTH = 88; //64;
+        private const int MINIMUMWIDTH = 64;
         private const int MINIMUMWIDTHICONONLY = 36; //64;
         private const int HEIGHTDEFAULT = 36;
         private const int HEIGHTDENSE = 32;
