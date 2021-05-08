@@ -184,6 +184,9 @@ namespace MaterialSkinExample
             this.materialListBox3 = new MaterialSkin.Controls.MaterialListBox();
             this.materialListBox2 = new MaterialSkin.Controls.MaterialListBox();
             this.materialListBox1 = new MaterialSkin.Controls.MaterialListBox();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.materialExpansionPanel1 = new MaterialSkin.Controls.MaterialExpansionPanel();
             this.menuIconList = new System.Windows.Forms.ImageList(this.components);
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.item1ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
@@ -193,6 +196,8 @@ namespace MaterialSkinExample
             this.item2ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
+            this.materialExpansionPanel2 = new MaterialSkin.Controls.MaterialExpansionPanel();
+            this.materialLabel51 = new MaterialSkin.Controls.MaterialLabel();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -206,6 +211,9 @@ namespace MaterialSkinExample
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.tabPage10.SuspendLayout();
+            this.tabPage11.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.materialExpansionPanel1.SuspendLayout();
             this.materialContextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -255,6 +263,7 @@ namespace MaterialSkinExample
             this.materialTabControl1.Controls.Add(this.tabPage5);
             this.materialTabControl1.Controls.Add(this.tabPage6);
             this.materialTabControl1.Controls.Add(this.tabPage10);
+            this.materialTabControl1.Controls.Add(this.tabPage11);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialTabControl1.ImageList = this.menuIconList;
@@ -2602,6 +2611,47 @@ namespace MaterialSkinExample
             this.materialListBox1.Size = new System.Drawing.Size(200, 160);
             this.materialListBox1.TabIndex = 0;
             // 
+            // tabPage11
+            // 
+            this.tabPage11.BackColor = System.Drawing.Color.White;
+            this.tabPage11.Controls.Add(this.flowLayoutPanel1);
+            this.tabPage11.ImageKey = "round_http_white_24dp.png";
+            this.tabPage11.Location = new System.Drawing.Point(4, 31);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Size = new System.Drawing.Size(1015, 520);
+            this.tabPage11.TabIndex = 8;
+            this.tabPage11.Text = "Expansion panel";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.Controls.Add(this.materialExpansionPanel1);
+            this.flowLayoutPanel1.Controls.Add(this.materialExpansionPanel2);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(561, 514);
+            this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel1.WrapContents = false;
+            // 
+            // materialExpansionPanel1
+            // 
+            this.materialExpansionPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialExpansionPanel1.Controls.Add(this.materialLabel51);
+            this.materialExpansionPanel1.Depth = 0;
+            this.materialExpansionPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialExpansionPanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialExpansionPanel1.Location = new System.Drawing.Point(16, 16);
+            this.materialExpansionPanel1.Margin = new System.Windows.Forms.Padding(16);
+            this.materialExpansionPanel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialExpansionPanel1.Name = "materialExpansionPanel1";
+            this.materialExpansionPanel1.Padding = new System.Windows.Forms.Padding(24, 64, 24, 16);
+            this.materialExpansionPanel1.Size = new System.Drawing.Size(523, 240);
+            this.materialExpansionPanel1.TabIndex = 0;
+            this.materialExpansionPanel1.Title = "Expansion panel";
+            // 
             // menuIconList
             // 
             this.menuIconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("menuIconList.ImageStream")));
@@ -2685,6 +2735,36 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem.Size = new System.Drawing.Size(170, 30);
             this.item3ToolStripMenuItem.Text = "Item 3";
             // 
+            // materialExpansionPanel2
+            // 
+            this.materialExpansionPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialExpansionPanel2.Collapse = true;
+            this.materialExpansionPanel2.Depth = 0;
+            this.materialExpansionPanel2.Description = "With accent color";
+            this.materialExpansionPanel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialExpansionPanel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialExpansionPanel2.Location = new System.Drawing.Point(16, 273);
+            this.materialExpansionPanel2.Margin = new System.Windows.Forms.Padding(16, 1, 16, 0);
+            this.materialExpansionPanel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialExpansionPanel2.Name = "materialExpansionPanel2";
+            this.materialExpansionPanel2.Padding = new System.Windows.Forms.Padding(24, 64, 24, 16);
+            this.materialExpansionPanel2.Size = new System.Drawing.Size(523, 48);
+            this.materialExpansionPanel2.TabIndex = 2;
+            this.materialExpansionPanel2.Title = "Expansion panel";
+            this.materialExpansionPanel2.UseAccentColor = true;
+            // 
+            // materialLabel51
+            // 
+            this.materialLabel51.Depth = 0;
+            this.materialLabel51.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel51.Location = new System.Drawing.Point(28, 68);
+            this.materialLabel51.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel51.Name = "materialLabel51";
+            this.materialLabel51.Size = new System.Drawing.Size(468, 64);
+            this.materialLabel51.TabIndex = 2;
+            this.materialLabel51.Text = "An expansion panel is a lightweight container that may either stand alone or be c" +
+    "onnected to a larger surface, such as a card.";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2723,6 +2803,10 @@ namespace MaterialSkinExample
             this.tabPage9.PerformLayout();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
+            this.tabPage11.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.materialExpansionPanel1.ResumeLayout(false);
+            this.materialExpansionPanel1.PerformLayout();
             this.materialContextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -2869,5 +2953,10 @@ namespace MaterialSkinExample
         private MaterialSlider materialSlider1;
         private MaterialLabel materialLabel49;
         private MaterialLabel materialLabel50;
+        private TabPage tabPage11;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private MaterialExpansionPanel materialExpansionPanel1;
+        private MaterialExpansionPanel materialExpansionPanel2;
+        private MaterialLabel materialLabel51;
     }
 }
