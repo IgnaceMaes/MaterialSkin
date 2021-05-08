@@ -38,6 +38,7 @@ public sealed class NativeTextRenderer : IDisposable
         SetFont(font);
 
         var size = new Size();
+        if (string.IsNullOrEmpty(str)) return size;
         GetTextExtentPoint32(_hdc, str, str.Length, ref size);
         return size;
     }
@@ -47,6 +48,7 @@ public sealed class NativeTextRenderer : IDisposable
         SelectObject(_hdc, LogFont);
 
         var size = new Size();
+        if (string.IsNullOrEmpty(str)) return size;
         GetTextExtentPoint32(_hdc, str, str.Length, ref size);
         return size;
     }
