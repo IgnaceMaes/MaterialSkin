@@ -208,6 +208,10 @@
         private static readonly Color BACKDROP_DARK = Color.FromArgb(255, 50, 50, 50);
         private static readonly Brush BACKDROP_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
 
+        //Other colors
+        private static readonly Color CARD_BLACK = Color.FromArgb(255, 42, 42, 42);
+        private static readonly Color CARD_WHITE = Color.White;
+
         // Getters - Using these makes handling the dark theme switching easier
         // Text
         public Color TextHighEmphasisColor => Theme == Themes.LIGHT ? TEXT_HIGH_EMPHASIS_DARK : TEXT_HIGH_EMPHASIS_LIGHT;
@@ -251,6 +255,10 @@
         public Brush BackgroundDownRedBrush => Theme == Themes.LIGHT ? BACKGROUND_DOWN_RED_BRUSH : BACKGROUND_DOWN_RED_BRUSH;
         public Color BackgroundFocusColor => Theme == Themes.LIGHT ? BACKGROUND_FOCUS_LIGHT : BACKGROUND_FOCUS_DARK;
         public Brush BackgroundFocusBrush => Theme == Themes.LIGHT ? BACKGROUND_FOCUS_LIGHT_BRUSH : BACKGROUND_FOCUS_DARK_BRUSH;
+
+
+        // Other color
+        public Color CardsColor => Theme == Themes.LIGHT ? CARD_WHITE : CARD_BLACK;
 
         // Expansion Panel color/brush
         public Brush ExpansionPanelFocusBrush => Theme == Themes.LIGHT ? EXPANSIONPANEL_FOCUS_LIGHT_BRUSH : EXPANSIONPANEL_FOCUS_DARK_BRUSH;
