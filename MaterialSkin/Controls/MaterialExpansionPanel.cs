@@ -265,6 +265,8 @@ namespace MaterialSkin.Controls
 
             _validationButton.Click += _validationButton_Click;
             _cancelButton.Click += _cancelButton_Click;
+	    
+            UpdateRects();
         }
 
         private void _cancelButton_Click(object sender, EventArgs e)
