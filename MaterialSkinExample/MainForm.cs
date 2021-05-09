@@ -164,5 +164,10 @@ namespace MaterialSkinExample
             var mresult = MaterialMessageBox.Show(batchOperationResults, "Batch Operation");
             materialComboBox1.Items.Add("this is a very long string");
         }
+
+        private void materialSwitch9_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawerAutoShow = materialSwitch9.Checked;
+        }
     }
 }
