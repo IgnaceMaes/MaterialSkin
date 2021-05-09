@@ -243,11 +243,35 @@
         [Category("Drawer")]
         public int DrawerWidth { get; set; }
 
+        private bool _drawerAutoHide;
         [Category("Drawer")]
-        public bool DrawerAutoHide { get; set; }
+        public bool DrawerAutoHide 
+        {
+            get
+            {
+                return _drawerAutoHide;
+            }
+            set
+            {
+                _drawerAutoHide = value;
+                drawerControl.AutoHide = _drawerAutoHide;
+            }
+        }
 
+        private bool _drawerAutoShow;
         [Category("Drawer")]
-        public bool DrawerAutoShow { get; set; }
+        public bool DrawerAutoShow 
+        {
+            get
+            {
+                return _drawerAutoShow;
+            }
+            set
+            {
+                _drawerAutoShow = value;
+                drawerControl.AutoShow = _drawerAutoShow;
+            }
+        }
 
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
