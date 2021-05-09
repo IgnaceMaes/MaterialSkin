@@ -85,7 +85,7 @@
         public MaterialButtonType Type
         {
             get { return type; }
-            set { type = value; Invalidate(); }
+            set { type = value; preProcessIcons(); Invalidate(); }
         }
 
         [Category("Material Skin")]
