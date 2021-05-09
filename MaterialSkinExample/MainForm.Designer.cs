@@ -198,6 +198,7 @@ namespace MaterialSkinExample
             this.item3ToolStripMenuItem = new MaterialSkin.Controls.MaterialToolStripMenuItem();
             this.materialExpansionPanel2 = new MaterialSkin.Controls.MaterialExpansionPanel();
             this.materialLabel51 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialSwitch9 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -286,6 +287,7 @@ namespace MaterialSkinExample
             this.tabPage1.Controls.Add(this.materialLabel9);
             this.tabPage1.Controls.Add(this.materialSwitch5);
             this.tabPage1.Controls.Add(this.materialButton7);
+            this.tabPage1.Controls.Add(this.materialSwitch9);
             this.tabPage1.Controls.Add(this.materialSwitch4);
             this.tabPage1.Controls.Add(this.MaterialButton4);
             this.tabPage1.ImageKey = "round_assessment_white_24dp.png";
@@ -2765,6 +2767,23 @@ namespace MaterialSkinExample
             this.materialLabel51.Text = "An expansion panel is a lightweight container that may either stand alone or be c" +
     "onnected to a larger surface, such as a card.";
             // 
+            // materialSwitch9
+            // 
+            this.materialSwitch9.AutoSize = true;
+            this.materialSwitch9.Depth = 0;
+            this.materialSwitch9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialSwitch9.Location = new System.Drawing.Point(387, 213);
+            this.materialSwitch9.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch9.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch9.Name = "materialSwitch9";
+            this.materialSwitch9.Ripple = true;
+            this.materialSwitch9.Size = new System.Drawing.Size(195, 37);
+            this.materialSwitch9.TabIndex = 29;
+            this.materialSwitch9.Text = "Drawer - Auto show";
+            this.materialSwitch9.UseVisualStyleBackColor = true;
+            this.materialSwitch9.CheckedChanged += new System.EventHandler(this.materialSwitch9_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2959,5 +2978,6 @@ namespace MaterialSkinExample
         private MaterialExpansionPanel materialExpansionPanel1;
         private MaterialExpansionPanel materialExpansionPanel2;
         private MaterialLabel materialLabel51;
+        private MaterialSwitch materialSwitch9;
     }
 }
