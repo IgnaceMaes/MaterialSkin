@@ -2792,7 +2792,6 @@ namespace MaterialSkinExample
             this.ClientSize = new System.Drawing.Size(1029, 622);
             this.ContextMenuStrip = this.materialContextMenuStrip1;
             this.Controls.Add(this.materialTabControl1);
-            this.DrawerAutoShow = true;
             this.DrawerShowIconsWhenHidden = true;
             this.DrawerTabControl = this.materialTabControl1;
             this.MinimumSize = new System.Drawing.Size(300, 200);
