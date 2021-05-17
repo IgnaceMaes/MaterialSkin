@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Linq;
+    using System.Data;
     using System.Windows.Forms;
 
     public class MaterialComboBox : ComboBox, IMaterialControl
@@ -284,7 +285,16 @@
             string Text = "";
             if (!string.IsNullOrWhiteSpace(DisplayMember))
             {
-                Text = Items[e.Index].GetType().GetProperty(DisplayMember).GetValue(Items[e.Index], null).ToString();
+                if (!Items[e.Index].GetType().Equals(typeof(DataRowView)))
+                {
+                    var item = Items[e.Index].GetType().GetProperty(DisplayMember).GetValue(Items[e.Index]);
+                    Text = item.ToString();
+                }
+                else
+                {
+                    var table = ((DataRow)Items[e.Index].GetType().GetProperty("Row").GetValue(Items[e.Index])).Table;
+                    Text = table.Rows[e.Index][DisplayMember].ToString();
+                }
             }
             else
             {
