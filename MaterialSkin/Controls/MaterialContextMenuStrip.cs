@@ -80,7 +80,7 @@
         public MaterialToolStripMenuItem()
         {
             AutoSize = false;
-            Size = new Size(120, 30);
+            Size = new Size(128, 32);
         }
 
         protected override ToolStripDropDown CreateDefaultDropDown()
@@ -97,6 +97,9 @@
 
     internal class MaterialToolStripRender : ToolStripProfessionalRenderer, IMaterialControl
     {
+        private const int LEFT_PADDING = 16;
+        private const int RIGHT_PADDING = 8;
+        
         //Properties for managing the material design properties
         public int Depth { get; set; }
 
@@ -110,7 +113,7 @@
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
             var itemRect = GetItemRect(e.Item);
-            var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
+            var textRect = new Rectangle(LEFT_PADDING, itemRect.Y, itemRect.Width - (LEFT_PADDING + RIGHT_PADDING), itemRect.Height);
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
@@ -125,11 +128,11 @@
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             var g = e.Graphics;
-            g.Clear(SkinManager.BackdropColor);
+            g.Clear(SkinManager.BackgroundColor);
 
             //Draw background
             var itemRect = GetItemRect(e.Item);
-            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.BackgroundFocusBrush : SkinManager.BackdropBrush, itemRect);
+            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.BackgroundFocusBrush : SkinManager.BackgroundBrush, itemRect);
 
             //Ripple animation
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
@@ -158,7 +161,7 @@
         {
             var g = e.Graphics;
 
-            g.FillRectangle(SkinManager.BackdropBrush, e.Item.Bounds);
+            g.FillRectangle(SkinManager.BackgroundBrush, e.Item.Bounds);
             g.DrawLine(
                 new Pen(SkinManager.DividersColor),
                 new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2),
@@ -167,11 +170,7 @@
 
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
-            var g = e.Graphics;
-
-            g.DrawRectangle(
-                new Pen(SkinManager.DividersColor),
-                new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
+            e.ToolStrip.BackColor = SkinManager.BackgroundColor;
         }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
@@ -196,7 +195,7 @@
 
         private Rectangle GetItemRect(ToolStripItem item)
         {
-            return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height);
+            return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width , item.ContentRectangle.Height);
         }
     }
 }
