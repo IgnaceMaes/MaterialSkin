@@ -891,10 +891,10 @@
                 g.FillRectangle(downBrush, _maxButtonBounds);
 
             if (_buttonState == ButtonState.XOver && ControlBox)
-                g.FillRectangle(hoverBrush, _xButtonBounds);
+                g.FillRectangle(SkinManager.BackgroundHoverRedBrush, _xButtonBounds);
 
             if (_buttonState == ButtonState.XDown && ControlBox)
-                g.FillRectangle(downBrush, _xButtonBounds);
+                g.FillRectangle(SkinManager.BackgroundDownRedBrush, _xButtonBounds);
 
             using (var formButtonsPen = new Pen(SkinManager.ColorScheme.TextColor, 2))
             {
