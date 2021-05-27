@@ -6,7 +6,7 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 >
 > This means I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up, also [@orapps44](https://github.com/orapps44) has been doing excelent work and is keeping this project alive and updated, Thank you! ❤️
 
-![home](https://user-images.githubusercontent.com/8310271/66237904-9dff9380-e6cc-11e9-9f08-3c5ba182e144.png)
+![home](https://user-images.githubusercontent.com/77468294/119880367-7823a400-bf2c-11eb-9fae-4172a57b317f.png)
 
 ## Nuget Package
 
