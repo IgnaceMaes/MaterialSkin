@@ -34,14 +34,16 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | Dialog                       |  **No**   |       -       |    -     |
 | Divider                      |    Yes    |      N/A      |   N/A    |
 | Drawer                       |    Yes    |      N/A      |   Yes    |
+| Expansion PAnel              |    Yes    |      Yes      |  **No**  |
 | Flexible Dialog (big)        |    Yes    |      Yes      |   N/A    |
 | FAB - Floating Action Button |    Yes    |    **No**     |   Yes    |
 | Label                        |    Yes    |      Yes      |   N/A    |
+| ListBox                      |    Yes    |      Yes      |   N/A    |
 | ListView                     |    Yes    |    **No**     |   N/A    |
 | Progress Bar                 |  _Partial_  |    **No**     |  **No**  |
 | Radio Button                 |    Yes    |      Yes      |   Yes    |
 | Text field                   |    Yes    |      Yes      |   Yes    |
-| Sliders                      |    Yes    |       -       |    -     |
+| Sliders                      |    Yes    |      Yes      |  **No**  |
 | Switch                       |    Yes    |      Yes      |   Yes    |
 | Tabs                         |    Yes    |      N/A      |   Yes    |
 
@@ -53,6 +55,8 @@ All supported components have a dark theme
 - Dialog (!= message box)
 - Backdrop (maybe)
 - Some Color code improvements and refactoring
+- DatePicker
+- MultilineTextBox improvements
 
 ---
 
