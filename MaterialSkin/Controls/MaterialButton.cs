@@ -284,6 +284,41 @@
         {
             if (Icon == null) return;
 
+            int newWidth, newHeight;
+            //Resize icon if greater than ICON_SIZE
+            if (Icon.Width> ICON_SIZE || Icon.Height > ICON_SIZE)
+            {
+                //calculate aspect ratio
+                float aspect = Icon.Width / (float)Icon.Height;
+
+                //calculate new dimensions based on aspect ratio
+                newWidth = (int)(ICON_SIZE * aspect);
+                newHeight = (int)(newWidth / aspect);
+
+                //if one of the two dimensions exceed the box dimensions
+                if (newWidth > ICON_SIZE || newHeight > ICON_SIZE)
+                {
+                    //depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
+                    if (newWidth > newHeight)
+                    {
+                        newWidth = ICON_SIZE;
+                        newHeight = (int)(newWidth / aspect);
+                    }
+                    else
+                    {
+                        newHeight = ICON_SIZE;
+                        newWidth = (int)(newHeight * aspect);
+                    }
+                }
+            }
+            else
+            {
+                newWidth = Icon.Width;
+                newHeight = Icon.Height;
+            }
+
+            Bitmap IconResized = new Bitmap(Icon, newWidth, newHeight);
+
             // Calculate lightness and color
             float l = (SkinManager.Theme == MaterialSkinManager.Themes.LIGHT & (highEmphasis == false | Enabled == false | Type != MaterialButtonType.Contained)) ? 0f : 1.5f;
 
@@ -310,7 +345,7 @@
             Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
             using (Graphics gGray = Graphics.FromImage(bgray))
             {
-                gGray.DrawImage(Icon,
+                gGray.DrawImage(IconResized,
                     new Point[] {
                                 new Point(0, 0),
                                 new Point(destRect.Width, 0),
@@ -327,8 +362,8 @@
             // Translate the brushes to the correct positions
             var iconRect = new Rectangle(8, 6, ICON_SIZE, ICON_SIZE);
 
-            textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - Icon.Width / 2,
-                                                iconRect.Y + iconRect.Height / 2 - Icon.Height / 2);
+            textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - IconResized.Width / 2,
+                                                iconRect.Y + iconRect.Height / 2 - IconResized.Height / 2);
 
             iconsBrushes = textureBrushGray;
         }
