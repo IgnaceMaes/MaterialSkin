@@ -134,7 +134,7 @@
             };
             GotFocus += (sender, args) =>
             {
-                _animationManager.StartNewAnimation(AnimationDirection.In);
+                _animationManager.StartNewAnimation(AnimationDirection.In);Invalidate();
             };
             MouseEnter += (sender, args) =>
             {
