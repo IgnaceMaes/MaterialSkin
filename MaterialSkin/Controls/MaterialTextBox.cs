@@ -238,6 +238,48 @@
             return new Size(proposedSize.Width, HEIGHT);
         }
 
+        private static Size ResizeIcon(Image Icon)
+        {
+            int newWidth, newHeight;
+            //Resize icon if greater than ICON_SIZE
+            if (Icon.Width > ICON_SIZE || Icon.Height > ICON_SIZE)
+            {
+                //calculate aspect ratio
+                float aspect = Icon.Width / (float)Icon.Height;
+
+                //calculate new dimensions based on aspect ratio
+                newWidth = (int)(ICON_SIZE * aspect);
+                newHeight = (int)(newWidth / aspect);
+
+                //if one of the two dimensions exceed the box dimensions
+                if (newWidth > ICON_SIZE || newHeight > ICON_SIZE)
+                {
+                    //depending on which of the two exceeds the box dimensions set it as the box dimension and calculate the other one based on the aspect ratio
+                    if (newWidth > newHeight)
+                    {
+                        newWidth = ICON_SIZE;
+                        newHeight = (int)(newWidth / aspect);
+                    }
+                    else
+                    {
+                        newHeight = ICON_SIZE;
+                        newWidth = (int)(newHeight * aspect);
+                    }
+                }
+            }
+            else
+            {
+                newWidth = Icon.Width;
+                newHeight = Icon.Height;
+            }
+
+            return new Size()
+            {
+                Height = newHeight,
+                Width = newWidth
+            };
+        }
+
         private void preProcessIcons()
         {
             if (_trailingIcon == null && _leadingIcon == null) return;
@@ -283,11 +325,15 @@
                 // *** _leadingIcon ***
                 // ********************
 
+                //Resize icon if greater than ICON_SIZE
+                Size newSize_leadingIcon = ResizeIcon(_leadingIcon);
+                Bitmap _leadingIconIconResized = new Bitmap(_leadingIcon, newSize_leadingIcon.Width, newSize_leadingIcon.Height);
+
                 // Create a pre-processed copy of the image (GRAY)
                 Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
                 using (Graphics gGray = Graphics.FromImage(bgray))
                 {
-                    gGray.DrawImage(_leadingIcon,
+                    gGray.DrawImage(_leadingIconIconResized,
                         new Point[] {
                                     new Point(0, 0),
                                     new Point(destRect.Width, 0),
@@ -303,8 +349,8 @@
 
                 var iconRect = _leadingIconBounds;
 
-                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
-                                                    iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - _leadingIconIconResized.Width / 2,
+                                                    iconRect.Y + iconRect.Height / 2 - _leadingIconIconResized.Height / 2);
 
                 // add to dictionary
                 iconsBrushes.Add("_leadingIcon", textureBrushGray);
@@ -316,11 +362,15 @@
                 // *** _trailingIcon ***
                 // *********************
 
+                //Resize icon if greater than ICON_SIZE
+                Size newSize_trailingIcon = ResizeIcon(_trailingIcon);
+                Bitmap _trailingIconResized = new Bitmap(_trailingIcon, newSize_trailingIcon.Width, newSize_trailingIcon.Height);
+
                 // Create a pre-processed copy of the image (GRAY)
                 Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
                 using (Graphics gGray = Graphics.FromImage(bgray))
                 {
-                    gGray.DrawImage(_trailingIcon,
+                    gGray.DrawImage(_trailingIconResized,
                         new Point[] {
                                     new Point(0, 0),
                                     new Point(destRect.Width, 0),
@@ -329,11 +379,11 @@
                         destRect, GraphicsUnit.Pixel, grayImageAttributes);
                 }
 
-                //Create a pre - processed copy of the image(PRIMARY COLOR)
+                //Create a pre - processed copy of the image(RED)
                 Bitmap bred = new Bitmap(destRect.Width, destRect.Height);
                 using (Graphics gred = Graphics.FromImage(bred))
                 {
-                    gred.DrawImage(_trailingIcon,
+                    gred.DrawImage(_trailingIconResized,
                         new Point[] {
                                     new Point(0, 0),
                                     new Point(destRect.Width, 0),
@@ -352,10 +402,10 @@
 
                 var iconRect = _trailingIconBounds;
 
-                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
-                                                    iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
-                textureBrushRed.TranslateTransform(iconRect.X + iconRect.Width / 2 - ICON_SIZE / 2,
-                                                     iconRect.Y + iconRect.Height / 2 - ICON_SIZE / 2);
+                textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - _trailingIconResized.Width / 2,
+                                                    iconRect.Y + iconRect.Height / 2 - _trailingIconResized.Height / 2);
+                textureBrushRed.TranslateTransform(iconRect.X + iconRect.Width / 2 - _trailingIconResized.Width / 2,
+                                                     iconRect.Y + iconRect.Height / 2 - _trailingIconResized.Height / 2);
 
                 // add to dictionary
                 iconsBrushes.Add("_trailingIcon", textureBrushGray);
