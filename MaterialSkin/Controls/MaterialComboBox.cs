@@ -117,7 +117,7 @@
                 AnimationType = AnimationType.EaseInOut
             };
             _animationManager.OnAnimationProgress += sender => Invalidate();
-
+            _animationManager.OnAnimationFinished += sender => { _animationManager.SetProgress(0); };
             DropDownClosed += (sender, args) =>
             {
                 MouseState = MouseState.OUT;
@@ -134,7 +134,8 @@
             };
             GotFocus += (sender, args) =>
             {
-                _animationManager.StartNewAnimation(AnimationDirection.In);Invalidate();
+                _animationManager.StartNewAnimation(AnimationDirection.In);
+                Invalidate();
             };
             MouseEnter += (sender, args) =>
             {
