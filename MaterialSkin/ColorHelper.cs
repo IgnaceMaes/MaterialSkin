@@ -138,5 +138,25 @@ namespace MaterialSkin
                     return Color.FromArgb(alpha, iMax, iMid, iMin);
             }
         }
+        
+        /// <summary>
+        /// Removes alpha value without changing Color.
+        /// </summary>
+        /// <param name="foreground">The foreground color.</param>
+        /// <param name="background">The background color.</param>
+        /// <returns></returns>
+        public static Color RemoveAlpha(Color foreground, Color background)
+        {
+            if (foreground.A == 255)
+                return foreground;
+
+            var alpha = foreground.A / 255.0;
+            var diff = 1.0 - alpha;
+            return Color.FromArgb(255,
+                (byte)(foreground.R * alpha + background.R * diff),
+                (byte)(foreground.G * alpha + background.G * diff),
+                (byte)(foreground.B * alpha + background.B * diff));
+        }
+        
     }
 }
