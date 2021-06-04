@@ -488,7 +488,7 @@ namespace MaterialSkin.Controls
                 string itemText = Items[i].Text;
                 string itemSecondaryText = Items[i].SecondaryText;
 
-                Rectangle itemRect = new Rectangle(0, (i - firstItem) * _itemHeight, Width, _itemHeight);
+                Rectangle itemRect = new Rectangle(0, (i - firstItem) * _itemHeight, Width - (_showScrollBar && _scrollBar.Visible ? _scrollBar.Width : 0), _itemHeight);
 
                 if (MultiSelect && _indicates.Count != 0)
                 {

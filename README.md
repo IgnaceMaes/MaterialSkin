@@ -60,7 +60,9 @@ All supported components have a dark theme
 
 ---
 
-## Contributting
+## Contributing
+
+Thanks for taking the time to contribute!  :+1:
 
 If you have any issues please open an issue; have an improvement? open a pull request.
 
@@ -68,6 +70,15 @@ If you have any issues please open an issue; have an improvement? open a pull re
 > - Currently it's kept alive by [@orapps44](https://github.com/orapps44/MaterialSkin)
 > - forked from [@donaldsteele](https://github.com/donaldsteele/MaterialSkin)
 > - and he forked it from the original [@IgnaceMaes](https://github.com/IgnaceMaes/MaterialSkin)
+
+## Contributors
+
+Thank you to all the people who have already contributed to MaterialSkin 2 !
+
+<a href="https://github.com/leocb/MaterialSkin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=leocb/MaterialSkin" />
+</a>
+
 
 ---
 
