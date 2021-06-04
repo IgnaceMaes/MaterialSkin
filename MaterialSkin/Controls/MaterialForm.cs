@@ -200,7 +200,7 @@
             DoubleBuffered = true;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-            Padding = new Padding(3, 3, 3, 3);      //Keep space for resize by mouse
+            Padding = new Padding(3, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, 3, 3);      //Keep space for resize by mouse
 
            // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
@@ -530,7 +530,9 @@
             // Double click to maximize
             else if (m.Msg == WM_LBUTTONDBLCLK)
             {
-                MaximizeWindow(!_maximized);
+                if((_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
+                !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
+                    MaximizeWindow(!_maximized);
             }
             // move a maximized window
             else if (m.Msg == WM_MOUSEMOVE && _maximized &&
