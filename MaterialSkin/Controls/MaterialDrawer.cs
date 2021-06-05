@@ -602,7 +602,7 @@
                 if (_drawerItemRects[i].Contains(e.Location))
                 {
                     _baseTabControl.SelectedIndex = i;
-                    if (AutoHide)
+                    if (AutoHide && !AutoShow)
                         Hide();
                 }
             }
