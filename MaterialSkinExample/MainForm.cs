@@ -37,6 +37,20 @@ namespace MaterialSkinExample
             materialCheckedListBox1.Items.Add("Item7", false);
 
             materialComboBox6.SelectedIndex = 0;
+
+            materialListBoxFormStyle.Clear();
+            foreach (var FormStyleItem in Enum.GetNames(typeof(MaterialForm.FormStyles)))
+            {
+                materialListBoxFormStyle.AddItem(FormStyleItem);
+                if (FormStyleItem == this.FormStyle.ToString()) materialListBoxFormStyle.SelectedIndex = materialListBoxFormStyle.Items.Count-1;
+            }
+
+            materialListBoxFormStyle.SelectedIndexChanged += (sender, args) =>
+            {
+                MaterialForm.FormStyles SelectedStyle = (MaterialForm.FormStyles)Enum.Parse(typeof(MaterialForm.FormStyles), args.Text);
+                if (this.FormStyle!= SelectedStyle) this.FormStyle = SelectedStyle;
+            };
+
         }
 
         private void seedListView()
@@ -169,5 +183,11 @@ namespace MaterialSkinExample
         {
             DrawerAutoShow = materialSwitch9.Checked;
         }
+
+        private void materialTextBox2_LeadingIconClick(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
