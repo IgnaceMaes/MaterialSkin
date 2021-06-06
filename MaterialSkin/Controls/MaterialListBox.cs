@@ -219,11 +219,11 @@ namespace MaterialSkin.Controls
         public object SelectedValue
         {
             get => _selectedValue;
-            set
-            {
-                _selectedValue = value;
-                Invalidate();
-            }
+            //set
+            //{
+            //    _selectedValue = value;
+            //    Invalidate();
+            //}
         }
 
         [Category("Material Skin"), DefaultValue(false), Description("Gets or sets a value indicating whether the ListBox supports multiple rows.")]
