@@ -57,6 +57,8 @@ namespace MaterialSkinExample
             this.materialCheckbox1 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.materialLabel52 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialListBoxFormStyle = new MaterialSkin.Controls.MaterialListBox();
             this.MaterialButton3 = new MaterialSkin.Controls.MaterialButton();
             this.materialSwitch8 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialLabel24 = new MaterialSkin.Controls.MaterialLabel();
@@ -279,6 +281,8 @@ namespace MaterialSkinExample
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.materialLabel52);
+            this.tabPage1.Controls.Add(this.materialListBoxFormStyle);
             this.tabPage1.Controls.Add(this.MaterialButton3);
             this.tabPage1.Controls.Add(this.materialSwitch8);
             this.tabPage1.Controls.Add(this.materialLabel24);
@@ -296,6 +300,33 @@ namespace MaterialSkinExample
             this.tabPage1.Size = new System.Drawing.Size(1015, 520);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Home";
+            // 
+            // materialLabel52
+            // 
+            this.materialLabel52.AutoSize = true;
+            this.materialLabel52.Depth = 0;
+            this.materialLabel52.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel52.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel52.Location = new System.Drawing.Point(642, 69);
+            this.materialLabel52.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel52.Name = "materialLabel52";
+            this.materialLabel52.Size = new System.Drawing.Size(113, 29);
+            this.materialLabel52.TabIndex = 39;
+            this.materialLabel52.Text = "Form style";
+            // 
+            // materialListBoxFormStyle
+            // 
+            this.materialListBoxFormStyle.BackColor = System.Drawing.Color.White;
+            this.materialListBoxFormStyle.BorderColor = System.Drawing.Color.LightGray;
+            this.materialListBoxFormStyle.Depth = 0;
+            this.materialListBoxFormStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialListBoxFormStyle.Location = new System.Drawing.Point(635, 102);
+            this.materialListBoxFormStyle.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialListBoxFormStyle.Name = "materialListBoxFormStyle";
+            this.materialListBoxFormStyle.SelectedIndex = -1;
+            this.materialListBoxFormStyle.SelectedItem = null;
+            this.materialListBoxFormStyle.Size = new System.Drawing.Size(225, 258);
+            this.materialListBoxFormStyle.TabIndex = 38;
             // 
             // MaterialButton3
             // 
@@ -1762,6 +1793,7 @@ namespace MaterialSkinExample
             this.materialTextBox2.TabIndex = 3;
             this.materialTextBox2.Text = "";
             this.materialTextBox2.TrailingIcon = null;
+            this.materialTextBox2.LeadingIconClick += new System.EventHandler(this.materialTextBox2_LeadingIconClick);
             // 
             // materialTextBox1
             // 
@@ -2609,7 +2641,6 @@ namespace MaterialSkinExample
             this.materialListBox1.Name = "materialListBox1";
             this.materialListBox1.SelectedIndex = -1;
             this.materialListBox1.SelectedItem = null;
-            this.materialListBox1.SelectedValue = null;
             this.materialListBox1.Size = new System.Drawing.Size(200, 160);
             this.materialListBox1.TabIndex = 0;
             // 
@@ -2978,5 +3009,7 @@ namespace MaterialSkinExample
         private MaterialExpansionPanel materialExpansionPanel2;
         private MaterialLabel materialLabel51;
         private MaterialSwitch materialSwitch9;
+        private MaterialListBox materialListBoxFormStyle;
+        private MaterialLabel materialLabel52;
     }
 }
