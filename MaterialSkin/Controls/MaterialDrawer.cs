@@ -641,7 +641,7 @@
                     return;
                 }
             }
-            Cursor = Cursors.Arrow;
+            //Cursor = Cursors.Arrow;
         }
 
         protected override void OnMouseEnter(EventArgs e)
