@@ -2560,7 +2560,6 @@ namespace MaterialSkinExample
             this.materialListBox3.Name = "materialListBox3";
             this.materialListBox3.SelectedIndex = -1;
             this.materialListBox3.SelectedItem = null;
-            this.materialListBox3.SelectedValue = null;
             this.materialListBox3.Size = new System.Drawing.Size(200, 160);
             this.materialListBox3.Style = MaterialSkin.Controls.MaterialListBox.ListBoxStyle.ThreeLine;
             this.materialListBox3.TabIndex = 2;
@@ -2600,7 +2599,6 @@ namespace MaterialSkinExample
             this.materialListBox2.Name = "materialListBox2";
             this.materialListBox2.SelectedIndex = -1;
             this.materialListBox2.SelectedItem = null;
-            this.materialListBox2.SelectedValue = null;
             this.materialListBox2.Size = new System.Drawing.Size(200, 160);
             this.materialListBox2.Style = MaterialSkin.Controls.MaterialListBox.ListBoxStyle.TwoLine;
             this.materialListBox2.TabIndex = 1;
