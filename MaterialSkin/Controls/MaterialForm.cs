@@ -712,7 +712,7 @@
                 return;
             UpdateButtons(e);
 
-            if (e.Button == MouseButtons.Left && !_maximized)
+            if (e.Button == MouseButtons.Left && !_maximized && _resizeCursors.Contains(Cursor))
                 ResizeForm(_resizeDir);
             base.OnMouseDown(e);
         }
