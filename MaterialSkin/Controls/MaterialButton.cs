@@ -594,11 +594,12 @@
 
             GotFocus += (sender, args) =>
             {
-                _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
+                if (MouseState == MouseState.HOVER) _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
                 Invalidate();
             };
             LostFocus += (sender, args) =>
             {
+                MouseState = MouseState.OUT;
                 _hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
                 Invalidate();
             };
