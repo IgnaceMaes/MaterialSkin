@@ -174,6 +174,7 @@
         private const int STATUS_BAR_HEIGHT_DEFAULT = 24;
         private int STATUS_BAR_HEIGHT = 24;
         private const int ICON_SIZE = 24;
+        private const int PADDING_MINIMUM = 3;
         private const int TITLE_LEFT_PADDING = 72;
         private const int ACTION_BAR_PADDING = 16;
         private const int ACTION_BAR_HEIGHT_DEFAULT = 40;
@@ -280,7 +281,7 @@
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             FormStyle = FormStyles.ActionBar_40;
 
-            Padding = new Padding(3, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, 3, 3);      //Keep space for resize by mouse
+            Padding = new Padding(PADDING_MINIMUM, STATUS_BAR_HEIGHT+ ACTION_BAR_HEIGHT, PADDING_MINIMUM, PADDING_MINIMUM);
 
            // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
@@ -590,10 +591,10 @@
 
         private void FixFormPadding(object sender)
         {
-            if (drawerControl.ShowIconsWhenHidden &&
-                Padding.Left < drawerControl.MinWidth) Padding = new Padding(drawerControl.MinWidth, originalPadding.Top, originalPadding.Right, originalPadding.Bottom);
+            if (drawerControl.ShowIconsWhenHidden)
+                Padding = new Padding(Padding.Left < drawerControl.MinWidth ? drawerControl.MinWidth : Padding.Left, originalPadding.Top, originalPadding.Right, originalPadding.Bottom);
             else
-                Padding = originalPadding;
+                Padding = new Padding(PADDING_MINIMUM, originalPadding.Top, originalPadding.Right, originalPadding.Bottom);
         }
 
         protected override void WndProc(ref Message m)
@@ -1122,7 +1123,7 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "MaterialForm";
-            this.Padding = new System.Windows.Forms.Padding(3, 64, 3, 3);
+            this.Padding = new System.Windows.Forms.Padding(PADDING_MINIMUM, 64, PADDING_MINIMUM, PADDING_MINIMUM);
             this.Load += new System.EventHandler(this.MaterialForm_Load);
             this.ResumeLayout(false);
         }
