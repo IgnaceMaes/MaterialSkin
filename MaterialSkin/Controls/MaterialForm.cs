@@ -91,7 +91,8 @@
                     STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
                 }
 
-                Padding = new Padding(Padding.Left, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Padding.Right, Padding.Bottom);
+                Padding = new Padding(_drawerShowIconsWhenHidden ? drawerControl.MinWidth : PADDING_MINIMUM, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Padding.Right, Padding.Bottom);
+                originalPadding = Padding;
 
                 if (DrawerTabControl != null)
                 {
