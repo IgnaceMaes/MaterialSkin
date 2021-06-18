@@ -284,10 +284,6 @@
 
             Padding = new Padding(PADDING_MINIMUM, STATUS_BAR_HEIGHT+ ACTION_BAR_HEIGHT, PADDING_MINIMUM, PADDING_MINIMUM);      //Keep space for resize by mouse
 
-           // This enables the form to trigger the MouseMove event even when mouse is over another control
-            Application.AddMessageFilter(new MouseMessageFilter());
-            MouseMessageFilter.MouseMove += OnGlobalMouseMove;
-
             _clickAnimManager = new AnimationManager()
             {
                 AnimationType = AnimationType.EaseOut,
@@ -569,6 +565,23 @@
             {
                 _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.Out);
             };
+            drawerControl.CursorUpdate += (sender, drawerCursor) =>
+            {
+                if (Sizable && !_maximized)
+                {
+                    if (drawerCursor == Cursors.SizeNESW)
+                        _resizeDir = ResizeDirection.BottomLeft;
+                    else if (drawerCursor == Cursors.SizeWE)
+                        _resizeDir = ResizeDirection.Left;
+                    else if (drawerCursor == Cursors.SizeNS)
+                        _resizeDir = ResizeDirection.Bottom;
+                    else
+                        _resizeDir = ResizeDirection.None;
+                }
+                else
+                    _resizeDir = ResizeDirection.None;
+                Cursor = drawerCursor;
+            };
 
             // Form Padding corrections
 
@@ -678,7 +691,7 @@
             {
                 // This re-enables resizing by letting the application know when the
                 // user is trying to resize a side. This is disabled by default when using WS_SYSMENU.
-                if (!Sizable)
+                if (!Sizable || !_resizeCursors.Contains(Cursor))
                     return;
 
                 byte bFlag = 0;
