@@ -138,6 +138,8 @@
 
         public event DrawerStateHandler DrawerShowIconsWhenHiddenChanged;
 
+        public event EventHandler<Cursor> CursorUpdate;
+
         // icons
         private Dictionary<string, TextureBrush> iconsBrushes;
 
@@ -301,6 +303,7 @@
         private List<GraphicsPath> _drawerItemPaths;
 
         private const int TAB_HEADER_PADDING = 24;
+        private const int BORDER_WIDTH = 7;
 
         private int drawerItemHeight;
 
@@ -633,15 +636,29 @@
 
             if (_drawerItemRects == null)
                 UpdateTabRects();
-            for (var i = 0; i < _drawerItemRects.Count; i++)
+                
+            if (e.Location.X + this.Location.X < BORDER_WIDTH)
             {
-                if (_drawerItemRects[i].Contains(e.Location))
-                {
-                    Cursor = Cursors.Hand;
-                    return;
-                }
+                if (e.Location.Y > this.Height - BORDER_WIDTH)
+                    Cursor = Cursors.SizeNESW;                  //Bottom Left
+                else
+                    Cursor = Cursors.SizeWE;                    //Left
+                CursorUpdate?.Invoke(this, Cursor);
+                return;
             }
-            //Cursor = Cursors.Arrow;
+            else if (e.Location.Y > this.Height - BORDER_WIDTH)
+            {
+                Cursor = Cursors.SizeNS;                        //Bottom
+                CursorUpdate?.Invoke(this, Cursor);
+                return;
+            }
+
+            if (e.Location.Y < _drawerItemRects[_drawerItemRects.Count - 1].Bottom && (e.Location.X + this.Location.X) >= BORDER_WIDTH)
+                Cursor = Cursors.Hand;
+            else
+                Cursor = Cursors.Arrow;
+                
+            CursorUpdate?.Invoke(this, Cursor);
         }
 
         protected override void OnMouseEnter(EventArgs e)
