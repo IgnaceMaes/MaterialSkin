@@ -732,12 +732,25 @@
             base.OnMouseDown(e);
         }
 
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            Cursor = Cursors.Default;
+        }
+
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
             if (DesignMode)
                 return;
             _buttonState = ButtonState.None;
+            _resizeDir = ResizeDirection.None;
+            //Only reset the cursor when needed
+            if (_resizeCursors.Contains(Cursor))
+            {
+                Cursor = Cursors.Default;
+            }
+
             Invalidate();
         }
 
@@ -791,16 +804,6 @@
             }
 
             UpdateButtons(e);
-        }
-
-        protected void OnGlobalMouseMove(object sender, MouseEventArgs e)
-        {
-            if (IsDisposed)
-                return;
-            // Convert to client position and pass to Form.MouseMove
-            var clientCursorPos = PointToClient(e.Location);
-            var newE = new MouseEventArgs(MouseButtons.None, 0, clientCursorPos.X, clientCursorPos.Y, 0);
-            OnMouseMove(newE);
         }
 
         private void UpdateButtons(MouseEventArgs e, bool up = false)

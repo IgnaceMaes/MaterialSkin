@@ -618,6 +618,7 @@
             base.OnMouseDown(e);
             if (DesignMode)
                 return;
+            MouseState = MouseState.DOWN;
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -625,6 +626,7 @@
             base.OnMouseUp(e);
             if (DesignMode)
                 return;
+            MouseState = MouseState.OUT;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -637,28 +639,29 @@
             if (_drawerItemRects == null)
                 UpdateTabRects();
                 
+            Cursor previousCursor = Cursor;
+
             if (e.Location.X + this.Location.X < BORDER_WIDTH)
             {
                 if (e.Location.Y > this.Height - BORDER_WIDTH)
                     Cursor = Cursors.SizeNESW;                  //Bottom Left
                 else
                     Cursor = Cursors.SizeWE;                    //Left
-                CursorUpdate?.Invoke(this, Cursor);
-                return;
             }
             else if (e.Location.Y > this.Height - BORDER_WIDTH)
             {
                 Cursor = Cursors.SizeNS;                        //Bottom
-                CursorUpdate?.Invoke(this, Cursor);
-                return;
+            }
+            else
+            {
+                if (e.Location.Y < _drawerItemRects[_drawerItemRects.Count - 1].Bottom && (e.Location.X + this.Location.X) >= BORDER_WIDTH)
+                    Cursor = Cursors.Hand;
+                else
+                    Cursor = Cursors.Default;
             }
 
-            if (e.Location.Y < _drawerItemRects[_drawerItemRects.Count - 1].Bottom && (e.Location.X + this.Location.X) >= BORDER_WIDTH)
-                Cursor = Cursors.Hand;
-            else
-                Cursor = Cursors.Arrow;
-                
-            CursorUpdate?.Invoke(this, Cursor);
+            if (previousCursor != Cursor) CursorUpdate?.Invoke(this, Cursor);
+
         }
 
         protected override void OnMouseEnter(EventArgs e)
@@ -673,6 +676,13 @@
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
+
+            if (MouseState != MouseState.DOWN)
+            {
+                Cursor = Cursors.Default;
+                CursorUpdate?.Invoke(this, Cursor);
+            }
+
             if (AutoShow)
             {
                 if (DisplayRectangle.Contains(Control.MousePosition) == false)
