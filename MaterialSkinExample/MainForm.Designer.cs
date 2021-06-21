@@ -335,7 +335,7 @@ namespace MaterialSkinExample
             this.MaterialButton3.Depth = 0;
             this.MaterialButton3.HighEmphasis = true;
             this.MaterialButton3.Icon = null;
-            this.MaterialButton3.Location = new System.Drawing.Point(22, 425);
+            this.MaterialButton3.Location = new System.Drawing.Point(22, 460);
             this.MaterialButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton3.Name = "MaterialButton3";
@@ -402,7 +402,7 @@ namespace MaterialSkinExample
             this.materialLabel6.Depth = 0;
             this.materialLabel6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel6.Location = new System.Drawing.Point(19, 389);
+            this.materialLabel6.Location = new System.Drawing.Point(19, 424);
             this.materialLabel6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
@@ -2801,7 +2801,7 @@ namespace MaterialSkinExample
             this.materialSwitch9.AutoSize = true;
             this.materialSwitch9.Depth = 0;
             this.materialSwitch9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialSwitch9.Location = new System.Drawing.Point(387, 213);
+            this.materialSwitch9.Location = new System.Drawing.Point(22, 360);
             this.materialSwitch9.Margin = new System.Windows.Forms.Padding(0);
             this.materialSwitch9.MouseLocation = new System.Drawing.Point(-1, -1);
             this.materialSwitch9.MouseState = MaterialSkin.MouseState.HOVER;
