@@ -6,7 +6,7 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 >
 > This means I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up, also [@orapps44](https://github.com/orapps44) has been doing excelent work and is keeping this project alive and updated, Thank you! ❤️
 
-![home](https://user-images.githubusercontent.com/77468294/119880367-7823a400-bf2c-11eb-9fae-4172a57b317f.png)
+![home](https://user-images.githubusercontent.com/77468294/122829023-b8d1cb80-d2e6-11eb-9094-fea30d80045b.png)
 
 ## Nuget Package
 
@@ -166,7 +166,7 @@ If you love .NET and Material Design, you should definitely check out [Material 
 ## Images
 
 *A simple demo interface with MaterialSkin components.*
-![home](https://user-images.githubusercontent.com/77468294/119880367-7823a400-bf2c-11eb-9fae-4172a57b317f.png)
+![home](https://user-images.githubusercontent.com/77468294/122829023-b8d1cb80-d2e6-11eb-9094-fea30d80045b.png)
 
 *The MaterialSkin Drawer (menu).*
 ![drawer](https://user-images.githubusercontent.com/77468294/119880600-b4570480-bf2c-11eb-9a83-e2d59b88bf22.png)
