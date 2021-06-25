@@ -121,7 +121,7 @@
         /// <summary>
         /// Constructer Setting up the Layout
         /// </summary>
-        public MaterialSnackBar(string Text, int Duration, bool ShowActionButton, string ActionButtonText)
+        public MaterialSnackBar(string Text, int Duration, bool ShowActionButton, string ActionButtonText, bool UseAccentColor)
         {
             this.Text = Text;
             this.Duration = Duration;
@@ -133,7 +133,7 @@
             FormStyle = FormStyles.StatusAndActionBar_None;
 
             this.ActionButtonText = ActionButtonText;
-            UseAccentColor = true;
+            this.UseAccentColor = UseAccentColor;
             //gPath = GetRoundedRP(rect, 30); //The 30 behind is the angle of the circle, the greater the value, the greater the circle angle
             Height = 48;
             MinimumSize = new System.Drawing.Size(344, 48);
@@ -176,23 +176,31 @@
 
         }
 
-        public MaterialSnackBar() : this("SnackBar Text", 3000, false, "OK")
+        public MaterialSnackBar() : this("SnackBar Text", 3000, false, "OK", false)
         {
         }
 
-        public MaterialSnackBar(string Text) : this(Text, 3000, false, "OK")
+        public MaterialSnackBar(string Text) : this(Text, 3000, false, "OK", false)
         {
         }
 
-        public MaterialSnackBar(string Text, int Duration) : this(Text, Duration, false, "OK")
+        public MaterialSnackBar(string Text, int Duration) : this(Text, Duration, false, "OK", false)
         {
         }
 
-        public MaterialSnackBar(string Text, string ActionButtonText) : this(Text, 3000, true, ActionButtonText)
+        public MaterialSnackBar(string Text, string ActionButtonText) : this(Text, 3000, true, ActionButtonText, false)
         {
         }
 
-        public MaterialSnackBar(string Text, int Duration, string ActionButtonText) : this(Text, Duration, true, ActionButtonText)
+        public MaterialSnackBar(string Text, string ActionButtonText, bool UseAccentColor) : this(Text, 3000, true, ActionButtonText, UseAccentColor)
+        {
+        }
+
+        public MaterialSnackBar(string Text, int Duration, string ActionButtonText) : this(Text, Duration, true, ActionButtonText, false)
+        {
+        }
+
+        public MaterialSnackBar(string Text, int Duration, string ActionButtonText, bool UseAccentColor) : this(Text, Duration, true, ActionButtonText, UseAccentColor)
         {
         }
 
