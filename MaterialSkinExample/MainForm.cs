@@ -189,5 +189,11 @@ namespace MaterialSkinExample
 
         }
 
+        private void materialButton6_Click(object sender, EventArgs e)
+        {
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("SnackBar started succesfully", "OK", true);
+            SnackBarMessage.Show(this);
+        }
+
     }
 }
