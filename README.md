@@ -44,6 +44,7 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | Radio Button                 |    Yes    |      Yes      |   Yes    |
 | Text field                   |    Yes    |      Yes      |   Yes    |
 | Sliders                      |    Yes    |      Yes      |  **No**  |
+| SnackBar                     |    Yes    |      N/A      |   Yes    |
 | Switch                       |    Yes    |      Yes      |   Yes    |
 | Tabs                         |    Yes    |      N/A      |   Yes    |
 
