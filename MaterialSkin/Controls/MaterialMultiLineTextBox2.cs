@@ -992,23 +992,17 @@ using MaterialSkin.Animations;
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
                 ForeColor = SkinManager.TextHighEmphasisColor,
-                //Location = new Point(10, 18),
-                //Width = Width-20,
-                ////Height = Height - 5,
-                //Height = Height-20,
-                //Margin = new Padding(0, 0, 0, 0),
-                //BackColor = Parent.BackColor,
                 Multiline = true
             };
 
-            //baseTextBox.SizeChanged += baseTextBox_SizeChanged;
+            Size = new Size(250, 100);
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
             {
                 Controls.Add(baseTextBox);
             }
 
-           baseTextBox.GotFocus += (sender, args) =>
+            baseTextBox.GotFocus += (sender, args) =>
             {
                 isFocused = true;
                 //Invalidate();
@@ -1020,8 +1014,6 @@ using MaterialSkin.Animations;
                 //Invalidate();
                 _animationManager.StartNewAnimation(AnimationDirection.Out);
             };
-            //baseTextBox.GotFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.In);
-            //baseTextBox.LostFocus += (sender, args) => _animationManager.StartNewAnimation(AnimationDirection.Out);
             BackColorChanged += (sender, args) =>
             {
                 baseTextBox.BackColor = BackColor;
@@ -1030,15 +1022,9 @@ using MaterialSkin.Animations;
 
             baseTextBox.TextChanged += new EventHandler(Redraw);
 
-            //Fix for tabstop
             baseTextBox.TabStop = true;
             this.TabStop = false;
         }
-
-        //void baseTextBox_SizeChanged(object sender, EventArgs e)
-        //{
-        //    // Height = baseTextBox.Height + 20;
-        //}
 
         private void Redraw(object sencer, EventArgs e)
         {
@@ -1049,7 +1035,7 @@ using MaterialSkin.Animations;
         {
             var g = pevent.Graphics;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            //g.Clear(DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A));
+
             g.Clear(Parent.BackColor);
             SolidBrush backBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A));
             g.FillRectangle(
@@ -1059,50 +1045,16 @@ using MaterialSkin.Animations;
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
-            //BackColor = !Enabled ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundDisabledColor, SkinManager.BackgroundDisabledColor.A) : //Disabled
-            //                isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
-            //                MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
-            //                DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
-
-            //g.FillRectangle(new SolidBrush(BackColor), ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
-
-            //baseTextBox.BackColor = Parent.BackColor;
-            //baseTextBox.BackColor = DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A);
-            //baseTextBox.BackColor = !Enabled ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundDisabledColor, SkinManager.BackgroundDisabledColor.A) : //Disabled
-            //    isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
-            //    MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
-            //    DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
             baseTextBox.BackColor = !Enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
                 isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
                 MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
                 DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
-            //g.FillRectangle(
-            //    !Enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
-            //    isFocused ? SkinManager.BackgroundFocusBrush :  // Focused
-            //    MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
-            //    backBrush, // Normal
-            //    baseTextBox.Location.X, baseTextBox.Location.Y, baseTextBox.Width, baseTextBox.Height);
-
-
-            // HintText
-            //bool userTextPresent = !String.IsNullOrEmpty(Text);
-
-            //Rectangle hintRect = new Rectangle(LEFT_PADDING, ClientRectangle.Y, Width - (LEFT_PADDING + RIGHT_PADDING), LINE_Y);
-            //int hintTextSize = 16;
 
             // bottom line base
             g.FillRectangle(SkinManager.DividersAlternativeBrush, 0, LINE_Y, Width, 1);
 
             if (!_animationManager.IsAnimating())
             {
-                //// No animation
-                //if (hasHint && (Focused || userTextPresent))
-                //{
-                //    // hint text
-                //    hintRect = new Rectangle(LEFT_PADDING, HINT_TEXT_SMALL_Y, Width - (LEFT_PADDING + RIGHT_PADDING), HINT_TEXT_SMALL_SIZE);
-                //    hintTextSize = 12;
-                //}
-
                 // bottom line
                 if (isFocused)
                 { 
@@ -1115,90 +1067,12 @@ using MaterialSkin.Animations;
                 // Animate - Focus got/lost
                 double animationProgress = _animationManager.GetProgress();
 
-                //// hint Animation
-                //if (hasHint)
-                //{
-                //    hintRect = new Rectangle(
-                //        LEFT_PADDING,
-                //        userTextPresent ? (HINT_TEXT_SMALL_Y) : ClientRectangle.Y + (int)((HINT_TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
-                //        Width - (LEFT_PADDING + RIGHT_PADDING),
-                //        userTextPresent ? (HINT_TEXT_SMALL_SIZE) : (int)(LINE_Y + (HINT_TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
-                //    hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
-                //}
-
                 // Line Animation
                 int LineAnimationWidth = (int)(Width * animationProgress);
                 int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
                 g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
             }
-
-            //// Draw hint text
-            //if (hasHint && (!userTextPresent || Focused))
-            //{
-            //    //g.DrawString(
-            //    //Hint,
-            //    //SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-            //    //    new SolidBrush(Enabled ? isFocused ? SkinManager.ColorScheme.PrimaryColor : // Focus Primary
-            //    //    SkinManager.TextMediumEmphasisColor : // not focused
-            //    //    SkinManager.TextDisabledOrHintColor), // Disabled
-            //    //new Rectangle(ClientRectangle.X, 0, ClientRectangle.Width, ClientRectangle.Height),
-            //    //new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
-
-            //    //g.DrawString(
-            //    //              Hint,
-            //    //              SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-            //    //              SkinManager.ColorScheme.AccentBrush,
-            //    //              new Rectangle(ClientRectangle.X, 0, ClientRectangle.Width, ClientRectangle.Height),
-            //    //              new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
-
-            //    //hintRect = new Rectangle(ClientRectangle.X, 0, ClientRectangle.Width, ClientRectangle.Height);
-            //    hintRect = new Rectangle(LEFT_PADDING, TOP_PADDING, ClientRectangle.Width, ClientRectangle.Height);
-
-            //    using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
-            //    {
-            //        NativeText.DrawTransparentText(
-            //        Hint,
-            //        SkinManager.getTextBoxFontBySize(hintTextSize),
-            //        Enabled ? (!userTextPresent && !Focused) ? Focused ? UseAccent ?
-            //        SkinManager.ColorScheme.AccentColor : // Focus Accent
-            //        SkinManager.ColorScheme.PrimaryColor : // Focus Primary
-            //        SkinManager.TextMediumEmphasisColor : // not focused
-            //        SkinManager.BackgroundHoverRedColor : // error state
-            //        SkinManager.TextDisabledOrHintColor, // Disabled
-            //        hintRect.Location,
-            //        hintRect.Size,
-            //        NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Top);
-            //        //NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
-            //    }
-            //}
-            //else if (!Enabled && userTextPresent && hasHint)
-            //{
-            //    g.DrawString(
-            //                  Hint,
-            //                  //SkinManager.ROBOTO_REGULAR_11,
-            //                  SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-            //                  SkinManager.ColorScheme.AccentBrush,
-            //                  new Rectangle(baseTextBox.Location.X, baseTextBox.Location.Y, baseTextBox.Size.Width, baseTextBox.Size.Height),
-            //                  new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
-            //}
         }
-
-        //public bool Focused()
-        //{
-        //    return baseTextBox.Focused;
-        //}
-
-        //protected override void OnGotFocus(EventArgs e)
-        //{
-        //    base.OnGotFocus(e);
-        //    isFocused = true;
-        //}
-
-        //protected override void OnLostFocus(EventArgs e)
-        //{
-        //    base.OnLostFocus(e);
-        //    isFocused = false;
-        //}
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -1243,28 +1117,9 @@ using MaterialSkin.Animations;
         {
             base.OnCreateControl();
 
-            //baseTextBox.ForeColor = SkinManager.TextHighEmphasisColor;
-            //baseTextBox.BackColor = Parent.BackColor;
-
-            //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            //baseTextBox.BackColor = Color.Empty;
-
-            //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
-
-
             // events
             MouseState = MouseState.OUT;
-            //MouseEnter += (sender, args) =>
-            //{
-            //    MouseState = MouseState.HOVER;
-            //    Invalidate();
-            //};
-            //MouseLeave += (sender, args) =>
-            //{
-            //    MouseState = MouseState.OUT;
-            //    Invalidate();
-            //};
-
+ 
         }
 
         protected class BaseTextBox : RichTextBox, IMaterialControl
@@ -1279,14 +1134,6 @@ using MaterialSkin.Animations;
             [Browsable(false)]
             public MouseState MouseState { get; set; }
 
-            //[DllImport("user32.dll", CharSet = CharSet.Auto)]
-            //private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, string lParam);
-
-            //private const int EM_SETCUEBANNER = 0x1501;
-            //private const char EmptyChar = (char)0;
-            //private const char VisualStylePasswordChar = '\u25CF';
-            //private const char NonVisualStylePasswordChar = '\u002A';
-
             private string hint = string.Empty;
             public string Hint
             {
@@ -1294,8 +1141,6 @@ using MaterialSkin.Animations;
                 set
                 {
                     hint = value;
-                    //SendMessage(Handle, EM_SETCUEBANNER, (int)IntPtr.Zero, Hint);
-                    //SendMessage(Handle, EM_SETCUEBANNER, 0, Hint);
                 }
             }
 
@@ -1317,12 +1162,6 @@ using MaterialSkin.Animations;
                 ContextMenuStrip = cms;
             }
 
-            //protected override void OnTextChanged(EventArgs e)
-            //{
-            //    base.OnTextChanged(e);
-            //    Invalidate();
-            //}
-
             protected override void OnGotFocus(EventArgs e)
             {
                 base.OnGotFocus(e);
@@ -1342,8 +1181,7 @@ using MaterialSkin.Animations;
             protected override void WndProc(ref Message m)
             {
                 base.WndProc(ref m);
-                //if (m.Msg == WM_PAINT && this.Text == string.Empty)
-                if (m.Msg == WM_PAINT && !Focused && String.IsNullOrEmpty(Text))
+                if (m.Msg == WM_PAINT && String.IsNullOrEmpty(Text))
                 {
                     using (NativeTextRenderer NativeText = new NativeTextRenderer(Graphics.FromHwnd(m.HWnd)))
                     {
@@ -1360,8 +1198,6 @@ using MaterialSkin.Animations;
                 }
 
                 Graphics g = Graphics.FromHwnd(Handle);
-                //Rectangle bounds = new Rectangle(0, 0, Width - 1, Height - 1);
-                //Pen p = new Pen(SystemColors.Highlight, 3);
                 Rectangle bounds = new Rectangle(0, 0, Width , Height );
 
                 if (m.Msg == WM_PAINT)
