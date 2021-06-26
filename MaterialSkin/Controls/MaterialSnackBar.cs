@@ -134,7 +134,6 @@
 
             this.ActionButtonText = ActionButtonText;
             this.UseAccentColor = UseAccentColor;
-            //gPath = GetRoundedRP(rect, 30); //The 30 behind is the angle of the circle, the greater the value, the greater the circle angle
             Height = 48;
             MinimumSize = new System.Drawing.Size(344, 48);
             MaximumSize = new System.Drawing.Size(568, 48);
