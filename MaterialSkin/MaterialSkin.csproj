@@ -102,6 +102,9 @@
     <Compile Include="Controls\MaterialMultiLineTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialMultiLineTextBox2.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialCard.cs">
       <SubType>Component</SubType>
     </Compile>
