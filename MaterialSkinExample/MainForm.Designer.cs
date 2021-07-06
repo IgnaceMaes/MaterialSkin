@@ -122,6 +122,7 @@ namespace MaterialSkinExample
             this.materialCheckBox6 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialCheckBox5 = new MaterialSkin.Controls.MaterialCheckbox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.materialMultiLineTextBox21 = new MaterialSkin.Controls.MaterialMultiLineTextBox2();
             this.materialTextBox5 = new MaterialSkin.Controls.MaterialTextBox();
             this.materialTextBox4 = new MaterialSkin.Controls.MaterialTextBox();
             this.materialTextBox3 = new MaterialSkin.Controls.MaterialTextBox();
@@ -1676,6 +1677,7 @@ namespace MaterialSkinExample
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.White;
+            this.tabPage3.Controls.Add(this.materialMultiLineTextBox21);
             this.tabPage3.Controls.Add(this.materialTextBox5);
             this.tabPage3.Controls.Add(this.materialTextBox4);
             this.tabPage3.Controls.Add(this.materialTextBox3);
@@ -1708,6 +1710,22 @@ namespace MaterialSkinExample
             this.tabPage3.Size = new System.Drawing.Size(1015, 520);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Textbox & Label";
+            // 
+            // materialMultiLineTextBox21
+            // 
+            this.materialMultiLineTextBox21.Depth = 0;
+            this.materialMultiLineTextBox21.Hint = "MaterialMultiLineTextBox2";
+            this.materialMultiLineTextBox21.Location = new System.Drawing.Point(25, 385);
+            this.materialMultiLineTextBox21.MaxLength = 2147483647;
+            this.materialMultiLineTextBox21.MouseState = MaterialSkin.MouseState.OUT;
+            this.materialMultiLineTextBox21.Name = "materialMultiLineTextBox21";
+            this.materialMultiLineTextBox21.ReadOnly = false;
+            this.materialMultiLineTextBox21.SelectedText = "";
+            this.materialMultiLineTextBox21.SelectionLength = 0;
+            this.materialMultiLineTextBox21.SelectionStart = 0;
+            this.materialMultiLineTextBox21.Size = new System.Drawing.Size(406, 100);
+            this.materialMultiLineTextBox21.TabIndex = 70;
+            this.materialMultiLineTextBox21.TabStop = false;
             // 
             // materialTextBox5
             // 
@@ -3098,5 +3116,6 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel52;
         private MaterialButton materialButton6;
         private MaterialLabel materialLabel53;
+        private MaterialMultiLineTextBox2 materialMultiLineTextBox21;
     }
 }
