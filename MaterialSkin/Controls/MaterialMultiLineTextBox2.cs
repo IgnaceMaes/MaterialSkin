@@ -43,6 +43,50 @@ using MaterialSkin.Animations;
             }
         }
 
+        private bool _enabled;
+        public new bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                _enabled = value;
+                base.Enabled = true;
+                if (_enabled!=true)
+                {
+                    baseTextBox.ForeColor = ColorHelper.RemoveAlpha(SkinManager.TextDisabledOrHintColor, BackColor);
+                    baseTextBox.ReadOnly = true;
+                    baseTextBox.TabStop = false;
+                    base.Parent.Focus();
+                }
+                else
+                {
+                    baseTextBox.ForeColor = ColorHelper.RemoveAlpha(SkinManager.TextHighEmphasisColor, BackColor);
+                    baseTextBox.ReadOnly = ReadOnly;
+                    baseTextBox.TabStop = true;
+                }
+                this.Invalidate();
+            }
+        }
+
+        private bool _readonly;
+        [Category("Behavior")]
+        public bool ReadOnly
+        {
+            get { return _readonly; }
+            set
+            {
+                _readonly = value;
+                if (_enabled == true)
+                {
+                    baseTextBox.ReadOnly = _readonly;
+                }
+                this.Invalidate();
+            }
+        }
+
         [Browsable(false)] 
         public int SelectionStart { get { return baseTextBox.SelectionStart; } set { baseTextBox.SelectionStart = value; } }
         [Browsable(false)] 
@@ -56,9 +100,6 @@ using MaterialSkin.Animations;
         public void Copy() { baseTextBox.Copy(); }
 
         public void Cut() { baseTextBox.Cut(); }
-
-        [Category("Behavior")]
-        public bool ReadOnly { get { return baseTextBox.ReadOnly; } set { baseTextBox.ReadOnly = value; } }
 
         [Category("Material Skin"), DefaultValue(true)]
         public bool UseAccent { get; set; }
@@ -995,6 +1036,7 @@ using MaterialSkin.Animations;
                 Multiline = true
             };
 
+            ReadOnly = false;
             Size = new Size(250, 100);
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
@@ -1002,16 +1044,34 @@ using MaterialSkin.Animations;
                 Controls.Add(baseTextBox);
             }
 
+            baseTextBox.ReadOnlyChanged += (sender, args) =>
+            {
+                if (_enabled)
+                {
+                    isFocused = true;
+                    //Invalidate();
+                    _animationManager.StartNewAnimation(AnimationDirection.In);
+                }
+                else
+                {
+                    isFocused = false;
+                    //Invalidate();
+                    _animationManager.StartNewAnimation(AnimationDirection.Out);
+                }
+            };
             baseTextBox.GotFocus += (sender, args) =>
             {
-                isFocused = true;
-                //Invalidate();
-                _animationManager.StartNewAnimation(AnimationDirection.In);
+                if (_enabled)
+                {
+                    isFocused = true;
+                    _animationManager.StartNewAnimation(AnimationDirection.In);
+                }
+                else
+                    base.Focus();
             };
             baseTextBox.LostFocus += (sender, args) =>
             {
                 isFocused = false;
-                //Invalidate();
                 _animationManager.StartNewAnimation(AnimationDirection.Out);
             };
             BackColorChanged += (sender, args) =>
@@ -1039,13 +1099,13 @@ using MaterialSkin.Animations;
             g.Clear(Parent.BackColor);
             SolidBrush backBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A));
             g.FillRectangle(
-                !Enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
+                !_enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
                 isFocused ? SkinManager.BackgroundFocusBrush :  // Focused
                 MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
-            baseTextBox.BackColor = !Enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
+            baseTextBox.BackColor = !_enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
                 isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
                 MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
                 DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
@@ -1153,7 +1213,6 @@ using MaterialSkin.Animations;
                 });
             }
 
-
             public BaseTextBox()
             {
                 MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
@@ -1174,6 +1233,7 @@ using MaterialSkin.Animations;
                 Invalidate();
             }
 
+            private const int WM_ENABLE = 0x0A;
             private const int WM_PAINT = 0xF;
             private const UInt32 WM_USER = 0x0400;
             private const UInt32 EM_SETBKGNDCOLOR = (WM_USER + 67);
@@ -1181,6 +1241,17 @@ using MaterialSkin.Animations;
             protected override void WndProc(ref Message m)
             {
                 base.WndProc(ref m);
+
+                if (m.Msg == WM_PAINT)
+                {
+                    if (m.Msg == WM_ENABLE)
+                    {
+                        Graphics g = Graphics.FromHwnd(Handle);
+                        Rectangle bounds = new Rectangle(0, 0, Width , Height );
+                        g.FillRectangle(SkinManager.BackgroundDisabledBrush, bounds);
+                    }
+                }
+
                 if (m.Msg == WM_PAINT && String.IsNullOrEmpty(Text))
                 {
                     using (NativeTextRenderer NativeText = new NativeTextRenderer(Graphics.FromHwnd(m.HWnd)))
@@ -1188,23 +1259,12 @@ using MaterialSkin.Animations;
                         NativeText.DrawTransparentText(
                         Hint,
                         SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-                        Enabled ?
+                        !this.ReadOnly ?
                         ColorHelper.RemoveAlpha(SkinManager.TextMediumEmphasisColor, BackColor) : // not focused
                         ColorHelper.RemoveAlpha(SkinManager.TextDisabledOrHintColor, BackColor), // Disabled
                         ClientRectangle.Location,
                         ClientRectangle.Size,
                         NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Top);
-                    }
-                }
-
-                Graphics g = Graphics.FromHwnd(Handle);
-                Rectangle bounds = new Rectangle(0, 0, Width , Height );
-
-                if (m.Msg == WM_PAINT)
-                {
-                    if (this.Enabled == false)
-                    {
-                        g.FillRectangle(SkinManager.BackgroundDisabledBrush, bounds);
                     }
                 }
 
