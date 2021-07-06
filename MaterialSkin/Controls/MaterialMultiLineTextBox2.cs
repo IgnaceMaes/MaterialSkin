@@ -1036,6 +1036,7 @@ using MaterialSkin.Animations;
                 Multiline = true
             };
 
+            Enabled = true;
             ReadOnly = false;
             Size = new Size(250, 100);
 
