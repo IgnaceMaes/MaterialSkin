@@ -1,14 +1,16 @@
-﻿using System.ComponentModel;
-using System.Windows.Forms;
-
-namespace MaterialSkin.Controls
+﻿namespace MaterialSkin.Controls
 {
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
     public sealed class MaterialDivider : Control, IMaterialControl
     {
         [Browsable(false)]
         public int Depth { get; set; }
+
         [Browsable(false)]
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
+
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
@@ -16,7 +18,7 @@ namespace MaterialSkin.Controls
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             Height = 1;
-            BackColor = SkinManager.GetDividersColor();
+            BackColor = SkinManager.DividersColor;
         }
     }
 }

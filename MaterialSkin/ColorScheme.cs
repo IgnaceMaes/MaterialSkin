@@ -1,21 +1,15 @@
-﻿using System.Drawing;
-
-namespace MaterialSkin
+﻿namespace MaterialSkin
 {
+    using System.Drawing;
+
     public class ColorScheme
     {
         public readonly Color PrimaryColor, DarkPrimaryColor, LightPrimaryColor, AccentColor, TextColor;
+
         public readonly Pen PrimaryPen, DarkPrimaryPen, LightPrimaryPen, AccentPen, TextPen;
+
         public readonly Brush PrimaryBrush, DarkPrimaryBrush, LightPrimaryBrush, AccentBrush, TextBrush;
 
-        /// <summary>
-        /// Defines the Color Scheme to be used for all forms.
-        /// </summary>
-        /// <param name="primary">The primary color, a -500 color is suggested here.</param>
-        /// <param name="darkPrimary">A darker version of the primary color, a -700 color is suggested here.</param>
-        /// <param name="lightPrimary">A lighter version of the primary color, a -100 color is suggested here.</param>
-        /// <param name="accent">The accent color, a -200 color is suggested here.</param>
-        /// <param name="textShade">The text color, the one with the highest contrast is suggested.</param>
         public ColorScheme(Primary primary, Primary darkPrimary, Primary lightPrimary, Accent accent, TextShade textShade)
         {
             //Color
@@ -39,44 +33,33 @@ namespace MaterialSkin
             AccentBrush = new SolidBrush(AccentColor);
             TextBrush = new SolidBrush(TextColor);
         }
-    }
 
-    public static class ColorExtension
-    {
-        /// <summary>
-        /// Convert an integer number to a Color.
-        /// </summary>
-        /// <returns></returns>
-        public static Color ToColor(this int argb)
+        public ColorScheme(Color primary, Color darkPrimary, Color lightPrimary, Color accent, TextShade textShade)
         {
-            return Color.FromArgb(
-                (argb & 0xff0000) >> 16,
-                (argb & 0xff00) >> 8,
-                 argb & 0xff);
-        }
+            //Color
+            PrimaryColor = primary;
+            DarkPrimaryColor = darkPrimary;
+            LightPrimaryColor = lightPrimary;
+            AccentColor = accent;
+            TextColor = ((int)textShade).ToColor();
 
-        /// <summary>
-        /// Removes the alpha component of a color.
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public static Color RemoveAlpha(this Color color)
-        {
-            return Color.FromArgb(color.R, color.G, color.B);
-        }
+            //Pen
+            PrimaryPen = new Pen(PrimaryColor);
+            DarkPrimaryPen = new Pen(DarkPrimaryColor);
+            LightPrimaryPen = new Pen(LightPrimaryColor);
+            AccentPen = new Pen(AccentColor);
+            TextPen = new Pen(TextColor);
 
-        /// <summary>
-        /// Converts a 0-100 integer to a 0-255 color component.
-        /// </summary>
-        /// <param name="percentage"></param>
-        /// <returns></returns>
-        public static int PercentageToColorComponent(this int percentage)
-        {
-            return (int)((percentage / 100d) * 255d);
+            //Brush
+            PrimaryBrush = new SolidBrush(PrimaryColor);
+            DarkPrimaryBrush = new SolidBrush(DarkPrimaryColor);
+            LightPrimaryBrush = new SolidBrush(LightPrimaryColor);
+            AccentBrush = new SolidBrush(AccentColor);
+            TextBrush = new SolidBrush(TextColor);
         }
     }
 
-    //Color constantes
+    //Color constants
     public enum TextShade
     {
         WHITE = 0xFFFFFF,
