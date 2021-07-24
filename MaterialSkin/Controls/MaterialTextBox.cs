@@ -35,6 +35,7 @@
                 _UseTallSize = value;
                 HEIGHT = UseTallSize ? 50 : 36;
                 Size = new Size(Size.Width, HEIGHT);
+                UpdateRects(false);
                 Invalidate();
             }
         }
@@ -67,16 +68,19 @@
             get { return _leadingIcon; }
             set
             {
-                _leadingIcon = value;
-                UpdateRects();
-                preProcessIcons();
-                if (AutoSize)
-                {
-                    Refresh();
-                }
-                else
-                {
-                    Invalidate();
+                if (_leadingIcon != value && value != null)
+                { 
+                    _leadingIcon = value;
+                    UpdateRects(false);
+                    preProcessIcons();
+                    if (AutoSize)
+                    {
+                        Refresh();
+                    }
+                    else
+                    {
+                        Invalidate();
+                    }
                 }
             }
         }
@@ -92,16 +96,19 @@
             get { return _trailingIcon; }
             set
             {
-                _trailingIcon = value;
-                UpdateRects();
-                preProcessIcons();
-                if (AutoSize)
+                if (_trailingIcon != value && value != null)
                 {
-                    Refresh();
-                }
-                else
-                {
-                    Invalidate();
+                    _trailingIcon = value;
+                    UpdateRects(false);
+                    preProcessIcons();
+                    if (AutoSize)
+                    {
+                        Refresh();
+                    }
+                    else
+                    {
+                        Invalidate();
+                    }
                 }
             }
         }
