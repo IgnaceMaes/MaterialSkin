@@ -68,19 +68,16 @@
             get { return _leadingIcon; }
             set
             {
-                if (_leadingIcon != value && value != null)
-                { 
-                    _leadingIcon = value;
-                    UpdateRects(false);
-                    preProcessIcons();
-                    if (AutoSize)
-                    {
-                        Refresh();
-                    }
-                    else
-                    {
-                        Invalidate();
-                    }
+                _leadingIcon = value;
+                UpdateRects(false);
+                preProcessIcons();
+                if (AutoSize)
+                {
+                    Refresh();
+                }
+                else
+                {
+                    Invalidate();
                 }
             }
         }
@@ -96,19 +93,16 @@
             get { return _trailingIcon; }
             set
             {
-                if (_trailingIcon != value && value != null)
+                _trailingIcon = value;
+                UpdateRects(false);
+                preProcessIcons();
+                if (AutoSize)
                 {
-                    _trailingIcon = value;
-                    UpdateRects(false);
-                    preProcessIcons();
-                    if (AutoSize)
-                    {
-                        Refresh();
-                    }
-                    else
-                    {
-                        Invalidate();
-                    }
+                    Refresh();
+                }
+                else
+                {
+                    Invalidate();
                 }
             }
         }
