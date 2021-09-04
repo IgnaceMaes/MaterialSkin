@@ -44,6 +44,9 @@
     <Compile Include="Animations\Animations.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="ColorScheme.cs" />
+    <Compile Include="Controls\BaseTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\FlexibleMaterialDialog.cs">
       <SubType>Form</SubType>
     </Compile>
