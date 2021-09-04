@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin.Controls
+namespace MaterialSkin.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -72,6 +72,7 @@
             {
                 baseTextBox.Hint = value;
                 hasHint = !String.IsNullOrEmpty(baseTextBox.Hint);
+                UpdateRects();
                 Invalidate();
             }
         }
@@ -120,7 +121,7 @@
         [Browsable(false)]
         public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
 
-        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
+        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; UpdateRects(); Invalidate(); } }
 
         [Category("Appearance")]
         public HorizontalAlignment TextAlign { get { return baseTextBox.TextAlign; } set { baseTextBox.TextAlign = value; } }
