@@ -114,6 +114,9 @@
     <Compile Include="Controls\MaterialTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialTextBox2.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
