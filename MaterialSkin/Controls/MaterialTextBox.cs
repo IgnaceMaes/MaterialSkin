@@ -35,6 +35,7 @@
                 _UseTallSize = value;
                 HEIGHT = UseTallSize ? 50 : 36;
                 Size = new Size(Size.Width, HEIGHT);
+                UpdateRects(false);
                 Invalidate();
             }
         }
@@ -68,7 +69,7 @@
             set
             {
                 _leadingIcon = value;
-                UpdateRects();
+                UpdateRects(false);
                 preProcessIcons();
                 if (AutoSize)
                 {
@@ -93,7 +94,7 @@
             set
             {
                 _trailingIcon = value;
-                UpdateRects();
+                UpdateRects(false);
                 preProcessIcons();
                 if (AutoSize)
                 {
