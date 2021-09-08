@@ -116,12 +116,52 @@ namespace MaterialSkin.Controls
             }
         }
 
+        public enum PrefixSuffixTypes
+        {
+            None,
+            Prefix,
+            Suffix,
+        }
+
+        private PrefixSuffixTypes _prefixsuffix;
+        [Category("Material Skin"), DefaultValue(PrefixSuffixTypes.None), Description("Set Prefix/Suffix/None")]
+        public PrefixSuffixTypes PrefixSuffix
+        {
+            get { return _prefixsuffix; }
+            set
+            {
+                _prefixsuffix = value;
+                UpdateRects();            //Génére une nullref exception
+                if (_prefixsuffix == PrefixSuffixTypes.Suffix)
+                    RightToLeft = RightToLeft.Yes;
+                else
+                    RightToLeft = RightToLeft.No;
+                Invalidate();
+            }
+        }
+
+        private string _prefixsuffixText;
+        [Category("Material Skin"), DefaultValue(""), Localizable(true), Description("Set Prefix or Suffix text")]
+        public string PrefixSuffixText
+        {
+            get { return _prefixsuffixText; }
+            set
+            {
+                //if (_prefixsuffixText != value)
+                //{
+                    _prefixsuffixText = value;
+                    UpdateRects();
+                    Invalidate();
+                //}
+            }
+        }
+
         //TextBox properties
 
         [Browsable(false)]
         public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
 
-        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; UpdateRects(); Invalidate(); } }
+        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
 
         [Category("Appearance")]
         public HorizontalAlignment TextAlign { get { return baseTextBox.TextAlign; } set { baseTextBox.TextAlign = value; } }
@@ -1094,6 +1134,7 @@ namespace MaterialSkin.Controls
         private readonly AnimationManager _animationManager;
 
         public bool isFocused = false;
+        private const int PREFIX_SUFFIX_PADDING = 4;
         private const int ICON_SIZE = 24;
         private const int HINT_TEXT_SMALL_SIZE = 18;
         private const int HINT_TEXT_SMALL_Y = 4;
@@ -1111,6 +1152,8 @@ namespace MaterialSkin.Controls
         private bool _errorState = false;
         private int _left_padding;
         private int _right_padding;
+        private int _prefix_padding;
+        private int _suffix_padding;
         private Rectangle _leadingIconBounds;
         private Rectangle _trailingIconBounds;
 
@@ -1164,6 +1207,7 @@ namespace MaterialSkin.Controls
             Size = new Size(250, HEIGHT);
 
             UseTallSize = true;
+            PrefixSuffix = PrefixSuffixTypes.None;
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
             {
@@ -1254,7 +1298,7 @@ namespace MaterialSkin.Controls
 
             // HintText
             bool userTextPresent = !String.IsNullOrEmpty(Text);
-            Rectangle hintRect = new Rectangle(_left_padding, HINT_TEXT_SMALL_Y, Width - _left_padding - _right_padding, HINT_TEXT_SMALL_SIZE);
+            Rectangle hintRect = new Rectangle(_left_padding - _prefix_padding, HINT_TEXT_SMALL_Y, Width - (_left_padding - _prefix_padding) - _right_padding, HINT_TEXT_SMALL_SIZE);
             int hintTextSize = 12;
 
             // bottom line base
@@ -1279,6 +1323,52 @@ namespace MaterialSkin.Controls
                 int LineAnimationWidth = (int)(Width * animationProgress);
                 int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
                 g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
+            }
+
+            // Prefix:
+            if (_prefixsuffix == PrefixSuffixTypes.Prefix && _prefixsuffixText != null && _prefixsuffixText.Length > 0 && (isFocused || userTextPresent || !hasHint))
+            {
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    Rectangle prefixRect = new Rectangle(
+                        _left_padding - _prefix_padding,
+                        hasHint && UseTallSize ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
+//                        NativeText.MeasureLogString(_prefixsuffixText, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width,
+                        _prefix_padding,
+                        hasHint && UseTallSize ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
+
+                    // Draw Prefix text 
+                    NativeText.DrawTransparentText(
+                    _prefixsuffixText,
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1),
+                    Enabled ? SkinManager.TextMediumEmphasisColor : SkinManager.TextDisabledOrHintColor,
+                    prefixRect.Location,
+                    prefixRect.Size,
+                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                }
+            }
+
+            // Suffix:
+            if (_prefixsuffix == PrefixSuffixTypes.Suffix && _prefixsuffixText != null && _prefixsuffixText.Length > 0 && (isFocused || userTextPresent || !hasHint))
+            {
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+                {
+                    Rectangle suffixRect = new Rectangle(
+                        Width - _right_padding ,
+                        hasHint && UseTallSize ? (hintRect.Y + hintRect.Height) - 2 : ClientRectangle.Y,
+                        //NativeText.MeasureLogString(_prefixsuffixText, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width + PREFIX_SUFFIX_PADDING,
+                        _suffix_padding,
+                        hasHint && UseTallSize ? LINE_Y - (hintRect.Y + hintRect.Height) : LINE_Y);
+
+                    // Draw Suffix text 
+                    NativeText.DrawTransparentText(
+                    _prefixsuffixText,
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1),
+                    Enabled ? SkinManager.TextMediumEmphasisColor : SkinManager.TextDisabledOrHintColor,
+                    suffixRect.Location,
+                    suffixRect.Size,
+                    NativeTextRenderer.TextAlignFlags.Right | NativeTextRenderer.TextAlignFlags.Middle);
+                }
             }
 
             // Draw hint text
@@ -1369,6 +1459,8 @@ namespace MaterialSkin.Controls
             base.OnResize(e);
 
             UpdateRects();
+            preProcessIcons();
+
             Size = new Size(Width, HEIGHT);
             LINE_Y = HEIGHT - ACTIVATION_INDICATOR_HEIGHT;
 
@@ -1560,6 +1652,8 @@ namespace MaterialSkin.Controls
                 iconsErrorBrushes.Add("_trailingIcon", textureBrushRed);
             }
         }
+        
+        #endregion
 
         private void UpdateRects()
         {
@@ -1572,6 +1666,28 @@ namespace MaterialSkin.Controls
                 _right_padding = RIGHT_PADDING + ICON_SIZE;
             else
                 _right_padding = RIGHT_PADDING;
+
+            if (_prefixsuffix == PrefixSuffixTypes.Prefix && _prefixsuffixText != null && _prefixsuffixText.Length > 0)
+            {
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(CreateGraphics()))
+                {
+                    _prefix_padding = NativeText.MeasureLogString(_prefixsuffixText, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width + PREFIX_SUFFIX_PADDING;
+                    _left_padding += _prefix_padding;
+                }
+            }
+            else
+                _prefix_padding = 0;
+                
+            if (_prefixsuffix == PrefixSuffixTypes.Suffix && _prefixsuffixText != null && _prefixsuffixText.Length > 0)
+            {
+                using (NativeTextRenderer NativeText = new NativeTextRenderer(CreateGraphics()))
+                {
+                    _suffix_padding = NativeText.MeasureLogString(_prefixsuffixText, SkinManager.getLogFontByType(MaterialSkinManager.fontType.Subtitle1)).Width + PREFIX_SUFFIX_PADDING;
+                    _right_padding += _suffix_padding;
+                }
+            }
+            else
+                _suffix_padding = 0;
 
             if (hasHint && UseTallSize && (isFocused || !String.IsNullOrEmpty(Text)))
             {
@@ -1589,8 +1705,6 @@ namespace MaterialSkin.Controls
             _leadingIconBounds = new Rectangle(8, (HEIGHT / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
             _trailingIconBounds = new Rectangle(Width - (ICON_SIZE + 8), (HEIGHT / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
         }
-
-        #endregion
 
         public void SetErrorState(bool ErrorState)
         {
