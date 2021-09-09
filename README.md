@@ -179,7 +179,7 @@ If you love .NET and Material Design, you should definitely check out [Material 
 ![selection](https://user-images.githubusercontent.com/8310271/66237912-a0fa8400-e6cc-11e9-9fb8-2cb247d2eff1.png)
 
 *Material skin textfield and labels*
-![text](https://user-images.githubusercontent.com/77468294/123526249-cddb9f80-d6d6-11eb-9084-2b5afac1202d.png)
+![text](https://user-images.githubusercontent.com/77468294/132768955-3c7cb44a-9d90-40e6-8e4c-57bb1ce20536.png)
 
 *Table control*
 ![table](https://user-images.githubusercontent.com/8310271/66237915-a1931a80-e6cc-11e9-8e68-bc919f533366.png)
@@ -195,6 +195,9 @@ If you love .NET and Material Design, you should definitely check out [Material 
 
 *Expansion Panel*
 ![expansion](https://user-images.githubusercontent.com/77468294/119881153-419a5900-bf2d-11eb-95a2-ab29089acdd3.png)
+
+*Label*
+![label](https://user-images.githubusercontent.com/77468294/132769098-440841c8-07d2-4b9b-bff7-e525402525dd.png)
 
 *MaterialSkin using a custom color scheme.*
 ![custom](https://user-images.githubusercontent.com/77468294/119881411-8e7e2f80-bf2d-11eb-9fa3-883eceabfadc.png)
