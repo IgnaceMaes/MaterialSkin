@@ -195,5 +195,73 @@ namespace MaterialSkinExample
             SnackBarMessage.Show(this);
         }
 
+        private void materialSwitch10_CheckedChanged(object sender, EventArgs e)
+        {
+            materialTextBox21.UseAccent = materialSwitch10.Checked;
+        }
+
+        private void materialSwitch11_CheckedChanged(object sender, EventArgs e)
+        {
+            materialTextBox21.UseTallSize = materialSwitch11.Checked;
+        }
+
+        private void materialSwitch12_CheckedChanged(object sender, EventArgs e)
+        {
+            if (materialSwitch12.Checked)
+                materialTextBox21.Hint = "Hint text";
+            else
+                materialTextBox21.Hint = "";
+        }
+
+        private void materialComboBox7_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (materialComboBox7.SelectedIndex == 1)
+            {
+                    materialTextBox21.PrefixSuffix = MaterialTextBox2.PrefixSuffixTypes.Prefix;
+            }
+            else if (materialComboBox7.SelectedIndex == 2)
+            {
+                materialTextBox21.PrefixSuffix = MaterialTextBox2.PrefixSuffixTypes.Suffix;
+            }
+            else 
+            {
+                materialTextBox21.PrefixSuffix = MaterialTextBox2.PrefixSuffixTypes.None;
+            }
+        }
+
+        private void materialSwitch13_CheckedChanged(object sender, EventArgs e)
+        {
+            materialTextBox21.UseSystemPasswordChar = materialSwitch13.Checked;
+
+        }
+
+        private void materialSwitch14_CheckedChanged(object sender, EventArgs e)
+        {
+            if (materialSwitch14.Checked)
+                materialTextBox21.LeadingIcon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
+            else
+                materialTextBox21.LeadingIcon = null;
+        }
+
+        private void materialSwitch15_CheckedChanged(object sender, EventArgs e)
+        {
+            if (materialSwitch15.Checked)
+                materialTextBox21.TrailingIcon = global::MaterialSkinExample.Properties.Resources.baseline_build_black_24dp;
+            else
+                materialTextBox21.TrailingIcon = null;
+        }
+
+        private void materialTextBox21_LeadingIconClick(object sender, EventArgs e)
+        {
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Leading Icon Click");
+            SnackBarMessage.Show(this);
+        }
+
+        private void materialTextBox21_TrailingIconClick(object sender, EventArgs e)
+        {
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Trailing Icon Click");
+            SnackBarMessage.Show(this);
+        }
+
     }
 }
