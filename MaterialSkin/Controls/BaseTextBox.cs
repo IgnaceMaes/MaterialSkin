@@ -24,6 +24,7 @@ namespace MaterialSkin.Controls
             set
             {
                 hint = value;
+                Invalidate();
             }
         }
 
