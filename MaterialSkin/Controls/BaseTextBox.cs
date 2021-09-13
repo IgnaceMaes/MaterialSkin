@@ -40,7 +40,7 @@ namespace MaterialSkin.Controls
 
         public BaseTextBox()
         {
-            MaterialContextMenuStrip cms = new BaseTextBoxContextMenuStrip();
+            MaterialContextMenuStrip cms = new TextBox2ContextMenuStrip();
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
             ContextMenuStrip = cms;
@@ -135,7 +135,7 @@ namespace MaterialSkin.Controls
 
         private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
         {
-            var strip = sender as BaseTextBoxContextMenuStrip;
+            var strip = sender as TextBox2ContextMenuStrip;
             if (strip != null)
             {
                 strip.undo.Enabled = CanUndo;
@@ -147,33 +147,6 @@ namespace MaterialSkin.Controls
             }
         }
 
-    }
-
-    public class BaseTextBoxContextMenuStrip : MaterialContextMenuStrip
-    {
-        public readonly ToolStripItem undo = new MaterialToolStripMenuItem { Text = "Undo" };
-        public readonly ToolStripItem seperator1 = new ToolStripSeparator();
-        public readonly ToolStripItem cut = new MaterialToolStripMenuItem { Text = "Cut" };
-        public readonly ToolStripItem copy = new MaterialToolStripMenuItem { Text = "Copy" };
-        public readonly ToolStripItem paste = new MaterialToolStripMenuItem { Text = "Paste" };
-        public readonly ToolStripItem delete = new MaterialToolStripMenuItem { Text = "Delete" };
-        public readonly ToolStripItem seperator2 = new ToolStripSeparator();
-        public readonly ToolStripItem selectAll = new MaterialToolStripMenuItem { Text = "Select All" };
-
-        public BaseTextBoxContextMenuStrip()
-        {
-            Items.AddRange(new[]
-            {
-                    undo,
-                    seperator1,
-                    cut,
-                    copy,
-                    paste,
-                    delete,
-                    seperator2,
-                    selectAll
-                });
-        }
     }
 
 }
