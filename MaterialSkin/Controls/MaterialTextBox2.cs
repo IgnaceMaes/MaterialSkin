@@ -1082,6 +1082,18 @@ namespace MaterialSkin.Controls
             }
         }
 
+       public event EventHandler TextAlignChanged
+        {
+            add
+            {
+                baseTextBox.TextAlignChanged += value;
+            }
+            remove
+            {
+                baseTextBox.TextAlignChanged -= value;
+            }
+        }
+
         public new event EventHandler TextChanged
         {
             add
