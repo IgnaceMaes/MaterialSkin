@@ -778,6 +778,7 @@
         }
     }
 
+    [ToolboxItem(false)]
     public class TextBoxContextMenuStrip : MaterialContextMenuStrip
     {
         public readonly ToolStripItem SelectAll = new MaterialToolStripMenuItem { Text = "Select All" };
