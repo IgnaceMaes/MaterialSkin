@@ -5,6 +5,7 @@ namespace MaterialSkin.Controls
     using System.Drawing;
     using System.Windows.Forms;
 
+    [ToolboxItem(false)]
     public class BaseTextBox : TextBox, IMaterialControl
     {
         //Properties for managing the material design properties
@@ -149,6 +150,7 @@ namespace MaterialSkin.Controls
 
     }
 
+    [ToolboxItem(false)]
     public class BaseTextBoxContextMenuStrip : MaterialContextMenuStrip
     {
         public readonly ToolStripItem undo = new MaterialToolStripMenuItem { Text = "Undo" };
