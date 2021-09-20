@@ -265,7 +265,14 @@
             set
             {
                 base.Text = value;
-                _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.getFontByType(MaterialSkinManager.fontType.Button));
+                if (!String.IsNullOrEmpty(value))
+                    _textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.getFontByType(MaterialSkinManager.fontType.Button));
+                else
+                {
+                    _textSize.Width = 0;
+                    _textSize.Height = 0;
+                }
+
                 if (AutoSize)
                 {
                     Refresh();
