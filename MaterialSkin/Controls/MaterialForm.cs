@@ -652,7 +652,7 @@
                             new Point(Cursor.Position.X - _previousSize.Width + Width - mousePoint.X, Cursor.Position.Y - mousePoint.Y) :
                             new Point(Cursor.Position.X - _previousSize.Width / 2, Cursor.Position.Y - mousePoint.Y);
 
-                    Size = _previousSize;
+                    WindowState = FormWindowState.Normal;
                     ReleaseCapture();
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 }
@@ -887,13 +887,15 @@
                 GetMonitorInfo(new HandleRef(null, monitorHandle), monitorInfo);
                 _previousSize = Size;
                 _previousLocation = Location;
-                Size = new Size(monitorInfo.rcWork.Width(), monitorInfo.rcWork.Height());
+                MaximizedBounds = Screen.FromControl(this).WorkingArea;
+                WindowState = FormWindowState.Maximized;
                 Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
             }
             else
             {
                 Size = _previousSize;
                 Location = _previousLocation;
+                WindowState = FormWindowState.Normal;
             }
         }
 
