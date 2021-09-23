@@ -28,6 +28,16 @@
             set { base.Text = value; Invalidate(); }
         }
 
+        public new FormWindowState WindowState
+        {
+            get { return base.WindowState; }
+            set
+            {
+                MaximizedBounds = Screen.FromControl(this).WorkingArea;
+                base.WindowState = value;
+            }
+        }
+
         public new FormBorderStyle FormBorderStyle
         {
             get { return base.FormBorderStyle; }
@@ -887,7 +897,6 @@
                 GetMonitorInfo(new HandleRef(null, monitorHandle), monitorInfo);
                 _previousSize = Size;
                 _previousLocation = Location;
-                MaximizedBounds = Screen.FromControl(this).WorkingArea;
                 WindowState = FormWindowState.Maximized;
                 Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
             }
