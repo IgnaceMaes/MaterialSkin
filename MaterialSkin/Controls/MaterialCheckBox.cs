@@ -10,6 +10,7 @@
 
     public class MaterialCheckbox : CheckBox, IMaterialControl
     {
+        #region Public properties
         [Browsable(false)]
         public int Depth { get; set; }
 
@@ -42,6 +43,11 @@
             }
         }
 
+        [Browsable(true)]
+        public bool ReadOnly { get; set; }
+        #endregion
+
+        #region Private fields
         private readonly AnimationManager _checkAM;
         private readonly AnimationManager _rippleAM;
         private readonly AnimationManager _hoverAM;
@@ -51,7 +57,12 @@
         private const int CHECKBOX_SIZE = 18;
         private const int CHECKBOX_SIZE_HALF = CHECKBOX_SIZE / 2;
         private int _boxOffset;
+        private static readonly Point[] CheckmarkLine = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
+        private bool hovered = false;
+        private CheckState _oldCheckState;
+        #endregion
 
+        #region Constructor
         public MaterialCheckbox()
         {
             _checkAM = new AnimationManager
@@ -83,7 +94,9 @@
             Height = HEIGHT_RIPPLE;
             MouseLocation = new Point(-1, -1);
         }
+        #endregion
 
+        #region Overridden events
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -103,8 +116,6 @@
             int w = _boxOffset + TEXT_OFFSET + strSize.Width;
             return Ripple ? new Size(w, HEIGHT_RIPPLE) : new Size(w, HEIGHT_NO_RIPPLE);
         }
-
-        private static readonly Point[] CheckmarkLine = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
@@ -194,23 +205,6 @@
             brush.Dispose();
         }
 
-        private Bitmap DrawCheckMarkBitmap()
-        {
-            Bitmap checkMark = new Bitmap(CHECKBOX_SIZE, CHECKBOX_SIZE);
-            Graphics g = Graphics.FromImage(checkMark);
-
-            // clear everything, transparent
-            g.Clear(Color.Transparent);
-
-            // draw the checkmark lines
-            using (Pen pen = new Pen(Parent.BackColor, 2))
-            {
-                g.DrawLines(pen, CheckmarkLine);
-            }
-
-            return checkMark;
-        }
-
         public override bool AutoSize
         {
             get { return base.AutoSize; }
@@ -223,13 +217,6 @@
                 }
             }
         }
-
-        private bool IsMouseInCheckArea()
-        {
-            return ClientRectangle.Contains(MouseLocation);
-        }
-
-        private bool hovered = false;
 
         protected override void OnCreateControl()
         {
@@ -265,6 +252,7 @@
                 //    _hoverAM.StartNewAnimation(AnimationDirection.In, new object[] { Checked });
                 //    hovered = true;
                 //}
+                _oldCheckState = CheckState;
             };
 
             MouseLeave += (sender, args) =>
@@ -286,6 +274,7 @@
                     _rippleAM.SecondaryIncrement = 0;
                     _rippleAM.StartNewAnimation(AnimationDirection.InOutIn, new object[] { Checked });
                 }
+                if (ReadOnly) CheckState = _oldCheckState;
             };
 
             KeyDown += (sender, args) =>
@@ -295,6 +284,7 @@
                     _rippleAM.SecondaryIncrement = 0;
                     _rippleAM.StartNewAnimation(AnimationDirection.InOutIn, new object[] { Checked });
                 }
+                if (ReadOnly) CheckState = _oldCheckState;
             };
 
             MouseUp += (sender, args) =>
@@ -306,6 +296,7 @@
                     _hoverAM.StartNewAnimation(AnimationDirection.Out, new object[] { Checked });
                     hovered = false;
                 }
+                if (ReadOnly) CheckState = _oldCheckState;
             };
 
             KeyUp += (sender, args) =>
@@ -315,6 +306,7 @@
                     MouseState = MouseState.HOVER;
                     _rippleAM.SecondaryIncrement = 0.08;
                 }
+                if (ReadOnly) CheckState = _oldCheckState;
             };
 
             MouseMove += (sender, args) =>
@@ -323,5 +315,30 @@
                 Cursor = IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
             };
         }
+        #endregion
+
+        #region Private events and methods
+        private Bitmap DrawCheckMarkBitmap()
+        {
+            Bitmap checkMark = new Bitmap(CHECKBOX_SIZE, CHECKBOX_SIZE);
+            Graphics g = Graphics.FromImage(checkMark);
+
+            // clear everything, transparent
+            g.Clear(Color.Transparent);
+
+            // draw the checkmark lines
+            using (Pen pen = new Pen(Parent.BackColor, 2))
+            {
+                g.DrawLines(pen, CheckmarkLine);
+            }
+
+            return checkMark;
+        }
+
+        private bool IsMouseInCheckArea()
+        {
+            return ClientRectangle.Contains(MouseLocation);
+        }
+        #endregion
     }
 }

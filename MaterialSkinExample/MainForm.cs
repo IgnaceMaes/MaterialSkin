@@ -263,5 +263,9 @@ namespace MaterialSkinExample
             SnackBarMessage.Show(this);
         }
 
+        private void MsReadOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            materialCheckbox1.ReadOnly = msReadOnly.Checked;
+        }
     }
 }
