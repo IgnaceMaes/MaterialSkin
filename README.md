@@ -176,7 +176,7 @@ If you love .NET and Material Design, you should definitely check out [Material 
 ![buttons](https://user-images.githubusercontent.com/77468294/119880777-e1a3b280-bf2c-11eb-8042-45b767459b41.png)
 
 *The MaterialSkin checkboxes, radio and Switch.*
-![selection](https://user-images.githubusercontent.com/8310271/66237912-a0fa8400-e6cc-11e9-9fb8-2cb247d2eff1.png)
+![selection](https://user-images.githubusercontent.com/77468294/134740844-795cd759-e4dc-4592-b2c1-86896e61f66f.png)
 
 *Material skin textfield and labels*
 ![text](https://user-images.githubusercontent.com/77468294/132768955-3c7cb44a-9d90-40e6-8e4c-57bb1ce20536.png)
