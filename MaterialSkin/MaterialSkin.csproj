@@ -62,6 +62,9 @@
     <Compile Include="Controls\MaterialSlider.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialSnackBar.cs">
       <SubType>Form</SubType>
     </Compile>
