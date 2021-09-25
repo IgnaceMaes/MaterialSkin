@@ -53,7 +53,6 @@ All supported components have a dark theme
 ## TODO List
 
 - Progress bar - Animation and variants, maybe round loading thingy
-- Dialog (!= message box)
 - Backdrop (maybe)
 - Some Color code improvements and refactoring
 - DatePicker
