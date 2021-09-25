@@ -1,164 +1,90 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EB7611B-68CD-4B8B-987A-11717E2B250C}</ProjectGuid>
+    <TargetFrameworks>net5.0-windows;net461</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MaterialSkin</RootNamespace>
-    <AssemblyName>MaterialSkin</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animations\AnimationDirection.cs" />
-    <Compile Include="Animations\AnimationManager.cs" />
-    <Compile Include="Animations\Animations.cs" />
-    <Compile Include="ColorHelper.cs" />
-    <Compile Include="ColorScheme.cs" />
-    <Compile Include="Controls\BaseTextBox.cs">
+    <Compile Update="Controls\BaseTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\FlexibleMaterialDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\MaterialListBox.cs">
+    <Compile Update="Controls\MaterialListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialScrollBar.cs">
+    <Compile Update="Controls\MaterialScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialExpansionPanel.cs">
+    <Compile Update="Controls\MaterialExpansionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialSlider.cs">
+    <Compile Update="Controls\MaterialSlider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialSnackBar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\MaterialSwitch.cs">
+    <Compile Update="Controls\MaterialSwitch.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialCheckBox.cs">
+    <Compile Update="Controls\MaterialCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialCheckedListBox.cs">
+    <Compile Update="Controls\MaterialCheckedListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialComboBox.cs">
+    <Compile Update="Controls\MaterialComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialContextMenuStrip.cs">
+    <Compile Update="Controls\MaterialContextMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialDivider.cs">
+    <Compile Update="Controls\MaterialDivider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialButton.cs">
+    <Compile Update="Controls\MaterialButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialFloatingActionButton.cs">
+    <Compile Update="Controls\MaterialFloatingActionButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\MaterialLabel.cs">
+    <Compile Update="Controls\MaterialLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialListView.cs">
+    <Compile Update="Controls\MaterialListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialMessageBox.cs" />
-    <Compile Include="Controls\MaterialRadioButton.cs">
+    <Compile Update="Controls\MaterialRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialMultiLineTextBox.cs">
+    <Compile Update="Controls\MaterialMultiLineTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialMultiLineTextBox2.cs">
+    <Compile Update="Controls\MaterialMultiLineTextBox2.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialCard.cs">
+    <Compile Update="Controls\MaterialCard.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialTextBox.cs">
+    <Compile Update="Controls\MaterialTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialTextBox2.cs">
+    <Compile Update="Controls\MaterialTextBox2.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialTabControl.cs">
+    <Compile Update="Controls\MaterialTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialDrawer.cs">
+    <Compile Update="Controls\MaterialDrawer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialTabSelector.cs">
+    <Compile Update="Controls\MaterialTabSelector.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialProgressBar.cs">
+    <Compile Update="Controls\MaterialProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DrawHelper.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="IMaterialControl.cs" />
-    <Compile Include="MaterialItemCollection.cs" />
-    <Compile Include="MaterialItemCollectionEditor.cs" />
-    <Compile Include="MaterialSkinManager.cs" />
-    <Compile Include="NativeTextRenderer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <DependentUpon>Settings.settings</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Controls\FlexibleMaterialDialog.resx">
-      <DependentUpon>FlexibleMaterialDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MaterialForm.resx">
-      <DependentUpon>MaterialForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Roboto-Regular.ttf" />
@@ -175,17 +101,12 @@
     <EmbeddedResource Include="Resources\Roboto-Thin.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    <Compile Remove="Controls\MaterialMenuStrip.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.246501">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+  </ItemGroup>
 </Project>

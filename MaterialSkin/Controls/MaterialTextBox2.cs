@@ -362,6 +362,7 @@ namespace MaterialSkin.Controls
             }
         }
 
+        #if NETFRAMEWORK
         public new event EventHandler ContextMenuChanged
         {
             add
@@ -373,6 +374,7 @@ namespace MaterialSkin.Controls
                 baseTextBox.ContextMenuChanged -= value;
             }
         }
+        #endif
 
         public new event EventHandler ContextMenuStripChanged
         {

@@ -8,8 +8,11 @@
     using System.Drawing.Text;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Runtime.Remoting.Channels;
     using System.Windows.Forms;
+
+    #if NETFRAMEWORK
+    using System.Runtime.Remoting.Channels;
+    #endif
 
     public class MaterialForm : Form, IMaterialControl
     {
