@@ -72,7 +72,6 @@
                 _header_Height = 40;
 
             _text = Text;
-            TopMost = true;
             ShowInTaskbar = false;
             Sizable = false;
 
