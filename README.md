@@ -56,7 +56,6 @@ All supported components have a dark theme
 - Backdrop (maybe)
 - Some Color code improvements and refactoring
 - DatePicker
-- MultilineTextBox improvements
 
 ---
 
