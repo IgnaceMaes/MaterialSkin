@@ -1,0 +1,112 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <TargetFrameworks>net5.0-windows;net461</TargetFrameworks>
+      <OutputType>Library</OutputType>
+      <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+      <UseWindowsForms>true</UseWindowsForms>
+      <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    </PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+		<Reference Include="System.Design" />
+	</ItemGroup>
+    <ItemGroup>
+      <Compile Update="Controls\BaseTextBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialListBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialScrollBar.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialExpansionPanel.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialSlider.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialSwitch.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialCheckBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialCheckedListBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialComboBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialContextMenuStrip.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialDivider.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialButton.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialFloatingActionButton.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialLabel.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialListView.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialRadioButton.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialMultiLineTextBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialMultiLineTextBox2.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialCard.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialTextBox.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialTextBox2.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialTabControl.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialDrawer.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialTabSelector.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controls\MaterialProgressBar.cs">
+        <SubType>Component</SubType>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Roboto-Regular.ttf" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Roboto-Medium.ttf" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Roboto-Bold.ttf" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Roboto-Black.ttf" />
+      <EmbeddedResource Include="Resources\Roboto-Light.ttf" />
+      <EmbeddedResource Include="Resources\Roboto-Thin.ttf" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Controls\MaterialMenuStrip.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.246501">
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+    </ItemGroup>
+  </Project>
