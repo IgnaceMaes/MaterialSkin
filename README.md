@@ -6,7 +6,7 @@ Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 >
 > This means I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up, also [@orapps44](https://github.com/orapps44) has been doing excelent work and is keeping this project alive and updated, Thank you! ❤️
 
-![home](https://user-images.githubusercontent.com/77468294/122829023-b8d1cb80-d2e6-11eb-9094-fea30d80045b.png)
+![home](https://user-images.githubusercontent.com/77468294/134770847-0f20f37f-e3e7-4e15-b838-cf53b0b32c4e.png)
 
 ## Nuget Package
 
@@ -31,7 +31,7 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | Check Box List               |    Yes    |      Yes      |   Yes    |
 | Combobox                     |    Yes    |      Yes      |   Yes    |
 | Context Menu                 |    Yes    |      Yes      |   Yes    |
-| Dialog                       |  **No**   |       -       |    -     |
+| Dialog                       |    Yes    |      N/A      |  **No**  |
 | Divider                      |    Yes    |      N/A      |   N/A    |
 | Drawer                       |    Yes    |      N/A      |   Yes    |
 | Expansion Panel              |    Yes    |      Yes      |  **No**  |
@@ -53,11 +53,9 @@ All supported components have a dark theme
 ## TODO List
 
 - Progress bar - Animation and variants, maybe round loading thingy
-- Dialog (!= message box)
 - Backdrop (maybe)
 - Some Color code improvements and refactoring
 - DatePicker
-- MultilineTextBox improvements
 
 ---
 
@@ -167,7 +165,7 @@ If you love .NET and Material Design, you should definitely check out [Material 
 ## Images
 
 *A simple demo interface with MaterialSkin components.*
-![home](https://user-images.githubusercontent.com/77468294/122829023-b8d1cb80-d2e6-11eb-9094-fea30d80045b.png)
+![home](https://user-images.githubusercontent.com/77468294/134770847-0f20f37f-e3e7-4e15-b838-cf53b0b32c4e.png)
 
 *The MaterialSkin Drawer (menu).*
 ![drawer](https://user-images.githubusercontent.com/77468294/119880600-b4570480-bf2c-11eb-9a83-e2d59b88bf22.png)
