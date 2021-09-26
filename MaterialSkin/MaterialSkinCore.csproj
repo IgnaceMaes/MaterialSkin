@@ -6,6 +6,8 @@
       <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
       <UseWindowsForms>true</UseWindowsForms>
       <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+      <AssemblyName>MaterialSkin</AssemblyName>
+      <RootNamespace>$(AssemblyName)</RootNamespace>
     </PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
 		<Reference Include="System.Design" />
@@ -88,18 +90,12 @@
       </Compile>
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Include="Resources\Roboto-Regular.ttf" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Include="Resources\Roboto-Medium.ttf" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Include="Resources\Roboto-Bold.ttf" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Include="Resources\Roboto-Black.ttf" />
-      <EmbeddedResource Include="Resources\Roboto-Light.ttf" />
-      <EmbeddedResource Include="Resources\Roboto-Thin.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Regular.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Medium.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Bold.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Black.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Light.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Thin.ttf" />
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Controls\MaterialMenuStrip.cs" />
