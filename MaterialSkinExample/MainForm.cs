@@ -51,6 +51,8 @@ namespace MaterialSkinExample
                 if (this.FormStyle!= SelectedStyle) this.FormStyle = SelectedStyle;
             };
 
+            materialMaskedTextBox1.ValidatingType = typeof(System.Int16);
+
         }
 
         private void seedListView()
