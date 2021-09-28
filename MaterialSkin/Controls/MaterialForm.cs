@@ -2,13 +2,11 @@
 {
     using MaterialSkin.Animations;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.Drawing.Text;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using System.Runtime.Remoting.Channels;
     using System.Windows.Forms;
 
     public class MaterialForm : Form, IMaterialControl
@@ -299,27 +297,6 @@
         private const int HTTOP = 12;
         private const int HTTOPLEFT = 13;
         private const int HTTOPRIGHT = 14;
-
-        // Window Size Messages
-        private readonly Dictionary<int, int> _resizingLocationsToCmd = new Dictionary<int, int>
-        {
-            {HTTOP,         WMSZ_TOP},
-            {HTTOPLEFT,     WMSZ_TOPLEFT},
-            {HTTOPRIGHT,    WMSZ_TOPRIGHT},
-            {HTLEFT,        WMSZ_LEFT},
-            {HTRIGHT,       WMSZ_RIGHT},
-            {HTBOTTOM,      WMSZ_BOTTOM},
-            {HTBOTTOMLEFT,  WMSZ_BOTTOMLEFT},
-            {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
-        };
-        private const int WMSZ_TOP = 3;
-        private const int WMSZ_TOPLEFT = 4;
-        private const int WMSZ_TOPRIGHT = 5;
-        private const int WMSZ_LEFT = 1;
-        private const int WMSZ_RIGHT = 2;
-        private const int WMSZ_BOTTOM = 6;
-        private const int WMSZ_BOTTOMLEFT = 7;
-        private const int WMSZ_BOTTOMRIGHT = 8;
 
         // Window Styles
         private const int WS_MINIMIZEBOX = 0x20000;
@@ -723,24 +700,6 @@
             _actionBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT, ClientSize.Width, ACTION_BAR_HEIGHT);
             _drawerButtonBounds = new Rectangle(ClientRectangle.X + (SkinManager.FORM_PADDING / 2) + 3, STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT/2) - (ACTION_BAR_HEIGHT_DEFAULT/2), ACTION_BAR_HEIGHT_DEFAULT, ACTION_BAR_HEIGHT_DEFAULT);
         }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            //
-            // MaterialForm
-            //
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.MinimumSize = new System.Drawing.Size(300, 200);
-            this.Name = "MaterialForm";
-            this.Padding = new System.Windows.Forms.Padding(PADDING_MINIMUM, 64, PADDING_MINIMUM, PADDING_MINIMUM);
-            this.Load += new System.EventHandler(this.MaterialForm_Load);
-            this.ResumeLayout(false);
-        }
-
-        private void MaterialForm_Load(object sender, EventArgs e)
-        {
-        }
         #endregion
 
         #region WinForms Methods
@@ -1118,7 +1077,6 @@
         #endregion
 
         #region Low Level Windows Methods
-
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         public class MONITORINFOEX
         {
@@ -1168,26 +1126,5 @@
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
         #endregion
-    }
-
-    public class MouseMessageFilter : IMessageFilter
-    {
-        private const int WM_MOUSEMOVE = 0x0200;
-
-        public static event MouseEventHandler MouseMove;
-
-        public bool PreFilterMessage(ref Message m)
-        {
-            if (m.Msg == WM_MOUSEMOVE)
-            {
-                if (MouseMove != null)
-                {
-                    int x = Control.MousePosition.X, y = Control.MousePosition.Y;
-
-                    MouseMove(null, new MouseEventArgs(MouseButtons.None, 0, x, y, 0));
-                }
-            }
-            return false;
-        }
     }
 }
