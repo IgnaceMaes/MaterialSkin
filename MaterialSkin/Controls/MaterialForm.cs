@@ -103,7 +103,6 @@
         [Category("Drawer")]
         public int DrawerWidth { get; set; }
 
-        private bool _drawerAutoHide;
         [Category("Drawer")]
         public bool DrawerAutoHide 
         {
@@ -118,7 +117,6 @@
             }
         }
 
-        private bool _drawerAutoShow;
         [Category("Drawer")]
         public bool DrawerAutoShow 
         {
@@ -451,6 +449,8 @@
 
         // Drawer overlay and speed improvements
         private bool _drawerShowIconsWhenHidden;
+        private bool _drawerAutoHide;
+        private bool _drawerAutoShow;
         private bool _drawerIsOpen;
         private bool _drawerUseColors;
         private bool _drawerHighlightWithAccent;
