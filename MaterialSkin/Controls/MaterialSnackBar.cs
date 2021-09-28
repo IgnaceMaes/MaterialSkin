@@ -357,6 +357,14 @@
 
             base.WndProc(ref message);
         }
+        
+       public new void Show()
+        {
+            if (Owner == null)
+            {
+                throw new Exception("Owner is null. Set Owner first.");
+            }
+        }
 
     }
 }
