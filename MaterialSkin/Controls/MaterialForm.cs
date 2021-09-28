@@ -13,6 +13,7 @@
 
     public class MaterialForm : Form, IMaterialControl
     {
+        #region Public Properties
         [Browsable(false)]
         public int Depth { get; set; }
 
@@ -22,38 +23,9 @@
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public override string Text
-        {
-            get { return base.Text; }
-            set { base.Text = value; Invalidate(); }
-        }
-
-        public new FormWindowState WindowState
-        {
-            get { return base.WindowState; }
-            set { base.WindowState = value; }
-        }
-
-        public new FormBorderStyle FormBorderStyle
-        {
-            get { return base.FormBorderStyle; }
-            set { base.FormBorderStyle = value; }
-        }
-
         [Category("Layout")]
         public bool Sizable { get; set; }
 
-        public enum FormStyles
-        {
-            StatusAndActionBar_None,
-            ActionBar_None,
-            ActionBar_40,
-            ActionBar_48,
-            ActionBar_56,
-            ActionBar_64,
-        }
-
-        private FormStyles _formStyle;
         [Category("Material Skin"), Browsable(true), DisplayName("Form Style"), DefaultValue(FormStyles.ActionBar_40)]
         public FormStyles FormStyle
         {
@@ -115,204 +87,6 @@
             }
         }
 
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern int TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
-
-        private Form drawerOverlay = new Form();
-        private Form drawerForm = new Form();
-
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-        public const int WM_NCCALCSIZE = 0x0083;
-        public const int WM_NCACTIVATE = 0x0086;
-        private const int WM_SYSCOMMAND = 0x0112;
-        public const int WM_MOUSEMOVE = 0x0200;
-        public const int WM_LBUTTONDOWN = 0x0201;
-        public const int WM_LBUTTONUP = 0x0202;
-        public const int WM_LBUTTONDBLCLK = 0x0203;
-        public const int WM_RBUTTONDOWN = 0x0204;
-        private const int HTBOTTOMLEFT = 16;
-        private const int HTBOTTOMRIGHT = 17;
-        private const int HTLEFT = 10;
-        private const int HTRIGHT = 11;
-        private const int HTBOTTOM = 15;
-        private const int HTTOP = 12;
-        private const int HTTOPLEFT = 13;
-        private const int HTTOPRIGHT = 14;
-        private const int BORDER_WIDTH = 7;
-
-        private ResizeDirection _resizeDir;
-        private ButtonState _buttonState = ButtonState.None;
-
-        private const int WMSZ_TOP = 3;
-        private const int WMSZ_TOPLEFT = 4;
-        private const int WMSZ_TOPRIGHT = 5;
-        private const int WMSZ_LEFT = 1;
-        private const int WMSZ_RIGHT = 2;
-        private const int WMSZ_BOTTOM = 6;
-        private const int WMSZ_BOTTOMLEFT = 7;
-        private const int WMSZ_BOTTOMRIGHT = 8;
-
-        private readonly Dictionary<int, int> _resizingLocationsToCmd = new Dictionary<int, int>
-        {
-            {HTTOP,         WMSZ_TOP},
-            {HTTOPLEFT,     WMSZ_TOPLEFT},
-            {HTTOPRIGHT,    WMSZ_TOPRIGHT},
-            {HTLEFT,        WMSZ_LEFT},
-            {HTRIGHT,       WMSZ_RIGHT},
-            {HTBOTTOM,      WMSZ_BOTTOM},
-            {HTBOTTOMLEFT,  WMSZ_BOTTOMLEFT},
-            {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
-        };
-
-        private const int STATUS_BAR_BUTTON_WIDTH = 24;
-        private const int STATUS_BAR_HEIGHT_DEFAULT = 24;
-        private int STATUS_BAR_HEIGHT = 24;
-        private const int ICON_SIZE = 24;
-        private const int PADDING_MINIMUM = 3;
-        private const int TITLE_LEFT_PADDING = 72;
-        private const int ACTION_BAR_PADDING = 16;
-        private const int ACTION_BAR_HEIGHT_DEFAULT = 40;
-        private int ACTION_BAR_HEIGHT = 40;   
-        private const uint TPM_LEFTALIGN = 0x0000;
-        private const uint TPM_RETURNCMD = 0x0100;
-        private const int WS_MINIMIZEBOX = 0x20000;
-        private const int WS_SIZEFRAME = 0x40000;
-        private const int WS_SYSMENU = 0x80000;
-        private const int MONITOR_DEFAULTTONEAREST = 2;
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        public class MONITORINFOEX
-        {
-            public int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
-            public RECT rcMonitor = new RECT();
-            public RECT rcWork = new RECT();
-            public int dwFlags = 0;
-
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-            public char[] szDevice = new char[32];
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
-        {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
-
-            public int Width()
-            {
-                return right - left;
-            }
-
-            public int Height()
-            {
-                return bottom - top;
-            }
-        }
-
-        private enum ResizeDirection
-        {
-            BottomLeft,
-            Left,
-            Right,
-            BottomRight,
-            Bottom,
-            None
-        }
-
-        private enum ButtonState
-        {
-            XOver,
-            MaxOver,
-            MinOver,
-            DrawerOver,
-            XDown,
-            MaxDown,
-            MinDown,
-            DrawerDown,
-            None
-        }
-
-        private readonly Cursor[] _resizeCursors = { Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE, Cursors.SizeNS };
-
-        private Rectangle _minButtonBounds;
-        private Rectangle _maxButtonBounds;
-        private Rectangle _xButtonBounds;
-        private Rectangle _actionBarBounds;
-        private Rectangle _drawerButtonBounds;
-
-        public Rectangle UserArea
-        {
-            get
-            {
-                return new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, ClientSize.Width, ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
-            }
-        }
-
-        private Rectangle _statusBarBounds;
-        private bool _maximized;
-        private Size _previousSize;
-        private Point _previousLocation;
-        private bool _headerMouseDown;
-
-        private Padding originalPadding;
-
-        public MaterialForm()
-        {
-            MaximizedBounds = Screen.FromControl(this).WorkingArea;
-            DrawerWidth = 200;
-            DrawerIsOpen = false;
-            DrawerShowIconsWhenHidden = false;
-            DrawerAutoHide = true;
-            DrawerAutoShow = false;
-            DrawerIndicatorWidth = 0;
-            DrawerHighlightWithAccent = true;
-            DrawerBackgroundWithAccent = false;
-
-            FormBorderStyle = FormBorderStyle.None;
-            Sizable = true;
-            DoubleBuffered = true;
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            FormStyle = FormStyles.ActionBar_40;
-
-            Padding = new Padding(PADDING_MINIMUM, STATUS_BAR_HEIGHT+ ACTION_BAR_HEIGHT, PADDING_MINIMUM, PADDING_MINIMUM);      //Keep space for resize by mouse
-
-            _clickAnimManager = new AnimationManager()
-            {
-                AnimationType = AnimationType.EaseOut,
-                Increment = 0.04
-            };
-            _clickAnimManager.OnAnimationProgress += sender => Invalidate();
-
-            // Drawer
-            Shown += (sender, e) =>
-            {
-                if (DesignMode || IsDisposed)
-                    return;
-                AddDrawerOverlayForm();
-            };
-        }
-
-        // Drawer overlay and speed improvements
-        private bool _drawerShowIconsWhenHidden;
-
         [Category("Drawer")]
         public bool DrawerShowIconsWhenHidden
         {
@@ -364,8 +138,6 @@
         [Category("Drawer")]
         public int DrawerIndicatorWidth { get; set; }
 
-        private bool _drawerIsOpen;
-
         [Category("Drawer")]
         public bool DrawerIsOpen
         {
@@ -386,8 +158,6 @@
             }
         }
 
-        private bool _drawerUseColors;
-
         [Category("Drawer")]
         public bool DrawerUseColors
         {
@@ -405,8 +175,6 @@
                 }
             }
         }
-
-        private bool _drawerHighlightWithAccent;
 
         [Category("Drawer")]
         public bool DrawerHighlightWithAccent
@@ -426,8 +194,6 @@
             }
         }
 
-        private bool _backgroundWithAccent;
-
         [Category("Drawer")]
         public bool DrawerBackgroundWithAccent
         {
@@ -446,13 +212,211 @@
             }
         }
 
-        private MaterialDrawer drawerControl = new MaterialDrawer();
-
         [Category("Drawer")]
         public MaterialTabControl DrawerTabControl { get; set; }
 
-        private AnimationManager _drawerShowHideAnimManager;
+        public override string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; Invalidate(); }
+        }
 
+        public new FormWindowState WindowState
+        {
+            get { return base.WindowState; }
+            set { base.WindowState = value; }
+        }
+
+        public new FormBorderStyle FormBorderStyle
+        {
+            get { return base.FormBorderStyle; }
+            set { base.FormBorderStyle = value; }
+        }
+
+        public Rectangle UserArea
+        {
+            get
+            {
+                return new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, ClientSize.Width, ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
+            }
+        }
+        #endregion
+
+        #region Enums
+        public enum FormStyles
+        {
+            StatusAndActionBar_None,
+            ActionBar_None,
+            ActionBar_40,
+            ActionBar_48,
+            ActionBar_56,
+            ActionBar_64,
+        }
+
+        private enum ResizeDirection
+        {
+            BottomLeft,
+            Left,
+            Right,
+            BottomRight,
+            Bottom,
+            None
+        }
+
+        private enum ButtonState
+        {
+            XOver,
+            MaxOver,
+            MinOver,
+            DrawerOver,
+            XDown,
+            MaxDown,
+            MinDown,
+            DrawerDown,
+            None
+        }
+        #endregion
+
+        #region Constants
+        // Window Messages
+        public const int WM_NCCALCSIZE = 0x0083;
+        public const int WM_NCACTIVATE = 0x0086;
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int WM_SYSCOMMAND = 0x0112;
+        public const int WM_MOUSEMOVE = 0x0200;
+        public const int WM_LBUTTONDOWN = 0x0201;
+        public const int WM_LBUTTONUP = 0x0202;
+        public const int WM_LBUTTONDBLCLK = 0x0203;
+        public const int WM_RBUTTONDOWN = 0x0204;
+
+        // Hit Test Results
+        public const int HT_CAPTION = 0x2;
+        private const int HTBOTTOMLEFT = 16;
+        private const int HTBOTTOMRIGHT = 17;
+        private const int HTLEFT = 10;
+        private const int HTRIGHT = 11;
+        private const int HTBOTTOM = 15;
+        private const int HTTOP = 12;
+        private const int HTTOPLEFT = 13;
+        private const int HTTOPRIGHT = 14;
+
+        // Window Size Messages
+        private readonly Dictionary<int, int> _resizingLocationsToCmd = new Dictionary<int, int>
+        {
+            {HTTOP,         WMSZ_TOP},
+            {HTTOPLEFT,     WMSZ_TOPLEFT},
+            {HTTOPRIGHT,    WMSZ_TOPRIGHT},
+            {HTLEFT,        WMSZ_LEFT},
+            {HTRIGHT,       WMSZ_RIGHT},
+            {HTBOTTOM,      WMSZ_BOTTOM},
+            {HTBOTTOMLEFT,  WMSZ_BOTTOMLEFT},
+            {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
+        };
+        private const int WMSZ_TOP = 3;
+        private const int WMSZ_TOPLEFT = 4;
+        private const int WMSZ_TOPRIGHT = 5;
+        private const int WMSZ_LEFT = 1;
+        private const int WMSZ_RIGHT = 2;
+        private const int WMSZ_BOTTOM = 6;
+        private const int WMSZ_BOTTOMLEFT = 7;
+        private const int WMSZ_BOTTOMRIGHT = 8;
+
+        // Window Styles
+        private const int WS_MINIMIZEBOX = 0x20000;
+        private const int WS_SIZEFRAME = 0x40000;
+        private const int WS_SYSMENU = 0x80000;
+
+        // Track Popup Menu
+        private const uint TPM_LEFTALIGN = 0x0000;
+        private const uint TPM_RETURNCMD = 0x0100;
+
+        // Form Constants
+        private const int BORDER_WIDTH = 7;
+        private const int STATUS_BAR_BUTTON_WIDTH = 24;
+        private const int STATUS_BAR_HEIGHT_DEFAULT = 24;
+        private const int ICON_SIZE = 24;
+        private const int PADDING_MINIMUM = 3;
+        private const int TITLE_LEFT_PADDING = 72;
+        private const int ACTION_BAR_PADDING = 16;
+        private const int ACTION_BAR_HEIGHT_DEFAULT = 40;
+        private const int MONITOR_DEFAULTTONEAREST = 2;
+        #endregion
+
+        #region Private Fields
+        private readonly Cursor[] _resizeCursors = { Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE, Cursors.SizeNS };
+
+        private ResizeDirection _resizeDir;
+        private ButtonState _buttonState = ButtonState.None;
+        private FormStyles _formStyle;
+        private Rectangle _minButtonBounds;
+        private Rectangle _maxButtonBounds;
+        private Rectangle _xButtonBounds;
+        private Rectangle _actionBarBounds;
+        private Rectangle _drawerButtonBounds;
+        private Rectangle _statusBarBounds;
+        private Rectangle _drawerIconRect;
+
+        private bool _maximized;
+        private bool _headerMouseDown;
+        private Size _previousSize;
+        private Point _previousLocation;
+        private Point _animationSource;
+        private Padding originalPadding;
+
+        private Form drawerOverlay = new Form();
+        private Form drawerForm = new Form();
+
+        // Drawer overlay and speed improvements
+        private bool _drawerShowIconsWhenHidden;
+        private bool _drawerIsOpen;
+        private bool _drawerUseColors;
+        private bool _drawerHighlightWithAccent;
+        private bool _backgroundWithAccent;
+        private MaterialDrawer drawerControl = new MaterialDrawer();
+        private AnimationManager _drawerShowHideAnimManager;
+        private readonly AnimationManager _clickAnimManager;
+
+        private int STATUS_BAR_HEIGHT = 24;
+        private int ACTION_BAR_HEIGHT = 40;
+        #endregion
+
+        public MaterialForm()
+        {
+            MaximizedBounds = Screen.FromControl(this).WorkingArea;
+            DrawerWidth = 200;
+            DrawerIsOpen = false;
+            DrawerShowIconsWhenHidden = false;
+            DrawerAutoHide = true;
+            DrawerAutoShow = false;
+            DrawerIndicatorWidth = 0;
+            DrawerHighlightWithAccent = true;
+            DrawerBackgroundWithAccent = false;
+
+            FormBorderStyle = FormBorderStyle.None;
+            Sizable = true;
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            FormStyle = FormStyles.ActionBar_40;
+
+            Padding = new Padding(PADDING_MINIMUM, STATUS_BAR_HEIGHT+ ACTION_BAR_HEIGHT, PADDING_MINIMUM, PADDING_MINIMUM);      //Keep space for resize by mouse
+
+            _clickAnimManager = new AnimationManager()
+            {
+                AnimationType = AnimationType.EaseOut,
+                Increment = 0.04
+            };
+            _clickAnimManager.OnAnimationProgress += sender => Invalidate();
+
+            // Drawer
+            Shown += (sender, e) =>
+            {
+                if (DesignMode || IsDisposed)
+                    return;
+                AddDrawerOverlayForm();
+            };
+        }
+
+        #region Private Methods
         protected void AddDrawerOverlayForm()
         {
             if (DrawerTabControl == null)
@@ -621,6 +585,178 @@
                 Padding = new Padding(PADDING_MINIMUM, originalPadding.Top, originalPadding.Right, originalPadding.Bottom);
         }
 
+        private void UpdateButtons(MouseEventArgs e, bool up = false)
+        {
+            if (DesignMode)
+                return;
+            var oldState = _buttonState;
+            bool showMin = MinimizeBox && ControlBox;
+            bool showMax = MaximizeBox && ControlBox;
+
+            if (e.Button == MouseButtons.Left && !up)
+            {
+                if (showMin && !showMax && _maxButtonBounds.Contains(e.Location))
+                    _buttonState = ButtonState.MinDown;
+                else if (showMin && showMax && _minButtonBounds.Contains(e.Location))
+                    _buttonState = ButtonState.MinDown;
+                else if (showMax && _maxButtonBounds.Contains(e.Location))
+                    _buttonState = ButtonState.MaxDown;
+                else if (ControlBox && _xButtonBounds.Contains(e.Location))
+                    _buttonState = ButtonState.XDown;
+                else if (_drawerButtonBounds.Contains(e.Location))
+                    _buttonState = ButtonState.DrawerDown;
+                else
+                    _buttonState = ButtonState.None;
+            }
+            else
+            {
+                if (showMin && !showMax && _maxButtonBounds.Contains(e.Location))
+                {
+                    _buttonState = ButtonState.MinOver;
+
+                    if (oldState == ButtonState.MinDown && up)
+                        WindowState = FormWindowState.Minimized;
+                }
+                else if (showMin && showMax && _minButtonBounds.Contains(e.Location))
+                {
+                    _buttonState = ButtonState.MinOver;
+
+                    if (oldState == ButtonState.MinDown && up)
+                        WindowState = FormWindowState.Minimized;
+                }
+                else if (MaximizeBox && ControlBox && _maxButtonBounds.Contains(e.Location))
+                {
+                    _buttonState = ButtonState.MaxOver;
+
+                    if (oldState == ButtonState.MaxDown && up)
+                        MaximizeWindow(!_maximized);
+                }
+                else if (ControlBox && _xButtonBounds.Contains(e.Location))
+                {
+                    _buttonState = ButtonState.XOver;
+
+                    if (oldState == ButtonState.XDown && up)
+                        Close();
+                }
+                else if (_drawerButtonBounds.Contains(e.Location))
+                {
+                    _buttonState = ButtonState.DrawerOver;
+                }
+                else
+                {
+                    _buttonState = ButtonState.None;
+                }
+            }
+
+            if (oldState != _buttonState)
+                Invalidate();
+        }
+
+        private void MaximizeWindow(bool maximize)
+        {
+            if (!MaximizeBox || !ControlBox)
+                return;
+
+            _maximized = maximize;
+
+            if (maximize)
+            {
+                var monitorHandle = MonitorFromWindow(Handle, MONITOR_DEFAULTTONEAREST);
+                var monitorInfo = new MONITORINFOEX();
+                GetMonitorInfo(new HandleRef(null, monitorHandle), monitorInfo);
+                _previousSize = Size;
+                _previousLocation = Location;
+                WindowState = FormWindowState.Maximized;
+                Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
+            }
+            else
+            {
+                Size = _previousSize;
+                Location = _previousLocation;
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void ResizeForm(ResizeDirection direction)
+        {
+            if (DesignMode)
+                return;
+            var dir = -1;
+            switch (direction)
+            {
+                case ResizeDirection.BottomLeft:
+                    dir = HTBOTTOMLEFT;
+                    Cursor = Cursors.SizeNESW;
+                    break;
+
+                case ResizeDirection.Left:
+                    dir = HTLEFT;
+                    Cursor = Cursors.SizeWE;
+                    break;
+
+                case ResizeDirection.Right:
+                    dir = HTRIGHT;
+                    break;
+
+                case ResizeDirection.BottomRight:
+                    dir = HTBOTTOMRIGHT;
+                    break;
+
+                case ResizeDirection.Bottom:
+                    dir = HTBOTTOM;
+                    break;
+            }
+
+            ReleaseCapture();
+            if (dir != -1)
+            {
+                SendMessage(Handle, WM_NCLBUTTONDOWN, dir, 0);
+            }
+        }
+
+        private void UpdateRects()
+        {
+            _minButtonBounds = new Rectangle((ClientSize.Width) - 3 * STATUS_BAR_BUTTON_WIDTH, ClientRectangle.Y, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            _maxButtonBounds = new Rectangle((ClientSize.Width) - 2 * STATUS_BAR_BUTTON_WIDTH, ClientRectangle.Y, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            _xButtonBounds = new Rectangle((ClientSize.Width) - STATUS_BAR_BUTTON_WIDTH, ClientRectangle.Y, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            _statusBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y, ClientSize.Width, STATUS_BAR_HEIGHT);
+            _actionBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT, ClientSize.Width, ACTION_BAR_HEIGHT);
+            _drawerButtonBounds = new Rectangle(ClientRectangle.X + (SkinManager.FORM_PADDING / 2) + 3, STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT/2) - (ACTION_BAR_HEIGHT_DEFAULT/2), ACTION_BAR_HEIGHT_DEFAULT, ACTION_BAR_HEIGHT_DEFAULT);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            //
+            // MaterialForm
+            //
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.MinimumSize = new System.Drawing.Size(300, 200);
+            this.Name = "MaterialForm";
+            this.Padding = new System.Windows.Forms.Padding(PADDING_MINIMUM, 64, PADDING_MINIMUM, PADDING_MINIMUM);
+            this.Load += new System.EventHandler(this.MaterialForm_Load);
+            this.ResumeLayout(false);
+        }
+
+        private void MaterialForm_Load(object sender, EventArgs e)
+        {
+        }
+        #endregion
+
+        #region WinForms Methods
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var par = base.CreateParams;
+                // WS_SYSMENU: Trigger the creation of the system menu
+                // WS_MINIMIZEBOX: Allow minimizing from taskbar
+                // WS_SIZEFRAME: Required for Aero Snapping
+                par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU | WS_SIZEFRAME; // Turn on the WS_MINIMIZEBOX style flag
+                return par;
+            }
+        }
+
         protected override void WndProc(ref Message m)
         {
             // Prevent the base class from receiving the message
@@ -714,19 +850,6 @@
             }
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                var par = base.CreateParams;
-                // WS_SYSMENU: Trigger the creation of the system menu
-                // WS_MINIMIZEBOX: Allow minimizing from taskbar
-                // WS_SIZEFRAME: Required for Aero Snapping
-                par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU | WS_SIZEFRAME; // Turn on the WS_MINIMIZEBOX style flag
-                return par;
-            }
-        }
-
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (DesignMode)
@@ -812,98 +935,6 @@
             UpdateButtons(e);
         }
 
-        private void UpdateButtons(MouseEventArgs e, bool up = false)
-        {
-            if (DesignMode)
-                return;
-            var oldState = _buttonState;
-            bool showMin = MinimizeBox && ControlBox;
-            bool showMax = MaximizeBox && ControlBox;
-
-            if (e.Button == MouseButtons.Left && !up)
-            {
-                if (showMin && !showMax && _maxButtonBounds.Contains(e.Location))
-                    _buttonState = ButtonState.MinDown;
-                else if (showMin && showMax && _minButtonBounds.Contains(e.Location))
-                    _buttonState = ButtonState.MinDown;
-                else if (showMax && _maxButtonBounds.Contains(e.Location))
-                    _buttonState = ButtonState.MaxDown;
-                else if (ControlBox && _xButtonBounds.Contains(e.Location))
-                    _buttonState = ButtonState.XDown;
-                else if (_drawerButtonBounds.Contains(e.Location))
-                    _buttonState = ButtonState.DrawerDown;
-                else
-                    _buttonState = ButtonState.None;
-            }
-            else
-            {
-                if (showMin && !showMax && _maxButtonBounds.Contains(e.Location))
-                {
-                    _buttonState = ButtonState.MinOver;
-
-                    if (oldState == ButtonState.MinDown && up)
-                        WindowState = FormWindowState.Minimized;
-                }
-                else if (showMin && showMax && _minButtonBounds.Contains(e.Location))
-                {
-                    _buttonState = ButtonState.MinOver;
-
-                    if (oldState == ButtonState.MinDown && up)
-                        WindowState = FormWindowState.Minimized;
-                }
-                else if (MaximizeBox && ControlBox && _maxButtonBounds.Contains(e.Location))
-                {
-                    _buttonState = ButtonState.MaxOver;
-
-                    if (oldState == ButtonState.MaxDown && up)
-                        MaximizeWindow(!_maximized);
-                }
-                else if (ControlBox && _xButtonBounds.Contains(e.Location))
-                {
-                    _buttonState = ButtonState.XOver;
-
-                    if (oldState == ButtonState.XDown && up)
-                        Close();
-                }
-                else if (_drawerButtonBounds.Contains(e.Location))
-                {
-                    _buttonState = ButtonState.DrawerOver;
-                }
-                else
-                {
-                    _buttonState = ButtonState.None;
-                }
-            }
-
-            if (oldState != _buttonState)
-                Invalidate();
-        }
-
-        private void MaximizeWindow(bool maximize)
-        {
-            if (!MaximizeBox || !ControlBox)
-                return;
-
-            _maximized = maximize;
-
-            if (maximize)
-            {
-                var monitorHandle = MonitorFromWindow(Handle, MONITOR_DEFAULTTONEAREST);
-                var monitorInfo = new MONITORINFOEX();
-                GetMonitorInfo(new HandleRef(null, monitorHandle), monitorInfo);
-                _previousSize = Size;
-                _previousLocation = Location;
-                WindowState = FormWindowState.Maximized;
-                Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
-            }
-            else
-            {
-                Size = _previousSize;
-                Location = _previousLocation;
-                WindowState = FormWindowState.Normal;
-            }
-        }
-
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (DesignMode)
@@ -914,57 +945,10 @@
             ReleaseCapture();
         }
 
-        private void ResizeForm(ResizeDirection direction)
-        {
-            if (DesignMode)
-                return;
-            var dir = -1;
-            switch (direction)
-            {
-                case ResizeDirection.BottomLeft:
-                    dir = HTBOTTOMLEFT;
-                    Cursor = Cursors.SizeNESW;
-                    break;
-
-                case ResizeDirection.Left:
-                    dir = HTLEFT;
-                    Cursor = Cursors.SizeWE;
-                    break;
-
-                case ResizeDirection.Right:
-                    dir = HTRIGHT;
-                    break;
-
-                case ResizeDirection.BottomRight:
-                    dir = HTBOTTOMRIGHT;
-                    break;
-
-                case ResizeDirection.Bottom:
-                    dir = HTBOTTOM;
-                    break;
-            }
-
-            ReleaseCapture();
-            if (dir != -1)
-            {
-                SendMessage(Handle, WM_NCLBUTTONDOWN, dir, 0);
-            }
-        }
-
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
             UpdateRects();
-        }
-
-        private void UpdateRects()
-        {
-            _minButtonBounds = new Rectangle((ClientSize.Width) - 3 * STATUS_BAR_BUTTON_WIDTH, ClientRectangle.Y, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            _maxButtonBounds = new Rectangle((ClientSize.Width) - 2 * STATUS_BAR_BUTTON_WIDTH, ClientRectangle.Y, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            _xButtonBounds = new Rectangle((ClientSize.Width) - STATUS_BAR_BUTTON_WIDTH, ClientRectangle.Y, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            _statusBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y, ClientSize.Width, STATUS_BAR_HEIGHT);
-            _actionBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT, ClientSize.Width, ACTION_BAR_HEIGHT);
-            _drawerButtonBounds = new Rectangle(ClientRectangle.X + (SkinManager.FORM_PADDING / 2) + 3, STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT/2) - (ACTION_BAR_HEIGHT_DEFAULT/2), ACTION_BAR_HEIGHT_DEFAULT, ACTION_BAR_HEIGHT_DEFAULT);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -1131,30 +1115,59 @@
                 }
             }
         }
+        #endregion
 
-        private readonly AnimationManager _clickAnimManager;
+        #region Low Level Windows Methods
 
-        private Rectangle _drawerIconRect;
-
-        private Point _animationSource;
-
-        private void InitializeComponent()
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+        public class MONITORINFOEX
         {
-            this.SuspendLayout();
-            //
-            // MaterialForm
-            //
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.MinimumSize = new System.Drawing.Size(300, 200);
-            this.Name = "MaterialForm";
-            this.Padding = new System.Windows.Forms.Padding(PADDING_MINIMUM, 64, PADDING_MINIMUM, PADDING_MINIMUM);
-            this.Load += new System.EventHandler(this.MaterialForm_Load);
-            this.ResumeLayout(false);
+            public int cbSize = Marshal.SizeOf(typeof(MONITORINFOEX));
+            public RECT rcMonitor = new RECT();
+            public RECT rcWork = new RECT();
+            public int dwFlags = 0;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+            public char[] szDevice = new char[32];
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct RECT
+            {
+                public int left;
+                public int top;
+                public int right;
+                public int bottom;
+
+                public int Width()
+                {
+                    return right - left;
+                }
+
+                public int Height()
+                {
+                    return bottom - top;
+                }
+            }
         }
 
-        private void MaterialForm_Load(object sender, EventArgs e)
-        {
-        }
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern int TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
+        #endregion
     }
 
     public class MouseMessageFilter : IMessageFilter
