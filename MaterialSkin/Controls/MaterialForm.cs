@@ -241,6 +241,9 @@
         #endregion
 
         #region Enums
+        /// <summary>
+        /// Various options to control the top caption of a window
+        /// </summary>
         public enum FormStyles
         {
             StatusAndActionBar_None,
@@ -251,6 +254,9 @@
             ActionBar_64,
         }
 
+        /// <summary>
+        /// Various directions the form can be resized in
+        /// </summary>
         private enum ResizeDirection
         {
             BottomLeft,
@@ -261,6 +267,9 @@
             None
         }
 
+        /// <summary>
+        /// The states a button can be in
+        /// </summary>
         private enum ButtonState
         {
             XOver,
@@ -273,40 +282,137 @@
             DrawerDown,
             None
         }
+
+        /// <summary>
+        /// Window Messages
+        /// <see href="https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues"/>
+        /// </summary>
+        private enum WM
+        {
+            /// <summary>
+            /// WM_NCCALCSIZE
+            /// </summary>
+            NonClientCalcSize = 0x0083,
+            /// <summary>
+            /// WM_NCACTIVATE
+            /// </summary>
+            NonClientActivate = 0x0086,
+            /// <summary>
+            /// WM_NCLBUTTONDOWN
+            /// </summary>
+            NonClientLeftButtonDown = 0x00A1,
+            /// <summary>
+            /// WM_SYSCOMMAND
+            /// </summary>
+            SystemCommand = 0x0112,
+            /// <summary>
+            /// WM_MOUSEMOVE
+            /// </summary>
+            MouseMove = 0x0200,
+            /// <summary>
+            /// WM_LBUTTONDOWN
+            /// </summary>
+            LeftButtonDown = 0x0201,
+            /// <summary>
+            /// WM_LBUTTONUP
+            /// </summary>
+            LeftButtonUp = 0x0202,
+            /// <summary>
+            /// WM_LBUTTONDBLCLK
+            /// </summary>
+            LeftButtonDoubleClick = 0x0203,
+            /// <summary>
+            /// WM_RBUTTONDOWN
+            /// </summary>
+            RightButtonDown = 0x0204,
+        }
+
+        /// <summary>
+        /// Hit Test Results
+        /// <see href="https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest"/>
+        /// </summary>
+        private enum HT
+        {
+            /// <summary>
+            /// HTNOWHERE - Nothing under cursor
+            /// </summary>
+            None = 0,
+            /// <summary>
+            /// HTCAPTION - Titlebar
+            /// </summary>
+            Caption = 2,
+            /// <summary>
+            /// HTLEFT - Left border
+            /// </summary>
+            Left = 10,
+            /// <summary>
+            /// HTRIGHT - Right border
+            /// </summary>
+            Right = 11,
+            /// <summary>
+            /// HTTOP - Top border
+            /// </summary>
+            Top = 12,
+            /// <summary>
+            /// HTTOPLEFT - Top left corner
+            /// </summary>
+            TopLeft = 13,
+            /// <summary>
+            /// HTTOPRIGHT - Top right corner
+            /// </summary>
+            TopRight = 14,
+            /// <summary>
+            /// HTBOTTOM - Bottom border
+            /// </summary>
+            Bottom = 15,
+            /// <summary>
+            /// HTBOTTOMLEFT - Bottom left corner
+            /// </summary>
+            BottomLeft = 16,
+            /// <summary>
+            /// HTBOTTOMRIGHT - Bottom right corner
+            /// </summary>
+            BottomRight = 17,
+        }
+
+        /// <summary>
+        /// Window Styles
+        /// <see href="https://docs.microsoft.com/en-us/windows/win32/winmsg/window-styles"/>
+        /// </summary>
+        private enum WS
+        {
+            /// <summary>
+            /// WS_MINIMIZEBOX - Allow minimizing from taskbar
+            /// </summary>
+            MinimizeBox = 0x20000,
+            /// <summary>
+            /// WS_SIZEFRAME - Required for Aero Snapping
+            /// </summary>
+            SizeFrame = 0x40000,
+            /// <summary>
+            /// WS_SYSMENU - Trigger the creation of the system menu
+            /// </summary>
+            SysMenu = 0x80000,
+        }
+
+        /// <summary>
+        /// Track Popup Menu Flags
+        /// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-trackpopupmenu"/>
+        /// </summary>
+        private enum TPM
+        {
+            /// <summary>
+            /// TPM_LEFTALIGN
+            /// </summary>
+            LeftAlign = 0x0000,
+            /// <summary>
+            /// TPM_RETURNCMD
+            /// </summary>
+            ReturnCommand = 0x0100,
+        }
         #endregion
 
         #region Constants
-        // Window Messages
-        public const int WM_NCCALCSIZE = 0x0083;
-        public const int WM_NCACTIVATE = 0x0086;
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int WM_SYSCOMMAND = 0x0112;
-        public const int WM_MOUSEMOVE = 0x0200;
-        public const int WM_LBUTTONDOWN = 0x0201;
-        public const int WM_LBUTTONUP = 0x0202;
-        public const int WM_LBUTTONDBLCLK = 0x0203;
-        public const int WM_RBUTTONDOWN = 0x0204;
-
-        // Hit Test Results
-        public const int HT_CAPTION = 0x2;
-        private const int HTBOTTOMLEFT = 16;
-        private const int HTBOTTOMRIGHT = 17;
-        private const int HTLEFT = 10;
-        private const int HTRIGHT = 11;
-        private const int HTBOTTOM = 15;
-        private const int HTTOP = 12;
-        private const int HTTOPLEFT = 13;
-        private const int HTTOPRIGHT = 14;
-
-        // Window Styles
-        private const int WS_MINIMIZEBOX = 0x20000;
-        private const int WS_SIZEFRAME = 0x40000;
-        private const int WS_SYSMENU = 0x80000;
-
-        // Track Popup Menu
-        private const uint TPM_LEFTALIGN = 0x0000;
-        private const uint TPM_RETURNCMD = 0x0100;
-
         // Form Constants
         private const int BORDER_WIDTH = 7;
         private const int STATUS_BAR_BUTTON_WIDTH = 24;
@@ -662,32 +768,32 @@
             switch (direction)
             {
                 case ResizeDirection.BottomLeft:
-                    dir = HTBOTTOMLEFT;
+                    dir = (int)HT.BottomLeft;
                     Cursor = Cursors.SizeNESW;
                     break;
 
                 case ResizeDirection.Left:
-                    dir = HTLEFT;
+                    dir = (int)HT.Left;
                     Cursor = Cursors.SizeWE;
                     break;
 
                 case ResizeDirection.Right:
-                    dir = HTRIGHT;
+                    dir = (int)HT.Right;
                     break;
 
                 case ResizeDirection.BottomRight:
-                    dir = HTBOTTOMRIGHT;
+                    dir = (int)HT.BottomRight;
                     break;
 
                 case ResizeDirection.Bottom:
-                    dir = HTBOTTOM;
+                    dir = (int)HT.Bottom;
                     break;
             }
 
             ReleaseCapture();
             if (dir != -1)
             {
-                SendMessage(Handle, WM_NCLBUTTONDOWN, dir, 0);
+                SendMessage(Handle, (int)WM.NonClientLeftButtonDown, dir, 0);
             }
         }
 
@@ -708,22 +814,20 @@
             get
             {
                 var par = base.CreateParams;
-                // WS_SYSMENU: Trigger the creation of the system menu
-                // WS_MINIMIZEBOX: Allow minimizing from taskbar
-                // WS_SIZEFRAME: Required for Aero Snapping
-                par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU | WS_SIZEFRAME; // Turn on the WS_MINIMIZEBOX style flag
+                par.Style = par.Style | (int)WS.MinimizeBox | (int)WS.SysMenu | (int)WS.SizeFrame;
                 return par;
             }
         }
 
         protected override void WndProc(ref Message m)
         {
+            var message = (WM)m.Msg;
             // Prevent the base class from receiving the message
-            if (m.Msg == WM_NCCALCSIZE) return;
+            if (message == WM.NonClientCalcSize) return;
 
             // https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-ncactivate?redirectedfrom=MSDN#parameters
             // "If this parameter is set to -1, DefWindowProc does not repaint the nonclient area to reflect the state change."
-            if (m.Msg == WM_NCACTIVATE)
+            if (message == WM.NonClientActivate)
             {
                 m.Result = new IntPtr(-1);
                 return;
@@ -734,7 +838,7 @@
                 return;
 
             // Drawer
-            if (DrawerTabControl != null && (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
+            if (DrawerTabControl != null && (message == WM.LeftButtonDown || message == WM.LeftButtonDoubleClick) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
             {
                 drawerControl.Toggle();
                 _clickAnimManager.SetProgress(0);
@@ -742,14 +846,14 @@
                 _animationSource = (PointToClient(Cursor.Position));
             }
             // Double click to maximize
-            else if (m.Msg == WM_LBUTTONDBLCLK)
+            else if (message == WM.LeftButtonDoubleClick)
             {
                 if ((_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
                 !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
                     MaximizeWindow(!_maximized);
             }
             // move a maximized window
-            else if (m.Msg == WM_MOUSEMOVE && _maximized &&
+            else if (message == WM.MouseMove && _maximized &&
                 (_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
                 !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
             {
@@ -770,18 +874,18 @@
 
                     WindowState = FormWindowState.Normal;
                     ReleaseCapture();
-                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    SendMessage(Handle, (int)WM.NonClientLeftButtonDown, (int)HT.Caption, 0);
                 }
             }
             // Status bar buttons
-            else if (m.Msg == WM_LBUTTONDOWN &&
+            else if (message == WM.LeftButtonDown &&
                 (_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
                 !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
             {
                 if (!_maximized)
                 {
                     ReleaseCapture();
-                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    SendMessage(Handle, (int)WM.NonClientLeftButtonDown, (int)HT.Caption, 0);
                 }
                 else
                 {
@@ -789,7 +893,7 @@
                 }
             }
             // Default context menu
-            else if (m.Msg == WM_RBUTTONDOWN)
+            else if (message == WM.RightButtonDown)
             {
                 Point cursorPos = PointToClient(Cursor.Position);
 
@@ -797,13 +901,13 @@
                     !_maxButtonBounds.Contains(cursorPos) && !_xButtonBounds.Contains(cursorPos))
                 {
                     // Show default system menu when right clicking titlebar
-                    var id = TrackPopupMenuEx(GetSystemMenu(Handle, false), TPM_LEFTALIGN | TPM_RETURNCMD, Cursor.Position.X, Cursor.Position.Y, Handle, IntPtr.Zero);
+                    var id = TrackPopupMenuEx(GetSystemMenu(Handle, false), (int)TPM.LeftAlign | (int)TPM.ReturnCommand, Cursor.Position.X, Cursor.Position.Y, Handle, IntPtr.Zero);
 
                     // Pass the command as a WM_SYSCOMMAND message
-                    SendMessage(Handle, WM_SYSCOMMAND, id, 0);
+                    SendMessage(Handle, (int)WM.SystemCommand, id, 0);
                 }
             }
-            else if (m.Msg == WM_LBUTTONUP)
+            else if (message == WM.LeftButtonUp)
             {
                 _headerMouseDown = false;
             }
