@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin.Controls
+namespace MaterialSkin.Controls
 {
     using MaterialSkin.Animations;
     using System;
@@ -743,40 +743,36 @@
 
         private void RecalculateFormBoundaries()
         {
-            if (_formStyle == FormStyles.StatusAndActionBar_None)
+            switch (_formStyle)
             {
+                case FormStyles.StatusAndActionBar_None:
                 ACTION_BAR_HEIGHT = 0;
                 STATUS_BAR_HEIGHT = 0;
-            }
-            else if (_formStyle == FormStyles.ActionBar_None)
-            {
+                    break;
+                case FormStyles.ActionBar_None:
                 ACTION_BAR_HEIGHT = 0;
                 STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-            }
-            else if (_formStyle == FormStyles.ActionBar_40)
-            {
+                    break;
+                case FormStyles.ActionBar_40:
                 ACTION_BAR_HEIGHT = ACTION_BAR_HEIGHT_DEFAULT;
                 STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-            }
-            else if (_formStyle == FormStyles.ActionBar_48)
-            {
+                    break;
+                case FormStyles.ActionBar_48:
                 ACTION_BAR_HEIGHT = 48;
                 STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-            }
-            else if (_formStyle == FormStyles.ActionBar_56)
-            {
+                    break;
+                case FormStyles.ActionBar_56:
                 ACTION_BAR_HEIGHT = 56;
                 STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-            }
-            else if (_formStyle == FormStyles.ActionBar_64)
-            {
+                    break;
+                case FormStyles.ActionBar_64:
                 ACTION_BAR_HEIGHT = 64;
                 STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-            }
-            else
-            {
+                    break;
+                default:
                 ACTION_BAR_HEIGHT = ACTION_BAR_HEIGHT_DEFAULT;
                 STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+                    break;
             }
 
             Padding = new Padding(_drawerShowIconsWhenHidden ? drawerControl.MinWidth : PADDING_MINIMUM, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Padding.Right, Padding.Bottom);
