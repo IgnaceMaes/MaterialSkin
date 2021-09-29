@@ -823,31 +823,32 @@ namespace MaterialSkin.Controls
                 return;
 
             // Drawer
-            if (DrawerTabControl != null && (message == WM.LeftButtonDown || message == WM.LeftButtonDoubleClick) && _drawerIconRect.Contains(PointToClient(Cursor.Position)))
+            var cursorPos = PointToClient(Cursor.Position);
+            if (DrawerTabControl != null && (message == WM.LeftButtonDown || message == WM.LeftButtonDoubleClick) && _drawerIconRect.Contains(cursorPos))
             {
                 drawerControl.Toggle();
                 _clickAnimManager.SetProgress(0);
                 _clickAnimManager.StartNewAnimation(AnimationDirection.In);
-                _animationSource = (PointToClient(Cursor.Position));
+                _animationSource = cursorPos;
             }
             // Double click to maximize
             else if (message == WM.LeftButtonDoubleClick)
             {
-                if ((_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
-                !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
+                if ((_statusBarBounds.Contains(cursorPos) || _actionBarBounds.Contains(cursorPos)) &&
+                !(_minButtonBounds.Contains(cursorPos) || _maxButtonBounds.Contains(cursorPos) || _xButtonBounds.Contains(cursorPos)))
                     MaximizeWindow(!_maximized);
             }
             // move a maximized window
             else if (message == WM.MouseMove && _maximized &&
-                (_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
-                !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
+                (_statusBarBounds.Contains(cursorPos) || _actionBarBounds.Contains(cursorPos)) &&
+                !(_minButtonBounds.Contains(cursorPos) || _maxButtonBounds.Contains(cursorPos) || _xButtonBounds.Contains(cursorPos)))
             {
                 if (_headerMouseDown)
                 {
                     _maximized = false;
                     _headerMouseDown = false;
 
-                    var mousePoint = PointToClient(Cursor.Position);
+                    var mousePoint = cursorPos;
                     if (mousePoint.X < ClientSize.Width / 2)
                         Location = mousePoint.X < _previousSize.Width / 2 ?
                             new Point(Cursor.Position.X - mousePoint.X, Cursor.Position.Y - mousePoint.Y) :
@@ -864,8 +865,8 @@ namespace MaterialSkin.Controls
             }
             // Status bar buttons
             else if (message == WM.LeftButtonDown &&
-                (_statusBarBounds.Contains(PointToClient(Cursor.Position)) || _actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
-                !(_minButtonBounds.Contains(PointToClient(Cursor.Position)) || _maxButtonBounds.Contains(PointToClient(Cursor.Position)) || _xButtonBounds.Contains(PointToClient(Cursor.Position))))
+                (_statusBarBounds.Contains(cursorPos) || _actionBarBounds.Contains(cursorPos)) &&
+                !(_minButtonBounds.Contains(cursorPos) || _maxButtonBounds.Contains(cursorPos) || _xButtonBounds.Contains(cursorPos)))
             {
                 if (!_maximized)
                 {
@@ -880,8 +881,6 @@ namespace MaterialSkin.Controls
             // Default context menu
             else if (message == WM.RightButtonDown)
             {
-                Point cursorPos = PointToClient(Cursor.Position);
-
                 if (_statusBarBounds.Contains(cursorPos) && !_minButtonBounds.Contains(cursorPos) &&
                     !_maxButtonBounds.Contains(cursorPos) && !_xButtonBounds.Contains(cursorPos))
                 {
@@ -893,9 +892,7 @@ namespace MaterialSkin.Controls
                 }
             }
             else if (message == WM.LeftButtonUp)
-            {
                 _headerMouseDown = false;
-            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
