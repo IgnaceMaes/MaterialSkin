@@ -27,76 +27,30 @@
         [Category("Material Skin"), Browsable(true), DisplayName("Form Style"), DefaultValue(FormStyles.ActionBar_40)]
         public FormStyles FormStyle
         {
-            get { return _formStyle; }
+            get => _formStyle;
             set
             {
+                if (_formStyle == value) return;
+
                 _formStyle = value;
-                if (_formStyle == FormStyles.StatusAndActionBar_None)
-                {
-                    ACTION_BAR_HEIGHT = 0;
-                    STATUS_BAR_HEIGHT = 0;
-                }
-                else if (_formStyle == FormStyles.ActionBar_None)
-                {
-                    ACTION_BAR_HEIGHT = 0;
-                    STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-                }
-                else if (_formStyle == FormStyles.ActionBar_40)
-                {
-                    ACTION_BAR_HEIGHT = ACTION_BAR_HEIGHT_DEFAULT;
-                    STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-                }
-                else if (_formStyle == FormStyles.ActionBar_48)
-                {
-                    ACTION_BAR_HEIGHT = 48;
-                    STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-                }
-                else if (_formStyle == FormStyles.ActionBar_56)
-                {
-                    ACTION_BAR_HEIGHT = 56;
-                    STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-                }
-                else if (_formStyle == FormStyles.ActionBar_64)
-                {
-                    ACTION_BAR_HEIGHT = 64;
-                    STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-                }
-                else
-                {
-                    ACTION_BAR_HEIGHT = ACTION_BAR_HEIGHT_DEFAULT;
-                    STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
-                }
-
-                Padding = new Padding(_drawerShowIconsWhenHidden ? drawerControl.MinWidth : PADDING_MINIMUM, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Padding.Right, Padding.Bottom);
-                originalPadding = Padding;
-
-                if (DrawerTabControl != null)
-                {
-                    int H = ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT);
-                    int Y = PointToScreen(Point.Empty).Y + (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT);
-                    drawerOverlay.Size = new Size(ClientSize.Width, H);
-                    drawerOverlay.Location = new Point(PointToScreen(Point.Empty).X, Y);
-                    drawerForm.Size = new Size(DrawerWidth, H);
-                    drawerForm.Location = new Point(PointToScreen(Point.Empty).X, Y);
-                }
-
-                UpdateRects();
-                Invalidate();
+                RecalculateFormBoundaries();
             }
         }
 
         [Category("Drawer")]
         public bool DrawerShowIconsWhenHidden
         {
-            get { return _drawerShowIconsWhenHidden; }
+            get => _drawerShowIconsWhenHidden;
             set
             {
+                if (_drawerShowIconsWhenHidden == value) return;
+
                 _drawerShowIconsWhenHidden = value;
-                if (drawerControl != null)
-                {
-                    drawerControl.ShowIconsWhenHidden = _drawerShowIconsWhenHidden;
-                    drawerControl.Refresh();
-                }
+
+                if (drawerControl == null) return;
+
+                drawerControl.ShowIconsWhenHidden = _drawerShowIconsWhenHidden;
+                drawerControl.Refresh();
             }
         }
 
@@ -106,29 +60,15 @@
         [Category("Drawer")]
         public bool DrawerAutoHide 
         {
-            get
-            {
-                return _drawerAutoHide;
-            }
-            set
-            {
-                _drawerAutoHide = value;
-                drawerControl.AutoHide = _drawerAutoHide;
-            }
+            get => _drawerAutoHide;
+            set => drawerControl.AutoHide = _drawerAutoHide = value;
         }
 
         [Category("Drawer")]
         public bool DrawerAutoShow 
         {
-            get
-            {
-                return _drawerAutoShow;
-            }
-            set
-            {
-                _drawerAutoShow = value;
-                drawerControl.AutoShow = _drawerAutoShow;
-            }
+            get => _drawerAutoShow;
+            set => drawerControl.AutoShow = _drawerAutoShow = value;
         }
 
         [Category("Drawer")]
@@ -137,74 +77,68 @@
         [Category("Drawer")]
         public bool DrawerIsOpen
         {
-            get
-            {
-                return _drawerIsOpen;
-            }
+            get => _drawerIsOpen;
             set
             {
+                if (_drawerIsOpen == value) return;
+
                 _drawerIsOpen = value;
-                if (drawerControl != null)
-                {
-                    if (value)
-                        drawerControl.Show();
-                    else
-                        drawerControl.Hide();
-                }
+
+                if (value)
+                    drawerControl?.Show();
+                else
+                    drawerControl?.Hide();
             }
         }
 
         [Category("Drawer")]
         public bool DrawerUseColors
         {
-            get
-            {
-                return _drawerUseColors;
-            }
+            get => _drawerUseColors;
             set
             {
+                if (_drawerUseColors == value) return;
+
                 _drawerUseColors = value;
-                if (drawerControl != null)
-                {
-                    drawerControl.UseColors = value;
-                    drawerControl.Refresh();
-                }
+
+                if (drawerControl == null) return;
+
+                drawerControl.UseColors = value;
+                drawerControl.Refresh();
             }
         }
 
         [Category("Drawer")]
         public bool DrawerHighlightWithAccent
         {
-            get
-            {
-                return _drawerHighlightWithAccent;
-            }
+            get => _drawerHighlightWithAccent;
             set
             {
+                if (_drawerHighlightWithAccent == value) return;
+
                 _drawerHighlightWithAccent = value;
-                if (drawerControl != null)
-                {
-                    drawerControl.HighlightWithAccent = value;
-                    drawerControl.Refresh();
-                }
+
+                if (drawerControl == null) return;
+
+                drawerControl.HighlightWithAccent = value;
+                drawerControl.Refresh();
             }
         }
 
         [Category("Drawer")]
         public bool DrawerBackgroundWithAccent
         {
-            get
-            {
-                return _backgroundWithAccent;
-            }
+            get => _backgroundWithAccent;
             set
             {
+                if (_backgroundWithAccent == value) return;
+
                 _backgroundWithAccent = value;
-                if (drawerControl != null)
-                {
-                    drawerControl.BackgroundWithAccent = value;
-                    drawerControl.Refresh();
-                }
+
+                if (drawerControl == null) return;
+
+                drawerControl.BackgroundWithAccent = value;
+                drawerControl.Refresh();
             }
         }
 
@@ -805,6 +739,61 @@
             _statusBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y, ClientSize.Width, STATUS_BAR_HEIGHT);
             _actionBarBounds = new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT, ClientSize.Width, ACTION_BAR_HEIGHT);
             _drawerButtonBounds = new Rectangle(ClientRectangle.X + (SkinManager.FORM_PADDING / 2) + 3, STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT/2) - (ACTION_BAR_HEIGHT_DEFAULT/2), ACTION_BAR_HEIGHT_DEFAULT, ACTION_BAR_HEIGHT_DEFAULT);
+        }
+
+        private void RecalculateFormBoundaries()
+        {
+            if (_formStyle == FormStyles.StatusAndActionBar_None)
+            {
+                ACTION_BAR_HEIGHT = 0;
+                STATUS_BAR_HEIGHT = 0;
+            }
+            else if (_formStyle == FormStyles.ActionBar_None)
+            {
+                ACTION_BAR_HEIGHT = 0;
+                STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+            }
+            else if (_formStyle == FormStyles.ActionBar_40)
+            {
+                ACTION_BAR_HEIGHT = ACTION_BAR_HEIGHT_DEFAULT;
+                STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+            }
+            else if (_formStyle == FormStyles.ActionBar_48)
+            {
+                ACTION_BAR_HEIGHT = 48;
+                STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+            }
+            else if (_formStyle == FormStyles.ActionBar_56)
+            {
+                ACTION_BAR_HEIGHT = 56;
+                STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+            }
+            else if (_formStyle == FormStyles.ActionBar_64)
+            {
+                ACTION_BAR_HEIGHT = 64;
+                STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+            }
+            else
+            {
+                ACTION_BAR_HEIGHT = ACTION_BAR_HEIGHT_DEFAULT;
+                STATUS_BAR_HEIGHT = STATUS_BAR_HEIGHT_DEFAULT;
+            }
+
+            Padding = new Padding(_drawerShowIconsWhenHidden ? drawerControl.MinWidth : PADDING_MINIMUM, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, Padding.Right, Padding.Bottom);
+            originalPadding = Padding;
+
+            if (DrawerTabControl != null)
+            {
+                int H = ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT);
+                int Y = PointToScreen(Point.Empty).Y + (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT);
+                drawerOverlay.Size = new Size(ClientSize.Width, H);
+                drawerOverlay.Location = new Point(PointToScreen(Point.Empty).X, Y);
+                drawerForm.Size = new Size(DrawerWidth, H);
+                drawerForm.Location = new Point(PointToScreen(Point.Empty).X, Y);
+            }
+
+            UpdateRects();
+            Invalidate();
         }
         #endregion
 
