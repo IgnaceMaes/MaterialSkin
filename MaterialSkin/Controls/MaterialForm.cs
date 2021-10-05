@@ -722,7 +722,11 @@
                 // WS_SYSMENU: Trigger the creation of the system menu
                 // WS_MINIMIZEBOX: Allow minimizing from taskbar
                 // WS_SIZEFRAME: Required for Aero Snapping
-                par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU | WS_SIZEFRAME; // Turn on the WS_MINIMIZEBOX style flag
+                par.Style |= WS_MINIMIZEBOX | WS_SYSMENU; // Turn on the WS_MINIMIZEBOX style flag
+
+                if (!DesignMode)
+                    par.Style |= WS_SIZEFRAME;
+
                 return par;
             }
         }
