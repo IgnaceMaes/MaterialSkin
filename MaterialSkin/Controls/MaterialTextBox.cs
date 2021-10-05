@@ -11,6 +11,10 @@
 
     public class MaterialTextBox : RichTextBox, IMaterialControl
     {
+
+        MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
+        ContextMenuStrip _lastContextMenuStrip = new ContextMenuStrip();
+
         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
@@ -107,6 +111,45 @@
             }
         }
 
+
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get { return base.ContextMenuStrip; }
+            set
+            {
+                if (value != null)
+                {
+                    base.ContextMenuStrip = value;
+                }
+                else
+                {
+                    base.ContextMenuStrip = cms;
+                }
+                _lastContextMenuStrip = base.ContextMenuStrip;
+            }
+        }
+
+
+        public override bool ShortcutsEnabled
+        {
+            get
+            {
+                return base.ShortcutsEnabled;
+            }
+            set
+            {
+                base.ShortcutsEnabled = value;
+                if (value == false)
+                {
+                    base.ContextMenuStrip = null;
+                }
+                else
+                {
+                    base.ContextMenuStrip = _lastContextMenuStrip;
+                }
+            }
+        }
+
         private const int ICON_SIZE = 24;
         private const int HINT_TEXT_SMALL_SIZE = 18;
         private const int HINT_TEXT_SMALL_Y = 4;
@@ -169,10 +212,8 @@
                 preProcessIcons();
             };
 
-            MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
-
             ContextMenuStrip = cms;
 
             MaxLength = 50;
@@ -731,10 +772,10 @@
             var strip = sender as TextBoxContextMenuStrip;
             if (strip != null)
             {
-                strip.Cut.Enabled = !string.IsNullOrEmpty(SelectedText);
+                strip.Cut.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
                 strip.Copy.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.Paste.Enabled = Clipboard.ContainsText();
-                strip.Delete.Enabled = !string.IsNullOrEmpty(SelectedText);
+                strip.Paste.Enabled = Clipboard.ContainsText() && !ReadOnly;
+                strip.Delete.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
                 strip.SelectAll.Enabled = !string.IsNullOrEmpty(Text);
             }
         }
