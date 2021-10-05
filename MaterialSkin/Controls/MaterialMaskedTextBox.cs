@@ -10,6 +10,10 @@
 
     public class MaterialMaskedTextBox : Control, IMaterialControl
     {
+
+        MaterialContextMenuStrip cms = new BaseTextBoxContextMenuStrip();
+        ContextMenuStrip _lastContextMenuStrip = new ContextMenuStrip();
+
         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
@@ -32,8 +36,10 @@
 
         [Browsable(false)]
         public int SelectionStart { get { return baseTextBox.SelectionStart; } set { baseTextBox.SelectionStart = value; } }
+
         [Browsable(false)]
         public int SelectionLength { get { return baseTextBox.SelectionLength; } set { baseTextBox.SelectionLength = value; } }
+        
         [Browsable(false)]
         public int TextLength { get { return baseTextBox.TextLength; } }
 
@@ -156,6 +162,25 @@
 
         //TextBox properties
 
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get { return baseTextBox.ContextMenuStrip; }
+            set
+            {
+                if (value != null)
+                {
+                    baseTextBox.ContextMenuStrip = value;
+                    base.ContextMenuStrip = value;
+                }
+                else
+                {
+                    baseTextBox.ContextMenuStrip = cms;
+                    base.ContextMenuStrip = cms;
+                }
+                _lastContextMenuStrip = base.ContextMenuStrip;
+            }
+        }
+
         [Browsable(false)]
         public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
 
@@ -210,7 +235,25 @@
         public bool ResetOnSpace { get { return baseTextBox.ResetOnSpace; } set { baseTextBox.ResetOnSpace = value; } }
 
         [Category("Behavior")]
-        public bool ShortcutsEnabled { get { return baseTextBox.ShortcutsEnabled; } set { baseTextBox.ShortcutsEnabled = value; } }
+        public bool ShortcutsEnabled 
+        { 
+            get 
+            { return baseTextBox.ShortcutsEnabled; } 
+            set 
+            { 
+                baseTextBox.ShortcutsEnabled = value;
+                if (value == false)
+                {
+                    baseTextBox.ContextMenuStrip = null;
+                    base.ContextMenuStrip = null;
+                }
+                else
+                {
+                    baseTextBox.ContextMenuStrip = _lastContextMenuStrip;
+                    base.ContextMenuStrip = _lastContextMenuStrip;
+                }
+            }
+        }
 
         [Category("Behavior")]
         public bool SkipLiterals { get { return baseTextBox.SkipLiterals; } set { baseTextBox.SkipLiterals = value; } }
@@ -267,6 +310,10 @@
         public void Copy() { baseTextBox.Copy(); }
 
         public void Cut() { baseTextBox.Cut(); }
+
+        public void Undo() { baseTextBox.Undo(); }
+
+        public void Paste() { baseTextBox.Paste(); }
 
         #region "Events"
 
@@ -1158,18 +1205,6 @@
             }
         }
 
-        public new event EventHandler TextChanged
-        {
-            add
-            {
-                baseTextBox.TextChanged += value;
-            }
-            remove
-            {
-                baseTextBox.TextChanged -= value;
-            }
-        }
-
        public event EventHandler TextAlignChanged
         {
             add
@@ -1179,6 +1214,18 @@
             remove
             {
                 baseTextBox.TextAlignChanged -= value;
+            }
+        }
+
+        public new event EventHandler TextChanged
+        {
+            add
+            {
+                baseTextBox.TextChanged += value;
+            }
+            remove
+            {
+                baseTextBox.TextChanged -= value;
             }
         }
 
@@ -1353,6 +1400,11 @@
 
             baseTextBox.TabStop = true;
             this.TabStop = false;
+
+            cms.Opening += ContextMenuStripOnOpening;
+            cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
+            ContextMenuStrip = cms;
+
         }
 
         private void Redraw(object sencer, EventArgs e)
@@ -1813,6 +1865,45 @@
         public bool GetErrorState()
         {
             return _errorState;
+        }
+
+        private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
+        {
+            switch (toolStripItemClickedEventArgs.ClickedItem.Text)
+            {
+                case "Undo":
+                    Undo();
+                    break;
+                case "Cut":
+                    Cut();
+                    break;
+                case "Copy":
+                    Copy();
+                    break;
+                case "Paste":
+                    Paste();
+                    break;
+                case "Delete":
+                    SelectedText = string.Empty;
+                    break;
+                case "Select All":
+                    SelectAll();
+                    break;
+            }
+        }
+
+        private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
+        {
+            var strip = sender as BaseTextBoxContextMenuStrip;
+            if (strip != null)
+            {
+                strip.undo.Enabled = baseTextBox.CanUndo && !ReadOnly;
+                strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
+                strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
+                strip.paste.Enabled = Clipboard.ContainsText() && !ReadOnly;
+                strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
+                strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
+            }
         }
 
     }
