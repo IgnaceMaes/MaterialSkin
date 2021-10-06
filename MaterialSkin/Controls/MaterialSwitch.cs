@@ -42,6 +42,10 @@
             }
         }
 
+        [Category("Appearance")]
+        [Browsable(true), DefaultValue(false), EditorBrowsable(EditorBrowsableState.Always)]
+        public bool ReadOnly { get; set; }
+
         private readonly AnimationManager _checkAM;
         private readonly AnimationManager _hoverAM;
         private readonly AnimationManager _rippleAM;
@@ -93,6 +97,12 @@
 
             Ripple = true;
             MouseLocation = new Point(-1, -1);
+            ReadOnly = false;
+        }
+
+        protected override void OnClick(EventArgs e)
+        {
+            if (!ReadOnly) base.OnClick(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
