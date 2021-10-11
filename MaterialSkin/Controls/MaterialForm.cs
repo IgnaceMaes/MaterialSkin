@@ -133,6 +133,44 @@
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
 
+        /// <summary>
+        ///     Provides a single method to call either the 32-bit or 64-bit method based on the size of an <see cref="IntPtr"/> for getting the
+        ///     Window Style flags.<br/>
+        ///     <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongptra">GetWindowLongPtr</see>
+        /// </summary>
+        private static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
+        {
+            if (IntPtr.Size == 8)
+                return GetWindowLongPtr64(hWnd, nIndex);
+            else
+                return GetWindowLong(hWnd, nIndex);
+        }
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        private static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+
+        /// <summary>
+        ///     Provides a single method to call either the 32-bit or 64-bit method based on the size of an <see cref="IntPtr"/> for setting the
+        ///     Window Style flags.<br/>
+        ///     <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptra">SetWindowLongPtr</see>
+        /// </summary>
+        private static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 8)
+                return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+            else
+                return SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32());
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        private static extern IntPtr SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
         private Form drawerOverlay = new Form();
         private Form drawerForm = new Form();
 
@@ -723,23 +761,18 @@
                 // WS_MINIMIZEBOX: Allow minimizing from taskbar
                 // WS_SIZEFRAME: Required for Aero Snapping
                 par.Style |= WS_MINIMIZEBOX | WS_SYSMENU; // Turn on the WS_MINIMIZEBOX style flag
-
-                // Due to unexpected behavior, SIZEFRAME can not currently be added to a form
-                // The addition of this style forces the form to grow by approximately "border" pixels in all
-                //  directions, forcing the form to increase in width, and length, by 2x border pixels.
-                // I believe this is due to forcing this style onto a form that is design with "None" 
-                 //  FormBorderStyle. Since the style isn't designed to have a sizable frame, when Windows creates the
-                //  form with this style property, it struggles to properly draw it.
-                // In the future, it may be worthwhile looking at overriding the native caption, control, and frame properties via NCClientSize,
-                //  NCPaint, and other non-client messages, as well as the OnPaint events to completely redesign how the
-                //  MaterialForm is rendered. This is a significant undertaking, but would remove the reliance upon lower level calls and utilize
-                //  the exposed API for WinForms. Documentation is scarce with most people recommending using WPF instead or only having code in C++.
-                // The primary goal here is to provide the Aero Snapping features of native Windows programs without adding unnecessary side effects
-
-                // par.Style |= WS_SIZEFRAME;
-
                 return par;
             }
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+
+            // Sets the Window Style for having a Size Frame after the form is created
+            // This prevents unexpected sizing while still allowing for Aero Snapping
+            var flags = GetWindowLongPtr(Handle, -16).ToInt64();
+            SetWindowLongPtr(Handle, -16, (IntPtr)(flags | WS_SIZEFRAME));
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
