@@ -8,6 +8,8 @@ namespace MaterialSkin.Controls
     [ToolboxItem(false)]
     public class BaseTextBox : TextBox, IMaterialControl
     {
+        #region "Public Properties"
+
         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
@@ -38,13 +40,10 @@ namespace MaterialSkin.Controls
             });
         }
 
+        #endregion
 
         public BaseTextBox()
         {
-            MaterialContextMenuStrip cms = new BaseTextBoxContextMenuStrip();
-            cms.Opening += ContextMenuStripOnOpening;
-            cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
-            ContextMenuStrip = cms;
         }
 
 
@@ -106,46 +105,6 @@ namespace MaterialSkin.Controls
                 Invalidate();
             }
 
-        }
-
-
-        private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
-        {
-            switch (toolStripItemClickedEventArgs.ClickedItem.Text)
-            {
-                case "Undo":
-                    Undo();
-                    break;
-                case "Cut":
-                    Cut();
-                    break;
-                case "Copy":
-                    Copy();
-                    break;
-                case "Paste":
-                    Paste();
-                    break;
-                case "Delete":
-                    SelectedText = string.Empty;
-                    break;
-                case "Select All":
-                    SelectAll();
-                    break;
-            }
-        }
-
-        private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
-        {
-            var strip = sender as BaseTextBoxContextMenuStrip;
-            if (strip != null)
-            {
-                strip.undo.Enabled = CanUndo;
-                strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.paste.Enabled = Clipboard.ContainsText();
-                strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
-            }
         }
 
     }
@@ -186,12 +145,7 @@ namespace MaterialSkin.Controls
 
         public BaseMaskedTextBox()
         {
-            MaterialContextMenuStrip cms = new BaseTextBoxContextMenuStrip();
-            cms.Opening += ContextMenuStripOnOpening;
-            cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
-            ContextMenuStrip = cms;
         }
-
 
         protected override void OnGotFocus(EventArgs e)
         {
@@ -252,47 +206,6 @@ namespace MaterialSkin.Controls
             }
 
         }
-
-
-        private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
-        {
-            switch (toolStripItemClickedEventArgs.ClickedItem.Text)
-            {
-                case "Undo":
-                    Undo();
-                    break;
-                case "Cut":
-                    Cut();
-                    break;
-                case "Copy":
-                    Copy();
-                    break;
-                case "Paste":
-                    Paste();
-                    break;
-                case "Delete":
-                    SelectedText = string.Empty;
-                    break;
-                case "Select All":
-                    SelectAll();
-                    break;
-            }
-        }
-
-        private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
-        {
-            var strip = sender as BaseTextBoxContextMenuStrip;
-            if (strip != null)
-            {
-                strip.undo.Enabled = CanUndo;
-                strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.paste.Enabled = Clipboard.ContainsText();
-                strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText);
-                strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
-            }
-        }
-
     }
 
     [ToolboxItem(false)]
