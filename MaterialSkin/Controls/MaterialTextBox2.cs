@@ -10,6 +10,10 @@ namespace MaterialSkin.Controls
 
     public class MaterialTextBox2 : Control, IMaterialControl
     {
+
+        MaterialContextMenuStrip cms = new BaseTextBoxContextMenuStrip();
+        ContextMenuStrip _lastContextMenuStrip = new ContextMenuStrip();
+
         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
@@ -158,6 +162,27 @@ namespace MaterialSkin.Controls
 
         //TextBox properties
 
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get { return baseTextBox.ContextMenuStrip; }
+            set
+            {
+                if (value != null)
+                {
+                    //ContextMenuStrip = value;
+                    baseTextBox.ContextMenuStrip = value;
+                    base.ContextMenuStrip = value;
+                }
+                else
+                {
+                    //ContextMenuStrip = cms;
+                    baseTextBox.ContextMenuStrip = cms;
+                    base.ContextMenuStrip = cms;
+                }
+                _lastContextMenuStrip = base.ContextMenuStrip;
+            }
+        }
+
         [Browsable(false)]
         public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
 
@@ -179,7 +204,25 @@ namespace MaterialSkin.Controls
         public char PasswordChar { get { return baseTextBox.PasswordChar; } set { baseTextBox.PasswordChar = value; } }
 
         [Category("Behavior")]
-        public bool ShortcutsEnabled { get { return baseTextBox.ShortcutsEnabled; } set { baseTextBox.ShortcutsEnabled = value; } }
+        public bool ShortcutsEnabled 
+        { 
+            get 
+            { return baseTextBox.ShortcutsEnabled; } 
+            set 
+            { 
+                baseTextBox.ShortcutsEnabled = value;
+                if (value == false)
+                {
+                    baseTextBox.ContextMenuStrip = null;
+                    base.ContextMenuStrip = null;
+                }
+                else
+                {
+                    baseTextBox.ContextMenuStrip = _lastContextMenuStrip;
+                    base.ContextMenuStrip = _lastContextMenuStrip;
+                }
+            }
+        }
 
         [Category("Behavior")]
         public bool UseSystemPasswordChar { get { return baseTextBox.UseSystemPasswordChar; } set { baseTextBox.UseSystemPasswordChar = value; } }
@@ -227,6 +270,10 @@ namespace MaterialSkin.Controls
         public void Copy() { baseTextBox.Copy(); }
 
         public void Cut() { baseTextBox.Cut(); }
+
+        public void Undo() { baseTextBox.Undo(); }
+
+        public void Paste() { baseTextBox.Paste(); }
 
         #region "Events"
 
@@ -1268,6 +1315,11 @@ namespace MaterialSkin.Controls
 
             baseTextBox.TabStop = true;
             this.TabStop = false;
+
+            cms.Opening += ContextMenuStripOnOpening;
+            cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
+            ContextMenuStrip = cms;
+
         }
 
         private void Redraw(object sencer, EventArgs e)
@@ -1729,6 +1781,45 @@ namespace MaterialSkin.Controls
         public bool GetErrorState()
         {
             return _errorState;
+        }
+
+        private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
+        {
+            switch (toolStripItemClickedEventArgs.ClickedItem.Text)
+            {
+                case "Undo":
+                    Undo();
+                    break;
+                case "Cut":
+                    Cut();
+                    break;
+                case "Copy":
+                    Copy();
+                    break;
+                case "Paste":
+                    Paste();
+                    break;
+                case "Delete":
+                    SelectedText = string.Empty;
+                    break;
+                case "Select All":
+                    SelectAll();
+                    break;
+            }
+        }
+
+        private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
+        {
+            var strip = sender as BaseTextBoxContextMenuStrip;
+            if (strip != null)
+            {
+                strip.undo.Enabled = baseTextBox.CanUndo && !ReadOnly;
+                strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
+                strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
+                strip.paste.Enabled = Clipboard.ContainsText() && !ReadOnly;
+                strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
+                strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
+            }
         }
 
     }

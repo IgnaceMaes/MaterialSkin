@@ -24,13 +24,16 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 
 | Component                    | Supported | Disabled mode | Animated |
 | ---------------------------- | :-------: | :-----------: | :------: |
-| Buttons                      |    Yes    |      Yes      |   Yes    |
 | Backdrop                     |  **No**   |       -       |    -     |
+| Banner                       |  **No**   |       -       |    -     |
+| Buttons                      |    Yes    |      Yes      |   Yes    |
 | Cards                        |    Yes    |      N/A      |   N/A    |
 | Check Box                    |    Yes    |      Yes      |   Yes    |
 | Check Box List               |    Yes    |      Yes      |   Yes    |
+| Chips                        |  **No**   |       -       |    -     |
 | Combobox                     |    Yes    |      Yes      |   Yes    |
 | Context Menu                 |    Yes    |      Yes      |   Yes    |
+| Date Picker                  |  **No**   |       -       |    -     |
 | Dialog                       |    Yes    |      N/A      |  **No**  |
 | Divider                      |    Yes    |      N/A      |   N/A    |
 | Drawer                       |    Yes    |      N/A      |   Yes    |
@@ -47,6 +50,8 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | SnackBar                     |    Yes    |      N/A      |   Yes    |
 | Switch                       |    Yes    |      Yes      |   Yes    |
 | Tabs                         |    Yes    |      N/A      |   Yes    |
+| Time Picker                  |  **No**   |       -       |    -     |
+| Tooltips                     |  **No**   |       -       |    -     |
 
 All supported components have a dark theme
 

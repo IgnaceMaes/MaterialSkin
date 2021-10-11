@@ -10,26 +10,44 @@ using MaterialSkin.Animations;
 
     public class MaterialMultiLineTextBox2 : Control, IMaterialControl
     {
+
+        MaterialContextMenuStrip cms = new BaseTextBoxContextMenuStrip();
+        ContextMenuStrip _lastContextMenuStrip = new ContextMenuStrip();
+
         //Properties for managing the material design properties
+        
         [Browsable(false)]
         public int Depth { get; set; }
+
         [Browsable(false)]
-        //public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MaterialSkinManager SkinManager => MaterialSkinManager.Instance;
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-        
-        public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
+		
+		//Unused properties
+		
+        [Browsable(false)]
+        public override System.Drawing.Image BackgroundImage { get; set; }
 
-        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
-        public new object Tag { get { return baseTextBox.Tag; } set { baseTextBox.Tag = value; } }
-
-        [Category("Behavior")]
-        public int MaxLength { get { return baseTextBox.MaxLength; } set { baseTextBox.MaxLength = value; } }
+        [Browsable(false)]
+        public override System.Windows.Forms.ImageLayout BackgroundImageLayout { get; set; }
 
         [Browsable(false)]
         public string SelectedText { get { return baseTextBox.SelectedText; } set { baseTextBox.SelectedText = value; } }
+
+        [Browsable(false)]
+        public int SelectionStart { get { return baseTextBox.SelectionStart; } set { baseTextBox.SelectionStart = value; } }
+        [Browsable(false)]
+        public int SelectionLength { get { return baseTextBox.SelectionLength; } set { baseTextBox.SelectionLength = value; } }
+        [Browsable(false)]
+        public int TextLength { get { return baseTextBox.TextLength; } }
+
+        [Browsable(false)]
+        public override System.Drawing.Color ForeColor { get; set; }
+
+        //Material Skin properties
+        
 
         [Category("Material Skin"), DefaultValue(""), Localizable(true)]
         public string Hint 
@@ -38,10 +56,81 @@ using MaterialSkin.Animations;
             set 
             { 
                 baseTextBox.Hint = value;
-                hasHint = !String.IsNullOrEmpty(Hint);
+                hasHint = !String.IsNullOrEmpty(baseTextBox.Hint);
                 Invalidate();
             }
         }
+
+        [Category("Material Skin"), DefaultValue(true)]
+        public bool UseAccent { get; set; }
+
+
+        //TextBox properties
+
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get { return baseTextBox.ContextMenuStrip; }
+            set
+            {
+                if (value != null)
+                {
+                    baseTextBox.ContextMenuStrip = value;
+                    base.ContextMenuStrip = value;
+                }
+                else
+                {
+                    baseTextBox.ContextMenuStrip = cms;
+                    base.ContextMenuStrip = cms;
+                }
+                _lastContextMenuStrip = base.ContextMenuStrip;
+            }
+        }
+
+        [Browsable(false)]
+        public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
+
+        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
+
+        [Category("Appearance")]
+        public HorizontalAlignment TextAlign { get { return baseTextBox.TextAlign; } set { baseTextBox.TextAlign = value; } }
+
+        [Category("Behavior")]
+        public CharacterCasing CharacterCasing { get { return baseTextBox.CharacterCasing; } set { baseTextBox.CharacterCasing = value; } }
+
+        [Category("Behavior")]
+        public bool HideSelection { get { return baseTextBox.HideSelection; } set { baseTextBox.HideSelection = value; } }
+
+        [Category("Behavior")]
+        public int MaxLength { get { return baseTextBox.MaxLength; } set { baseTextBox.MaxLength = value; } }
+
+        [Category("Behavior")]
+        public char PasswordChar { get { return baseTextBox.PasswordChar; } set { baseTextBox.PasswordChar = value; } }
+
+        [Category("Behavior")]
+        public bool ShortcutsEnabled 
+        { 
+            get 
+            { return baseTextBox.ShortcutsEnabled; } 
+            set 
+            { 
+                baseTextBox.ShortcutsEnabled = value;
+                if (value == false)
+                {
+                    baseTextBox.ContextMenuStrip = null;
+                    base.ContextMenuStrip = null;
+                }
+                else
+                {
+                    baseTextBox.ContextMenuStrip = _lastContextMenuStrip;
+                    base.ContextMenuStrip = _lastContextMenuStrip;
+                }
+            }
+        }
+
+        [Category("Behavior")]
+        public bool UseSystemPasswordChar { get { return baseTextBox.UseSystemPasswordChar; } set { baseTextBox.UseSystemPasswordChar = value; } }
+
+        public new object Tag { get { return baseTextBox.Tag; } set { baseTextBox.Tag = value; } }
 
         private bool _enabled;
         public new bool Enabled
@@ -55,6 +144,7 @@ using MaterialSkin.Animations;
                 _enabled = value;
                 base.Enabled = _enabled;
                 baseTextBox.Enabled = _enabled;
+
                 this.Invalidate();
             }
         }
@@ -75,30 +165,26 @@ using MaterialSkin.Animations;
             }
         }
 
-        [Browsable(false)] 
-        public int SelectionStart { get { return baseTextBox.SelectionStart; } set { baseTextBox.SelectionStart = value; } }
-        [Browsable(false)] 
-        public int SelectionLength { get { return baseTextBox.SelectionLength; } set { baseTextBox.SelectionLength = value; } }
-        [Browsable(false)]
-        public int TextLength { get { return baseTextBox.TextLength; } }
 
         public void SelectAll() { baseTextBox.SelectAll(); }
+
         public void Clear() { baseTextBox.Clear(); }
 
         public void Copy() { baseTextBox.Copy(); }
 
         public void Cut() { baseTextBox.Cut(); }
 
-        [Category("Material Skin"), DefaultValue(true)]
-        public bool UseAccent { get; set; }
+        public void Undo() { baseTextBox.Undo(); }
+
+        public void Paste() { baseTextBox.Paste(); }
 
 
         # region Forwarding events to baseTextBox
+        
         public event EventHandler AcceptsTabChanged
         {
             add
             {
-
                 baseTextBox.AcceptsTabChanged += value;
             }
             remove
@@ -937,6 +1023,18 @@ using MaterialSkin.Animations;
             }
         }
 
+       public event EventHandler TextAlignChanged
+        {
+            add
+            {
+                baseTextBox.TextAlignChanged += value;
+            }
+            remove
+            {
+                baseTextBox.TextAlignChanged -= value;
+            }
+        }
+
         public new event EventHandler TextChanged
         {
             add
@@ -1019,7 +1117,6 @@ using MaterialSkin.Animations;
 
             baseTextBox = new BaseTextBox
             {
-
                 BorderStyle = BorderStyle.None,
                 Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
                 ForeColor = SkinManager.TextHighEmphasisColor,
@@ -1040,13 +1137,11 @@ using MaterialSkin.Animations;
                 if (_enabled)
                 {
                     isFocused = true;
-                    //Invalidate();
                     _animationManager.StartNewAnimation(AnimationDirection.In);
                 }
                 else
                 {
                     isFocused = false;
-                    //Invalidate();
                     _animationManager.StartNewAnimation(AnimationDirection.Out);
                 }
             };
@@ -1075,6 +1170,10 @@ using MaterialSkin.Animations;
 
             baseTextBox.TabStop = true;
             this.TabStop = false;
+
+            cms.Opening += ContextMenuStripOnOpening;
+            cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
+            ContextMenuStrip = cms;
         }
 
         private void Redraw(object sencer, EventArgs e)
@@ -1086,7 +1185,6 @@ using MaterialSkin.Animations;
         {
             var g = pevent.Graphics;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-
             g.Clear(Parent.BackColor);
             SolidBrush backBrush = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A));
 
@@ -1172,7 +1270,45 @@ using MaterialSkin.Animations;
 
             // events
             MouseState = MouseState.OUT;
- 
+        }
+
+        private void ContextMenuStripOnItemClickStart(object sender, ToolStripItemClickedEventArgs toolStripItemClickedEventArgs)
+        {
+            switch (toolStripItemClickedEventArgs.ClickedItem.Text)
+            {
+                case "Undo":
+                    Undo();
+                    break;
+                case "Cut":
+                    Cut();
+                    break;
+                case "Copy":
+                    Copy();
+                    break;
+                case "Paste":
+                    Paste();
+                    break;
+                case "Delete":
+                    SelectedText = string.Empty;
+                    break;
+                case "Select All":
+                    SelectAll();
+                    break;
+            }
+        }
+
+        private void ContextMenuStripOnOpening(object sender, CancelEventArgs cancelEventArgs)
+        {
+            var strip = sender as BaseTextBoxContextMenuStrip;
+            if (strip != null)
+            {
+                strip.undo.Enabled = baseTextBox.CanUndo && !ReadOnly;
+                strip.cut.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
+                strip.copy.Enabled = !string.IsNullOrEmpty(SelectedText);
+                strip.paste.Enabled = Clipboard.ContainsText() && !ReadOnly;
+                strip.delete.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
+                strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
+            }
         }
 
     }
