@@ -784,9 +784,19 @@ namespace MaterialSkin.Controls
             get
             {
                 var par = base.CreateParams;
-                par.Style = par.Style | (int)WS.MinimizeBox | (int)WS.SysMenu | (int)WS.SizeFrame;
+                par.Style |= (int)WS.MinimizeBox | (int)WS.SysMenu;
                 return par;
             }
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+
+            // Sets the Window Style for having a Size Frame after the form is created
+            // This prevents unexpected sizing while still allowing for Aero Snapping
+            var flags = GetWindowLongPtr(Handle, -16).ToInt64();
+            SetWindowLongPtr(Handle, -16, (IntPtr)(flags | (int)WS.SizeFrame));
         }
 
         protected override void WndProc(ref Message m)
@@ -1147,6 +1157,43 @@ namespace MaterialSkin.Controls
         #endregion
 
         #region Low Level Windows Methods
+        /// <summary>
+        ///     Provides a single method to call either the 32-bit or 64-bit method based on the size of an <see cref="IntPtr"/> for getting the
+        ///     Window Style flags.<br/>
+        ///     <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongptra">GetWindowLongPtr</see>
+        /// </summary>
+        private static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
+        {
+            if (IntPtr.Size == 8)
+                return GetWindowLongPtr64(hWnd, nIndex);
+            else
+                return GetWindowLong(hWnd, nIndex);
+        }
+
+        /// <summary>
+        ///     Provides a single method to call either the 32-bit or 64-bit method based on the size of an <see cref="IntPtr"/> for setting the
+        ///     Window Style flags.<br/>
+        ///     <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlongptra">SetWindowLongPtr</see>
+        /// </summary>
+        private static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 8)
+                return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+            else
+                return SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32());
+        }
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        private static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        private static extern IntPtr SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
