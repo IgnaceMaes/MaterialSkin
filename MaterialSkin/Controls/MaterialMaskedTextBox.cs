@@ -1568,6 +1568,9 @@
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
             {
                 LeadingIconClick?.Invoke(this, new EventArgs());
@@ -1578,9 +1581,6 @@
             }
             else
             {
-                if (DesignMode)
-                    return;
-
                 baseTextBox?.Focus();
             }
             base.OnMouseDown(e);
@@ -1588,6 +1588,9 @@
         }
         protected override void OnMouseEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             base.OnMouseEnter(e);
             MouseState = MouseState.HOVER;
             Invalidate();
@@ -1595,6 +1598,9 @@
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition)))
                 return;
             else
