@@ -1121,6 +1121,7 @@ using MaterialSkin.Animations;
                 Multiline = true
             };
 
+            Cursor = Cursors.IBeam;
             Enabled = true;
             ReadOnly = false;
             Size = new Size(250, 100);
@@ -1225,14 +1226,26 @@ using MaterialSkin.Animations;
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             if (DesignMode)
                 return;
+
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (DesignMode)
+                return;
+
+            baseTextBox?.Focus();
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             base.OnMouseEnter(e);
             MouseState = MouseState.HOVER;
             Invalidate();
@@ -1240,6 +1253,9 @@ using MaterialSkin.Animations;
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition)))
                 return;
             else

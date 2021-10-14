@@ -1474,13 +1474,16 @@ namespace MaterialSkin.Controls
             }
             else
             {
-                Cursor = Cursors.Default;
+                Cursor = Cursors.IBeam;
             }
 
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
             {
                 LeadingIconClick?.Invoke(this, new EventArgs());
@@ -1491,9 +1494,6 @@ namespace MaterialSkin.Controls
             }
             else
             {
-                if (DesignMode)
-                    return;
-
                 baseTextBox?.Focus();
             }
             base.OnMouseDown(e);
@@ -1501,6 +1501,9 @@ namespace MaterialSkin.Controls
         }
         protected override void OnMouseEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             base.OnMouseEnter(e);
             MouseState = MouseState.HOVER;
             Invalidate();
@@ -1508,6 +1511,9 @@ namespace MaterialSkin.Controls
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition)))
                 return;
             else
