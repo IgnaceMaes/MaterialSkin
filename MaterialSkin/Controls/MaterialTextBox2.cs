@@ -1474,7 +1474,7 @@ namespace MaterialSkin.Controls
             }
             else
             {
-                Cursor = Cursors.Default;
+                Cursor = Cursors.IBeam;
             }
 
         }
