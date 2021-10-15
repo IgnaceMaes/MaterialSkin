@@ -262,6 +262,19 @@ namespace MaterialSkin.Controls
             }
         }
 
+        private bool _animateReadOnly;
+
+        [Category("Behavior")]
+        [Browsable(true)]
+        public bool AnimateReadOnly
+        {
+            get => _animateReadOnly;
+            set
+            {
+                _animateReadOnly = value;
+                Invalidate();
+            }
+        }
 
         public void SelectAll() { baseTextBox.SelectAll(); }
 
@@ -1253,7 +1266,7 @@ namespace MaterialSkin.Controls
             {
 
                 BorderStyle = BorderStyle.None,
-               Font = base.Font,
+                Font = base.Font,
                 ForeColor = SkinManager.TextHighEmphasisColor,
                 Multiline = false,
                 Location = new Point(LEFT_PADDING, HEIGHT/2- FONT_HEIGHT/2),
@@ -1285,6 +1298,7 @@ namespace MaterialSkin.Controls
                     isFocused = false;
                     _animationManager.StartNewAnimation(AnimationDirection.Out);
                 }
+                UpdateRects();
             };
             baseTextBox.GotFocus += (sender, args) =>
             {
@@ -1316,6 +1330,7 @@ namespace MaterialSkin.Controls
 
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
+            KeyUp += new KeyEventHandler(KeyUpCustom);
             ContextMenuStrip = cms;
 
         }
@@ -1323,6 +1338,15 @@ namespace MaterialSkin.Controls
         private void Redraw(object sencer, EventArgs e)
         {
             Invalidate();
+        }
+
+        private void KeyUpCustom(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                SendKeys.Send("{TAB}");
+            }
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -1336,13 +1360,13 @@ namespace MaterialSkin.Controls
             g.FillRectangle(
                 !_enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
                 isFocused ? SkinManager.BackgroundFocusBrush :  // Focused
-                MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
+                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && !AnimateReadOnly)) ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
             baseTextBox.BackColor = !_enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
                 isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
-                MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
+                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && AnimateReadOnly)) ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
                 DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
 
             //Leading Icon
@@ -1361,33 +1385,37 @@ namespace MaterialSkin.Controls
             }
 
             // HintText
-            bool userTextPresent = !String.IsNullOrEmpty(Text);
+            bool userTextPresent = !string.IsNullOrEmpty(Text);
             Rectangle hintRect = new Rectangle(_left_padding - _prefix_padding, HINT_TEXT_SMALL_Y, Width - (_left_padding - _prefix_padding) - _right_padding, HINT_TEXT_SMALL_SIZE);
             int hintTextSize = 12;
 
             // bottom line base
             g.FillRectangle(SkinManager.DividersAlternativeBrush, 0, LINE_Y, Width, 1);
 
-            if (!_animationManager.IsAnimating())
+            if (ReadOnly == false || (ReadOnly && AnimateReadOnly))
             {
-                // No animation
-
-                // bottom line
-                if (isFocused)
+                if (!_animationManager.IsAnimating())
                 {
-                    g.FillRectangle(isFocused ? UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush : SkinManager.DividersBrush, 0, LINE_Y, Width, isFocused ? 2 : 1);
+                    // No animation
+
+                    // bottom line
+                    if (isFocused)
+                    {
+                        g.FillRectangle(isFocused ? UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush : SkinManager.DividersBrush, 0, LINE_Y, Width, isFocused ? 2 : 1);
+                    }
+                }
+                else
+                {
+                    // Animate - Focus got/lost
+                    double animationProgress = _animationManager.GetProgress();
+
+                    // Line Animation
+                    int LineAnimationWidth = (int)(Width * animationProgress);
+                    int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
+                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
                 }
             }
-            else
-            {
-                // Animate - Focus got/lost
-                double animationProgress = _animationManager.GetProgress();
-
-                // Line Animation
-                int LineAnimationWidth = (int)(Width * animationProgress);
-                int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
-                g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
-            }
+            
 
             // Prefix:
             if (_prefixsuffix == PrefixSuffixTypes.Prefix && _prefixsuffixText != null && _prefixsuffixText.Length > 0 && (isFocused || userTextPresent || !hasHint))
