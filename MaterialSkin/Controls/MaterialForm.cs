@@ -753,11 +753,11 @@ namespace MaterialSkin.Controls
 
             if (DrawerTabControl != null)
             {
-                var size = new Size(ClientSize.Width, ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
-                var location = Point.Subtract(Location, new Size(0, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
-                drawerOverlay.Size = size;
+                var height = ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT);
+                var location = Point.Add(Location, new Size(0, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
+                drawerOverlay.Size = new Size(ClientSize.Width, height);
                 drawerOverlay.Location = location;
-                drawerForm.Size = size;
+                drawerForm.Size = new Size(DrawerWidth, height);
                 drawerForm.Location = location;
             }
 
