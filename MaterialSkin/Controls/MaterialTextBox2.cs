@@ -1225,6 +1225,7 @@ namespace MaterialSkin.Controls
         {
             // Material Properties
             UseAccent = true;
+            MouseState = MouseState.OUT;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
@@ -1273,19 +1274,6 @@ namespace MaterialSkin.Controls
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.ReadOnlyChanged += (sender, args) =>
-            {
-                if (_enabled)
-                {
-                    isFocused = true;
-                    _animationManager.StartNewAnimation(AnimationDirection.In);
-                }
-                else
-                {
-                    isFocused = false;
-                    _animationManager.StartNewAnimation(AnimationDirection.Out);
-                }
-            };
             baseTextBox.GotFocus += (sender, args) =>
             {
                 if (_enabled)
