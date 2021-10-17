@@ -1312,6 +1312,7 @@
         {
             // Material Properties
             UseAccent = true;
+            MouseState = MouseState.OUT;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
@@ -1360,19 +1361,6 @@
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.ReadOnlyChanged += (sender, args) =>
-            {
-                if (_enabled)
-                {
-                    isFocused = true;
-                    _animationManager.StartNewAnimation(AnimationDirection.In);
-                }
-                else
-                {
-                    isFocused = false;
-                    _animationManager.StartNewAnimation(AnimationDirection.Out);
-                }
-            };
             baseTextBox.GotFocus += (sender, args) =>
             {
                 if (_enabled)
@@ -1561,13 +1549,16 @@
             }
             else
             {
-                Cursor = Cursors.Default;
+                Cursor = Cursors.IBeam;
             }
 
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
             {
                 LeadingIconClick?.Invoke(this, new EventArgs());
@@ -1578,9 +1569,6 @@
             }
             else
             {
-                if (DesignMode)
-                    return;
-
                 baseTextBox?.Focus();
             }
             base.OnMouseDown(e);
@@ -1588,6 +1576,9 @@
         }
         protected override void OnMouseEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             base.OnMouseEnter(e);
             MouseState = MouseState.HOVER;
             Invalidate();
@@ -1595,6 +1586,9 @@
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition)))
                 return;
             else

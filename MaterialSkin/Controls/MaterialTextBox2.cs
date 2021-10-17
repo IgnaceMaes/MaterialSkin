@@ -1225,6 +1225,7 @@ namespace MaterialSkin.Controls
         {
             // Material Properties
             UseAccent = true;
+            MouseState = MouseState.OUT;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
@@ -1273,19 +1274,6 @@ namespace MaterialSkin.Controls
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.ReadOnlyChanged += (sender, args) =>
-            {
-                if (_enabled)
-                {
-                    isFocused = true;
-                    _animationManager.StartNewAnimation(AnimationDirection.In);
-                }
-                else
-                {
-                    isFocused = false;
-                    _animationManager.StartNewAnimation(AnimationDirection.Out);
-                }
-            };
             baseTextBox.GotFocus += (sender, args) =>
             {
                 if (_enabled)
@@ -1474,13 +1462,16 @@ namespace MaterialSkin.Controls
             }
             else
             {
-                Cursor = Cursors.Default;
+                Cursor = Cursors.IBeam;
             }
 
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (LeadingIcon != null && _leadingIconBounds.Contains(e.Location))
             {
                 LeadingIconClick?.Invoke(this, new EventArgs());
@@ -1491,9 +1482,6 @@ namespace MaterialSkin.Controls
             }
             else
             {
-                if (DesignMode)
-                    return;
-
                 baseTextBox?.Focus();
             }
             base.OnMouseDown(e);
@@ -1501,6 +1489,9 @@ namespace MaterialSkin.Controls
         }
         protected override void OnMouseEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             base.OnMouseEnter(e);
             MouseState = MouseState.HOVER;
             Invalidate();
@@ -1508,6 +1499,9 @@ namespace MaterialSkin.Controls
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition)))
                 return;
             else
