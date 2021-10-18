@@ -3,6 +3,7 @@ namespace MaterialSkin.Controls
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Windows.Forms;
@@ -1232,12 +1233,16 @@ namespace MaterialSkin.Controls
         private Dictionary<string, TextureBrush> iconsBrushes;
         private Dictionary<string, TextureBrush> iconsErrorBrushes;
 
-        protected readonly BaseTextBox baseTextBox;
+        // Make it public for tessting purpose - check BackColor
+        // by default it must be protected object
+        //protected readonly BaseTextBox baseTextBox;
+        public readonly BaseTextBox baseTextBox;
 
         public MaterialTextBox2()
         {
             // Material Properties
             UseAccent = true;
+            isFocused = false;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
@@ -1286,20 +1291,6 @@ namespace MaterialSkin.Controls
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.ReadOnlyChanged += (sender, args) =>
-            {
-                if (_enabled)
-                {
-                    isFocused = true;
-                    _animationManager.StartNewAnimation(AnimationDirection.In);
-                }
-                else
-                {
-                    isFocused = false;
-                    _animationManager.StartNewAnimation(AnimationDirection.Out);
-                }
-                UpdateRects();
-            };
             baseTextBox.GotFocus += (sender, args) =>
             {
                 if (_enabled)
@@ -1360,7 +1351,7 @@ namespace MaterialSkin.Controls
             g.FillRectangle(
                 !_enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
                 isFocused ? SkinManager.BackgroundFocusBrush :  // Focused
-                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && !AnimateReadOnly)) ? SkinManager.BackgroundHoverBrush : // Hover
+                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && AnimateReadOnly)) ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
