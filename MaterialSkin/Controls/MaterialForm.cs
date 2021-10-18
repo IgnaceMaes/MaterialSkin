@@ -833,11 +833,18 @@ namespace MaterialSkin.Controls
                 if (_statusBarBounds.Contains(cursorPos) && !_minButtonBounds.Contains(cursorPos) &&
                     !_maxButtonBounds.Contains(cursorPos) && !_xButtonBounds.Contains(cursorPos))
                 {
+                    // Temporary disable user defined ContextMenuStrip
+                    var user_cms = base.ContextMenuStrip;
+                    base.ContextMenuStrip = null;
+
                     // Show default system menu when right clicking titlebar
                     var id = TrackPopupMenuEx(GetSystemMenu(Handle, false), (int)TPM.LeftAlign | (int)TPM.ReturnCommand, Cursor.Position.X, Cursor.Position.Y, Handle, IntPtr.Zero);
 
                     // Pass the command as a WM_SYSCOMMAND message
                     SendMessage(Handle, (int)WM.SystemCommand, id, 0);
+                    
+                    // restore user defined ContextMenuStrip
+                    base.ContextMenuStrip = user_cms;
                 }
             }
         }
