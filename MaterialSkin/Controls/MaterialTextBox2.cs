@@ -1242,7 +1242,7 @@ namespace MaterialSkin.Controls
         {
             // Material Properties
             UseAccent = true;
-            isFocused = false;
+            MouseState = MouseState.OUT;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
