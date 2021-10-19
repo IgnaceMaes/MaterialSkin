@@ -58,14 +58,14 @@ namespace MaterialSkin.Controls
         public int DrawerWidth { get; set; }
 
         [Category("Drawer")]
-        public bool DrawerAutoHide 
+        public bool DrawerAutoHide
         {
             get => _drawerAutoHide;
             set => drawerControl.AutoHide = _drawerAutoHide = value;
         }
 
         [Category("Drawer")]
-        public bool DrawerAutoShow 
+        public bool DrawerAutoShow
         {
             get => _drawerAutoShow;
             set => drawerControl.AutoShow = _drawerAutoShow = value;
@@ -407,7 +407,7 @@ namespace MaterialSkin.Controls
 
         public MaterialForm()
         {
-            MaximizedBounds = Screen.FromControl(this).WorkingArea;
+            MaximizedBounds = Screen.GetWorkingArea(Location);
             DrawerWidth = 200;
             DrawerIsOpen = false;
             DrawerShowIconsWhenHidden = false;
