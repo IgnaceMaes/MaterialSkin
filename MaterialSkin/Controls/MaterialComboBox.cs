@@ -71,10 +71,10 @@
             get => _startIndex;
             set
             {
-                _startIndex = value < 0 ? 0 : value;
+                _startIndex = value;
                 try
                 {
-                    base.SelectedIndex = value < 0 ? 0 : value;
+                    base.SelectedIndex = value;
                 }
                 catch
                 {

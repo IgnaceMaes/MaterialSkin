@@ -315,7 +315,7 @@
             Height = 120;
             Width = 250;
             IndicatorWidth = 0;
-            _isOpen = true;
+            _isOpen = false;
             ShowIconsWhenHidden = false;
             AutoHide = false;
             AutoShow = false;

@@ -1,6 +1,7 @@
 ﻿namespace MaterialSkin.Controls
 {
     using System.ComponentModel;
+    using System.Drawing;
     using System.Windows.Forms;
 
     public class MaterialProgressBar : ProgressBar, IMaterialControl
@@ -28,7 +29,10 @@
         protected override void OnPaint(PaintEventArgs e)
         {
             var doneProgress = (int)(Width * ((double)Value / Maximum));
-            e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, 0, doneProgress, Height);
+            e.Graphics.FillRectangle(Enabled ? 
+                SkinManager.ColorScheme.PrimaryBrush :
+                new SolidBrush(DrawHelper.BlendColor(SkinManager.ColorScheme.PrimaryColor, SkinManager.SwitchOffDisabledThumbColor, 197)),
+                0, 0, doneProgress, Height);
             e.Graphics.FillRectangle(SkinManager.BackgroundFocusBrush, doneProgress, 0, Width - doneProgress, Height);
         }
     }

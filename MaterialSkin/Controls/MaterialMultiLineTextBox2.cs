@@ -94,6 +94,9 @@ using MaterialSkin.Animations;
         [Category("Appearance")]
         public HorizontalAlignment TextAlign { get { return baseTextBox.TextAlign; } set { baseTextBox.TextAlign = value; } }
 
+        [Category("Appearance")]
+        public ScrollBars ScrollBars { get { return baseTextBox.ScrollBars; } set { baseTextBox.ScrollBars = value; } }
+
         [Category("Behavior")]
         public CharacterCasing CharacterCasing { get { return baseTextBox.CharacterCasing; } set { baseTextBox.CharacterCasing = value; } }
 
@@ -1103,6 +1106,7 @@ using MaterialSkin.Animations;
         {
             // Material Properties
             UseAccent = true;
+            MouseState = MouseState.OUT;
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
@@ -1123,8 +1127,10 @@ using MaterialSkin.Animations;
                 Multiline = true
             };
 
+            Cursor = Cursors.IBeam;
             Enabled = true;
             ReadOnly = false;
+            ScrollBars = ScrollBars.None;
             Size = new Size(250, 100);
 
             if (!Controls.Contains(baseTextBox) && !DesignMode)
@@ -1132,19 +1138,6 @@ using MaterialSkin.Animations;
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.ReadOnlyChanged += (sender, args) =>
-            {
-                if (_enabled)
-                {
-                    isFocused = true;
-                    _animationManager.StartNewAnimation(AnimationDirection.In);
-                }
-                else
-                {
-                    isFocused = false;
-                    _animationManager.StartNewAnimation(AnimationDirection.Out);
-                }
-            };
             baseTextBox.GotFocus += (sender, args) =>
             {
                 if (_enabled)
@@ -1227,14 +1220,26 @@ using MaterialSkin.Animations;
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             if (DesignMode)
                 return;
+
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (DesignMode)
+                return;
+
+            baseTextBox?.Focus();
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             base.OnMouseEnter(e);
             MouseState = MouseState.HOVER;
             Invalidate();
@@ -1242,6 +1247,9 @@ using MaterialSkin.Animations;
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (DesignMode)
+                return;
+
             if (this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition)))
                 return;
             else

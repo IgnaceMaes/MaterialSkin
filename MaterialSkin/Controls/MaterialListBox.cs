@@ -10,41 +10,12 @@ using System.ComponentModel.Design;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-//using System.Collections.Specialized;
 using System.Runtime.InteropServices;
-//using System.Collections;
-//using System.Windows.Forms.Design;
-//using System.ComponentModel.Design;
 
 #endregion
 
 namespace MaterialSkin.Controls
 {
-    #region MaterialListBoxDesignerDesign
-
-    //internal class MaterialListBoxDesigner : ControlDesigner
-    //{
-    //    private readonly string[] _propertiesToRemove =
-    //    {
-    //        "BackgroundImage", "BackgroundImageLayout",
-    //        "RightToLeft","ImeMode"
-    //    };
-
-    //    protected override void PostFilterProperties(IDictionary properties)
-    //    {
-    //        foreach (string property in _propertiesToRemove)
-    //        {
-    //            properties.Remove(property);
-    //        }
-
-    //        base.PostFilterProperties(properties);
-    //    }
-
-    //    private DesignerActionListCollection _actionListCollection;
-
-    //    public override DesignerActionListCollection ActionLists => _actionListCollection ?? (_actionListCollection = new DesignerActionListCollection { new MaterialListBoxActionList(Component) });
-    //}
-    #endregion
 
     #region MaterialListBox
 
@@ -53,54 +24,6 @@ namespace MaterialSkin.Controls
     [ComVisible(true)]
     public class MaterialListBox : Control, IMaterialControl
     {
-        #region Interfaces
-
-        //[Category("Metro"), Description("Gets or sets the style associated with the control.")]
-        //public Style Style
-        //{
-        //    get => StyleManager?.Style ?? _style;
-        //    set
-        //    {
-        //        _style = value;
-        //        switch (value)
-        //        {
-        //            case Style.Light:
-        //                ApplyTheme();
-        //                break;
-        //            case Style.Dark:
-        //                ApplyTheme(Style.Dark);
-        //                break;
-        //            case Style.Custom:
-        //                ApplyTheme(Style.Custom);
-        //                break;
-        //            default:
-        //                ApplyTheme();
-        //                break;
-        //        }
-        //        _scrollBar.Style = value;
-        //        Invalidate();
-        //    }
-        //}
-
-        //[Category("Metro"), Description("Gets or sets the Style Manager associated with the control.")]
-        //public MetroStyleManager StyleManager
-        //{
-        //    get => _styleManager;
-        //    set
-        //    {
-        //        _styleManager = value;
-        //        Invalidate();
-        //    }
-        //}
-
-        //[Category("Metro"), Description("Gets or sets the The Author name associated with the theme.")]
-        //public string ThemeAuthor { get; set; }
-
-        //[Category("Metro"), Description("Gets or sets the The Theme name associated with the theme.")]
-        //public string ThemeName { get; set; }
-
-        #endregion Interfaces
-
         #region Internal Vars
 
         private ObservableCollection<MaterialListBoxItem> _items = new ObservableCollection<MaterialListBoxItem>();
@@ -390,16 +313,6 @@ namespace MaterialSkin.Controls
 
         private void UpdateItemSpecs()
         {
-            //_leftrightPadding = 16;
-            //if (_style == ListBoxStyle.SingleLine)
-            //{
-            //    if (_density == MaterialItemDensity.Dense)
-            //        _itemHeight = 40;
-            //    else
-            //        _itemHeight = 48;
-            //    base.Font = SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1);
-            //    _secondaryFont = SkinManager.getFontByType(MaterialSkinManager.fontType.Body1);
-            //}
             if (_style == ListBoxStyle.TwoLine)
             {
                 _secondaryTextTopPadding = 4;
@@ -482,6 +395,14 @@ namespace MaterialSkin.Controls
                 primaryTextAlignFlags = NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle;
             }
 
+            //Set color and brush
+            Color SelectedColor = new Color();
+            if (UseAccentColor)
+                SelectedColor = SkinManager.ColorScheme.AccentColor;
+            else
+                SelectedColor = SkinManager.ColorScheme.PrimaryColor;
+            SolidBrush SelectedBrush = new SolidBrush(SelectedColor);
+
             //Draw items
             for (int i = firstItem; i < lastItem; i++)
             {
@@ -498,7 +419,10 @@ namespace MaterialSkin.Controls
                     }
                     else if (_indicates.Contains(i))
                     {
-                        g.FillRectangle(UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, itemRect);
+                        g.FillRectangle(Enabled ?
+                            SelectedBrush :
+                            new SolidBrush(DrawHelper.BlendColor(SelectedColor, SkinManager.SwitchOffDisabledThumbColor, 197)),
+                            itemRect);
                     }
                 }
                 else
@@ -509,7 +433,10 @@ namespace MaterialSkin.Controls
                     }
                     else if (i == SelectedIndex)
                     {
-                        g.FillRectangle(UseAccentColor ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, itemRect);
+                        g.FillRectangle(Enabled ?
+                            SelectedBrush :
+                            new SolidBrush(DrawHelper.BlendColor(SelectedColor, SkinManager.SwitchOffDisabledThumbColor, 197)),
+                            itemRect);
                     }
                 }
 
@@ -539,7 +466,10 @@ namespace MaterialSkin.Controls
                     NativeText.DrawTransparentText(
                     itemText,
                     _primaryFont,
-                    (i != SelectedIndex || UseAccentColor) ? SkinManager.TextHighEmphasisColor : SkinManager.ColorScheme.TextColor,
+                    Enabled ? (i != SelectedIndex || UseAccentColor) ? 
+                    SkinManager.TextHighEmphasisColor : 
+                    SkinManager.ColorScheme.TextColor :
+                    SkinManager.TextDisabledOrHintColor, // Disabled
                     primaryTextRect.Location,
                     primaryTextRect.Size,
                     primaryTextAlignFlags);
@@ -548,7 +478,10 @@ namespace MaterialSkin.Controls
                         NativeText.DrawTransparentText(
                         itemSecondaryText,
                         _secondaryFont,
-                        (i != SelectedIndex || UseAccentColor) ? SkinManager.TextDisabledOrHintColor : SkinManager.ColorScheme.TextColor.Darken(0.25f),
+                        Enabled ? (i != SelectedIndex || UseAccentColor) ? 
+                        SkinManager.TextDisabledOrHintColor : 
+                        SkinManager.ColorScheme.TextColor.Darken(0.25f) :
+                        SkinManager.TextDisabledOrHintColor, // Disabled
                         secondaryTextRect.Location,
                         secondaryTextRect.Size,
                         secondaryTextAlignFlags);
@@ -558,7 +491,10 @@ namespace MaterialSkin.Controls
                         NativeText.DrawMultilineTransparentText(
                         itemSecondaryText,
                         _secondaryFont,
-                        (i != SelectedIndex || UseAccentColor) ? SkinManager.TextDisabledOrHintColor : SkinManager.ColorScheme.TextColor.Darken(0.25f),
+                        Enabled ? (i != SelectedIndex || UseAccentColor) ? 
+                        SkinManager.TextDisabledOrHintColor : 
+                        SkinManager.ColorScheme.TextColor.Darken(0.25f) :
+                        SkinManager.TextDisabledOrHintColor, // Disabled
                         secondaryTextRect.Location,
                         secondaryTextRect.Size,
                         secondaryTextAlignFlags);
