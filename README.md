@@ -39,7 +39,7 @@ You can access it [here](https://github.com/leocb/MaterialSkin/wiki)
 | Drawer                       |    Yes    |      N/A      |   Yes    |
 | Expansion Panel              |    Yes    |      Yes      |  **No**  |
 | Flexible Dialog (big)        |    Yes    |      Yes      |   N/A    |
-| FAB - Floating Action Button |    Yes    |    **No**     |   Yes    |
+| FAB - Floating Action Button |    Yes    |      Yes      |   Yes    |
 | Label                        |    Yes    |      Yes      |   N/A    |
 | ListBox                      |    Yes    |      Yes      |   N/A    |
 | ListView                     |    Yes    |    **No**     |   N/A    |
