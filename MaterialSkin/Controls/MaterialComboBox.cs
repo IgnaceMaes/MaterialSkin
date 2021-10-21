@@ -162,6 +162,14 @@
                 SkinManager.BackgroundDisabledBrush // Disabled
                 , ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
+            //Set color and brush
+            Color SelectedColor = new Color();
+            if (UseAccent)
+                SelectedColor = SkinManager.ColorScheme.AccentColor;
+            else
+                SelectedColor = SkinManager.ColorScheme.PrimaryColor;
+            SolidBrush SelectedBrush = new SolidBrush(SelectedColor);
+
             // Create and Draw the arrow
             System.Drawing.Drawing2D.GraphicsPath pth = new System.Drawing.Drawing2D.GraphicsPath();
             PointF TopRight = new PointF(this.Width - 0.5f - SkinManager.FORM_PADDING, (this.Height >> 1) - 2.5f);
@@ -171,7 +179,11 @@
             pth.AddLine(TopRight, MidBottom);
 
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            g.FillPath((SolidBrush)(DroppedDown || Focused ? UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush : SkinManager.TextHighEmphasisBrush), pth);
+            g.FillPath((SolidBrush)(Enabled ? DroppedDown || Focused ?
+                SelectedBrush : //DroppedDown or Focused
+                SkinManager.TextHighEmphasisBrush : //Not DroppedDown and not Focused
+                new SolidBrush(DrawHelper.BlendColor(SkinManager.TextHighEmphasisColor, SkinManager.SwitchOffDisabledThumbColor, 197))  //Disabled
+                ), pth);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
 
             // HintText
@@ -195,7 +207,7 @@
                 // bottom line
                 if (DroppedDown || Focused)
                 {
-                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
+                    g.FillRectangle(SelectedBrush, 0, LINE_Y, Width, 2);
                 }
             }
             else
@@ -217,7 +229,7 @@
                 // Line Animation
                 int LineAnimationWidth = (int)(Width * animationProgress);
                 int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
-                g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
+                g.FillRectangle(SelectedBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
             }
 
             // Calc text Rect
@@ -251,9 +263,8 @@
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getTextBoxFontBySize(hintTextSize),
-                    Enabled ? DroppedDown || Focused ? UseAccent ?
-                    SkinManager.ColorScheme.AccentColor : // Focus Accent
-                    SkinManager.ColorScheme.PrimaryColor : // Focus Primary
+                    Enabled ? DroppedDown || Focused ? 
+                    SelectedColor : // Focus 
                     SkinManager.TextMediumEmphasisColor : // not focused
                     SkinManager.TextDisabledOrHintColor, // Disabled
                     hintRect.Location,
