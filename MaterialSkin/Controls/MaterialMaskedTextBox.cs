@@ -449,6 +449,7 @@
             }
         }
 
+        #if NETFRAMEWORK
         public new event EventHandler ContextMenuChanged
         {
             add
@@ -460,6 +461,7 @@
                 baseTextBox.ContextMenuChanged -= value;
             }
         }
+        #endif
 
         public new event EventHandler ContextMenuStripChanged
         {
@@ -1620,7 +1622,7 @@
 
         }
 
-        #region Icon
+#region Icon
 
         private static Size ResizeIcon(Image Icon)
         {
@@ -1798,7 +1800,7 @@
             }
         }
         
-        #endregion
+#endregion
 
         private void UpdateRects()
         {
