@@ -1010,13 +1010,52 @@ namespace MaterialSkin.Controls
                     // Maximize button
                     if (showMax)
                     {
-                        g.DrawRectangle(
-                            formButtonsPen,
-                            _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.33),
-                            _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.36),
-                            (int)(_maxButtonBounds.Width * 0.39),
-                            (int)(_maxButtonBounds.Height * 0.31)
-                       );
+                        if (WindowState != FormWindowState.Maximized)
+                        {
+                            g.DrawRectangle(
+                                formButtonsPen,
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.33),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.36),
+                                (int)(_maxButtonBounds.Width * 0.39),
+                                (int)(_maxButtonBounds.Height * 0.31)
+                            );
+                        }
+                        else
+                        {
+                            // Change position of square
+                            g.DrawRectangle(
+                                formButtonsPen,
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.30),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.42),
+                                (int)(_maxButtonBounds.Width * 0.40),
+                                (int)(_maxButtonBounds.Height * 0.32)
+                            );
+                            // Draw lines for background square
+                            g.DrawLine(formButtonsPen,
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.42),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.30),
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.42),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.38)
+                            );
+                            g.DrawLine(formButtonsPen,
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.40),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.30),
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.86),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Width * 0.30)
+                            );
+                            g.DrawLine(formButtonsPen,
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.82),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.28),
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.82),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Width * 0.64)
+                            );
+                            g.DrawLine(formButtonsPen,
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.70),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Height * 0.62),
+                                _maxButtonBounds.X + (int)(_maxButtonBounds.Width * 0.84),
+                                _maxButtonBounds.Y + (int)(_maxButtonBounds.Width * 0.62)
+                            );
+                        }
                     }
 
                     // Close button
