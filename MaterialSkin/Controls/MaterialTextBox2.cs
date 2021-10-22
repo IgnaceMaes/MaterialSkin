@@ -3,7 +3,6 @@ namespace MaterialSkin.Controls
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Windows.Forms;
@@ -263,19 +262,6 @@ namespace MaterialSkin.Controls
             }
         }
 
-        private bool _animateReadOnly;
-
-        [Category("Behavior")]
-        [Browsable(true)]
-        public bool AnimateReadOnly
-        {
-            get => _animateReadOnly;
-            set
-            {
-                _animateReadOnly = value;
-                Invalidate();
-            }
-        }
 
         public void SelectAll() { baseTextBox.SelectAll(); }
 
@@ -1233,10 +1219,7 @@ namespace MaterialSkin.Controls
         private Dictionary<string, TextureBrush> iconsBrushes;
         private Dictionary<string, TextureBrush> iconsErrorBrushes;
 
-        // Make it public for tessting purpose - check BackColor
-        // by default it must be protected object
-        //protected readonly BaseTextBox baseTextBox;
-        public readonly BaseTextBox baseTextBox;
+        protected readonly BaseTextBox baseTextBox;
 
         public MaterialTextBox2()
         {
@@ -1271,7 +1254,7 @@ namespace MaterialSkin.Controls
             {
 
                 BorderStyle = BorderStyle.None,
-                Font = base.Font,
+               Font = base.Font,
                 ForeColor = SkinManager.TextHighEmphasisColor,
                 Multiline = false,
                 Location = new Point(LEFT_PADDING, HEIGHT/2- FONT_HEIGHT/2),
@@ -1321,7 +1304,6 @@ namespace MaterialSkin.Controls
 
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
-            KeyUp += new KeyEventHandler(KeyUpCustom);
             ContextMenuStrip = cms;
 
         }
@@ -1329,15 +1311,6 @@ namespace MaterialSkin.Controls
         private void Redraw(object sencer, EventArgs e)
         {
             Invalidate();
-        }
-
-        private void KeyUpCustom(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-                SendKeys.Send("{TAB}");
-            }
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -1351,13 +1324,13 @@ namespace MaterialSkin.Controls
             g.FillRectangle(
                 !_enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
                 isFocused ? SkinManager.BackgroundFocusBrush :  // Focused
-                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && AnimateReadOnly)) ? SkinManager.BackgroundHoverBrush : // Hover
+                MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
             baseTextBox.BackColor = !_enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
                 isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
-                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && AnimateReadOnly)) ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
+                MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
                 DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
 
             //Leading Icon
@@ -1376,35 +1349,32 @@ namespace MaterialSkin.Controls
             }
 
             // HintText
-            bool userTextPresent = !string.IsNullOrEmpty(Text);
+            bool userTextPresent = !String.IsNullOrEmpty(Text);
             Rectangle hintRect = new Rectangle(_left_padding - _prefix_padding, HINT_TEXT_SMALL_Y, Width - (_left_padding - _prefix_padding) - _right_padding, HINT_TEXT_SMALL_SIZE);
             int hintTextSize = 12;
 
             // bottom line base
             g.FillRectangle(SkinManager.DividersAlternativeBrush, 0, LINE_Y, Width, 1);
 
-            if (ReadOnly == false || (ReadOnly && AnimateReadOnly))
+            if (!_animationManager.IsAnimating())
             {
-                if (!_animationManager.IsAnimating())
-                {
-                    // No animation
+                // No animation
 
-                    // bottom line
-                    if (isFocused)
-                    {
-                        g.FillRectangle(isFocused ? UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush : SkinManager.DividersBrush, 0, LINE_Y, Width, isFocused ? 2 : 1);
-                    }
-                }
-                else
+                // bottom line
+                if (isFocused)
                 {
-                    // Animate - Focus got/lost
-                    double animationProgress = _animationManager.GetProgress();
-
-                    // Line Animation
-                    int LineAnimationWidth = (int)(Width * animationProgress);
-                    int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
-                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
+                    g.FillRectangle(isFocused ? UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush : SkinManager.DividersBrush, 0, LINE_Y, Width, isFocused ? 2 : 1);
                 }
+            }
+            else
+            {
+                // Animate - Focus got/lost
+                double animationProgress = _animationManager.GetProgress();
+
+                // Line Animation
+                int LineAnimationWidth = (int)(Width * animationProgress);
+                int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
+                g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
             }
 
             // Prefix:
