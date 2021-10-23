@@ -269,23 +269,6 @@
 
         public new object Tag { get { return baseTextBox.Tag; } set { baseTextBox.Tag = value; } }
 
-        private bool _enabled;
-        public new bool Enabled
-        {
-            get
-            {
-                return _enabled;
-            }
-            set
-            {
-                _enabled = value;
-                base.Enabled = _enabled;
-                baseTextBox.Enabled = _enabled;
-
-                this.Invalidate();
-            }
-        }
-
         private bool _readonly;
         [Category("Behavior")]
         public bool ReadOnly
@@ -294,7 +277,7 @@
             set
             {
                 _readonly = value;
-                if (_enabled == true)
+                if (Enabled == true)
                 {
                     baseTextBox.ReadOnly = _readonly;
                 }
@@ -1339,7 +1322,6 @@
 
             baseTextBox = new BaseMaskedTextBox
             {
-
                 BorderStyle = BorderStyle.None,
                 Font = base.Font,
                 ForeColor = SkinManager.TextHighEmphasisColor,
@@ -1363,7 +1345,7 @@
 
             baseTextBox.GotFocus += (sender, args) =>
             {
-                if (_enabled)
+                if (Enabled)
                 {
                     isFocused = true;
                     _animationManager.StartNewAnimation(AnimationDirection.In);
@@ -1378,12 +1360,11 @@
                 _animationManager.StartNewAnimation(AnimationDirection.Out);
                 UpdateRects();
             };
-            BackColorChanged += (sender, args) =>
+            EnabledChanged += (sender, args) =>
             {
-                baseTextBox.BackColor = BackColor;
-                baseTextBox.ForeColor = SkinManager.TextHighEmphasisColor;
+                baseTextBox.Enabled = Enabled;
             };
-
+            
             baseTextBox.TextChanged += new EventHandler(Redraw);
 
             baseTextBox.TabStop = true;
@@ -1409,13 +1390,13 @@
             
             //backColor
             g.FillRectangle(
-                !_enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
+                !Enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
                 isFocused ? SkinManager.BackgroundFocusBrush :  // Focused
                 MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
-            baseTextBox.BackColor = !_enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
+            baseTextBox.BackColor = !Enabled ? ColorHelper.RemoveAlpha(SkinManager.BackgroundDisabledColor, BackColor) : //Disabled
                 isFocused ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundFocusColor, SkinManager.BackgroundFocusColor.A) : //Focused
                 MouseState == MouseState.HOVER ? DrawHelper.BlendColor(BackColor, SkinManager.BackgroundHoverColor, SkinManager.BackgroundHoverColor.A) : // Hover
                 DrawHelper.BlendColor(BackColor, SkinManager.BackgroundAlternativeColor, SkinManager.BackgroundAlternativeColor.A); // Normal
