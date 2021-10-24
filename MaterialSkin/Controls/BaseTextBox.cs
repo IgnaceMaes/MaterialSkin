@@ -86,7 +86,7 @@ namespace MaterialSkin.Controls
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-                    !this.ReadOnly ?
+                    Enabled ?
                     ColorHelper.RemoveAlpha(SkinManager.TextMediumEmphasisColor, BackColor) : // not focused
                     ColorHelper.RemoveAlpha(SkinManager.TextDisabledOrHintColor, BackColor), // Disabled
                     ClientRectangle.Location,
@@ -186,7 +186,7 @@ namespace MaterialSkin.Controls
                     NativeText.DrawTransparentText(
                     Hint,
                     SkinManager.getFontByType(MaterialSkinManager.fontType.Subtitle1),
-                    !this.ReadOnly ?
+                    Enabled ?
                     ColorHelper.RemoveAlpha(SkinManager.TextMediumEmphasisColor, BackColor) : // not focused
                     ColorHelper.RemoveAlpha(SkinManager.TextDisabledOrHintColor, BackColor), // Disabled
                     ClientRectangle.Location,
