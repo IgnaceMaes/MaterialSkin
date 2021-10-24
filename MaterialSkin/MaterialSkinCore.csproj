@@ -1,13 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <TargetFrameworks>net5.0-windows;net461</TargetFrameworks>
-	  <RuntimeIdentifier>win</RuntimeIdentifier>
+		<TargetFrameworks>net5.0-windows;net461</TargetFrameworks>
+		<RuntimeIdentifier>win</RuntimeIdentifier>
       <OutputType>Library</OutputType>
       <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-      <UseWindowsForms>true</UseWindowsForms>
-      <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
       <AssemblyName>MaterialSkin</AssemblyName>
       <RootNamespace>$(AssemblyName)</RootNamespace>
+      <PackageId>MaterialSkin.2</PackageId>
+      <Version>2.2.1</Version>
+      <Product>MaterialSkin 2</Product>
+      <Authors>leocb, IgnaceMaes, orapps44</Authors>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <RepositoryUrl>https://github.com/leocb/MaterialSkin</RepositoryUrl>
+      <PackageIcon>nugetIcon.png</PackageIcon>
+      <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+      <Description>Google's Material Design for your windows forms. MaterialSkin 2 is a Google's Material Design skin for you windows forms app. This updated version brings new user controls, unified theming and consistency. This package supersedes the MaterialSkin package By IgnaceMaes. Example app and documentation is available on the project site.</Description>
+      <PackageReleaseNotes>See GitHub page for release notes.</PackageReleaseNotes>
+      <Copyright>Copyright Leonardo C Bottaro © 2021</Copyright>
+      <PackageTags>material design materialdesign google forms theme skin</PackageTags>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
 		<Reference Include="System.Design" />
@@ -99,5 +112,15 @@
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Controls\MaterialMenuStrip.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="..\nugetIcon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
   </Project>
