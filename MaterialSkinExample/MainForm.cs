@@ -279,6 +279,13 @@ namespace MaterialSkinExample
             SnackBarMessage.Show(this);
 
         }
+        
+        private void materialSwitch16_CheckedChanged(object sender, EventArgs e)
+        {
+            materialTextBox21.ShowAssistiveText = materialSwitch16.Checked;
+        }
+
+
 
     }
 }
