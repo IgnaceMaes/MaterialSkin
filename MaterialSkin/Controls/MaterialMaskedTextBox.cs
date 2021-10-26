@@ -1779,6 +1779,19 @@
                 Size newSize_leadingIcon = ResizeIcon(_leadingIcon);
                 Bitmap _leadingIconIconResized = new Bitmap(_leadingIcon, newSize_leadingIcon.Width, newSize_leadingIcon.Height);
 
+                // Create a pre-processed copy of the image (GRAY)
+                Bitmap bgray = new Bitmap(destRect.Width, destRect.Height);
+                using (Graphics gGray = Graphics.FromImage(bgray))
+                {
+                    gGray.DrawImage(_leadingIconIconResized,
+                        new Point[] {
+                                    new Point(0, 0),
+                                    new Point(destRect.Width, 0),
+                                    new Point(0, destRect.Height),
+                        },
+                        destRect, GraphicsUnit.Pixel, grayImageAttributes);
+                }
+
                 //Create a pre - processed copy of the image(RED)
                 Bitmap bred = new Bitmap(destRect.Width, destRect.Height);
                 using (Graphics gred = Graphics.FromImage(bred))
