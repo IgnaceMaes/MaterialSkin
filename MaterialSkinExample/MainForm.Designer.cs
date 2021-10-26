@@ -127,6 +127,7 @@ namespace MaterialSkinExample
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.materialSwitch15 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialSwitch14 = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialSwitch16 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialSwitch13 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialComboBox7 = new MaterialSkin.Controls.MaterialComboBox();
             this.materialSwitch12 = new MaterialSkin.Controls.MaterialSwitch();
@@ -1757,6 +1758,7 @@ namespace MaterialSkinExample
             this.tabPage3.Controls.Add(this.materialMaskedTextBox1);
             this.tabPage3.Controls.Add(this.materialSwitch15);
             this.tabPage3.Controls.Add(this.materialSwitch14);
+            this.tabPage3.Controls.Add(this.materialSwitch16);
             this.tabPage3.Controls.Add(this.materialSwitch13);
             this.tabPage3.Controls.Add(this.materialComboBox7);
             this.tabPage3.Controls.Add(this.materialSwitch12);
@@ -1812,6 +1814,24 @@ namespace MaterialSkinExample
             this.materialSwitch14.Text = "Leading Icon";
             this.materialSwitch14.UseVisualStyleBackColor = true;
             this.materialSwitch14.CheckedChanged += new System.EventHandler(this.materialSwitch14_CheckedChanged);
+            // 
+            // materialSwitch16
+            // 
+            this.materialSwitch16.AutoSize = true;
+            this.materialSwitch16.Checked = true;
+            this.materialSwitch16.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.materialSwitch16.Depth = 0;
+            this.materialSwitch16.Location = new System.Drawing.Point(729, 295);
+            this.materialSwitch16.Margin = new System.Windows.Forms.Padding(0);
+            this.materialSwitch16.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialSwitch16.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSwitch16.Name = "materialSwitch16";
+            this.materialSwitch16.Ripple = true;
+            this.materialSwitch16.Size = new System.Drawing.Size(200, 37);
+            this.materialSwitch16.TabIndex = 76;
+            this.materialSwitch16.Text = "Show Assistive Text";
+            this.materialSwitch16.UseVisualStyleBackColor = true;
+            this.materialSwitch16.CheckedChanged += new System.EventHandler(this.materialSwitch16_CheckedChanged);
             // 
             // materialSwitch13
             // 
@@ -1914,7 +1934,9 @@ namespace MaterialSkinExample
             this.materialTextBox21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.materialTextBox21.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.materialTextBox21.Depth = 0;
+            this.materialTextBox21.ErrorMessage = "Invalid entry";
             this.materialTextBox21.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialTextBox21.HelperText = "Helper Text";
             this.materialTextBox21.HideSelection = true;
             this.materialTextBox21.LeadingIcon = null;
             this.materialTextBox21.Location = new System.Drawing.Point(528, 114);
@@ -1929,6 +1951,7 @@ namespace MaterialSkinExample
             this.materialTextBox21.SelectionLength = 0;
             this.materialTextBox21.SelectionStart = 0;
             this.materialTextBox21.ShortcutsEnabled = true;
+            this.materialTextBox21.ShowAssistiveText = true;
             this.materialTextBox21.Size = new System.Drawing.Size(384, 48);
             this.materialTextBox21.TabIndex = 71;
             this.materialTextBox21.TabStop = false;
@@ -3277,6 +3300,7 @@ namespace MaterialSkinExample
             this.DrawerTabControl = this.materialTabControl1;
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MaterialSkin Demo";
             this.materialTabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -3481,5 +3505,6 @@ namespace MaterialSkinExample
         private MaterialMaskedTextBox materialMaskedTextBox1;
         private MaterialButton materialButton25;
         private MaterialLabel materialLabel57;
+        private MaterialSwitch materialSwitch16;
     }
 }
