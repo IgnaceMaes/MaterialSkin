@@ -287,6 +287,7 @@ using MaterialSkin.Animations;
             }
         }
 
+        #if NETFRAMEWORK
         public new event EventHandler ContextMenuChanged
         {
             add
@@ -298,6 +299,7 @@ using MaterialSkin.Animations;
                 baseTextBox.ContextMenuChanged -= value;
             }
         }
+        #endif
 
         public new event EventHandler ContextMenuStripChanged
         {
