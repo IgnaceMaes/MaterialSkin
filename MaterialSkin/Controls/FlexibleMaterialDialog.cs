@@ -846,7 +846,6 @@ namespace MaterialSkin.Controls
             //Set the buttons visibilities and texts. Also set a default button.
             //Moved after SetDialogSizes() because it needs Dialog.Width property set.
             SetDialogButtons(FlexibleMaterialForm, buttons, defaultButton, buttonsPosition);
-
             //Show the dialog
             return FlexibleMaterialForm.ShowDialog(owner);
         }
@@ -858,6 +857,7 @@ namespace MaterialSkin.Controls
         private static void SetButtonsPosition(FlexibleMaterialForm fMF, ButtonsPosition buttonsPosition)
         {
             const int padding = 10;
+            int visibleButtonsWidth = 0;
             switch (buttonsPosition)
             {
                 case ButtonsPosition.Center:
@@ -867,13 +867,16 @@ namespace MaterialSkin.Controls
                             fMF.middleButton.Left = fMF.Width / 2 - fMF.middleButton.Width / 2;
                             fMF.leftButton.Left = fMF.middleButton.Left - fMF.leftButton.Width - padding * 2;
                             fMF.rightButton.Left = fMF.middleButton.Right + padding * 2;
+                            visibleButtonsWidth = fMF.leftButton.Width + fMF.middleButton.Width + fMF.rightButton.Width + padding * 6;
                             break;
                         case 2:
                             fMF.middleButton.Left = fMF.Width / 2 - fMF.middleButton.Width - padding;
                             fMF.rightButton.Left = fMF.Width / 2 + padding;
+                            visibleButtonsWidth = fMF.middleButton.Width + fMF.rightButton.Width + padding * 4;
                             break;
                         case 1:
                             fMF.rightButton.Left = fMF.Width / 2 - fMF.rightButton.Width / 2;
+                            visibleButtonsWidth = fMF.rightButton.Width + padding * 2;
                             break;
                         default:
                             break;
@@ -886,13 +889,16 @@ namespace MaterialSkin.Controls
                             fMF.leftButton.Left = padding;
                             fMF.middleButton.Left = fMF.leftButton.Right + padding * 2;
                             fMF.rightButton.Left = fMF.middleButton.Right + padding * 2;
+                            visibleButtonsWidth = fMF.leftButton.Width + fMF.middleButton.Width + fMF.rightButton.Width + padding * 6;
                             break;
                         case 2:
                             fMF.middleButton.Left = padding;
                             fMF.rightButton.Left = fMF.middleButton.Right + padding * 2;
+                            visibleButtonsWidth = fMF.middleButton.Width + fMF.rightButton.Width + padding * 4;
                             break;
                         case 1:
                             fMF.rightButton.Left = padding;
+                            visibleButtonsWidth = fMF.rightButton.Width + padding * 2;
                             break;
                         default:
                             break;
@@ -904,6 +910,20 @@ namespace MaterialSkin.Controls
                     fMF.rightButton.Left = fMF.Width - fMF.rightButton.Width - padding;
                     fMF.middleButton.Left = fMF.rightButton.Left - fMF.middleButton.Width - padding * 2;
                     fMF.leftButton.Left = fMF.middleButton.Left - fMF.leftButton.Width - padding * 2;
+                    switch (fMF.visibleButtonsCount)
+                    {
+                        case 3:
+                            visibleButtonsWidth = fMF.leftButton.Width + fMF.middleButton.Width + fMF.rightButton.Width + padding * 6;
+                            break;
+                        case 2:
+                            visibleButtonsWidth = fMF.middleButton.Width + fMF.rightButton.Width + padding * 4;
+                            break;
+                        case 1:
+                            visibleButtonsWidth = fMF.rightButton.Width + padding * 2;
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case ButtonsPosition.Fill:
                     switch (fMF.visibleButtonsCount)
@@ -912,19 +932,23 @@ namespace MaterialSkin.Controls
                             fMF.leftButton.Left = padding;
                             fMF.middleButton.Left = fMF.Width / 2 - fMF.middleButton.Width / 2;
                             fMF.rightButton.Left = fMF.Width - fMF.rightButton.Width - padding * 2;
+                            visibleButtonsWidth = fMF.leftButton.Width + fMF.middleButton.Width + fMF.rightButton.Width + padding * 6;
                             break;
                         case 2:
                             fMF.middleButton.Left = padding;
                             fMF.rightButton.Left = fMF.Width - fMF.rightButton.Width - padding * 2;
+                            visibleButtonsWidth = fMF.middleButton.Width + fMF.rightButton.Width + padding * 4;
                             break;
                         case 1:
                             fMF.rightButton.Left = fMF.Width / 2 - fMF.middleButton.Width / 2;
+                            visibleButtonsWidth = fMF.rightButton.Width + padding * 2;
                             break;
                         default:
                             break;
                     }
                     break;
             }
+            fMF.Width = Math.Max(fMF.Width, visibleButtonsWidth);
         }
     }
 }
