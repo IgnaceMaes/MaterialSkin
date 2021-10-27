@@ -177,7 +177,7 @@ namespace MaterialSkinExample
             }
 
             var batchOperationResults = builder.ToString();
-            var mresult = MaterialMessageBox.Show(batchOperationResults, "Batch Operation");
+            var mresult = MaterialMessageBox.Show(batchOperationResults, "Batch Operation", MessageBoxButtons.YesNo, FlexibleMaterialForm.ButtonsPosition.Center);
             materialComboBox1.Items.Add("this is a very long string");
         }
 
