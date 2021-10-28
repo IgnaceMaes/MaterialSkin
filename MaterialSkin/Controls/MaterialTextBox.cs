@@ -169,6 +169,20 @@
         private Dictionary<string, TextureBrush> iconsBrushes;
         private Dictionary<string, TextureBrush> iconsErrorBrushes;
 
+        private bool _animateReadOnly;
+
+        [Category("Material Skin")]
+        [Browsable(true)]
+        public bool AnimateReadOnly
+        {
+            get => _animateReadOnly;
+            set
+            {
+                _animateReadOnly = value;
+                Invalidate();
+            }
+        }
+
         #region "Events"
 
         [Category("Action")]
@@ -509,7 +523,7 @@
             g.FillRectangle(
                 !Enabled ? SkinManager.BackgroundDisabledBrush : // Disabled
                 Focused ? SkinManager.BackgroundFocusBrush :  // Focused
-                MouseState == MouseState.HOVER ? SkinManager.BackgroundHoverBrush : // Hover
+                MouseState == MouseState.HOVER && (!ReadOnly || (ReadOnly && !AnimateReadOnly)) ? SkinManager.BackgroundHoverBrush : // Hover
                 backBrush, // Normal
                 ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, LINE_Y);
 
@@ -540,42 +554,45 @@
             // bottom line base
             g.FillRectangle(SkinManager.DividersAlternativeBrush, 0, LINE_Y, Width, 1);
 
-            if (!_animationManager.IsAnimating())
+            if (ReadOnly == false || (ReadOnly && AnimateReadOnly))
             {
-                // No animation
-                if (hasHint && UseTallSize && (Focused || userTextPresent))
+                if (!_animationManager.IsAnimating())
                 {
-                    // hint text
-                    hintRect = new Rectangle(_left_padding, HINT_TEXT_SMALL_Y, Width - _left_padding - _right_padding, HINT_TEXT_SMALL_SIZE);
-                    hintTextSize = 12;
-                }
+                    // No animation
+                    if (hasHint && UseTallSize && (Focused || userTextPresent))
+                    {
+                        // hint text
+                        hintRect = new Rectangle(_left_padding, HINT_TEXT_SMALL_Y, Width - _left_padding - _right_padding, HINT_TEXT_SMALL_SIZE);
+                        hintTextSize = 12;
+                    }
 
-                // bottom line
-                if (Focused)
+                    // bottom line
+                    if (Focused)
+                    {
+                        g.FillRectangle(_errorState ? SkinManager.BackgroundHoverRedBrush : UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
+                    }
+                }
+                else
                 {
-                    g.FillRectangle(_errorState ? SkinManager.BackgroundHoverRedBrush : UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, 0, LINE_Y, Width, 2);
-                }
-            }
-            else
-            {
-                // Animate - Focus got/lost
-                double animationProgress = _animationManager.GetProgress();
+                    // Animate - Focus got/lost
+                    double animationProgress = _animationManager.GetProgress();
 
-                // hint Animation
-                if (hasHint && UseTallSize)
-                {
-                    hintRect = new Rectangle(
-                        _left_padding,
-                        userTextPresent ? (HINT_TEXT_SMALL_Y) : ClientRectangle.Y + (int)((HINT_TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
-                        Width - _left_padding - _right_padding,
-                        userTextPresent ? (HINT_TEXT_SMALL_SIZE) : (int)(LINE_Y + (HINT_TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
-                    hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
-                }
+                    // hint Animation
+                    if (hasHint && UseTallSize)
+                    {
+                        hintRect = new Rectangle(
+                            _left_padding,
+                            userTextPresent ? (HINT_TEXT_SMALL_Y) : ClientRectangle.Y + (int)((HINT_TEXT_SMALL_Y - ClientRectangle.Y) * animationProgress),
+                            Width - _left_padding - _right_padding,
+                            userTextPresent ? (HINT_TEXT_SMALL_SIZE) : (int)(LINE_Y + (HINT_TEXT_SMALL_SIZE - LINE_Y) * animationProgress));
+                        hintTextSize = userTextPresent ? 12 : (int)(16 + (12 - 16) * animationProgress);
+                    }
 
-                // Line Animation
-                int LineAnimationWidth = (int)(Width * animationProgress);
-                int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
-                g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
+                    // Line Animation
+                    int LineAnimationWidth = (int)(Width * animationProgress);
+                    int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
+                    g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
+                }
             }
 
             // Text stuff:
