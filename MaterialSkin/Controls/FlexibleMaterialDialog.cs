@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -385,14 +385,14 @@ namespace MaterialSkin.Controls
         private static readonly String[] BUTTON_TEXTS_ITALIAN_IT = { "OK", "Annulla", "&Sì", "&No", "&Interrompi", "&Riprova", "&Ignora" };
 
         /// <summary>
-        /// Defines the BUTTON_TEXTS_ENGLISH_FR
+        /// Defines the BUTTON_TEXTS_FRENCH_FR
         /// </summary>
         private static readonly String[] BUTTON_TEXTS_FRENCH_FR = { "OK", "Annuler", "&Oui", "&Non", "&Interrompre", "&Recommencer", "&Ignorer" };
 
         /// <summary>
-        /// Defines the BUTTON_TEXTS_ENGLISH_RO
+        /// Defines the BUTTON_TEXTS_ROMANIAN_RO
         /// </summary>
-        private static readonly String[] BUTTON_TEXTS_FRENCH_RO = { "Acceptă", "Anulează", "&Da", "&Nu", "&Întrerupe", "&Reîncearcă", "&Ignoră" };
+        private static readonly String[] BUTTON_TEXTS_ROMANIAN_RO = { "Acceptă", "Anulează", "&Da", "&Nu", "&Întrerupe", "&Reîncearcă", "&Ignoră" };
 
         /// <summary>
         /// Defines the defaultButton
@@ -460,6 +460,7 @@ namespace MaterialSkin.Controls
                 case TwoLetterISOLanguageID.es: return BUTTON_TEXTS_SPANISH_ES[buttonTextArrayIndex];
                 case TwoLetterISOLanguageID.it: return BUTTON_TEXTS_ITALIAN_IT[buttonTextArrayIndex];
                 case TwoLetterISOLanguageID.fr: return BUTTON_TEXTS_FRENCH_FR[buttonTextArrayIndex];
+                case TwoLetterISOLanguageID.ro: return BUTTON_TEXTS_ROMANIAN_RO[buttonTextArrayIndex];
 
                 default: return BUTTON_TEXTS_ENGLISH_EN[buttonTextArrayIndex];
             }
