@@ -9,6 +9,10 @@ namespace MaterialSkin.Controls
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
+    #if NETFRAMEWORK
+    using System.Runtime.Remoting.Channels;
+    #endif
+
     public class MaterialForm : Form, IMaterialControl
     {
         #region Public Properties
