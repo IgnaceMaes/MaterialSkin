@@ -287,7 +287,7 @@ namespace MaterialSkin.Controls
 
         private bool _animateReadOnly;
 
-        [Category("Behavior")]
+        [Category("Material Skin")]
         [Browsable(true)]
         public bool AnimateReadOnly
         {
