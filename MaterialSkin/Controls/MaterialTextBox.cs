@@ -183,6 +183,27 @@
             }
         }
 
+        private bool _leaveOnEnterKey;
+
+        [Category("Material Skin")]
+        public bool LeaveOnEnterKey
+        {
+            get => _leaveOnEnterKey;
+            set
+            {
+                _leaveOnEnterKey = value;
+                if (value)
+                {
+                    KeyDown += new KeyEventHandler(LeaveOnEnterKey_KeyDown);
+                }
+                else
+                {
+                    KeyDown -= LeaveOnEnterKey_KeyDown;
+                }
+                Invalidate();
+            }
+        }
+
         #region "Events"
 
         [Category("Action")]
@@ -794,6 +815,16 @@
                 strip.Paste.Enabled = Clipboard.ContainsText() && !ReadOnly;
                 strip.Delete.Enabled = !string.IsNullOrEmpty(SelectedText) && !ReadOnly;
                 strip.SelectAll.Enabled = !string.IsNullOrEmpty(Text);
+            }
+        }
+
+        private void LeaveOnEnterKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                SendKeys.Send("{TAB}");
             }
         }
 

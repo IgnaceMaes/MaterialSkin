@@ -299,6 +299,27 @@ namespace MaterialSkin.Controls
             }
         }
 
+        private bool _leaveOnEnterKey;
+
+        [Category("Material Skin")]
+        public bool LeaveOnEnterKey
+        {
+            get => _leaveOnEnterKey;
+            set
+            {
+                _leaveOnEnterKey = value;
+                if (value)
+                {
+                    baseTextBox.KeyDown += new KeyEventHandler(LeaveOnEnterKey_KeyDown);
+                }
+                else
+                {
+                    baseTextBox.KeyDown -= LeaveOnEnterKey_KeyDown;
+                }
+                Invalidate();
+            }
+        }
+
         public void SelectAll() { baseTextBox.SelectAll(); }
 
         public void Clear() { baseTextBox.Clear(); }
@@ -1928,5 +1949,14 @@ namespace MaterialSkin.Controls
             }
         }
 
+        private void LeaveOnEnterKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                SendKeys.Send("{TAB}");
+            }
+        }
     }
 }

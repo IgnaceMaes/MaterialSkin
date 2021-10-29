@@ -41,6 +41,27 @@
             }
         }
 
+        private bool _leaveOnEnterKey;
+
+        [Category("Material Skin")]
+        public bool LeaveOnEnterKey
+        {
+            get => _leaveOnEnterKey;
+            set
+            {
+                _leaveOnEnterKey = value;
+                if (value)
+                {
+                    KeyDown += new KeyEventHandler(LeaveOnEnterKey_KeyDown);
+                }
+                else
+                {
+                    KeyDown -= LeaveOnEnterKey_KeyDown;
+                }
+                Invalidate();
+            }
+        }
+
         public new void SelectAll()
         {
             BeginInvoke((MethodInvoker)delegate ()
@@ -56,6 +77,16 @@
             {
                 base.Focus();
             });
+        }
+
+        private void LeaveOnEnterKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter && e.Control == false)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                SendKeys.Send("{TAB}");
+            }
         }
 
         public MaterialMultiLineTextBox()
