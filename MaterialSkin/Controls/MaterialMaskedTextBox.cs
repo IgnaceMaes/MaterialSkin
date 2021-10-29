@@ -1395,7 +1395,7 @@
 
             UseTallSize = true;
             PrefixSuffix = PrefixSuffixTypes.None;
-            ShowAssistiveText = true;
+            ShowAssistiveText = false;
             HelperText = string.Empty;
             ErrorMessage = string.Empty;
 
