@@ -1337,6 +1337,7 @@ namespace MaterialSkin.Controls
             };
 
             baseTextBox.TextChanged += new EventHandler(Redraw);
+            baseTextBox.BackColorChanged += new EventHandler(Redraw);
 
             baseTextBox.TabStop = true;
             this.TabStop = false;
