@@ -1326,7 +1326,7 @@ namespace MaterialSkin.Controls
 
             UseTallSize = true;
             PrefixSuffix = PrefixSuffixTypes.None;
-            ShowAssistiveText = true;
+            ShowAssistiveText = false;
             HelperText = string.Empty;
             ErrorMessage = string.Empty;
 
@@ -1358,6 +1358,7 @@ namespace MaterialSkin.Controls
             };
 
             baseTextBox.TextChanged += new EventHandler(Redraw);
+            baseTextBox.BackColorChanged += new EventHandler(Redraw);
 
             baseTextBox.TabStop = true;
             this.TabStop = false;
@@ -1369,7 +1370,9 @@ namespace MaterialSkin.Controls
 
         private void Redraw(object sencer, EventArgs e)
         {
+            SuspendLayout();
             Invalidate();
+            ResumeLayout(false);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
