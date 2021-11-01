@@ -1427,6 +1427,7 @@
             };
             
             baseTextBox.TextChanged += new EventHandler(Redraw);
+            baseTextBox.BackColorChanged += new EventHandler(Redraw);
 
             baseTextBox.TabStop = true;
             this.TabStop = false;
@@ -1439,7 +1440,9 @@
 
         private void Redraw(object sencer, EventArgs e)
         {
+            SuspendLayout();
             Invalidate();
+            ResumeLayout(false);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
