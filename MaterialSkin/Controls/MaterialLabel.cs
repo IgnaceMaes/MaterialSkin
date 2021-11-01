@@ -157,7 +157,6 @@
         protected override void InitLayout()
         {
             Font = SkinManager.getFontByType(_fontType);
-            BackColorChanged += (sender, args) => Refresh();
         }
     }
 }
