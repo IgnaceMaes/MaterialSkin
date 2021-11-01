@@ -1349,7 +1349,9 @@ namespace MaterialSkin.Controls
 
         private void Redraw(object sencer, EventArgs e)
         {
+            SuspendLayout();
             Invalidate();
+            ResumeLayout(false);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
