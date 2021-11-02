@@ -56,9 +56,6 @@
         }
 
         [Browsable(false)]
-        public Color AccentTextColor { get; set; }
-
-        [Browsable(false)]
         public Color NoAccentTextColor { get; set; }
 
         [Category("Material Skin")]
@@ -220,12 +217,7 @@
             UseAccentColor = false;
             Type = MaterialButtonType.Contained;
             Density = MaterialButtonDensity.Default;
-            AccentTextColor = SkinManager.ColorScheme.AccentColor;
-
-            if (SkinManager.Theme == MaterialSkin.MaterialSkinManager.Themes.LIGHT)
-                NoAccentTextColor = SkinManager.ColorScheme.PrimaryColor;
-            else
-                NoAccentTextColor = SkinManager.ColorScheme.LightPrimaryColor;
+            NoAccentTextColor = Color.Empty;
 
             _animationManager = new AnimationManager(false)
             {
@@ -509,8 +501,10 @@
             }
 
             Color textColor = Enabled ? (HighEmphasis ? (Type == MaterialButtonType.Text || Type == MaterialButtonType.Outlined) ?
-                (UseAccentColor ? AccentTextColor : // Outline or Text and accent and emphasis
-                NoAccentTextColor) : // Outline or Text and emphasis
+                UseAccentColor ? SkinManager.ColorScheme.AccentColor : // Outline or Text and accent and emphasis
+                NoAccentTextColor == Color.Empty ? 
+                SkinManager.ColorScheme.PrimaryColor :  // Outline or Text and emphasis
+                NoAccentTextColor : // User defined Outline or Text and emphasis
                 SkinManager.ColorScheme.TextColor : // Contained and Emphasis
                 SkinManager.TextHighEmphasisColor) : // Cointained and accent
                 SkinManager.TextDisabledOrHintColor; // Disabled
