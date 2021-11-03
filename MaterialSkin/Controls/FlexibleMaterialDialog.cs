@@ -167,7 +167,6 @@ namespace MaterialSkin.Controls
             // 
             // leftButton
             // 
-            this.leftButton.AccentTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(64)))), ((int)(((byte)(129)))));
             this.leftButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.leftButton.AutoSize = false;
             this.leftButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -181,7 +180,6 @@ namespace MaterialSkin.Controls
             this.leftButton.MinimumSize = new System.Drawing.Size(0, 24);
             this.leftButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.leftButton.Name = "leftButton";
-            this.leftButton.NoAccentTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
             this.leftButton.Size = new System.Drawing.Size(108, 36);
             this.leftButton.TabIndex = 14;
             this.leftButton.Text = "OK";
@@ -192,7 +190,6 @@ namespace MaterialSkin.Controls
             // 
             // middleButton
             // 
-            this.middleButton.AccentTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(64)))), ((int)(((byte)(129)))));
             this.middleButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.middleButton.AutoSize = false;
             this.middleButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -206,7 +203,6 @@ namespace MaterialSkin.Controls
             this.middleButton.MinimumSize = new System.Drawing.Size(0, 24);
             this.middleButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.middleButton.Name = "middleButton";
-            this.middleButton.NoAccentTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
             this.middleButton.Size = new System.Drawing.Size(102, 36);
             this.middleButton.TabIndex = 15;
             this.middleButton.Text = "OK";
@@ -217,7 +213,6 @@ namespace MaterialSkin.Controls
             // 
             // rightButton
             // 
-            this.rightButton.AccentTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(64)))), ((int)(((byte)(129)))));
             this.rightButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.rightButton.AutoSize = false;
             this.rightButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -231,7 +226,6 @@ namespace MaterialSkin.Controls
             this.rightButton.MinimumSize = new System.Drawing.Size(0, 24);
             this.rightButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.rightButton.Name = "rightButton";
-            this.rightButton.NoAccentTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(81)))), ((int)(((byte)(181)))));
             this.rightButton.Size = new System.Drawing.Size(106, 36);
             this.rightButton.TabIndex = 13;
             this.rightButton.Text = "OK";
