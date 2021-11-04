@@ -1421,10 +1421,6 @@
                 _animationManager.StartNewAnimation(AnimationDirection.Out);
                 UpdateRects();
             };
-            EnabledChanged += (sender, args) =>
-            {
-                baseTextBox.Enabled = Enabled;
-            };
             
             baseTextBox.TextChanged += new EventHandler(Redraw);
             baseTextBox.BackColorChanged += new EventHandler(Redraw);
