@@ -1149,10 +1149,6 @@ using MaterialSkin.Animations;
                 isFocused = false;
                 _animationManager.StartNewAnimation(AnimationDirection.Out);
             };
-            EnabledChanged += (sender, args) =>
-            {
-                baseTextBox.Enabled = Enabled;
-            };
 
             baseTextBox.TextChanged += new EventHandler(Redraw);
             baseTextBox.BackColorChanged += new EventHandler(Redraw);
