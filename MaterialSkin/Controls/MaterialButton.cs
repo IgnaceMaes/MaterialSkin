@@ -605,9 +605,14 @@
                 Invalidate();
             };
 
+            MouseMove += (sender, args) =>
+            {
+                Focus();
+            };
+
             GotFocus += (sender, args) =>
             {
-                if (MouseState == MouseState.HOVER) _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
+                _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
                 Invalidate();
             };
             LostFocus += (sender, args) =>
@@ -617,7 +622,7 @@
                 Invalidate();
             };
 
-            KeyDown += (object sender, KeyEventArgs e) =>
+            PreviewKeyDown += (object sender, PreviewKeyDownEventArgs e) =>
             {
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
                 {
