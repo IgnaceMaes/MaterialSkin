@@ -167,7 +167,7 @@ using MaterialSkin.Animations;
 
         private bool _leaveOnEnterKey;
 
-        [Category("Material Skin"), DefaultValue(false), Description("Select next control which have TabStop property set to True when enter key is pressed.")]
+        [Category("Material Skin"), DefaultValue(false), Description("Select next control which have TabStop property set to True when enter key is pressed. To add enter in text, the user must press CTRL+Enter")]
         public bool LeaveOnEnterKey
         {
             get => _leaveOnEnterKey;
