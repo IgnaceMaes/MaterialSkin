@@ -161,6 +161,7 @@
         }
 
         private readonly AnimationManager _hoverAnimationManager = null;
+        private readonly AnimationManager _focusAnimationManager = null;
         private readonly AnimationManager _animationManager = null;
 
         /// <summary>
@@ -229,6 +230,11 @@
                 Increment = 0.12,
                 AnimationType = AnimationType.Linear
             };
+            _focusAnimationManager = new AnimationManager
+            {
+                Increment = 0.12,
+                AnimationType = AnimationType.Linear
+            };
             SkinManager.ColorSchemeChanged += sender =>
             {
                 preProcessIcons();
@@ -240,6 +246,7 @@
             };
 
             _hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
+            _focusAnimationManager.OnAnimationProgress += sender => Invalidate();
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -391,6 +398,7 @@
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             double hoverAnimProgress = _hoverAnimationManager.GetProgress();
+            double focusAnimProgress = _focusAnimationManager.GetProgress();
 
             g.Clear(Parent.BackColor);
 
@@ -434,14 +442,31 @@
             }
 
             //Hover
-            using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(
-                (int)(HighEmphasis && Type == MaterialButtonType.Contained ? hoverAnimProgress * 80 : hoverAnimProgress * SkinManager.BackgroundFocusColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
-                SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
-                SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
-                (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
-                SkinManager.ColorScheme.PrimaryColor)).RemoveAlpha()))) // Normal or Emphasis without accent
+            if (hoverAnimProgress > 0)
             {
-                g.FillPath(hoverBrush, buttonPath);
+                using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(
+                    (int)(HighEmphasis && Type == MaterialButtonType.Contained ? hoverAnimProgress * 80 : hoverAnimProgress * SkinManager.BackgroundHoverColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                    SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
+                    SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
+                    (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
+                    SkinManager.ColorScheme.PrimaryColor)).RemoveAlpha()))) // Normal or Emphasis without accent
+                {
+                    g.FillPath(hoverBrush, buttonPath);
+                }
+            }
+
+            //Focus
+            if (focusAnimProgress > 0)
+            {
+                using (SolidBrush focusBrush = new SolidBrush(Color.FromArgb(
+                    (int)(HighEmphasis && Type == MaterialButtonType.Contained ? focusAnimProgress * 80 : focusAnimProgress * SkinManager.BackgroundFocusColor.A), (UseAccentColor ? (HighEmphasis && Type == MaterialButtonType.Contained ?
+                    SkinManager.ColorScheme.AccentColor.Lighten(0.5f) : // Contained with Emphasis - with accent
+                    SkinManager.ColorScheme.AccentColor) : // Not Contained Or Low Emphasis - with accent
+                    (Type == MaterialButtonType.Contained && HighEmphasis ? SkinManager.ColorScheme.LightPrimaryColor : // Contained with Emphasis without accent
+                    SkinManager.ColorScheme.PrimaryColor)).RemoveAlpha()))) // Normal or Emphasis without accent
+                {
+                    g.FillPath(focusBrush, buttonPath);
+                }
             }
 
             if (Type == MaterialButtonType.Outlined)
@@ -605,20 +630,15 @@
                 Invalidate();
             };
 
-            MouseMove += (sender, args) =>
-            {
-                Focus();
-            };
-
             GotFocus += (sender, args) =>
             {
-                _hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
+                _focusAnimationManager.StartNewAnimation(AnimationDirection.In);
                 Invalidate();
             };
             LostFocus += (sender, args) =>
             {
                 MouseState = MouseState.OUT;
-                _hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
+                _focusAnimationManager.StartNewAnimation(AnimationDirection.Out);
                 Invalidate();
             };
 
