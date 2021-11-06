@@ -341,7 +341,7 @@
 
         private bool _leaveOnEnterKey;
 
-        [Category("Material Skin")]
+        [Category("Material Skin"), DefaultValue(false), Description("Select next control which have TabStop property set to True when enter key is pressed.")]
         public bool LeaveOnEnterKey
         {
             get => _leaveOnEnterKey;
