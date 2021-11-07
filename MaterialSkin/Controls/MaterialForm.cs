@@ -411,7 +411,6 @@ namespace MaterialSkin.Controls
 
         public MaterialForm()
         {
-            MaximizedBounds = Screen.GetWorkingArea(Location);
             DrawerWidth = 200;
             DrawerIsOpen = false;
             DrawerShowIconsWhenHidden = false;
@@ -851,6 +850,13 @@ namespace MaterialSkin.Controls
                     base.ContextMenuStrip = user_cms;
                 }
             }
+        }
+
+        protected override void OnMove(EventArgs e)
+        {
+            // Empty Point ensures the screen maximizes to the top left of the current screen
+            MaximizedBounds = new Rectangle(Point.Empty, Screen.GetWorkingArea(Location).Size);
+            base.OnMove(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
