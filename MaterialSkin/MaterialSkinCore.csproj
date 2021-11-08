@@ -9,7 +9,7 @@
       <AssemblyName>MaterialSkin</AssemblyName>
       <RootNamespace>$(AssemblyName)</RootNamespace>
       <PackageId>MaterialSkin.2</PackageId>
-      <Version>2.2.1</Version>
+      <Version>2.3.0</Version>
       <Product>MaterialSkin 2</Product>
       <Authors>leocb, IgnaceMaes, orapps44</Authors>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
