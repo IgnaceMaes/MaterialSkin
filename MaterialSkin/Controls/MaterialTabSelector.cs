@@ -6,6 +6,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Drawing.Text;
+    using System.Globalization;
     using System.Windows.Forms;
 
     public class MaterialTabSelector : Control, IMaterialControl
@@ -18,6 +19,21 @@
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
+        //[Browsable(false)]
+        public enum CustomCharacterCasing
+        {
+            [Description("Text will be used as user inserted, no alteration")]
+            Normal,
+            [Description("Text will be converted to UPPER case")]
+            Upper,
+            [Description("Text will be converted to lower case")]
+            Lower,
+            [Description("Text will be converted to Proper case (aka Title case)")]
+            Proper
+        }
+
+        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
 
         private MaterialTabControl _baseTabControl;
 
@@ -62,13 +78,28 @@
         private List<Rectangle> _tabRects;
 
         private const int ICON_SIZE = 24;
-        private const int FIRST_TAB_PADDING = 80;
+        private const int FIRST_TAB_PADDING = 50;
         private const int TAB_HEADER_PADDING = 24;
         private const int TAB_WIDTH_MIN = 160;
         private const int TAB_WIDTH_MAX = 264;
 
         private int _tab_over_index = -1;
 
+        private string TextCased;
+
+        private CustomCharacterCasing _characterCasing;
+
+        [Category("Appearance")]
+        public CustomCharacterCasing CharacterCasing
+        {
+            get => _characterCasing;
+            set
+            {
+                _characterCasing = value;
+                _baseTabControl.Invalidate();
+                Invalidate();
+            }
+        }
         private int _tab_indicator_height;
 
         [Category("Material Skin"), Browsable(true), DisplayName("Tab Indicator Height"), DefaultValue(2)]
@@ -188,7 +219,9 @@
                         if (((TAB_HEADER_PADDING*2) + textSize.Width < TAB_WIDTH_MAX))
                         {
                             NativeText.DrawTransparentText(
-                            tabPage.Text.ToUpper(),
+                            CharacterCasing == CustomCharacterCasing.Upper ? tabPage.Text.ToUpper() :
+                            CharacterCasing == CustomCharacterCasing.Lower ? tabPage.Text.ToLower() :
+                            CharacterCasing == CustomCharacterCasing.Proper ? textInfo.ToTitleCase(tabPage.Text.ToLower()) : tabPage.Text,
                             Font,
                             Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor),
                             textLocation.Location,
@@ -203,7 +236,9 @@
                                 textLocation.Height = 26;
                             }
                             NativeText.DrawMultilineTransparentText(
-                            tabPage.Text.ToUpper(),
+                            CharacterCasing == CustomCharacterCasing.Upper ? tabPage.Text.ToUpper() :
+                            CharacterCasing == CustomCharacterCasing.Lower ? tabPage.Text.ToLower() :
+                            CharacterCasing == CustomCharacterCasing.Proper ? textInfo.ToTitleCase(tabPage.Text.ToLower()) : tabPage.Text,
                             SkinManager.getFontByType(MaterialSkinManager.fontType.Body2),
                             Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor),
                             textLocation.Location,

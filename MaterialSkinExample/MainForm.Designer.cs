@@ -194,6 +194,7 @@ namespace MaterialSkinExample
             this.materialLabel51 = new MaterialSkin.Controls.MaterialLabel();
             this.materialExpansionPanel2 = new MaterialSkin.Controls.MaterialExpansionPanel();
             this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.materialLabel58 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel43 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel42 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel41 = new MaterialSkin.Controls.MaterialLabel();
@@ -340,6 +341,7 @@ namespace MaterialSkinExample
             this.materialButton25.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton25.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton25.Name = "materialButton25";
+            this.materialButton25.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton25.Size = new System.Drawing.Size(119, 36);
             this.materialButton25.TabIndex = 41;
             this.materialButton25.Text = "Show Dialog";
@@ -359,6 +361,7 @@ namespace MaterialSkinExample
             this.materialButton6.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton6.Name = "materialButton6";
+            this.materialButton6.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton6.Size = new System.Drawing.Size(144, 36);
             this.materialButton6.TabIndex = 41;
             this.materialButton6.Text = "Show SnackBar";
@@ -433,6 +436,7 @@ namespace MaterialSkinExample
             this.MaterialButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton3.Name = "MaterialButton3";
+            this.MaterialButton3.NoAccentTextColor = System.Drawing.Color.Empty;
             this.MaterialButton3.Size = new System.Drawing.Size(163, 36);
             this.MaterialButton3.TabIndex = 36;
             this.MaterialButton3.Text = "Open Message box";
@@ -547,6 +551,7 @@ namespace MaterialSkinExample
             this.materialButton7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton7.Name = "materialButton7";
+            this.materialButton7.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton7.Size = new System.Drawing.Size(133, 36);
             this.materialButton7.TabIndex = 0;
             this.materialButton7.Text = "Change Theme";
@@ -600,6 +605,7 @@ namespace MaterialSkinExample
             this.MaterialButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton4.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton4.Name = "MaterialButton4";
+            this.MaterialButton4.NoAccentTextColor = System.Drawing.Color.Empty;
             this.MaterialButton4.Size = new System.Drawing.Size(140, 36);
             this.MaterialButton4.TabIndex = 22;
             this.MaterialButton4.Text = "Change Colors";
@@ -656,6 +662,7 @@ namespace MaterialSkinExample
             this.materialButton23.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton23.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton23.Name = "materialButton23";
+            this.materialButton23.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton23.Size = new System.Drawing.Size(168, 36);
             this.materialButton23.TabIndex = 7;
             this.materialButton23.Text = "CONT - ICON";
@@ -758,6 +765,7 @@ namespace MaterialSkinExample
             this.materialButton24.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton24.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton24.Name = "materialButton24";
+            this.materialButton24.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton24.Size = new System.Drawing.Size(189, 36);
             this.materialButton24.TabIndex = 13;
             this.materialButton24.Text = "OUTLINE - ICON";
@@ -777,6 +785,7 @@ namespace MaterialSkinExample
             this.materialButton22.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton22.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton22.Name = "materialButton22";
+            this.materialButton22.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton22.Size = new System.Drawing.Size(174, 36);
             this.materialButton22.TabIndex = 1;
             this.materialButton22.Text = "TEXT - ICON";
@@ -808,6 +817,7 @@ namespace MaterialSkinExample
             this.materialButton19.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton19.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton19.Name = "materialButton19";
+            this.materialButton19.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton19.Size = new System.Drawing.Size(189, 36);
             this.materialButton19.TabIndex = 16;
             this.materialButton19.Text = "OUTLINE - LOW - NORMAL";
@@ -827,6 +837,7 @@ namespace MaterialSkinExample
             this.materialButton20.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton20.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton20.Name = "materialButton20";
+            this.materialButton20.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton20.Size = new System.Drawing.Size(174, 36);
             this.materialButton20.TabIndex = 4;
             this.materialButton20.Text = "TEXT - LOW - NORMAL";
@@ -846,6 +857,7 @@ namespace MaterialSkinExample
             this.materialButton21.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton21.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton21.Name = "materialButton21";
+            this.materialButton21.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton21.Size = new System.Drawing.Size(168, 36);
             this.materialButton21.TabIndex = 10;
             this.materialButton21.Text = "CONT - LOW - NORMAL";
@@ -865,6 +877,7 @@ namespace MaterialSkinExample
             this.materialButton5.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton5.Name = "materialButton5";
+            this.materialButton5.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton5.Size = new System.Drawing.Size(189, 36);
             this.materialButton5.TabIndex = 14;
             this.materialButton5.Text = "OUTLINE - HIGH - NORMAL";
@@ -884,6 +897,7 @@ namespace MaterialSkinExample
             this.materialButton8.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton8.Name = "materialButton8";
+            this.materialButton8.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton8.Size = new System.Drawing.Size(174, 36);
             this.materialButton8.TabIndex = 2;
             this.materialButton8.Text = "TEXT - HIGH - NORMAL";
@@ -903,6 +917,7 @@ namespace MaterialSkinExample
             this.materialButton9.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton9.Name = "materialButton9";
+            this.materialButton9.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton9.Size = new System.Drawing.Size(168, 36);
             this.materialButton9.TabIndex = 8;
             this.materialButton9.Text = "CONT - HIGH - NORMAL";
@@ -923,6 +938,7 @@ namespace MaterialSkinExample
             this.materialButton18.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton18.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton18.Name = "materialButton18";
+            this.materialButton18.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton18.Size = new System.Drawing.Size(189, 36);
             this.materialButton18.TabIndex = 18;
             this.materialButton18.Text = "OUTLINE - DISABLED";
@@ -942,6 +958,7 @@ namespace MaterialSkinExample
             this.materialButton17.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton17.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton17.Name = "materialButton17";
+            this.materialButton17.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton17.Size = new System.Drawing.Size(189, 36);
             this.materialButton17.TabIndex = 17;
             this.materialButton17.Text = "OUTLINE - LOW - ACCENT";
@@ -961,6 +978,7 @@ namespace MaterialSkinExample
             this.materialButton16.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton16.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton16.Name = "materialButton16";
+            this.materialButton16.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton16.Size = new System.Drawing.Size(189, 36);
             this.materialButton16.TabIndex = 15;
             this.materialButton16.Text = "OUTLINE - HIGH - ACCENT";
@@ -980,6 +998,7 @@ namespace MaterialSkinExample
             this.materialButton15.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton15.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton15.Name = "materialButton15";
+            this.materialButton15.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton15.Size = new System.Drawing.Size(174, 36);
             this.materialButton15.TabIndex = 5;
             this.materialButton15.Text = "TEXT - LOW - ACCENT";
@@ -999,6 +1018,7 @@ namespace MaterialSkinExample
             this.materialButton14.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton14.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton14.Name = "materialButton14";
+            this.materialButton14.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton14.Size = new System.Drawing.Size(174, 36);
             this.materialButton14.TabIndex = 3;
             this.materialButton14.Text = "TEXT - HIGH - ACCENT";
@@ -1019,6 +1039,7 @@ namespace MaterialSkinExample
             this.materialButton13.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton13.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton13.Name = "materialButton13";
+            this.materialButton13.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton13.Size = new System.Drawing.Size(168, 36);
             this.materialButton13.TabIndex = 12;
             this.materialButton13.Text = "CONT - DISABLED";
@@ -1039,6 +1060,7 @@ namespace MaterialSkinExample
             this.materialButton12.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton12.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton12.Name = "materialButton12";
+            this.materialButton12.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton12.Size = new System.Drawing.Size(174, 36);
             this.materialButton12.TabIndex = 6;
             this.materialButton12.Text = "TEXT - DISABLED";
@@ -1058,6 +1080,7 @@ namespace MaterialSkinExample
             this.materialButton11.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton11.Name = "materialButton11";
+            this.materialButton11.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton11.Size = new System.Drawing.Size(168, 36);
             this.materialButton11.TabIndex = 11;
             this.materialButton11.Text = "CONT - LOW - ACCENT";
@@ -1077,6 +1100,7 @@ namespace MaterialSkinExample
             this.materialButton10.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton10.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton10.Name = "materialButton10";
+            this.materialButton10.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton10.Size = new System.Drawing.Size(168, 36);
             this.materialButton10.TabIndex = 9;
             this.materialButton10.Text = "CONT - HIGH - ACCENT";
@@ -1757,6 +1781,7 @@ namespace MaterialSkinExample
             // materialMaskedTextBox1
             // 
             this.materialMaskedTextBox1.AllowPromptAsInput = true;
+            this.materialMaskedTextBox1.AnimateReadOnly = false;
             this.materialMaskedTextBox1.AsciiOnly = false;
             this.materialMaskedTextBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.materialMaskedTextBox1.BeepOnError = false;
@@ -1768,6 +1793,7 @@ namespace MaterialSkinExample
             this.materialMaskedTextBox1.Hint = "Phone number mask";
             this.materialMaskedTextBox1.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Default;
             this.materialMaskedTextBox1.LeadingIcon = global::MaterialSkinExample.Properties.Resources.round_phone_black_24dp;
+            this.materialMaskedTextBox1.LeaveOnEnterKey = false;
             this.materialMaskedTextBox1.Location = new System.Drawing.Point(528, 437);
             this.materialMaskedTextBox1.Mask = "+00-0-00-00-00-00";
             this.materialMaskedTextBox1.MaxLength = 32767;
@@ -1944,6 +1970,7 @@ namespace MaterialSkinExample
             // 
             // materialTextBox21
             // 
+            this.materialTextBox21.AnimateReadOnly = false;
             this.materialTextBox21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.materialTextBox21.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.materialTextBox21.Depth = 0;
@@ -1952,6 +1979,7 @@ namespace MaterialSkinExample
             this.materialTextBox21.HelperText = "Helper Text";
             this.materialTextBox21.HideSelection = true;
             this.materialTextBox21.LeadingIcon = null;
+            this.materialTextBox21.LeaveOnEnterKey = false;
             this.materialTextBox21.Location = new System.Drawing.Point(528, 114);
             this.materialTextBox21.MaxLength = 32767;
             this.materialTextBox21.MouseState = MaterialSkin.MouseState.OUT;
@@ -1965,7 +1993,7 @@ namespace MaterialSkinExample
             this.materialTextBox21.SelectionStart = 0;
             this.materialTextBox21.ShortcutsEnabled = true;
             this.materialTextBox21.ShowAssistiveText = true;
-            this.materialTextBox21.Size = new System.Drawing.Size(384, 48);
+            this.materialTextBox21.Size = new System.Drawing.Size(384, 64);
             this.materialTextBox21.TabIndex = 71;
             this.materialTextBox21.TabStop = false;
             this.materialTextBox21.Text = "MaterialTextBox2";
@@ -1977,12 +2005,14 @@ namespace MaterialSkinExample
             // 
             // materialMultiLineTextBox21
             // 
+            this.materialMultiLineTextBox21.AnimateReadOnly = false;
             this.materialMultiLineTextBox21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.materialMultiLineTextBox21.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.materialMultiLineTextBox21.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialMultiLineTextBox21.Depth = 0;
             this.materialMultiLineTextBox21.HideSelection = true;
             this.materialMultiLineTextBox21.Hint = "MaterialMultiLineTextBox2";
+            this.materialMultiLineTextBox21.LeaveOnEnterKey = false;
             this.materialMultiLineTextBox21.Location = new System.Drawing.Point(25, 385);
             this.materialMultiLineTextBox21.MaxLength = 2147483647;
             this.materialMultiLineTextBox21.MouseState = MaterialSkin.MouseState.OUT;
@@ -2002,6 +2032,7 @@ namespace MaterialSkinExample
             // 
             // materialTextBox5
             // 
+            this.materialTextBox5.AnimateReadOnly = false;
             this.materialTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox5.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox5.Depth = 0;
@@ -2010,6 +2041,7 @@ namespace MaterialSkinExample
             this.materialTextBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox5.Hint = "This is Disabled";
             this.materialTextBox5.LeadingIcon = null;
+            this.materialTextBox5.LeaveOnEnterKey = false;
             this.materialTextBox5.Location = new System.Drawing.Point(222, 170);
             this.materialTextBox5.MaxLength = 50;
             this.materialTextBox5.MouseState = MaterialSkin.MouseState.OUT;
@@ -2022,6 +2054,7 @@ namespace MaterialSkinExample
             // 
             // materialTextBox4
             // 
+            this.materialTextBox4.AnimateReadOnly = false;
             this.materialTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox4.Depth = 0;
@@ -2030,6 +2063,7 @@ namespace MaterialSkinExample
             this.materialTextBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox4.Hint = "This is Disabled";
             this.materialTextBox4.LeadingIcon = null;
+            this.materialTextBox4.LeaveOnEnterKey = false;
             this.materialTextBox4.Location = new System.Drawing.Point(25, 170);
             this.materialTextBox4.MaxLength = 50;
             this.materialTextBox4.MouseState = MaterialSkin.MouseState.OUT;
@@ -2042,6 +2076,7 @@ namespace MaterialSkinExample
             // 
             // materialTextBox3
             // 
+            this.materialTextBox3.AnimateReadOnly = false;
             this.materialTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox3.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox3.Depth = 0;
@@ -2049,6 +2084,7 @@ namespace MaterialSkinExample
             this.materialTextBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox3.Hint = "This field has UseTallSize = false";
             this.materialTextBox3.LeadingIcon = null;
+            this.materialTextBox3.LeaveOnEnterKey = false;
             this.materialTextBox3.Location = new System.Drawing.Point(25, 338);
             this.materialTextBox3.MaxLength = 50;
             this.materialTextBox3.MouseState = MaterialSkin.MouseState.OUT;
@@ -2101,6 +2137,7 @@ namespace MaterialSkinExample
             // 
             // materialTextBox2
             // 
+            this.materialTextBox2.AnimateReadOnly = false;
             this.materialTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox2.Depth = 0;
@@ -2108,6 +2145,7 @@ namespace MaterialSkinExample
             this.materialTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox2.Hint = "Password";
             this.materialTextBox2.LeadingIcon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
+            this.materialTextBox2.LeaveOnEnterKey = false;
             this.materialTextBox2.Location = new System.Drawing.Point(25, 282);
             this.materialTextBox2.MaxLength = 50;
             this.materialTextBox2.MouseState = MaterialSkin.MouseState.OUT;
@@ -2122,12 +2160,14 @@ namespace MaterialSkinExample
             // 
             // materialTextBox1
             // 
+            this.materialTextBox1.AnimateReadOnly = false;
             this.materialTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox1.Depth = 0;
             this.materialTextBox1.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox1.LeadingIcon = null;
+            this.materialTextBox1.LeaveOnEnterKey = false;
             this.materialTextBox1.Location = new System.Drawing.Point(25, 114);
             this.materialTextBox1.MaxLength = 50;
             this.materialTextBox1.MouseState = MaterialSkin.MouseState.OUT;
@@ -2140,6 +2180,7 @@ namespace MaterialSkinExample
             // 
             // materialSingleLineTextField2
             // 
+            this.materialSingleLineTextField2.AnimateReadOnly = false;
             this.materialSingleLineTextField2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialSingleLineTextField2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialSingleLineTextField2.Depth = 0;
@@ -2147,6 +2188,7 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialSingleLineTextField2.Hint = "Type here";
             this.materialSingleLineTextField2.LeadingIcon = null;
+            this.materialSingleLineTextField2.LeaveOnEnterKey = false;
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(25, 226);
             this.materialSingleLineTextField2.MaxLength = 50;
             this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.OUT;
@@ -2299,6 +2341,7 @@ namespace MaterialSkinExample
             this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialFlatButton2.Name = "materialFlatButton2";
+            this.materialFlatButton2.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialFlatButton2.Size = new System.Drawing.Size(108, 36);
             this.materialFlatButton2.TabIndex = 1;
             this.materialFlatButton2.Text = "Remove";
@@ -2348,6 +2391,7 @@ namespace MaterialSkinExample
             this.MaterialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaterialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.MaterialButton2.Name = "MaterialButton2";
+            this.MaterialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
             this.MaterialButton2.Size = new System.Drawing.Size(78, 36);
             this.MaterialButton2.TabIndex = 2;
             this.MaterialButton2.Text = "Add";
@@ -2474,6 +2518,7 @@ namespace MaterialSkinExample
             this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
+            this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
             this.materialButton1.Size = new System.Drawing.Size(64, 36);
             this.materialButton1.TabIndex = 1;
             this.materialButton1.Text = "Nice!";
@@ -2533,7 +2578,7 @@ namespace MaterialSkinExample
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage8.Size = new System.Drawing.Size(483, 252);
             this.tabPage8.TabIndex = 0;
-            this.tabPage8.Text = "FIRST";
+            this.tabPage8.Text = "FirSt";
             // 
             // materialLabel45
             // 
@@ -2573,7 +2618,7 @@ namespace MaterialSkinExample
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage9.Size = new System.Drawing.Size(483, 252);
             this.tabPage9.TabIndex = 1;
-            this.tabPage9.Text = "Second";
+            this.tabPage9.Text = "seConD";
             // 
             // materialLabel10
             // 
@@ -2594,6 +2639,7 @@ namespace MaterialSkinExample
             // materialTabSelector1
             // 
             this.materialTabSelector1.BaseTabControl = this.materialTabControl2;
+            this.materialTabSelector1.CharacterCasing = MaterialSkin.Controls.MaterialTabSelector.CustomCharacterCasing.Proper;
             this.materialTabSelector1.Depth = 0;
             this.materialTabSelector1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialTabSelector1.Location = new System.Drawing.Point(40, 90);
@@ -2874,6 +2920,7 @@ namespace MaterialSkinExample
             // tabPage12
             // 
             this.tabPage12.BackColor = System.Drawing.Color.White;
+            this.tabPage12.Controls.Add(this.materialLabel58);
             this.tabPage12.Controls.Add(this.materialLabel43);
             this.tabPage12.Controls.Add(this.materialLabel42);
             this.tabPage12.Controls.Add(this.materialLabel41);
@@ -2898,6 +2945,20 @@ namespace MaterialSkinExample
             this.tabPage12.Size = new System.Drawing.Size(1015, 520);
             this.tabPage12.TabIndex = 9;
             this.tabPage12.Text = "Label";
+            // 
+            // materialLabel58
+            // 
+            this.materialLabel58.AutoSize = true;
+            this.materialLabel58.Depth = 0;
+            this.materialLabel58.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel58.FontType = MaterialSkin.MaterialSkinManager.fontType.SubtleEmphasis;
+            this.materialLabel58.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel58.Location = new System.Drawing.Point(492, 483);
+            this.materialLabel58.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel58.Name = "materialLabel58";
+            this.materialLabel58.Size = new System.Drawing.Size(89, 14);
+            this.materialLabel58.TabIndex = 84;
+            this.materialLabel58.Text = "SubtleEmphasis";
             // 
             // materialLabel43
             // 
@@ -3463,5 +3524,6 @@ namespace MaterialSkinExample
         private MaterialButton materialButton25;
         private MaterialLabel materialLabel57;
         private MaterialSwitch materialSwitch16;
+        private MaterialLabel materialLabel58;
     }
 }

@@ -65,6 +65,7 @@
             logicalFonts.Add("H6", createLogicalFont("Roboto Medium", 20, NativeTextRenderer.logFontWeight.FW_MEDIUM));
             logicalFonts.Add("Subtitle1", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("Subtitle2", createLogicalFont("Roboto Medium", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+            logicalFonts.Add("SubtleEmphasis", createLogicalFont("Roboto", 12, NativeTextRenderer.logFontWeight.FW_NORMAL, 1));
             logicalFonts.Add("Body1", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("Body2", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("Button", createLogicalFont("Roboto Medium", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
@@ -283,6 +284,7 @@
             H6,
             Subtitle1,
             Subtitle2,
+            SubtleEmphasis,
             Body1,
             Body2,
             Button,
@@ -317,6 +319,9 @@
 
                 case fontType.Subtitle2:
                     return new Font(RobotoFontFamilies["Roboto_Medium"], 14f, FontStyle.Bold, GraphicsUnit.Pixel);
+                
+                case fontType.SubtleEmphasis:
+                    return new Font(RobotoFontFamilies["Roboto"], 12f, FontStyle.Italic, GraphicsUnit.Pixel);
 
                 case fontType.Body1:
                     return new Font(RobotoFontFamilies["Roboto"], 14f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -379,13 +384,14 @@
             privateFontCollection.AddMemoryFont(ptrFont, dataLength);
         }
 
-        private IntPtr createLogicalFont(string fontName, int size, NativeTextRenderer.logFontWeight weight)
+        private IntPtr createLogicalFont(string fontName, int size, NativeTextRenderer.logFontWeight weight, byte lfItalic = 0)
         {
             // Logical font:
             NativeTextRenderer.LogFont lfont = new NativeTextRenderer.LogFont();
             lfont.lfFaceName = fontName;
             lfont.lfHeight = -size;
             lfont.lfWeight = (int)weight;
+            lfont.lfItalic = lfItalic;
             return NativeTextRenderer.CreateFontIndirect(lfont);
         }
 
