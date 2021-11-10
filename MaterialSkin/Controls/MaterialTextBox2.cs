@@ -226,7 +226,7 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public override Color BackColor { get { return Parent == null ? SkinManager.BackgroundColor : Parent.BackColor; } }
 
-        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
+        public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; UpdateRects(); Invalidate(); } }
 
         [Category("Appearance")]
         public HorizontalAlignment TextAlign { get { return baseTextBox.TextAlign; } set { baseTextBox.TextAlign = value; } }
