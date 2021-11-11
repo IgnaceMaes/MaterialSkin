@@ -7,6 +7,7 @@
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
     using System.Drawing.Text;
+    using System.Globalization;
     using System.Windows.Forms;
 
     /// <summary>
@@ -108,7 +109,26 @@
                 Invalidate();
             }
         }
-        
+
+        public enum CharacterCasingEnum
+        {
+            Normal,
+            Lower,
+            Upper,
+            Title
+        }
+
+        public CharacterCasingEnum _cc;
+        [Category("Behavior"), DefaultValue(CharacterCasingEnum.Upper), Description("Change capitalization of Text property")]
+        public CharacterCasingEnum CharacterCasing
+        {
+            get => _cc;
+            set
+            {
+                _cc = value;
+                Invalidate();
+            }
+        }
         protected override void InitLayout()
         {
             base.InitLayout();
@@ -219,6 +239,7 @@
             Type = MaterialButtonType.Contained;
             Density = MaterialButtonDensity.Default;
             NoAccentTextColor = Color.Empty;
+            CharacterCasing = CharacterCasingEnum.Upper;
 
             _animationManager = new AnimationManager(false)
             {
@@ -536,7 +557,10 @@
 
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
-                NativeText.DrawMultilineTransparentText(Text.ToUpper(), SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
+                NativeText.DrawMultilineTransparentText(
+                    CharacterCasing == CharacterCasingEnum.Upper ? base.Text.ToUpper() : CharacterCasing == CharacterCasingEnum.Lower ? base.Text.ToLower() :
+                        CharacterCasing == CharacterCasingEnum.Title ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(base.Text.ToLower()) : base.Text,
+                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Button),
                     textColor,
                     textRect.Location,
                     textRect.Size,
