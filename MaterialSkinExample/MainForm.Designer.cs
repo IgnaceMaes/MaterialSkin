@@ -333,6 +333,7 @@ namespace MaterialSkinExample
             // materialButton25
             // 
             this.materialButton25.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton25.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton25.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton25.Depth = 0;
             this.materialButton25.HighEmphasis = true;
@@ -353,6 +354,7 @@ namespace MaterialSkinExample
             // materialButton6
             // 
             this.materialButton6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton6.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton6.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton6.Depth = 0;
             this.materialButton6.HighEmphasis = true;
@@ -428,6 +430,7 @@ namespace MaterialSkinExample
             // MaterialButton3
             // 
             this.MaterialButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MaterialButton3.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.MaterialButton3.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.MaterialButton3.Depth = 0;
             this.MaterialButton3.HighEmphasis = true;
@@ -543,6 +546,7 @@ namespace MaterialSkinExample
             // materialButton7
             // 
             this.materialButton7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton7.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton7.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton7.Depth = 0;
             this.materialButton7.HighEmphasis = true;
@@ -597,6 +601,7 @@ namespace MaterialSkinExample
             // MaterialButton4
             // 
             this.MaterialButton4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MaterialButton4.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.MaterialButton4.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.MaterialButton4.Depth = 0;
             this.MaterialButton4.HighEmphasis = true;
@@ -654,6 +659,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton23.AutoSize = false;
             this.materialButton23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton23.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton23.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton23.Depth = 0;
             this.materialButton23.HighEmphasis = false;
@@ -757,6 +763,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton24.AutoSize = false;
             this.materialButton24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton24.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton24.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton24.Depth = 0;
             this.materialButton24.HighEmphasis = false;
@@ -777,6 +784,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton22.AutoSize = false;
             this.materialButton22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton22.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton22.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton22.Depth = 0;
             this.materialButton22.HighEmphasis = false;
@@ -809,6 +817,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton19.AutoSize = false;
             this.materialButton19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton19.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton19.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton19.Depth = 0;
             this.materialButton19.HighEmphasis = false;
@@ -829,6 +838,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton20.AutoSize = false;
             this.materialButton20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton20.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton20.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton20.Depth = 0;
             this.materialButton20.HighEmphasis = false;
@@ -849,6 +859,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton21.AutoSize = false;
             this.materialButton21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton21.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton21.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton21.Depth = 0;
             this.materialButton21.HighEmphasis = false;
@@ -869,6 +880,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton5.AutoSize = false;
             this.materialButton5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton5.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton5.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton5.Depth = 0;
             this.materialButton5.HighEmphasis = true;
@@ -889,6 +901,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton8.AutoSize = false;
             this.materialButton8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton8.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton8.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton8.Depth = 0;
             this.materialButton8.HighEmphasis = true;
@@ -909,6 +922,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton9.AutoSize = false;
             this.materialButton9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton9.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton9.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton9.Depth = 0;
             this.materialButton9.HighEmphasis = true;
@@ -929,6 +943,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton18.AutoSize = false;
             this.materialButton18.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton18.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton18.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton18.Depth = 0;
             this.materialButton18.Enabled = false;
@@ -950,6 +965,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton17.AutoSize = false;
             this.materialButton17.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton17.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton17.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton17.Depth = 0;
             this.materialButton17.HighEmphasis = false;
@@ -970,6 +986,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton16.AutoSize = false;
             this.materialButton16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton16.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton16.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton16.Depth = 0;
             this.materialButton16.HighEmphasis = true;
@@ -990,6 +1007,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton15.AutoSize = false;
             this.materialButton15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton15.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton15.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton15.Depth = 0;
             this.materialButton15.HighEmphasis = false;
@@ -1010,6 +1028,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton14.AutoSize = false;
             this.materialButton14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton14.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton14.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton14.Depth = 0;
             this.materialButton14.HighEmphasis = true;
@@ -1030,6 +1049,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton13.AutoSize = false;
             this.materialButton13.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton13.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton13.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton13.Depth = 0;
             this.materialButton13.Enabled = false;
@@ -1051,6 +1071,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton12.AutoSize = false;
             this.materialButton12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton12.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton12.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton12.Depth = 0;
             this.materialButton12.Enabled = false;
@@ -1072,6 +1093,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton11.AutoSize = false;
             this.materialButton11.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton11.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton11.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton11.Depth = 0;
             this.materialButton11.HighEmphasis = false;
@@ -1092,6 +1114,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton10.AutoSize = false;
             this.materialButton10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton10.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton10.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton10.Depth = 0;
             this.materialButton10.HighEmphasis = true;
@@ -1793,7 +1816,6 @@ namespace MaterialSkinExample
             this.materialMaskedTextBox1.Hint = "Phone number mask";
             this.materialMaskedTextBox1.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Default;
             this.materialMaskedTextBox1.LeadingIcon = global::MaterialSkinExample.Properties.Resources.round_phone_black_24dp;
-            this.materialMaskedTextBox1.LeaveOnEnterKey = false;
             this.materialMaskedTextBox1.Location = new System.Drawing.Point(528, 437);
             this.materialMaskedTextBox1.Mask = "+00-0-00-00-00-00";
             this.materialMaskedTextBox1.MaxLength = 32767;
@@ -1979,7 +2001,6 @@ namespace MaterialSkinExample
             this.materialTextBox21.HelperText = "Helper Text";
             this.materialTextBox21.HideSelection = true;
             this.materialTextBox21.LeadingIcon = null;
-            this.materialTextBox21.LeaveOnEnterKey = false;
             this.materialTextBox21.Location = new System.Drawing.Point(528, 114);
             this.materialTextBox21.MaxLength = 32767;
             this.materialTextBox21.MouseState = MaterialSkin.MouseState.OUT;
@@ -2012,7 +2033,6 @@ namespace MaterialSkinExample
             this.materialMultiLineTextBox21.Depth = 0;
             this.materialMultiLineTextBox21.HideSelection = true;
             this.materialMultiLineTextBox21.Hint = "MaterialMultiLineTextBox2";
-            this.materialMultiLineTextBox21.LeaveOnEnterKey = false;
             this.materialMultiLineTextBox21.Location = new System.Drawing.Point(25, 385);
             this.materialMultiLineTextBox21.MaxLength = 2147483647;
             this.materialMultiLineTextBox21.MouseState = MaterialSkin.MouseState.OUT;
@@ -2041,7 +2061,6 @@ namespace MaterialSkinExample
             this.materialTextBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox5.Hint = "This is Disabled";
             this.materialTextBox5.LeadingIcon = null;
-            this.materialTextBox5.LeaveOnEnterKey = false;
             this.materialTextBox5.Location = new System.Drawing.Point(222, 170);
             this.materialTextBox5.MaxLength = 50;
             this.materialTextBox5.MouseState = MaterialSkin.MouseState.OUT;
@@ -2063,7 +2082,6 @@ namespace MaterialSkinExample
             this.materialTextBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox4.Hint = "This is Disabled";
             this.materialTextBox4.LeadingIcon = null;
-            this.materialTextBox4.LeaveOnEnterKey = false;
             this.materialTextBox4.Location = new System.Drawing.Point(25, 170);
             this.materialTextBox4.MaxLength = 50;
             this.materialTextBox4.MouseState = MaterialSkin.MouseState.OUT;
@@ -2084,7 +2102,6 @@ namespace MaterialSkinExample
             this.materialTextBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox3.Hint = "This field has UseTallSize = false";
             this.materialTextBox3.LeadingIcon = null;
-            this.materialTextBox3.LeaveOnEnterKey = false;
             this.materialTextBox3.Location = new System.Drawing.Point(25, 338);
             this.materialTextBox3.MaxLength = 50;
             this.materialTextBox3.MouseState = MaterialSkin.MouseState.OUT;
@@ -2145,7 +2162,6 @@ namespace MaterialSkinExample
             this.materialTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox2.Hint = "Password";
             this.materialTextBox2.LeadingIcon = global::MaterialSkinExample.Properties.Resources.baseline_fingerprint_black_24dp;
-            this.materialTextBox2.LeaveOnEnterKey = false;
             this.materialTextBox2.Location = new System.Drawing.Point(25, 282);
             this.materialTextBox2.MaxLength = 50;
             this.materialTextBox2.MouseState = MaterialSkin.MouseState.OUT;
@@ -2167,7 +2183,6 @@ namespace MaterialSkinExample
             this.materialTextBox1.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialTextBox1.LeadingIcon = null;
-            this.materialTextBox1.LeaveOnEnterKey = false;
             this.materialTextBox1.Location = new System.Drawing.Point(25, 114);
             this.materialTextBox1.MaxLength = 50;
             this.materialTextBox1.MouseState = MaterialSkin.MouseState.OUT;
@@ -2188,7 +2203,6 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialSingleLineTextField2.Hint = "Type here";
             this.materialSingleLineTextField2.LeadingIcon = null;
-            this.materialSingleLineTextField2.LeaveOnEnterKey = false;
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(25, 226);
             this.materialSingleLineTextField2.MaxLength = 50;
             this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.OUT;
@@ -2333,6 +2347,7 @@ namespace MaterialSkinExample
             // materialFlatButton2
             // 
             this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton2.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialFlatButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialFlatButton2.Depth = 0;
             this.materialFlatButton2.HighEmphasis = false;
@@ -2383,6 +2398,7 @@ namespace MaterialSkinExample
             // 
             this.MaterialButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.MaterialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MaterialButton2.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.MaterialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.MaterialButton2.Depth = 0;
             this.MaterialButton2.HighEmphasis = true;
@@ -2510,6 +2526,7 @@ namespace MaterialSkinExample
             // 
             this.materialButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton1.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Normal;
             this.materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton1.Depth = 0;
             this.materialButton1.HighEmphasis = true;
