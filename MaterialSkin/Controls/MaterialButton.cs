@@ -119,7 +119,7 @@
         }
 
         public CharacterCasingEnum _cc;
-        [Category("Behavior"), DefaultValue(CharacterCasingEnum.Upper)]
+        [Category("Behavior"), DefaultValue(CharacterCasingEnum.Upper), Description("Change capitalization of Text property")]
         public CharacterCasingEnum CharacterCasing
         {
             get => _cc;
@@ -239,6 +239,7 @@
             Type = MaterialButtonType.Contained;
             Density = MaterialButtonDensity.Default;
             NoAccentTextColor = Color.Empty;
+            CharacterCasing = CharacterCasingEnum.Upper;
 
             _animationManager = new AnimationManager(false)
             {
