@@ -683,12 +683,9 @@
                 CursorUpdate?.Invoke(this, Cursor);
             }
 
-            if (AutoShow)
+            if (AutoShow || DisplayRectangle.Contains(Control.MousePosition) == false)
             {
-                if (DisplayRectangle.Contains(Control.MousePosition) == false)
-                {
-                    Hide();
-                }
+                Hide();
             }
         }
 
