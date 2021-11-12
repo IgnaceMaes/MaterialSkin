@@ -19,6 +19,20 @@ namespace MaterialSkin.Controls
         public MouseState MouseState { get; set; }
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
+        public Image Logo { get; set; }
+        public bool ShowActionBar { get; set; } = true;
+
+        public Shades StatusBarColor
+        {
+            get => _statusBarColor;
+            set { _statusBarColor = value;  Invalidate(new Rectangle(0,0,Width, STATUS_BAR_HEIGHT));}
+        }
+
+        public Shades ActionBarColor
+        {
+            get => _actionBarColor;
+            set { _actionBarColor = value; Invalidate(new Rectangle(0,STATUS_BAR_HEIGHT,Width, ACTION_BAR_HEIGHT));}
+        }
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -79,8 +93,9 @@ namespace MaterialSkin.Controls
         };
 
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
-        private const int STATUS_BAR_HEIGHT = 24;
+        private const int STATUS_BAR_HEIGHT = 36;
         private const int ACTION_BAR_HEIGHT = 40;
+        private const int LOGO_SIZE = 32;
 
         private const uint TPM_LEFTALIGN = 0x0000;
         private const uint TPM_RETURNCMD = 0x0100;
@@ -128,6 +143,7 @@ namespace MaterialSkin.Controls
             Right,
             BottomRight,
             Bottom,
+            Top,
             None
         }
 
@@ -149,11 +165,15 @@ namespace MaterialSkin.Controls
         private Rectangle _xButtonBounds;
         private Rectangle _actionBarBounds;
         private Rectangle _statusBarBounds;
+        private Rectangle _textLabelBounds;
+        private Rectangle _logoBounds;
 
         private bool _maximized;
         private Size _previousSize;
         private Point _previousLocation;
         private bool _headerMouseDown;
+        private Shades _actionBarColor;
+        private Shades _statusBarColor;
 
         public MaterialForm()
         {
@@ -290,7 +310,12 @@ namespace MaterialSkin.Controls
                 //True if the mouse is hovering over a child control
                 var isChildUnderMouse = GetChildAtPoint(e.Location) != null;
 
-                if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                if (e.Location.Y < BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                {
+                    _resizeDir = ResizeDirection.Top;
+                    Cursor = Cursors.SizeNS;
+                }
+                else if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
                 {
                     _resizeDir = ResizeDirection.BottomLeft;
                     Cursor = Cursors.SizeNESW;
@@ -450,6 +475,9 @@ namespace MaterialSkin.Controls
                 case ResizeDirection.Bottom:
                     dir = HTBOTTOM;
                     break;
+                case ResizeDirection.Top:
+                    dir = HTTOP;
+                    break;
             }
 
             ReleaseCapture();
@@ -468,16 +496,21 @@ namespace MaterialSkin.Controls
             _xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             _statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             _actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+
+            _textLabelBounds = Logo != null 
+                ? new Rectangle(SkinManager.FORM_PADDING + LOGO_SIZE + 5, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT) 
+                : new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
+            _logoBounds = new Rectangle(0, _textLabelBounds.Y, _textLabelBounds.X + _textLabelBounds.Width, _textLabelBounds.Height);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
+            
             g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, _statusBarBounds);
-            g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, _actionBarBounds);
+            g.FillRectangle(MaterialSkinManager.GetMaterialBrush(StatusBarColor), _statusBarBounds);
+            if (ShowActionBar) DrawActionBar(g);
 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
@@ -561,8 +594,37 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            //Form title
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            // Logo
+            if (Logo != null)
+            {
+                g.FillRectangle(SkinManager.ColorScheme.LightGrayBrush, _logoBounds);
+                int logoY = STATUS_BAR_HEIGHT + (ACTION_BAR_HEIGHT - LOGO_SIZE) / 2;
+                g.DrawImage(Logo, 
+                    new Rectangle( SkinManager.FORM_PADDING, logoY,Logo.Width, LOGO_SIZE), 
+                    new Rectangle(0,0,Logo.Width, Logo.Height), GraphicsUnit.Pixel);
+            }
+
+            
+            // Form title
+            g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, _textLabelBounds, new StringFormat { LineAlignment = StringAlignment.Center });
+        }
+
+        private void DrawActionBar(Graphics g)
+        {
+            g.FillRectangle(MaterialSkinManager.GetMaterialBrush(ActionBarColor), _actionBarBounds);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // MaterialForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ControlBox = false;
+            this.Name = "MaterialForm";
+            this.ResumeLayout(false);
+
         }
     }
 

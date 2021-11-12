@@ -38,6 +38,8 @@ namespace MaterialSkin.Controls
             }
         }
 
+        public Shades Shade { get; set; }
+
         // animation managers
         private readonly AnimationManager _animationManager;
         private readonly AnimationManager _rippleAnimationManager;
@@ -108,7 +110,15 @@ namespace MaterialSkin.Controls
             float animationSizeHalf = animationSize / 2;
             animationSize = (float)(animationProgress * 9f);
 
-            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            var shadeBrush = SkinManager.GetCheckboxOffBrush();           
+            var shadeColor = SkinManager.GetCheckboxOffColor();           
+            if (Shade != Shades.None)
+            {
+                shadeBrush = MaterialSkinManager.GetMaterialBrush(Shade);
+                shadeColor = MaterialSkinManager.GetMaterialColor(Shade);
+            }
+
+            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? shadeColor : SkinManager.GetCheckBoxOffDisabledColor()));
             var pen = new Pen(brush.Color);
 
             // draw ripple animation
@@ -131,7 +141,7 @@ namespace MaterialSkin.Controls
             }
 
             // draw radiobutton circle
-            Color uncheckedColor = DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha);
+            Color uncheckedColor = DrawHelper.BlendColor(Parent.BackColor, Enabled ? shadeColor : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha);
 
             using (var path = DrawHelper.CreateRoundRect(_boxOffset, _boxOffset, RADIOBUTTON_SIZE, RADIOBUTTON_SIZE, 9f))
             {
@@ -158,7 +168,7 @@ namespace MaterialSkin.Controls
                 }
             }
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(), _boxOffset + 22, Height / 2 - stringSize.Height / 2);
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? shadeBrush : SkinManager.GetDisabledOrHintBrush(), _boxOffset + 22, Height / 2 - stringSize.Height / 2);
 
             brush.Dispose();
             pen.Dispose();

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MaterialSkin.Controls
@@ -8,6 +9,9 @@ namespace MaterialSkin.Controls
     /// </summary>
     public class MaterialProgressBar : ProgressBar, IMaterialControl
     {
+
+        public Shades Shade { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MaterialProgressBar"/> class.
         /// </summary>
@@ -64,7 +68,11 @@ namespace MaterialSkin.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             var doneProgress = (int)(e.ClipRectangle.Width * ((double)Value / Maximum));
-            e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, 0, doneProgress, e.ClipRectangle.Height);
+            Brush b = Shade != Shades.None
+                ? MaterialSkinManager.GetMaterialBrush(Shade)
+                : SkinManager.ColorScheme.PrimaryBrush;
+
+            e.Graphics.FillRectangle(b, 0, 0, doneProgress, e.ClipRectangle.Height);
             e.Graphics.FillRectangle(SkinManager.GetDisabledOrHintBrush(), doneProgress, 0, e.ClipRectangle.Width, e.ClipRectangle.Height);
         }
     }

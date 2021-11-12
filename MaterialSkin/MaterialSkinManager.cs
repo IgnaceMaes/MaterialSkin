@@ -226,10 +226,22 @@ namespace MaterialSkin
         }
 
         //Roboto font
-        public Font ROBOTO_MEDIUM_12;
+        public Font ROBOTO_REGULAR_8;
+        public Font ROBOTO_MEDIUM_8;
+         
+        public Font ROBOTO_REGULAR_10;
+        public Font ROBOTO_MEDIUM_10;
+        
         public Font ROBOTO_REGULAR_11;
         public Font ROBOTO_MEDIUM_11;
-        public Font ROBOTO_MEDIUM_10;
+
+        public Font ROBOTO_REGULAR_12;
+        public Font ROBOTO_MEDIUM_12;
+
+        public Font ROBOTO_TITLE;
+        public Font ROBOTO_TITLE1;
+        public Font ROBOTO_REGULAR_HUGE;
+        public Font ROBOTO_BOLD_HUGE;
 
         //Other constants
         public int FORM_PADDING = 14;
@@ -239,12 +251,28 @@ namespace MaterialSkin
 
         private MaterialSkinManager()
         {
-            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+            ROBOTO_REGULAR_8 = new Font(LoadFont(Resources.Roboto_Regular), 8f);
+            ROBOTO_MEDIUM_8 = new Font(LoadFont(Resources.Roboto_Medium), 8f);
+
+            ROBOTO_REGULAR_10 = new Font(LoadFont(Resources.Roboto_Regular), 10f);
             ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
-            ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
+            ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f, FontStyle.Bold);
+            
+            ROBOTO_REGULAR_12 = new Font(LoadFont(Resources.Roboto_Regular), 12f);
+            ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+
+            ROBOTO_TITLE = new Font(LoadFont(Resources.Roboto_Medium), 20f, FontStyle.Bold);
+            
+            ROBOTO_TITLE1 = new Font(LoadFont(Resources.Roboto_Medium), 16f, FontStyle.Bold);
+            
+            ROBOTO_REGULAR_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 42f, FontStyle.Regular);
+            ROBOTO_BOLD_HUGE = new Font(LoadFont(Resources.Roboto_Medium), 42f, FontStyle.Bold);
+
             Theme = Themes.LIGHT;
             ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
         }
 
         public static MaterialSkinManager Instance => _instance ?? (_instance = new MaterialSkinManager());
@@ -329,7 +357,7 @@ namespace MaterialSkin
                 controlToUpdate.BackColor = newBackColor;
 
             }
-
+        
             //recursive call
             foreach (Control control in controlToUpdate.Controls)
             {
@@ -337,6 +365,53 @@ namespace MaterialSkin
             }
 
             controlToUpdate.Invalidate();
+        }
+
+        public static Color GetMaterialColor(Shades shade)
+        {
+            Color fillBrush;
+            switch (shade)
+
+            {
+                case Shades.Primary:
+                    fillBrush = _instance.ColorScheme.PrimaryColor;
+                    break;
+                case Shades.PrimaryDark:
+                    fillBrush = _instance.ColorScheme.DarkPrimaryColor;
+                    break;
+                case Shades.PrimaryLight:
+                    fillBrush = _instance.ColorScheme.LightPrimaryColor;
+                    break;
+                case Shades.Accent:
+                    fillBrush = _instance.ColorScheme.AccentColor;
+                    break;
+                case Shades.Danger:
+                    fillBrush = _instance.ColorScheme.DangerColor;
+                    break;
+                case Shades.Warning:
+                    fillBrush = _instance.ColorScheme.WarningColor;
+                    break;
+                case Shades.Success:
+                    fillBrush = _instance.ColorScheme.SuccessColor;
+                    break;
+                case Shades.LightGray:
+                    fillBrush = _instance.ColorScheme.LightGrayColor;
+                    break;
+                default:
+                    fillBrush = _instance.ColorScheme.PrimaryColor;
+                    break;
+            }
+
+            return fillBrush;
+        }
+        public static Brush GetMaterialBrush(Shades shade)
+        {           
+            return new SolidBrush(GetMaterialColor(shade));
+        }
+
+        public static Pen GetMaterialPen(Shades shade)
+        {           
+            return new Pen(GetMaterialColor(shade));
         }
     }
 }
