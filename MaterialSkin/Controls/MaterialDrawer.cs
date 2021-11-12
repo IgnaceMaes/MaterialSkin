@@ -683,7 +683,7 @@
                 CursorUpdate?.Invoke(this, Cursor);
             }
 
-            if (AutoShow || DisplayRectangle.Contains(Control.MousePosition) == false)
+            if (AutoShow)
             {
                 Hide();
             }
