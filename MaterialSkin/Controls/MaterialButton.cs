@@ -399,7 +399,7 @@
             textureBrushGray.WrapMode = System.Drawing.Drawing2D.WrapMode.Clamp;
 
             // Translate the brushes to the correct positions
-            var iconRect = new Rectangle(8, 6, ICON_SIZE, ICON_SIZE);
+            var iconRect = new Rectangle(8, (Height/2 - ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
 
             textureBrushGray.TranslateTransform(iconRect.X + iconRect.Width / 2 - IconResized.Width / 2,
                                                 iconRect.Y + iconRect.Height / 2 - IconResized.Height / 2);
@@ -524,20 +524,6 @@
                 g.ResetClip();
             }
 
-            //Icon
-            var iconRect = new Rectangle(8, 6, ICON_SIZE, ICON_SIZE);
-
-            if (string.IsNullOrEmpty(Text))
-            {
-                // Center Icon
-                iconRect.X += 2;
-            }
-
-            if (Icon != null)
-            {
-                g.FillRectangle(iconsBrushes, iconRect);
-            }
-
             //Text
             var textRect = ClientRectangle;
             if (Icon != null)
@@ -565,6 +551,20 @@
                     textRect.Location,
                     textRect.Size,
                     NativeTextRenderer.TextAlignFlags.Center | NativeTextRenderer.TextAlignFlags.Middle);
+            }
+
+            //Icon
+            var iconRect = new Rectangle(8, (Height / 2) - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE);
+
+            if (string.IsNullOrEmpty(Text))
+            {
+                // Center Icon
+                iconRect.X += 2;
+            }
+
+            if (Icon != null)
+            {
+                g.FillRectangle(iconsBrushes, iconRect);
             }
         }
 
@@ -619,6 +619,9 @@
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            // before checking DesignMode property, as long as we need see Icon in proper position
+            Resize += (sender, args) => { preProcessIcons(); Invalidate(); };
+
             if (DesignMode)
             {
                 return;
