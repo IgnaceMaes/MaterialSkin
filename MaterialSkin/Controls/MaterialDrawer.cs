@@ -685,10 +685,7 @@
 
             if (AutoShow)
             {
-                if (DisplayRectangle.Contains(Control.MousePosition) == false)
-                {
-                    Hide();
-                }
+                Hide();
             }
         }
 
