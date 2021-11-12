@@ -355,7 +355,12 @@ namespace MaterialSkin.Controls
             /// <summary>
             /// Defines the ro
             /// </summary>
-            ro
+            ro,
+
+            /// <summary>
+            /// Defines the pl
+            /// </summary>
+            pl
         };
 
         /// <summary>
@@ -387,6 +392,11 @@ namespace MaterialSkin.Controls
         /// Defines the BUTTON_TEXTS_ROMANIAN_RO
         /// </summary>
         private static readonly String[] BUTTON_TEXTS_ROMANIAN_RO = { "Acceptă", "Anulează", "&Da", "&Nu", "&Întrerupe", "&Reîncearcă", "&Ignoră" };
+
+        /// <summary>
+        /// Defines the BUTTON_TEXTS_ROMANIAN_PL
+        /// </summary>
+        private static readonly String[] BUTTON_TEXTS_POLISH_PL = { "OK", "Anuluj", "Tak", "Nie", "Opuść", "Powtórz", "Ignoruj" };
 
         /// <summary>
         /// Defines the defaultButton
@@ -455,6 +465,7 @@ namespace MaterialSkin.Controls
                 case TwoLetterISOLanguageID.it: return BUTTON_TEXTS_ITALIAN_IT[buttonTextArrayIndex];
                 case TwoLetterISOLanguageID.fr: return BUTTON_TEXTS_FRENCH_FR[buttonTextArrayIndex];
                 case TwoLetterISOLanguageID.ro: return BUTTON_TEXTS_ROMANIAN_RO[buttonTextArrayIndex];
+                case TwoLetterISOLanguageID.pl: return BUTTON_TEXTS_POLISH_PL[buttonTextArrayIndex];
 
                 default: return BUTTON_TEXTS_ENGLISH_EN[buttonTextArrayIndex];
             }
