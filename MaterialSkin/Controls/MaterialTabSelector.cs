@@ -85,8 +85,6 @@
 
         private int _tab_over_index = -1;
 
-        private string TextCased;
-
         private CustomCharacterCasing _characterCasing;
 
         [Category("Appearance")]
