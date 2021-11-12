@@ -200,6 +200,9 @@ namespace MaterialSkin.Controls
             Right,
             BottomRight,
             Bottom,
+            Top,
+            TopLeft,
+            TopRight,
             None
         }
 
@@ -708,6 +711,18 @@ namespace MaterialSkin.Controls
                 case ResizeDirection.Bottom:
                     dir = (int)HT.Bottom;
                     break;
+
+                case ResizeDirection.Top:
+                    dir = (int)HT.Top;
+                    break;
+
+                case ResizeDirection.TopLeft:
+                    dir = (int)HT.TopLeft;
+                    break;
+
+                case ResizeDirection.TopRight:
+                    dir = (int)HT.TopRight;
+                    break;
             }
 
             ReleaseCapture();
@@ -907,7 +922,22 @@ namespace MaterialSkin.Controls
             //True if the mouse is hovering over a child control
             var isChildUnderMouse = GetChildAtPoint(coords) != null;
 
-            if (!isChildUnderMouse && !Maximized && coords.X <= BORDER_WIDTH && coords.Y >= ClientSize.Height - BORDER_WIDTH)
+            if (!isChildUnderMouse && !Maximized && coords.Y < BORDER_WIDTH && coords.X > BORDER_WIDTH && coords.X < ClientSize.Width - BORDER_WIDTH)
+            {
+                _resizeDir = ResizeDirection.Top;
+                Cursor = Cursors.SizeNS;
+            }
+            else if (!isChildUnderMouse && !Maximized && coords.X <= BORDER_WIDTH && coords.Y < BORDER_WIDTH)
+            {
+                _resizeDir = ResizeDirection.TopLeft;
+                Cursor = Cursors.SizeNWSE;
+            }
+            else if (!isChildUnderMouse && !Maximized && coords.X >= ClientSize.Width - BORDER_WIDTH && coords.Y < BORDER_WIDTH)
+            {
+                _resizeDir = ResizeDirection.TopRight;
+                Cursor = Cursors.SizeNESW;
+            }
+            else if (!isChildUnderMouse && !Maximized && coords.X <= BORDER_WIDTH && coords.Y >= ClientSize.Height - BORDER_WIDTH)
             {
                 _resizeDir = ResizeDirection.BottomLeft;
                 Cursor = Cursors.SizeNESW;
