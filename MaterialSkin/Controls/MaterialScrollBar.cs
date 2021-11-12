@@ -136,7 +136,7 @@ namespace MaterialSkin.Controls
         }
 
         private bool isHovered;
-        private bool isPressed;
+        //private bool isPressed;
 
         private bool useBarColor = false;
         [DefaultValue(false)]
@@ -478,7 +478,7 @@ namespace MaterialSkin.Controls
         protected override void OnLostFocus(EventArgs e)
         {
             isHovered = false;
-            isPressed = false;
+            //isPressed = false;
             Invalidate();
 
             base.OnLostFocus(e);
@@ -494,7 +494,7 @@ namespace MaterialSkin.Controls
         protected override void OnLeave(EventArgs e)
         {
             isHovered = false;
-            isPressed = false;
+            //isPressed = false;
             Invalidate();
 
             base.OnLeave(e);
@@ -524,7 +524,7 @@ namespace MaterialSkin.Controls
         {
             if (e.Button == MouseButtons.Left)
             {
-                isPressed = true;
+                //isPressed = true;
                 Invalidate();
             }
 
@@ -568,7 +568,7 @@ namespace MaterialSkin.Controls
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            isPressed = false;
+            //isPressed = false;
 
             base.OnMouseUp(e);
 
@@ -695,7 +695,7 @@ namespace MaterialSkin.Controls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             isHovered = true;
-            isPressed = true;
+            //isPressed = true;
             Invalidate();
 
             base.OnKeyDown(e);
@@ -704,7 +704,7 @@ namespace MaterialSkin.Controls
         protected override void OnKeyUp(KeyEventArgs e)
         {
             isHovered = false;
-            isPressed = false;
+            //isPressed = false;
             Invalidate();
 
             base.OnKeyUp(e);
