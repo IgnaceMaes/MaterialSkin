@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-		<TargetFrameworks>net5.0-windows;net461</TargetFrameworks>
+		<TargetFrameworks>net5.0-windows;net48;net461;net45</TargetFrameworks>
 		<RuntimeIdentifier>win</RuntimeIdentifier>
       <OutputType>Library</OutputType>
       <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -22,7 +22,7 @@
       <PackageTags>material design materialdesign google forms theme skin</PackageTags>
       <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
 		<Reference Include="System.Design" />
 	</ItemGroup>
     <ItemGroup>
