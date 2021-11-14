@@ -320,6 +320,12 @@ namespace MaterialSkin.Controls
             }
         }
 
+        public AutoCompleteStringCollection AutoCompleteCustomSource { get { return baseTextBox.AutoCompleteCustomSource; } set { baseTextBox.AutoCompleteCustomSource = value; } }
+
+        public AutoCompleteSource AutoCompleteSource { get { return baseTextBox.AutoCompleteSource; } set { baseTextBox.AutoCompleteSource = value; } }
+
+        public AutoCompleteMode AutoCompleteMode { get { return baseTextBox.AutoCompleteMode; } set { baseTextBox.AutoCompleteMode = value; } }
+
         public void SelectAll() { baseTextBox.SelectAll(); }
 
         public void Clear() { baseTextBox.Clear(); }
