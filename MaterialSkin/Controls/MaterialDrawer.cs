@@ -362,6 +362,29 @@
                 Increment = 0.04
             };
             _clickAnimManager.OnAnimationProgress += sender => Invalidate();
+
+            MouseWheel += MaterialDrawer_MouseWheel;
+        }
+
+        private void MaterialDrawer_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int step = 20;
+            if (e.Delta > 0)
+            {
+                if (this.Location.Y < 0)
+                {
+                    this.Location = new Point(this.Location.X, (this.Location.Y + step));
+                    this.Height -= step;
+                }
+            }
+            else
+            {
+                if (this.Height < (8 + drawerItemHeight) * _drawerItemRects.Count)
+                {
+                    this.Location = new Point(this.Location.X, (this.Location.Y - step));
+                    this.Height += step;
+                }
+            }
         }
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
