@@ -394,7 +394,7 @@ namespace MaterialSkin.Controls
         private Padding originalPadding;
 
         private Form drawerOverlay = new Form();
-        private Form drawerForm = new Form();
+        private MaterialDrawerForm drawerForm = new MaterialDrawerForm();
 
         // Drawer overlay and speed improvements
         private bool _drawerShowIconsWhenHidden;
@@ -1238,5 +1238,62 @@ namespace MaterialSkin.Controls
         [DllImport("user32.dll")]
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
         #endregion
+    }
+
+    public class MessageFilter : IMessageFilter
+    {
+        private const int WM_MOUSEWHEEL = 0x020A;
+        private const int WM_MOUSEHWHEEL = 0x020E;
+
+        [DllImport("user32.dll")]
+        static extern IntPtr WindowFromPoint(Point p);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case WM_MOUSEWHEEL:
+                case WM_MOUSEHWHEEL:
+                    IntPtr hControlUnderMouse = WindowFromPoint(new Point((int)m.LParam));
+                    if (hControlUnderMouse == m.HWnd)
+                    {
+                        //Do nothing because it's already headed for the right control
+                        return false;
+                    }
+                    else
+                    {
+                        //Send the scroll message to the control under the mouse
+                        uint u = Convert.ToUInt32(m.Msg);
+                        SendMessage(hControlUnderMouse, u, m.WParam, m.LParam);
+                        return true;
+                    }
+                default:
+                    return false;
+            }
+        }
+    }
+
+    public partial class MaterialDrawerForm : Form
+    {
+        MessageFilter mf = null;
+
+        public MaterialDrawerForm()
+        {
+            Load += MyForm_Load;
+            FormClosing += MyForm_FormClosing;
+        }
+
+        private void MyForm_Load(object sender, EventArgs e)
+        {
+            mf = new MessageFilter();
+            Application.AddMessageFilter(mf);
+        }
+
+        private void MyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.RemoveMessageFilter(mf);
+        }
     }
 }
