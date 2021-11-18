@@ -9,6 +9,7 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
+    [ToolboxItem(false), Description("This control has been replaced by MaterialTextBox2"), Obsolete("Use MaterialTextBox2 instead", false)]
     public class MaterialTextBox : RichTextBox, IMaterialControl
     {
 
