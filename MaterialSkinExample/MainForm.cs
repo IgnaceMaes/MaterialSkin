@@ -1,4 +1,4 @@
-﻿using MaterialSkin;
+using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Text;
@@ -189,6 +189,8 @@ namespace MaterialSkinExample
 
         private void materialTextBox2_LeadingIconClick(object sender, EventArgs e)
         {
+            MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Leading Icon Click");
+            SnackBarMessage.Show(this);
 
         }
 
