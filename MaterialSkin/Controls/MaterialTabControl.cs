@@ -25,5 +25,12 @@
             if (m.Msg == 0x1328 && !DesignMode) m.Result = (IntPtr)1;
             else base.WndProc(ref m);
         }
+        
+        protected override void OnControlAdded(ControlEventArgs e)
+        {
+            base.OnControlAdded(e);
+
+            e.Control.BackColor = System.Drawing.Color.White;
+        }
     }
 }
