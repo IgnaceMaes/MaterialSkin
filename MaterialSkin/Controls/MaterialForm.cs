@@ -394,7 +394,7 @@ namespace MaterialSkin.Controls
         private Padding originalPadding;
 
         private Form drawerOverlay = new Form();
-        private Form drawerForm = new Form();
+        private MaterialDrawerForm drawerForm = new MaterialDrawerForm();
 
         // Drawer overlay and speed improvements
         private bool _drawerShowIconsWhenHidden;
@@ -601,6 +601,7 @@ namespace MaterialSkin.Controls
             // Fix Closing the Drawer or Overlay form with Alt+F4 not exiting the app
             drawerOverlay.FormClosed += TerminateOnClose;
             drawerForm.FormClosed += TerminateOnClose;
+            drawerForm.Attach(drawerControl);
         }
 
         private void TerminateOnClose(object sender, FormClosedEventArgs e)
@@ -1238,5 +1239,26 @@ namespace MaterialSkin.Controls
         [DllImport("user32.dll")]
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
         #endregion
+    }
+
+    public class MaterialDrawerForm : Form
+    {
+        public MouseWheelRedirector MouseWheelRedirector;
+
+        public MaterialDrawerForm()
+        {
+            MouseWheelRedirector = new MouseWheelRedirector();
+            SetStyle(ControlStyles.Selectable | ControlStyles.OptimizedDoubleBuffer | ControlStyles.EnableNotifyMessage, true);
+        }
+
+        public void Attach(Control control)
+        {
+            MouseWheelRedirector.Attach(control);
+        }
+
+        public void Detach(Control control)
+        {
+            MouseWheelRedirector.Detach(control);
+        }
     }
 }

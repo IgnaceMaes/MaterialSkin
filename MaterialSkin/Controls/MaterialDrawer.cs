@@ -308,6 +308,8 @@
         private int drawerItemHeight;
 
         public int MinWidth;
+        private int _lastMouseY;
+        private int _lastLocationY;
 
         public MaterialDrawer()
         {
@@ -362,6 +364,29 @@
                 Increment = 0.04
             };
             _clickAnimManager.OnAnimationProgress += sender => Invalidate();
+
+            MouseWheel += MaterialDrawer_MouseWheel;
+        }
+
+        private void MaterialDrawer_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int step = 20;
+            if (e.Delta > 0)
+            {
+                if (Location.Y < 0)
+                {
+                    Location = new Point(Location.X, Location.Y + step > 0 ? 0 : Location.Y + step);
+                    Height = Location.Y + step > 0 ? Parent.Height : Height - step;
+                }
+            }
+            else
+            {
+                if (Height < (8 + drawerItemHeight) * _drawerItemRects.Count)
+                {
+                    Location = new Point(Location.X, Location.Y - step);
+                    Height += step;
+                }
+            }
         }
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -602,7 +627,7 @@
                 UpdateTabRects();
             for (var i = 0; i < _drawerItemRects.Count; i++)
             {
-                if (_drawerItemRects[i].Contains(e.Location))
+                if (_drawerItemRects[i].Contains(e.Location) && _lastLocationY == Location.Y)
                 {
                     _baseTabControl.SelectedIndex = i;
                     if (AutoHide && !AutoShow)
@@ -615,6 +640,8 @@
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            _lastMouseY = e.Y;
+            _lastLocationY = Location.Y; // memorize Y location of drawer
             base.OnMouseDown(e);
             if (DesignMode)
                 return;
@@ -631,10 +658,32 @@
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             if (DesignMode)
                 return;
+            
+            if (e.Button == MouseButtons.Left && e.Y != _lastMouseY && (Location.Y < 0 || Height < (8 + drawerItemHeight) * _drawerItemRects.Count))
+            {
+                int diff = e.Y - _lastMouseY;
+                if (diff > 0) 
+                {
+                    if (Location.Y < 0)
+                    {
+                        Location = new Point(Location.X, Location.Y + diff > 0 ? 0 : Location.Y + diff);
+                        Height = Parent.Height + Math.Abs(Location.Y);
+                    }
+                }
+                else 
+                {
+                    if (Height < (8 + drawerItemHeight) * _drawerItemRects.Count)
+                    {
+                        Location = new Point(Location.X, Location.Y + diff);
+                        Height = Parent.Height + Math.Abs(Location.Y);
+                    }
+                }
+                //return;
+            }
+            
+            base.OnMouseMove(e);
 
             if (_drawerItemRects == null)
                 UpdateTabRects();
