@@ -61,7 +61,7 @@ All supported components have a dark theme
 - [ ] Backdrop (maybe)
 - [ ] Some Color code improvements and refactoring
 - [ ] DatePicker
-- [ ] Drawer - Header, Divider, subtitle, submenu & scroller
+- [ ] Drawer - Header, Divider, subtitle & submenu
 - [ ] Textfield ContextualMenu translation
 - [ ] Controls code cleanup
 
