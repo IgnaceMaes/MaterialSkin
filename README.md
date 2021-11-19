@@ -57,11 +57,13 @@ All supported components have a dark theme
 
 ## TODO List
 
-- Progress bar - Animation and variants, maybe round loading thingy
-- Backdrop (maybe)
-- Some Color code improvements and refactoring
-- DatePicker
-- Drawer - Header, Divider, subtitle & scroller
+- [ ] Progress bar - Animation and variants, maybe round loading thingy
+- [ ] Backdrop (maybe)
+- [ ] Some Color code improvements and refactoring
+- [ ] DatePicker
+- [ ] Drawer - Header, Divider, subtitle, submenu & scroller
+- [ ] Textfield ContextualMenu translation
+- [ ] Controls code cleanup
 
 ---
 

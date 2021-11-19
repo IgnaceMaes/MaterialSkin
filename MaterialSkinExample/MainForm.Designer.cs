@@ -137,15 +137,15 @@ namespace MaterialSkinExample
             this.materialSwitch10 = new MaterialSkin.Controls.MaterialSwitch();
             this.materialTextBox21 = new MaterialSkin.Controls.MaterialTextBox2();
             this.materialMultiLineTextBox21 = new MaterialSkin.Controls.MaterialMultiLineTextBox2();
-            this.materialTextBox5 = new MaterialSkin.Controls.MaterialTextBox();
-            this.materialTextBox4 = new MaterialSkin.Controls.MaterialTextBox();
-            this.materialTextBox3 = new MaterialSkin.Controls.MaterialTextBox();
+            this.materialTextBox5 = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialTextBox4 = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialTextBox3 = new MaterialSkin.Controls.MaterialTextBox2();
             this.materialLabel27 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel56 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel23 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialTextBox2 = new MaterialSkin.Controls.MaterialTextBox();
-            this.materialTextBox1 = new MaterialSkin.Controls.MaterialTextBox();
-            this.materialSingleLineTextField2 = new MaterialSkin.Controls.MaterialTextBox();
+            this.materialTextBox2 = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialTextBox1 = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialSingleLineTextField2 = new MaterialSkin.Controls.MaterialTextBox2();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.materialLabel39 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel28 = new MaterialSkin.Controls.MaterialLabel();
@@ -2030,7 +2030,6 @@ namespace MaterialSkinExample
             // materialTextBox5
             // 
             this.materialTextBox5.AnimateReadOnly = false;
-            this.materialTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox5.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox5.Depth = 0;
             this.materialTextBox5.Enabled = false;
@@ -2041,7 +2040,6 @@ namespace MaterialSkinExample
             this.materialTextBox5.Location = new System.Drawing.Point(222, 170);
             this.materialTextBox5.MaxLength = 50;
             this.materialTextBox5.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox5.Multiline = false;
             this.materialTextBox5.Name = "materialTextBox5";
             this.materialTextBox5.Size = new System.Drawing.Size(209, 50);
             this.materialTextBox5.TabIndex = 69;
@@ -2051,7 +2049,6 @@ namespace MaterialSkinExample
             // materialTextBox4
             // 
             this.materialTextBox4.AnimateReadOnly = false;
-            this.materialTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox4.Depth = 0;
             this.materialTextBox4.Enabled = false;
@@ -2062,7 +2059,6 @@ namespace MaterialSkinExample
             this.materialTextBox4.Location = new System.Drawing.Point(25, 170);
             this.materialTextBox4.MaxLength = 50;
             this.materialTextBox4.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox4.Multiline = false;
             this.materialTextBox4.Name = "materialTextBox4";
             this.materialTextBox4.Size = new System.Drawing.Size(191, 50);
             this.materialTextBox4.TabIndex = 68;
@@ -2072,7 +2068,6 @@ namespace MaterialSkinExample
             // materialTextBox3
             // 
             this.materialTextBox3.AnimateReadOnly = false;
-            this.materialTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox3.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox3.Depth = 0;
             this.materialTextBox3.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -2082,7 +2077,6 @@ namespace MaterialSkinExample
             this.materialTextBox3.Location = new System.Drawing.Point(25, 338);
             this.materialTextBox3.MaxLength = 50;
             this.materialTextBox3.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox3.Multiline = false;
             this.materialTextBox3.Name = "materialTextBox3";
             this.materialTextBox3.Size = new System.Drawing.Size(406, 36);
             this.materialTextBox3.TabIndex = 67;
@@ -2132,7 +2126,6 @@ namespace MaterialSkinExample
             // materialTextBox2
             // 
             this.materialTextBox2.AnimateReadOnly = false;
-            this.materialTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox2.Depth = 0;
             this.materialTextBox2.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -2142,9 +2135,8 @@ namespace MaterialSkinExample
             this.materialTextBox2.Location = new System.Drawing.Point(25, 282);
             this.materialTextBox2.MaxLength = 50;
             this.materialTextBox2.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox2.Multiline = false;
             this.materialTextBox2.Name = "materialTextBox2";
-            this.materialTextBox2.Password = true;
+            this.materialTextBox2.UseSystemPasswordChar = true;
             this.materialTextBox2.Size = new System.Drawing.Size(406, 50);
             this.materialTextBox2.TabIndex = 3;
             this.materialTextBox2.Text = "";
@@ -2154,7 +2146,6 @@ namespace MaterialSkinExample
             // materialTextBox1
             // 
             this.materialTextBox1.AnimateReadOnly = false;
-            this.materialTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialTextBox1.Depth = 0;
             this.materialTextBox1.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -2163,7 +2154,6 @@ namespace MaterialSkinExample
             this.materialTextBox1.Location = new System.Drawing.Point(25, 114);
             this.materialTextBox1.MaxLength = 50;
             this.materialTextBox1.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox1.Multiline = false;
             this.materialTextBox1.Name = "materialTextBox1";
             this.materialTextBox1.Size = new System.Drawing.Size(406, 50);
             this.materialTextBox1.TabIndex = 1;
@@ -2173,7 +2163,6 @@ namespace MaterialSkinExample
             // materialSingleLineTextField2
             // 
             this.materialSingleLineTextField2.AnimateReadOnly = false;
-            this.materialSingleLineTextField2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialSingleLineTextField2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.materialSingleLineTextField2.Depth = 0;
             this.materialSingleLineTextField2.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -2183,7 +2172,6 @@ namespace MaterialSkinExample
             this.materialSingleLineTextField2.Location = new System.Drawing.Point(25, 226);
             this.materialSingleLineTextField2.MaxLength = 50;
             this.materialSingleLineTextField2.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialSingleLineTextField2.Multiline = false;
             this.materialSingleLineTextField2.Name = "materialSingleLineTextField2";
             this.materialSingleLineTextField2.Size = new System.Drawing.Size(406, 50);
             this.materialSingleLineTextField2.TabIndex = 2;
@@ -3413,9 +3401,9 @@ namespace MaterialSkinExample
         private MaterialRadioButton materialRadioButton1;
         private MaterialRadioButton materialRadioButton2;
         private MaterialLabel materialLabel23;
-        private MaterialTextBox materialTextBox2;
-        private MaterialTextBox materialTextBox1;
-        private MaterialTextBox materialSingleLineTextField2;
+        private MaterialTextBox2 materialTextBox2;
+        private MaterialTextBox2 materialTextBox1;
+        private MaterialTextBox2 materialSingleLineTextField2;
         private MaterialLabel materialLabel24;
         private MaterialLabel materialLabel25;
         private MaterialLabel materialLabel26;
@@ -3441,14 +3429,14 @@ namespace MaterialSkinExample
         private MaterialLabel materialLabel6;
         private MaterialLabel materialLabel39;
         private MaterialButton materialButton23;
-        private MaterialTextBox materialTextBox3;
+        private MaterialTextBox2 materialTextBox3;
         private MaterialComboBox materialComboBox5;
         private MaterialComboBox materialComboBox4;
         private MaterialComboBox materialComboBox3;
         private MaterialComboBox materialComboBox2;
         private MaterialComboBox materialComboBox6;
-        private MaterialTextBox materialTextBox5;
-        private MaterialTextBox materialTextBox4;
+        private MaterialTextBox2 materialTextBox5;
+        private MaterialTextBox2 materialTextBox4;
         private MaterialSwitch materialSwitch8;
         private MaterialLabel materialLabel7;
         private MaterialLabel materialLabel45;
