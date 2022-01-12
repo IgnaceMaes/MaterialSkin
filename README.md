@@ -2,7 +2,7 @@
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-> This project state is: **somewhat active**
+> This project state is: **not very active**
 >
 > This means I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up, also [@orapps44](https://github.com/orapps44) has been doing excelent work and is keeping this project alive and updated, Thank you! ❤️
 
@@ -64,6 +64,7 @@ All supported components have a dark theme
 - [ ] Drawer - Header, Divider, subtitle & submenu
 - [ ] Textfield ContextualMenu translation
 - [ ] Controls code cleanup
+- [ ] Add Noto font support
 
 ---
 
