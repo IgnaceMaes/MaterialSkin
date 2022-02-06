@@ -1,12 +1,12 @@
 ﻿
 namespace MaterialSkin.Controls
 {
-using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using MaterialSkin.Animations;
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+    using MaterialSkin.Animations;
 
     public class MaterialMultiLineTextBox2 : Control, IMaterialControl
     {
@@ -15,7 +15,7 @@ using MaterialSkin.Animations;
         ContextMenuStrip _lastContextMenuStrip = new ContextMenuStrip();
 
         //Properties for managing the material design properties
-        
+
         [Browsable(false)]
         public int Depth { get; set; }
 
@@ -24,9 +24,9 @@ using MaterialSkin.Animations;
 
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-		
-		//Unused properties
-		
+
+        //Unused properties
+
         [Browsable(false)]
         public override System.Drawing.Image BackgroundImage { get; set; }
 
@@ -47,14 +47,14 @@ using MaterialSkin.Animations;
         public override System.Drawing.Color ForeColor { get; set; }
 
         //Material Skin properties
-        
+
 
         [Category("Material Skin"), DefaultValue(""), Localizable(true)]
-        public string Hint 
-        { 
-            get { return baseTextBox.Hint; } 
-            set 
-            { 
+        public string Hint
+        {
+            get { return baseTextBox.Hint; }
+            set
+            {
                 baseTextBox.Hint = value;
                 hasHint = !String.IsNullOrEmpty(baseTextBox.Hint);
                 Invalidate();
@@ -63,6 +63,13 @@ using MaterialSkin.Animations;
 
         [Category("Material Skin"), DefaultValue(true)]
         public bool UseAccent { get; set; }
+
+
+
+        [Browsable(true)]
+        [Category("Material Skin"), DefaultValue(true), Description("Defines whether MaterialMultiLineTextBox allows scrolling of text. This property is independent of the ScrollBars property")]
+        public bool AllowScroll { get; set; }
+
 
 
         //TextBox properties
@@ -110,12 +117,12 @@ using MaterialSkin.Animations;
         public char PasswordChar { get { return baseTextBox.PasswordChar; } set { baseTextBox.PasswordChar = value; } }
 
         [Category("Behavior")]
-        public bool ShortcutsEnabled 
-        { 
-            get 
-            { return baseTextBox.ShortcutsEnabled; } 
-            set 
-            { 
+        public bool ShortcutsEnabled
+        {
+            get
+            { return baseTextBox.ShortcutsEnabled; }
+            set
+            {
                 baseTextBox.ShortcutsEnabled = value;
                 if (value == false)
                 {
@@ -199,8 +206,8 @@ using MaterialSkin.Animations;
         public void Paste() { baseTextBox.Paste(); }
 
 
-        # region Forwarding events to baseTextBox
-        
+        #region Forwarding events to baseTextBox
+
         public event EventHandler AcceptsTabChanged
         {
             add
@@ -321,7 +328,7 @@ using MaterialSkin.Animations;
             }
         }
 
-        #if NETFRAMEWORK
+#if NETFRAMEWORK
         public new event EventHandler ContextMenuChanged
         {
             add
@@ -333,7 +340,7 @@ using MaterialSkin.Animations;
                 baseTextBox.ContextMenuChanged -= value;
             }
         }
-        #endif
+#endif
 
         public new event EventHandler ContextMenuStripChanged
         {
@@ -1043,7 +1050,7 @@ using MaterialSkin.Animations;
             }
         }
 
-       public event EventHandler TextAlignChanged
+        public event EventHandler TextAlignChanged
         {
             add
             {
@@ -1117,10 +1124,15 @@ using MaterialSkin.Animations;
         private const int RIGHT_PADDING = 12;
         private int LINE_Y;
         private bool hasHint;
+        private readonly int SB_LINEUP = 0;
+        private readonly int SB_LINEDOWN = 1;
+        private readonly uint WM_VSCROLL = 277;
+        private readonly IntPtr ptrLparam = new IntPtr(0);
 
         protected readonly BaseTextBox baseTextBox;
         public MaterialMultiLineTextBox2()
         {
+            AllowScroll = true;
             // Material Properties
             UseAccent = true;
             MouseState = MouseState.OUT;
@@ -1180,6 +1192,7 @@ using MaterialSkin.Animations;
             cms.Opening += ContextMenuStripOnOpening;
             cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
             ContextMenuStrip = cms;
+            this.MouseWheel += OnMouseWheel;
         }
 
         private void Redraw(object sencer, EventArgs e)
@@ -1233,6 +1246,36 @@ using MaterialSkin.Animations;
                     int LineAnimationX = (Width / 2) - (LineAnimationWidth / 2);
                     g.FillRectangle(UseAccent ? SkinManager.ColorScheme.AccentBrush : SkinManager.ColorScheme.PrimaryBrush, LineAnimationX, LINE_Y, LineAnimationWidth, 2);
                 }
+            }
+        }
+
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto, EntryPoint = "SendMessage")]
+        protected static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        protected void OnMouseWheel(object sender, MouseEventArgs e)
+        {
+            if (AllowScroll)
+            {
+                if (DesignMode)
+                    return;
+                //Calculate number of notches mouse wheel moved
+                int v = e.Delta / 120;
+                //Down Movement
+                if (v < 0)
+                {
+                    var ptrWparam = new IntPtr(SB_LINEDOWN);
+                    SendMessage(baseTextBox.Handle, WM_VSCROLL, ptrWparam, ptrLparam);
+                }
+                //Up Movement
+                else if (v > 0)
+                {
+                    var ptrWparam = new IntPtr(SB_LINEUP);
+                    SendMessage(baseTextBox.Handle, WM_VSCROLL, ptrWparam, ptrLparam);
+                }
+
+                baseTextBox?.Focus();
+                base.OnMouseDown(e);
             }
         }
 
