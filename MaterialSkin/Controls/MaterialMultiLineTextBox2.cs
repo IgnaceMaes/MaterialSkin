@@ -67,7 +67,7 @@ namespace MaterialSkin.Controls
 
 
         [Browsable(true)]
-        [Category("Behavior"), DefaultValue(true), Description("Defines whether MaterialMultiLineTextBox allows scrolling of text. This property is independent of the ScrollBars property")]
+        [Category("Material Skin"), DefaultValue(true), Description("Defines whether MaterialMultiLineTextBox allows scrolling of text. This property is independent of the ScrollBars property")]
         public bool AllowScroll { get; set; }
 
 
