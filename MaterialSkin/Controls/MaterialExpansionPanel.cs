@@ -634,6 +634,14 @@ namespace MaterialSkin.Controls
                     _cancelButton.UseAccentColor = _useAccentColor;
                 }
             }
+            if (_validationButton != null)
+            {
+                _validationButton.Visible = _showValidationButtons;
+            }
+            if (_cancelButton != null)
+            {
+                _cancelButton.Visible = _showValidationButtons;
+            }
         }
 
     }
