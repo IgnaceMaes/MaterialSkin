@@ -749,6 +749,7 @@ namespace MaterialSkin.Controls
 
                 Invalidate();
                 base.OnMouseWheel(e);
+                ((HandledMouseEventArgs)e).Handled = true;
             }
         }
 
