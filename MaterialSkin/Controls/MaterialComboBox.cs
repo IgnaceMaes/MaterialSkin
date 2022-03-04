@@ -147,6 +147,18 @@
                 MouseState = MouseState.OUT;
                 Invalidate();
             };
+            SelectedIndexChanged += (sender, args) =>
+            {
+                Invalidate();
+            };
+            KeyUp += (sender, args) =>
+            { 
+                if (Enabled && DropDownStyle == ComboBoxStyle.DropDownList && (args.KeyCode == Keys.Delete || args.KeyCode == Keys.Back))
+                {
+                    SelectedIndex = -1;
+                    Invalidate();
+                }
+            };
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
