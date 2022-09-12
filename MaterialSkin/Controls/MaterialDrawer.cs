@@ -285,9 +285,10 @@
                                                      iconRect.Y + iconRect.Height / 2 - _baseTabControl.ImageList.Images[tabPage.ImageKey].Height / 2);
 
                 // add to dictionary
-                iconsBrushes.Add(tabPage.ImageKey, textureBrushGray);
-                iconsSelectedBrushes.Add(tabPage.ImageKey, textureBrushColor);
-                iconsSize.Add(tabPage.ImageKey, new Rectangle(0, 0, iconRect.Width, iconRect.Height));
+                var ik = string.Concat(tabPage.ImageKey, "_", tabPage.Name);
+                iconsBrushes.Add(ik, textureBrushGray);
+                iconsSelectedBrushes.Add(ik, textureBrushColor);
+                iconsSize.Add(ik, new Rectangle(0, 0, iconRect.Width, iconRect.Height));
             }
         }
 
@@ -516,18 +517,19 @@
                 // Icons
                 if (_baseTabControl.ImageList != null && !String.IsNullOrEmpty(tabPage.ImageKey))
                 {
+                    var ik = string.Concat(tabPage.ImageKey, "_", tabPage.Name);
                     Rectangle iconRect = new Rectangle(
-                        _drawerItemRects[currentTabIndex].X + (drawerItemHeight >> 1) - (iconsSize[tabPage.ImageKey].Width >> 1),
-                        _drawerItemRects[currentTabIndex].Y + (drawerItemHeight >> 1) - (iconsSize[tabPage.ImageKey].Height >> 1),
-                        iconsSize[tabPage.ImageKey].Width, iconsSize[tabPage.ImageKey].Height);
-
+                        _drawerItemRects[currentTabIndex].X + (drawerItemHeight >> 1) - (iconsSize[ik].Width >> 1),
+                        _drawerItemRects[currentTabIndex].Y + (drawerItemHeight >> 1) - (iconsSize[ik].Height >> 1),
+                        iconsSize[ik].Width, iconsSize[ik].Height);
+                    
                     if (ShowIconsWhenHidden)
                     {
-                        iconsBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
-                        iconsSelectedBrushes[tabPage.ImageKey].TranslateTransform(dx, 0);
+                        iconsBrushes[ik].TranslateTransform(dx, 0);
+                        iconsSelectedBrushes[ik].TranslateTransform(dx, 0);
                     }
 
-                    g.FillRectangle(currentTabIndex == _baseTabControl.SelectedIndex ? iconsSelectedBrushes[tabPage.ImageKey] : iconsBrushes[tabPage.ImageKey], iconRect);
+                    g.FillRectangle(currentTabIndex == _baseTabControl.SelectedIndex ? iconsSelectedBrushes[ik] : iconsBrushes[ik], iconRect);
                 }
             }
 
