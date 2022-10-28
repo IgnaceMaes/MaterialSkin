@@ -74,7 +74,10 @@
                 _startIndex = value;
                 try
                 {
-                    base.SelectedIndex = value;
+                    if (base.Items.Count > 0)
+                    {
+                        base.SelectedIndex = value;
+                    }
                 }
                 catch
                 {
