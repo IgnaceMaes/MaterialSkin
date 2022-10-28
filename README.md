@@ -2,9 +2,9 @@
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-> This project state is: **not very active**
+> This project state is: **not active**
 >
-> This means I still read every issue and check every PR and occasionally release new versions when enough pull requests have pilled up, also [@orapps44](https://github.com/orapps44) has been doing excelent work and is keeping this project alive and updated, Thank you! ❤️
+
 
 ![home](https://user-images.githubusercontent.com/77468294/134770847-0f20f37f-e3e7-4e15-b838-cf53b0b32c4e.png)
 
