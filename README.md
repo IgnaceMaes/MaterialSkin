@@ -2,9 +2,20 @@
 
 Theming .NET WinForms, C# or VB.Net, to Google's Material Design Principles.
 
-> This project state is: **not active**
+> ⚠️ **It's NOT recommended to use this lib for new projects** ⚠️
 >
+> ❓For new projects I recommend [WPF with this Material Design Xaml Toolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) since it's a lot newer and performant and feature complete
+>
+> ℹ️ The current state of this project state is: **not active**
 
+## Contributing
+
+- Feel free to open a PR with new features or bug fixes. Since this project is not currently active, big changes will not be considered.
+- Support this and more projects by donating:
+
+[![Paypal](https://user-images.githubusercontent.com/8310271/225498353-9d0a672d-ed45-4fed-9838-11d71ee49c28.png)](https://www.paypal.com/donate/?hosted_button_id=683D7S6KLX7EA)
+
+## A quick look
 
 ![home](https://user-images.githubusercontent.com/77468294/134770847-0f20f37f-e3e7-4e15-b838-cf53b0b32c4e.png)
 
@@ -171,7 +182,7 @@ If you love .NET and Material Design, you should definitely check out [Material 
 
 ---
 
-## Images
+## Preview!
 
 *A simple demo interface with MaterialSkin components.*
 ![home](https://user-images.githubusercontent.com/77468294/134770847-0f20f37f-e3e7-4e15-b838-cf53b0b32c4e.png)
