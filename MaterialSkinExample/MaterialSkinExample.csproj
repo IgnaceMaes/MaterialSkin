@@ -69,6 +69,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\win10HighDPI.manifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -84,6 +85,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_assessment_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_backup_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_bluetooth_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_bookmark_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_build_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_gps_fixed_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_http_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_report_problem_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_swap_vert_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_build_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_fingerprint_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_thumb_up_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_bluetooth_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_favorite_border_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_add_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_phone_black_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>MaterialSkin.2</id>
+    <version>2.3.1</version>
+    <title>MaterialSkin 2</title>
+    <authors>leocb, IgnaceMaes, orapps44</authors>
+    <owners>leocb</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/leocb/MaterialSkin</projectUrl>
+    <icon>images\nugetIcon.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Google's Material Design for your windows forms.</description>
+    <releaseNotes>see github page for release notes</releaseNotes>
+    <copyright>Copyright Leonardo C Bottaro © 2021</copyright>
+    <tags>material design materialdesign google forms theme skin</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1" />
+    </dependencies>
+    <summary>The MaterialSkin 2 is a Google's Material Design skin for you windows forms app. this updated version brings new user controls, unified theming and consistency. This package superseeds the MaterialSkin package By IgnaceMaes. Example app and documentation is available on the project site.</summary>
+  </metadata>
+  <files>
+    <file src="nugetIcon.png" target="images\" />
+    <file src="MaterialSkin\bin\Release\*.dll" target="lib\net461" />
+  </files>
+</package>
