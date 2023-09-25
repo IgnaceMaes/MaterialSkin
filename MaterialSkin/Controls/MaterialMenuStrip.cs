@@ -33,7 +33,7 @@ namespace MaterialSkin.Controls
 		{
 			base.OnCreateControl();
 			Font = SkinManager.ROBOTO_MEDIUM_10;
-			BackColor = SkinManager.PrimaryColor;
+			BackColor = SkinManager.GetPrimaryTextColor();
 		}
 	}
 
@@ -53,7 +53,7 @@ namespace MaterialSkin.Controls
 			{
 				var itemRect = GetItemRect(e.Item);
 				var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
-				g.DrawString(e.Text, SkinManager.ROBOTO_MEDIUM_10, e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush(), textRect, new StringFormat() { LineAlignment = StringAlignment.Center });
+				g.DrawString(e.Text, SkinManager.ROBOTO_MEDIUM_10, e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(), textRect, new StringFormat() { LineAlignment = StringAlignment.Center });
 			}
 			else
 			{
@@ -64,7 +64,7 @@ namespace MaterialSkin.Controls
 		protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
 		{
 			var g = e.Graphics;
-			g.Clear(SkinManager.PrimaryColor);
+			g.Clear(SkinManager.GetPrimaryTextColor());
 
 			//Draw background
 			var itemRect = GetItemRect(e.Item);
@@ -74,16 +74,16 @@ namespace MaterialSkin.Controls
 			}
 			else
 			{
-				g.FillRectangle(e.Item.Selected ? SkinManager.GetFlatButtonPressedBackgroundBrush() : SkinManager.PrimaryColorBrush, itemRect);
+				g.FillRectangle(e.Item.Selected ? SkinManager.GetFlatButtonPressedBackgroundBrush() : SkinManager.GetPrimaryTextBrush(), itemRect);
 			}
 
 			//Ripple animation
 			var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
 			if (toolStrip != null)
 			{
-				var animationManager = toolStrip.animationManager;
-				var animationSource = toolStrip.animationSource;
-				if (toolStrip.animationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
+				var animationManager = toolStrip.AnimationManager;
+				var animationSource = toolStrip.AnimationSource;
+				if (toolStrip.AnimationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
 				{
 					for (int i = 0; i < animationManager.GetAnimationCount(); i++)
 					{
@@ -122,7 +122,7 @@ namespace MaterialSkin.Controls
 			const int ARROW_SIZE = 4;
 
 			var arrowMiddle = new Point(e.ArrowRectangle.X + e.ArrowRectangle.Width / 2, e.ArrowRectangle.Y + e.ArrowRectangle.Height / 2);
-			var arrowBrush = e.Item.Enabled ? SkinManager.GetMainTextBrush() : SkinManager.GetDisabledOrHintBrush();
+			var arrowBrush = e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush();
 			using (var arrowPath = new GraphicsPath())
 			{
 				arrowPath.AddLines(new[] { new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y - ARROW_SIZE), new Point(arrowMiddle.X, arrowMiddle.Y), new Point(arrowMiddle.X - ARROW_SIZE, arrowMiddle.Y + ARROW_SIZE) });
