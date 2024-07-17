@@ -38,6 +38,9 @@ namespace MaterialSkin.Controls
             }
         }
 
+        public Shades CheckShade { get; set; }
+        public Shades Shade { get; set; }
+
         private readonly AnimationManager _animationManager;
         private readonly AnimationManager _rippleAnimationManager;
 
@@ -88,7 +91,7 @@ namespace MaterialSkin.Controls
         }
 
         private static readonly Point[] CheckmarkLine = { new Point(3, 8), new Point(7, 12), new Point(14, 5) };
-        private const int TEXT_OFFSET = 22;
+        private const int TEXT_OFFSET = 20;
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
@@ -105,8 +108,22 @@ namespace MaterialSkin.Controls
             var colorAlpha = Enabled ? (int)(animationProgress * 255.0) : SkinManager.GetCheckBoxOffDisabledColor().A;
             var backgroundAlpha = Enabled ? (int)(SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress)) : SkinManager.GetCheckBoxOffDisabledColor().A;
 
-            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor()));
-            var brush3 = new SolidBrush(Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.GetCheckBoxOffDisabledColor());
+            var checkColor = SkinManager.ColorScheme.AccentColor;           
+            if (CheckShade != Shades.None)
+            {
+                checkColor = MaterialSkinManager.GetMaterialColor(CheckShade);
+            }
+
+            var shadeBrush = SkinManager.GetCheckboxOffBrush();           
+            var shadeColor = SkinManager.GetCheckboxOffColor();           
+            if (Shade != Shades.None)
+            {
+                shadeBrush = MaterialSkinManager.GetMaterialBrush(Shade);
+                shadeColor = MaterialSkinManager.GetMaterialColor(Shade);
+            }
+
+            var brush = new SolidBrush(Color.FromArgb(colorAlpha, Enabled ? checkColor : SkinManager.GetCheckBoxOffDisabledColor()));
+            var brush3 = new SolidBrush(Enabled ? checkColor : SkinManager.GetCheckBoxOffDisabledColor());
             var pen = new Pen(brush.Color);
 
             // draw ripple animation
@@ -133,7 +150,7 @@ namespace MaterialSkin.Controls
             var checkMarkLineFill = new Rectangle(_boxOffset, _boxOffset, (int)(17.0 * animationProgress), 17);
             using (var checkmarkPath = DrawHelper.CreateRoundRect(_boxOffset, _boxOffset, 17, 17, 1f))
             {
-                var brush2 = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, Enabled ? SkinManager.GetCheckboxOffColor() : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha));
+                var brush2 = new SolidBrush(DrawHelper.BlendColor(Parent.BackColor, Enabled ? shadeColor : SkinManager.GetCheckBoxOffDisabledColor(), backgroundAlpha));
                 var pen2 = new Pen(brush2.Color);
                 g.FillPath(brush2, checkmarkPath);
                 g.DrawPath(pen2, checkmarkPath);
@@ -159,12 +176,13 @@ namespace MaterialSkin.Controls
                 g.DrawImageUnscaledAndClipped(DrawCheckMarkBitmap(), checkMarkLineFill);
             }
 
-            // draw checkbox text
+            // draw checkbox text           
+
             SizeF stringSize = g.MeasureString(Text, SkinManager.ROBOTO_MEDIUM_10);
             g.DrawString(
                 Text,
                 SkinManager.ROBOTO_MEDIUM_10,
-                Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                Enabled ? shadeBrush : SkinManager.GetDisabledOrHintBrush(),
                 _boxOffset + TEXT_OFFSET, Height / 2 - stringSize.Height / 2);
 
             // dispose used paint objects

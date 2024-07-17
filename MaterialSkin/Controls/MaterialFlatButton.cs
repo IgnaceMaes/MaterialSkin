@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialSkin.Animations;
@@ -17,6 +18,7 @@ namespace MaterialSkin.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
+        public Shades Shade { get; set; }
 
         private readonly AnimationManager _animationManager;
         private readonly AnimationManager _hoverAnimationManager;
@@ -54,8 +56,8 @@ namespace MaterialSkin.Controls
             _hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
             _animationManager.OnAnimationProgress += sender => Invalidate();
 
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            AutoSize = true;
+            //AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            //AutoSize = true;
             Margin = new Padding(4, 6, 4, 6);
             Padding = new Padding(0);
         }
@@ -81,9 +83,13 @@ namespace MaterialSkin.Controls
             g.Clear(Parent.BackColor);
 
             //Hover
-            Color c = SkinManager.GetFlatButtonHoverBackgroundColor();
-            using (Brush b = new SolidBrush(Color.FromArgb((int)(_hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
-                g.FillRectangle(b, ClientRectangle);
+            Color c = Shade != Shades.None
+                ? MaterialSkinManager.GetMaterialColor(Shade)
+                : SkinManager.GetFlatButtonHoverBackgroundColor();
+            using (Brush b = Shade != Shades.None 
+                ? new SolidBrush(c) 
+                : new SolidBrush(Color.FromArgb((int)(_hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
+                // g.FillRectangle(b, ClientRectangle);
 
             //Ripple
             if (_animationManager.IsAnimating())
@@ -103,16 +109,24 @@ namespace MaterialSkin.Controls
                 g.SmoothingMode = SmoothingMode.None;
             }
 
-            //Icon
-            var iconRect = new Rectangle(8, 6, 24, 24);
 
-            if (string.IsNullOrEmpty(Text))
-                // Center Icon
-                iconRect.X += 2;
+            //Icon          
 
             if (Icon != null)
-                g.DrawImage(Icon, iconRect);
+            {
+                var iconRect = new Rectangle(8, (Height/2)- Icon.Height/2, Icon.Width, Icon.Height);
 
+                //create a color matrix object  & set the opacity
+                var matrix = new ColorMatrix { Matrix33 = Enabled ? (float) 0.75 : (float) 0.30 };
+
+                //set the color(opacity) of the image                  
+                var attributes = new ImageAttributes();                 
+                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);                    
+
+                // Draw the image
+                g.DrawImage(Icon, iconRect, 0, 0, Icon.Width, Icon.Height, GraphicsUnit.Pixel, attributes );
+            }
+            
             //Text
             var textRect = ClientRectangle;
 
@@ -134,13 +148,20 @@ namespace MaterialSkin.Controls
                 textRect.X += 8 + 24 + 4;
             }
 
+            var fontColor = Enabled
+                ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush())
+                : SkinManager.GetFlatButtonDisabledTextBrush();
+
+            if (Shade != Shades.None) fontColor = MaterialSkinManager.GetMaterialBrush(Shade);
+
+
             g.DrawString(
                 Text.ToUpper(),
                 SkinManager.ROBOTO_MEDIUM_10,
-                Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(),
+                fontColor,
                 textRect,
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center }
-                );
+                new StringFormat { Alignment = MaterialRaisedButton.ContentToTextHAlignment(TextAlign), LineAlignment = MaterialRaisedButton.ContentToTextVAlignment(TextAlign) });
+                
         }
 
         private Size GetPreferredSize()
