@@ -100,6 +100,12 @@ namespace MaterialSkin
         private static readonly Color FLAT_BUTTON_DISABLEDTEXT_DARK = Color.FromArgb(30.PercentageToColorComponent(), 0xFFFFFF.ToColor());
         private static readonly Brush FLAT_BUTTON_DISABLEDTEXT_DARK_BRUSH = new SolidBrush(FLAT_BUTTON_DISABLEDTEXT_DARK);
 
+        //Snackbar
+        private static readonly Color SNACKBAR_BACKGROUND = Color.FromArgb(255, 50, 50, 50);
+        private static readonly Brush SNACKBAR_BACKGROUND_BRUSH = new SolidBrush(SNACKBAR_BACKGROUND);
+        private static readonly Color SNACKBAR_TEXT_COLOR = PRIMARY_TEXT_WHITE;
+        private static readonly Brush SNACKBAR_TEXT_BRUSH = new SolidBrush(SNACKBAR_TEXT_COLOR);
+
         //ContextMenuStrip
         private static readonly Color CMS_BACKGROUND_LIGHT_HOVER = Color.FromArgb(255, 238, 238, 238);
         private static readonly Brush CMS_BACKGROUND_HOVER_LIGHT_BRUSH = new SolidBrush(CMS_BACKGROUND_LIGHT_HOVER);
@@ -225,7 +231,28 @@ namespace MaterialSkin
             return Theme == Themes.LIGHT ? BACKGROUND_LIGHT : BACKGROUND_DARK;
         }
 
+        public Color GetSnackbarBackgroundColor()
+        {
+            return SNACKBAR_BACKGROUND;
+        }
+
+        public Brush GetSnackbarBackgroundBrush()
+        {
+            return SNACKBAR_BACKGROUND_BRUSH;
+        }
+
+        public Color GetSnackbarTextColor()
+        {
+            return SNACKBAR_TEXT_COLOR;
+        }
+
+        public Brush GetSnackbarTextBrush()
+        {
+            return SNACKBAR_TEXT_BRUSH;
+        }
+
         //Roboto font
+        public Font ROBOTO_REGULAR_14;
         public Font ROBOTO_MEDIUM_12;
         public Font ROBOTO_REGULAR_11;
         public Font ROBOTO_MEDIUM_11;
@@ -242,6 +269,7 @@ namespace MaterialSkin
             ROBOTO_MEDIUM_12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
             ROBOTO_MEDIUM_10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
+            ROBOTO_REGULAR_14 = new Font(LoadFont(Resources.Roboto_Regular), 14f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
             Theme = Themes.LIGHT;
             ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
